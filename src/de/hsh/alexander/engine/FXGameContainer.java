@@ -5,53 +5,43 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-public abstract class FXGame
+public abstract class FXGameContainer
         extends Application
         implements GameInterface {
 
     private Java2DEngine engine;
-
     private boolean running = false;
 
-    public FXGame() {
-        this.engine = new Java2DEngine();
+    public FXGameContainer() {
+        this.setEngine( new Java2DEngine() );
     }
+
 
     @Override
     public void start( Stage primaryStage ) {
+        this.setRunning( true );
+        this.getEngine().init();
+        this.getEngine().start();
+
+        primaryStage = configGui( primaryStage );
         primaryStage.setOnCloseRequest( close -> {
             this.stopGame();
             Platform.exit();
         } );
-        primaryStage = configGui( primaryStage );
-        this.engine.init();
-        this.engine.start();
         primaryStage.show();
-    }
-
-    @Override
-    public void initGame( String[] args ) {
-        this.setRunning( true );
-        launch( args );
-    }
-
-    @Override
-    public void initGame() {
-        this.setRunning( true );
-        launch();
     }
 
     @Override
     public void stopGame() {
         this.setRunning( false );
-        this.engine.setRunning( false );
+        this.getEngine().setRunning( false );
     }
+
+    //-------------------------------------- GETTER & SETTER --------------------------------------
 
     public synchronized boolean isRunning() {
         return running;
     }
-
-    //-------------------------------------- GETTER & SETTER --------------------------------------
 
     public synchronized void setRunning( boolean running ) {
         this.running = running;
@@ -61,4 +51,7 @@ public abstract class FXGame
 
     public Java2DEngine getEngine() {return this.engine;}
 
+    protected void setEngine( Java2DEngine java2DEngine ) {
+        this.engine = java2DEngine;
+    }
 }

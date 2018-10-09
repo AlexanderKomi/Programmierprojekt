@@ -1,9 +1,20 @@
 package de.hsh.alexander;
 
-import de.hsh.alexander.engine.FXGame;
+import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.GameInterface;
+import de.hsh.alexander.examples.ExampleFXGameContainer;
 
-/**
+/** A simple Java 2 engine.<br>
+ * To use the engine, implement an GameInterface.<br>
+ *
+ * For a few examples, take a look at the classes in this package : de.hsh.alexander.engine.examples .
+ *
+ * @see GameInterface
+ *
+ * Example classes:
+ *
+ * @see ExampleFXGameContainer
+ *
  * @author Alexander Komischke
  */
 public class Java2DEngine implements Runnable {
@@ -14,16 +25,26 @@ public class Java2DEngine implements Runnable {
     private       boolean       running    = false;
     private       int           fps;
 
-
+    /**
+     * Must be called before start().
+     * <p>
+     * Initializes the Game Thread, with an instance of this class.
+     */
     public void init() {
         this.gameThread = new Thread( this, "Java 2D Engine" );
     }
 
     /**
+     * Use init once before start.
      * Only starts the game thread.
      */
     public void start() {
-        this.gameThread.start();
+        if ( !this.isRunning() ) {
+            this.setRunning( true );
+            if ( !this.gameThread.isInterrupted() ) {
+                this.gameThread.start();
+            }
+        }
     }
 
     /**
@@ -31,6 +52,7 @@ public class Java2DEngine implements Runnable {
      */
     public void stop() {
         this.setRunning( false );
+        this.gameThread.interrupt();
     }
 
     /**
@@ -61,7 +83,7 @@ public class Java2DEngine implements Runnable {
         int    frames     = 0;
 
 
-        boolean render = false;
+        boolean render;
         this.running = true;
 
         while ( this.running ) {
@@ -97,7 +119,9 @@ public class Java2DEngine implements Runnable {
             }
             else {
                 try {
-                    Thread.sleep( 1 ); // CPU Idle
+                    if ( !this.gameThread.isInterrupted() ) {
+                        Thread.sleep( 1 ); // CPU Idle
+                    }
                 }
                 catch ( InterruptedException e ) {
                     e.printStackTrace();
@@ -127,7 +151,7 @@ public class Java2DEngine implements Runnable {
         return this.fps;
     }
 
-    public void setGame( FXGame fxgame ) {
+    public void setGame( FXGameContainer fxgame ) {
         this.game = fxgame;
     }
 

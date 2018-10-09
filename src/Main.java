@@ -1,9 +1,9 @@
-import de.hsh.alexander.ExampleFXGame;
+import de.hsh.alexander.examples.ExampleFXGameContainer;
 
 public class Main {
 
     public static void main( String[] args ) {
-        ExampleFXGame e = new ExampleFXGame();
+        ExampleFXGameContainer e = new ExampleFXGameContainer();
         e.initGame( args );
     }
 
