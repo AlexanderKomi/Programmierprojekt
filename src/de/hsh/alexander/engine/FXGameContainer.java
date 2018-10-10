@@ -3,17 +3,21 @@ package de.hsh.alexander.engine;
 import de.hsh.alexander.Java2DEngine;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 
 public abstract class FXGameContainer
         extends Application
         implements GameInterface {
 
+
+    private Canvas       canvas;
     private Java2DEngine engine;
-    private boolean running = false;
+    private boolean      running = false;
 
     public FXGameContainer() {
         this.setEngine( new Java2DEngine() );
+        this.getEngine().setGame( this ); // This must be in every class, which is an FXGameContainer.
     }
 
 
@@ -30,6 +34,7 @@ public abstract class FXGameContainer
         } );
         primaryStage.show();
     }
+
 
     @Override
     public void stopGame() {
@@ -53,5 +58,13 @@ public abstract class FXGameContainer
 
     protected void setEngine( Java2DEngine java2DEngine ) {
         this.engine = java2DEngine;
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public void setCanvas( Canvas canvas ) {
+        this.canvas = canvas;
     }
 }

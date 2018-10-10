@@ -10,12 +10,6 @@ import javafx.stage.Stage;
 
 public class ExampleFXGameContainer extends FXGameContainer {
 
-    private Canvas canvas;
-
-    public ExampleFXGameContainer() {
-        this.getEngine().setGame( this ); // This must be in every class, which is an FXGameContainer.
-    }
-
     @Override
     public void initGame( String[] args ) {
         launch( args );
@@ -26,13 +20,14 @@ public class ExampleFXGameContainer extends FXGameContainer {
         launch();
     }
 
+
     @Override
     public void render() {
         //System.out.println( "Render" );
     }
 
     public Stage configGui( Stage primaryStage ) {
-        this.canvas = new Canvas( 400, 300 );
+        this.setCanvas( new Canvas( 400, 300 ) );
 
         GraphicsContext gc = this.getCanvas().getGraphicsContext2D();
         gc.setFill( Color.CORAL );
@@ -48,11 +43,4 @@ public class ExampleFXGameContainer extends FXGameContainer {
 
     // ----------------------------------- GETTER & SETTER  -----------------------------------
 
-    public Canvas getCanvas() {
-        return canvas;
-    }
-
-    public void setCanvas( Canvas canvas ) {
-        this.canvas = canvas;
-    }
 }
