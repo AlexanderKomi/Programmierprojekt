@@ -8,13 +8,13 @@ class Java2DEngineTest {
     @Test
     void startStopStressTest() {
         StressClass e = new StressClass();
-        e.initGame();
+        e.startContainer();
     }
 
     class StressClass extends ExampleFXGameContainer {
 
         StressClass() {
-            this.getEngine().setGame( this );
+            this.getEngine().setGameContainer( this );
         }
 
         @Override

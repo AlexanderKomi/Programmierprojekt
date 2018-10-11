@@ -1,16 +1,14 @@
-package de.hsh.alexander;
+package de.hsh.alexander.engine;
 
-import de.hsh.alexander.engine.FXGameContainer;
-import de.hsh.alexander.engine.GameInterface;
 import de.hsh.alexander.examples.ExampleFXGameContainer;
 import de.hsh.alexander.util.Logger;
 
 /** A simple Java 2 engine.<br>
- * To use the engine, implement an GameInterface.<br>
+ * To use the engine, implement an GameContainerInterface.<br>
  *
  * For a few examples, take a look at the classes in this package : de.hsh.alexander.engine.examples .
  *
- * @see GameInterface
+ * @see GameContainerInterface
  *
  * Example classes:
  *
@@ -20,24 +18,25 @@ import de.hsh.alexander.util.Logger;
  */
 public class Java2DEngine implements Runnable {
 
-    private final double        UPDATE_CAP = 1.0 / 60.0;
-    private       Thread        gameThread;
-    private       GameInterface game;
-    private       boolean       running    = false;
-    private       int           fps;
+
+    private static final double                 UPDATE_CAP = 1.0 / 60.0;
+    private              Thread                 gameThread;
+    private              GameContainerInterface gameContainer;
+    private              boolean                running    = false;
+    private              int                    fps;
 
     /**
      * Must be called before start().
      * <p>
      * Initializes the Game Thread, with an instance of this class.
      */
-    public void init() {
+    void init() {
         this.gameThread = new Thread( this, "Java 2D Engine" );
     }
 
     /**
      * Use init once before start.
-     * Only starts the game thread.
+     * Only starts the gameContainer thread.
      */
     public void start() {
         if ( !this.isRunning() ) {
@@ -49,16 +48,18 @@ public class Java2DEngine implements Runnable {
     }
 
     /**
-     * Joins game thread to current main thread.
+     * Interrupts the engine thread.
      */
     public void stop() {
-        this.setRunning( false );
-        this.gameThread.interrupt();
+        if ( this.isRunning() ) {
+            this.setRunning( false );
+            this.gameThread.interrupt();
+        }
     }
 
     /**
-     * Initializes the game, then starts the game-loop.
-     * When game should be stopped, dispose gets called.
+     * Initializes the gameContainer, then starts the gameContainer-loop.
+     * When gameContainer should be stopped, dispose gets called.
      *
      * @see Thread
      * @see Runnable
@@ -84,16 +85,18 @@ public class Java2DEngine implements Runnable {
         int    frames     = 0;
 
 
-        boolean render;
+        boolean shouldRender;
         this.running = true;
 
         while ( this.running ) {
-            render = false;
+            shouldRender = false;
 
+            // Needed for CPU idle time and rendering
             first_time = System.nanoTime() / 1000000000.0;
             passed_time = first_time - last_time;
             last_time = first_time;
-            unprocessed_time += passed_time; // Needed for CPU idle time and rendering
+            unprocessed_time += passed_time;
+
             frame_time += passed_time; // Needed for FPS calculation
 
             while ( unprocessed_time >= UPDATE_CAP ) {
@@ -103,34 +106,46 @@ public class Java2DEngine implements Runnable {
                     frame_time = 0;
                     this.fps = frames;
                     frames = 0;
-                    Logger.log( "FPS : " + this.getFps() );
+                    Logger.log( "Frames per second : " + this.getFps() );
                 }
 
-                render = true;
+                shouldRender = true;
             }
+            frames += this.render( shouldRender );
+        }
 
-            if ( render ) {
-                frames++; // Counts frames rendered
+    }
 
-                // START ------------------------ Render game ------------------------
+    /**
+     * Calls CPU Idle and starts render process of the current gameContainer.<br>
+     *
+     * @param shouldRender
+     *         Determines if a the update and render process of the GameContainer is used.<br>
+     *
+     * @return Returns 1 if a new frame is rendered.<br>
+     * Returns 0 when cpu idles.
+     */
+    private int render( boolean shouldRender ) {
+        if ( shouldRender ) {
 
-                this.game.render();
+            // START ------------------------ Render gameContainer ------------------------
 
-                // STOP  ------------------------ Render game ------------------------
-            }
-            else {
+            this.gameContainer.render();
+
+            // STOP  ------------------------ Render gameContainer ------------------------
+            return 1;
+        }
+        else {
+            if ( !this.gameThread.isInterrupted() ) {
                 try {
-                    if ( !this.gameThread.isInterrupted() ) {
-                        Thread.sleep( 1 ); // CPU Idle
-                    }
+                    Thread.sleep( 1 ); // CPU Idle
                 }
                 catch ( InterruptedException e ) {
                     e.printStackTrace();
                 }
             }
-
         }
-
+        return 0;
     }
 
 
@@ -152,8 +167,8 @@ public class Java2DEngine implements Runnable {
         return this.fps;
     }
 
-    public void setGame( FXGameContainer fxgame ) {
-        this.game = fxgame;
+    public void setGameContainer( FXGameContainer fxgame ) {
+        this.gameContainer = fxgame;
     }
 
 }

@@ -10,9 +10,9 @@ public class Logger {
 
     public static String log( String message ) {
         if ( isUsingDebugMode() ) {
-            Calendar         c                = new GregorianCalendar();
+            Calendar         calendar         = new GregorianCalendar();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyy.mm.dd HH:mm:ss" );
-            String           new_message      = simpleDateFormat.format( c.getTime() ) + "\t\t" + message;
+            String           new_message      = simpleDateFormat.format( calendar.getTime() ) + "\t\t" + message;
             System.out.println( new_message );
             return new_message;
         }

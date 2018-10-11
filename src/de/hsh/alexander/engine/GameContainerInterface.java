@@ -1,13 +1,14 @@
 package de.hsh.alexander.engine;
 
-public interface GameInterface {
+public interface GameContainerInterface {
 
     /**
      * Start the new game.
+     * @param args Problem arguments
      */
-    public void initGame( String[] args );
+    public void startContainer( String[] args );
 
-    public void initGame();
+    public void startContainer();
 
     /**
      * Render the next picture and update.
@@ -15,9 +16,9 @@ public interface GameInterface {
     public void render();
 
     /**
-     * Stop the new game.
+     * Stops the engine container.
      */
-    public void stopGame();
+    public void stopContainer();
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
 

@@ -10,23 +10,27 @@ import javafx.stage.Stage;
 
 public class ExampleFXGameContainer extends FXGameContainer {
 
-    @Override
-    public void initGame( String[] args ) {
-        launch( args );
-    }
+    public ExampleFXGameContainer() {}
 
     @Override
-    public void initGame() {
+    public void startContainer( String[] args ) { launch( args ); }
+
+    @Override
+    public void startContainer() {
         launch();
     }
 
 
+    /**
+     * Updates every frame drawn.
+     */
     @Override
     public void render() {
         //Logger.log("Rendering...");
     }
 
-    public Stage configGui( Stage primaryStage ) {
+    @Override
+    protected Stage configGui( Stage primaryStage ) {
 
         this.setCanvas( new Canvas( 400, 300 ) );
 
@@ -34,12 +38,12 @@ public class ExampleFXGameContainer extends FXGameContainer {
         gc.setFill( Color.CORAL );
         gc.fillRect( 75, 75, 100, 100 );
 
-        Group g = new Group();
-        g.getChildren().addAll( this.getCanvas() );
+        Scene s = new Scene( new Group( this.getCanvas() ) );
 
-        Scene s = new Scene( g );
+        primaryStage.setTitle( "Example" );
         primaryStage.setScene( s );
         primaryStage.setResizable( false );
+
         return primaryStage;
     }
 
