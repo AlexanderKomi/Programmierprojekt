@@ -3,6 +3,7 @@ package de.hsh.alexander;
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.GameInterface;
 import de.hsh.alexander.examples.ExampleFXGameContainer;
+import de.hsh.alexander.util.Logger;
 
 /** A simple Java 2 engine.<br>
  * To use the engine, implement an GameInterface.<br>
@@ -102,7 +103,7 @@ public class Java2DEngine implements Runnable {
                     frame_time = 0;
                     this.fps = frames;
                     frames = 0;
-                    System.out.println( "FPS : " + fps );
+                    Logger.log( "FPS : " + this.getFps() );
                 }
 
                 render = true;

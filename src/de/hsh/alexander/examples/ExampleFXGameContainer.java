@@ -23,10 +23,11 @@ public class ExampleFXGameContainer extends FXGameContainer {
 
     @Override
     public void render() {
-        //System.out.println( "Render" );
+        //Logger.log("Rendering...");
     }
 
     public Stage configGui( Stage primaryStage ) {
+
         this.setCanvas( new Canvas( 400, 300 ) );
 
         GraphicsContext gc = this.getCanvas().getGraphicsContext2D();
@@ -38,6 +39,7 @@ public class ExampleFXGameContainer extends FXGameContainer {
 
         Scene s = new Scene( g );
         primaryStage.setScene( s );
+        primaryStage.setResizable( false );
         return primaryStage;
     }
 

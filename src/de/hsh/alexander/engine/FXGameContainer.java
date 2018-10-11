@@ -42,6 +42,8 @@ public abstract class FXGameContainer
         this.getEngine().setRunning( false );
     }
 
+    public abstract Stage configGui( Stage primaryStage );
+
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
     public synchronized boolean isRunning() {
@@ -51,8 +53,6 @@ public abstract class FXGameContainer
     public synchronized void setRunning( boolean running ) {
         this.running = running;
     }
-
-    public abstract Stage configGui( Stage primaryStage );
 
     public Java2DEngine getEngine() {return this.engine;}
 
