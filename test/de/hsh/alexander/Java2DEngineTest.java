@@ -1,10 +1,8 @@
 package de.hsh.alexander;
 
-import de.hsh.alexander.examples.ExampleFXGameContainer;
-import org.junit.jupiter.api.Test;
-
 class Java2DEngineTest {
 
+    /*
     @Test
     void startStopStressTest() {
         StressClass e = new StressClass();
@@ -23,6 +21,6 @@ class Java2DEngineTest {
             this.getEngine().start();
         }
     }
-
+    */
 
 }

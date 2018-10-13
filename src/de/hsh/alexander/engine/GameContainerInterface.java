@@ -3,27 +3,33 @@ package de.hsh.alexander.engine;
 public interface GameContainerInterface {
 
     /**
-     * Start the new game.
-     * @param args Problem arguments
+     * Start the new game. Must be called from the class launching the application!
+     *
+     * @param args
+     *         Program arguments
      */
-    public void startContainer( String[] args );
-
-    public void startContainer();
-
-    /**
-     * Render the next picture and update.
-     */
-    public void render();
+    void startContainer( String[] args );
 
     /**
-     * Stops the engine container.
+     * Start the new game. Must be called from the class launching the application!
      */
-    public void stopContainer();
+    void startContainer();
+
+    /**
+     * Gets called every time a new frame is rendered.
+     * Use this to update every frame.
+     */
+    void render();
+
+    /**
+     * Stops the engine container. Kills every process inside the container.
+     */
+    void stopContainer();
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
-    public boolean isRunning();
+    boolean isRunning();
 
-    public void setRunning( boolean value );
+    void setRunning( boolean value );
 
 }

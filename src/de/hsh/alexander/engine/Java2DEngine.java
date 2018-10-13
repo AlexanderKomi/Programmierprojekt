@@ -3,18 +3,17 @@ package de.hsh.alexander.engine;
 import de.hsh.alexander.examples.ExampleFXGameContainer;
 import de.hsh.alexander.util.Logger;
 
-/** A simple Java 2 engine.<br>
+/**
+ * A simple Java 2 engine.<br>
  * To use the engine, implement an GameContainerInterface.<br>
- *
+ * <p>
  * For a few examples, take a look at the classes in this package : de.hsh.alexander.engine.examples .
  *
- * @see GameContainerInterface
- *
- * Example classes:
- *
- * @see ExampleFXGameContainer
- *
  * @author Alexander Komischke
+ * @see GameContainerInterface
+ * <p>
+ * Example classes:
+ * @see ExampleFXGameContainer
  */
 public class Java2DEngine implements Runnable {
 
@@ -55,6 +54,10 @@ public class Java2DEngine implements Runnable {
             this.setRunning( false );
             this.gameThread.interrupt();
         }
+    }
+
+    public boolean isRunning() {
+        return this.running;
     }
 
     /**
@@ -116,6 +119,17 @@ public class Java2DEngine implements Runnable {
 
     }
 
+
+    // --------------------- GETTER & SETTER etc...  ---------------------
+
+    public void setRunning( boolean running ) {
+        this.running = running;
+    }
+
+    public int getFps() {
+        return this.fps;
+    }
+
     /**
      * Calls CPU Idle and starts render process of the current gameContainer.<br>
      *
@@ -148,23 +162,8 @@ public class Java2DEngine implements Runnable {
         return 0;
     }
 
-
-    // --------------------- GETTER & SETTER etc...  ---------------------
-
-    public boolean isRunning() {
-        return this.running;
-    }
-
-    public void setRunning( boolean running ) {
-        this.running = running;
-    }
-
     public double getUPDATE_CAP() {
         return UPDATE_CAP;
-    }
-
-    public int getFps() {
-        return this.fps;
     }
 
     public void setGameContainer( FXGameContainer fxgame ) {

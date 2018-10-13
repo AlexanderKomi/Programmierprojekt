@@ -1,14 +1,9 @@
 package de.hsh.alexander.engine;
 
-import de.hsh.alexander.game.Game;
-import de.hsh.alexander.game.GameMenu;
+import de.hsh.alexander.engine.game.MainMenu;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public abstract class FXGameContainer
@@ -17,68 +12,71 @@ public abstract class FXGameContainer
 
 
     // JavaFX Properties
-    private static boolean fxApplicationLaunched = false;
-    private        Canvas  canvas;
-    private        Stage   stage;
-
+    private static boolean         fxApplicationLaunched = false;
+    private        Stage           stage;
     //Engine properties
-    private Java2DEngine engine;
-    private boolean      running = false;
-
-    // Games
-    private ArrayList<Game> games = new ArrayList<>(); // Tracks all the games
-    private GameMenu        mainScreen;
+    private        Java2DEngine    engine;
+    private        boolean         running               = false;
+    private        SceneController sceneController       = new SceneController();
 
     public FXGameContainer() {
-        initialize();
-    }
-
-    public FXGameContainer( Game... games ) {
-        this.games.addAll( Arrays.asList( this.games.toArray( games ) ) );
-        initialize();
-    }
-
-    public FXGameContainer( ArrayList<Game> games ) {
-        this.games = games;
-        initialize();
-    }
-
-    public static boolean launched() {
-        return FXGameContainer.fxApplicationLaunched;
-    }
-
-    /**
-     * Gets called after every constructor
-     */
-    private void initialize() {
         this.setEngine( new Java2DEngine() );
         this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
     }
 
     /**
+     * Launches the javafx Thread. When using an FX Container, apply every interaction, only after the FXThread isLaunched.
+     *
      * @param primaryStage
      *         Main window used.
      */
     @Override
     public void start( Stage primaryStage ) {
-        if ( launched() ) {
-            throw new IllegalStateException( "Already launched an JavaFX Application. Use existing Stage instead." );
+        if ( isLaunched() ) {
+            throw new IllegalStateException( "Already isLaunched an JavaFX Application. Use existing Stage instead." );
         }
 
-        FXGameContainer.fxApplicationLaunched = true;
         this.setRunning( true );
         this.getEngine().init();
         this.getEngine().start();
 
-        this.stage = primaryStage; // This line is required, for reference change.
-        this.stage = configGui( this.stage );
+        initStage( primaryStage );
+        FXGameContainer.fxApplicationLaunched = true;
+    }
 
+    public static boolean isLaunched() {
+        return FXGameContainer.fxApplicationLaunched;
+    }
+
+    public Java2DEngine getEngine() {return this.engine;}
+
+    protected void setEngine( Java2DEngine java2DEngine ) {
+        this.engine = java2DEngine;
+    }
+
+    private void initStage( Stage primaryStage ) {
+        this.stage = primaryStage; // This line is required, for reference change.
+        this.stage = configWindow( this.stage );
+        this.sceneController.init( configMainMenu() );
+        this.stage.setScene( this.sceneController.getScene() );
         this.stage.setOnCloseRequest( close -> {
             this.stopContainer();
             Platform.exit();
         } );
-        this.stage.show();
+        this.showWindow();
     }
+
+    /**
+     * Configures the whole window. Only call once...
+     *
+     * @param primaryStage
+     *         Window which is created, when calling launch. Needs to be modified.
+     *
+     * @return Returns the modified version of the parameter.
+     */
+    protected abstract Stage configWindow( Stage primaryStage );
+
+    protected abstract MainMenu configMainMenu();
 
     /**
      * Stops the Container instance and the running engine.
@@ -93,15 +91,14 @@ public abstract class FXGameContainer
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
-    /**
-     * Configures the whole window. Only call once...
-     *
-     * @param primaryStage
-     *         Window which is created, when calling launch. Needs to be modified.
-     *
-     * @return Returns the modified version of the parameter.
-     */
-    protected abstract Stage configGui( Stage primaryStage );
+    private void showWindow() {
+        if ( this.stage != null ) {
+            this.stage.show();
+        }
+        else {
+            throw new NullPointerException( "Stage is not existing anymore." );
+        }
+    }
 
     public synchronized boolean isRunning() {
         return running;
@@ -109,20 +106,6 @@ public abstract class FXGameContainer
 
     public synchronized void setRunning( boolean running ) {
         this.running = running;
-    }
-
-    public Java2DEngine getEngine() {return this.engine;}
-
-    protected void setEngine( Java2DEngine java2DEngine ) {
-        this.engine = java2DEngine;
-    }
-
-    public Canvas getCanvas() {
-        return canvas;
-    }
-
-    public void setCanvas( Canvas canvas ) {
-        this.canvas = canvas;
     }
 
     public Stage getStage() {
