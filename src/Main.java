@@ -4,7 +4,9 @@ public class Main {
 
     public static void main( String[] args ) {
         ExampleFXGameContainer e1 = new ExampleFXGameContainer();
-        e1.startContainer( args );
+        if ( !ExampleFXGameContainer.isLaunched() ) {
+            e1.startContainer( args );
+        }
     }
 
 }

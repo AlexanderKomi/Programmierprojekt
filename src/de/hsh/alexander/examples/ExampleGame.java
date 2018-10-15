@@ -1,7 +1,6 @@
 package de.hsh.alexander.examples;
 
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.engine.game.GameMenu;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,13 +12,8 @@ import java.util.Observer;
 
 public class ExampleGame extends Game {
 
-    public ExampleGame( Observer o ) {
+    ExampleGame( Observer o ) {
         super( o );
-    }
-
-    @Override
-    public GameMenu initMenu() {
-        return new ExampleGameMenu();
     }
 
     @Override

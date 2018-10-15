@@ -1,7 +1,6 @@
 package de.hsh.alexander.engine;
 
 import de.hsh.alexander.examples.ExampleFXGameContainer;
-import de.hsh.alexander.util.Logger;
 
 /**
  * A simple Java 2 engine.<br>
@@ -37,7 +36,7 @@ public class Java2DEngine implements Runnable {
      * Use configMainMenu once before start.
      * Only starts the gameContainer thread.
      */
-    public void start() {
+    void start() {
         if ( !this.isRunning() ) {
             this.setRunning( true );
             if ( !this.gameThread.isInterrupted() ) {
@@ -46,18 +45,12 @@ public class Java2DEngine implements Runnable {
         }
     }
 
-    /**
-     * Interrupts the engine thread.
-     */
-    public void stop() {
-        if ( this.isRunning() ) {
-            this.setRunning( false );
-            this.gameThread.interrupt();
-        }
+    private boolean isRunning() {
+        return this.running;
     }
 
-    public boolean isRunning() {
-        return this.running;
+    void setRunning( boolean running ) {
+        this.running = running;
     }
 
     /**
@@ -79,9 +72,9 @@ public class Java2DEngine implements Runnable {
     private void game_loop() {
 
         //------
-        double first_time       = 0;
+        double first_time;
         double last_time        = System.nanoTime() / 1000000000.0;
-        double passed_time      = 0;
+        double passed_time;
         double unprocessed_time = 0;
         //------
         double frame_time = 0;
@@ -109,7 +102,6 @@ public class Java2DEngine implements Runnable {
                     frame_time = 0;
                     this.fps = frames;
                     frames = 0;
-                    Logger.log( "Frames per second : " + this.getFps() );
                 }
 
                 shouldRender = true;
@@ -122,11 +114,17 @@ public class Java2DEngine implements Runnable {
 
     // --------------------- GETTER & SETTER etc...  ---------------------
 
-    public void setRunning( boolean running ) {
-        this.running = running;
+    /**
+     * Interrupts the engine thread.
+     */
+    private void stop() {
+        if ( this.isRunning() ) {
+            this.setRunning( false );
+            this.gameThread.interrupt();
+        }
     }
 
-    public int getFps() {
+    int getFps() {
         return this.fps;
     }
 
@@ -162,11 +160,7 @@ public class Java2DEngine implements Runnable {
         return 0;
     }
 
-    public double getUPDATE_CAP() {
-        return UPDATE_CAP;
-    }
-
-    public void setGameContainer( FXGameContainer fxgame ) {
+    void setGameContainer( FXGameContainer fxgame ) {
         this.gameContainer = fxgame;
     }
 

@@ -4,6 +4,7 @@ import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.MainMenu;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.Observable;
@@ -52,8 +53,19 @@ public abstract class FXGameContainer
         FXGameContainer.fxApplicationLaunched = true;
     }
 
-    public static boolean isLaunched() {
-        return FXGameContainer.fxApplicationLaunched;
+    @Override
+    public void update( Observable o, Object arg ) {
+        if ( o instanceof Game ) {
+            Game g = (Game) o;
+            this.onUpdate( g, arg );
+        }
+        else if ( o instanceof MainMenu ) {
+            MainMenu m = (MainMenu) o;
+            this.onUpdate( m, arg );
+        }
+        else {
+            this.onUpdate( o, arg );
+        }
     }
 
     public Java2DEngine getEngine() {return this.engine;}
@@ -100,17 +112,51 @@ public abstract class FXGameContainer
         this.getEngine().setRunning( false );
     }
 
-    @Override
-    public void update( Observable o, Object arg ) {
-        onUpdate( o, arg );
+    public abstract void onUpdate( Game game, Object arg );
+
+    public abstract void onUpdate( MainMenu mainMenu, Object arg );
+
+    public static boolean isLaunched() {
+        return FXGameContainer.fxApplicationLaunched;
+    }
+
+    protected int getFPS() {
+        return this.engine.getFps();
     }
 
     public abstract void onUpdate( Observable o, Object arg );
 
+    protected void setGameShown( Game g ) {
+        Pane p = g.getGameContentPane();
+        if ( p != null ) {
+            this.sceneController.getScene().rootProperty().setValue( p );
+        }
+        else {
+            throw new NullPointerException( "Pane is null" );
+        }
+    }
+
+    protected void setGameShown( int index ) {
+        Game game = this.sceneController.getGames().get( index );
+        Pane p    = game.getGameContentPane();
+        if ( p != null ) {
+            this.sceneController.getScene().rootProperty().setValue( p );
+        }
+        else {
+            throw new NullPointerException( "Pane is null" );
+        }
+    }
+
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
-    public SceneController getSceneController() {
-        return this.sceneController;
+    protected void setMainMenuShown( MainMenu m ) {
+        Pane pane = m.getPane();
+        if ( pane != null ) {
+            this.sceneController.getScene().rootProperty().setValue( pane );
+        }
+        else {
+            throw new NullPointerException( "Pane is null" );
+        }
     }
 
     private void showWindow() {
@@ -128,9 +174,5 @@ public abstract class FXGameContainer
 
     public synchronized void setRunning( boolean running ) {
         this.running = running;
-    }
-
-    public Stage getStage() {
-        return this.stage;
     }
 }

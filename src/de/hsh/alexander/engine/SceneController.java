@@ -8,19 +8,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SceneController {
+class SceneController {
 
     private Scene      scene;
     private MainMenu   mainMenu;
-    private List<Game> games = new ArrayList<Game>(); // Tracks all the games
+    private List<Game> games = new ArrayList<>(); // Tracks all the games
 
     void configMainMenu( MainMenu mainMenu ) {
         this.mainMenu = mainMenu;
         this.scene = new Scene( this.mainMenu.getPane() );
     }
 
-
-    public void addGames( Game... games ) {
+    void addGames( Game... games ) {
         this.games = Arrays.asList( games );
     }
 
@@ -28,19 +27,12 @@ public class SceneController {
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
-    public Scene getScene() {
+    Scene getScene() {
         return scene;
     }
 
-    public List<Game> getGames() {
+    List<Game> getGames() {
         return games;
     }
 
-    public void setScene( Scene scene ) {
-        this.scene = scene;
-    }
-
-    public void setGames( List<Game> games ) {
-        this.games = games;
-    }
 }

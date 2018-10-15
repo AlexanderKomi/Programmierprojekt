@@ -17,31 +17,13 @@ public abstract class MainMenu extends Observable {
 
     protected abstract Pane initScene();
 
-    public MainMenu( Observer sceneController, Pane pane ) {
-        this.sceneController = sceneController;
-        this.pane = pane;
-    }
-
-    @Override
-    public void notifyObservers() {
-        super.notifyObservers();
-    }
-
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
     public Pane getPane() {
         return pane;
     }
 
-    public Observer getSceneController() {
+    protected Observer getSceneController() {
         return sceneController;
-    }
-
-    public void setPane( Pane pane ) {
-        this.pane = pane;
-    }
-
-    public void setSceneController( Observer sceneController ) {
-        this.sceneController = sceneController;
     }
 }

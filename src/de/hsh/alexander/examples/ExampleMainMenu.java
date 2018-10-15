@@ -10,7 +10,7 @@ import java.util.Observer;
 
 public class ExampleMainMenu extends MainMenu {
 
-    public ExampleMainMenu( Observer sceneController ) {
+    ExampleMainMenu( Observer sceneController ) {
         super( sceneController );
     }
 
@@ -21,7 +21,7 @@ public class ExampleMainMenu extends MainMenu {
         Text text = new Text( "MainMenu" );
         bp.setTop( text );
         Button startGame = new Button( "Start Game" );
-        startGame.setOnAction( e -> this.notifyObservers() );
+        startGame.setOnAction( this::notifyObservers );
         bp.setCenter( startGame );
         return bp;
     }
@@ -30,5 +30,16 @@ public class ExampleMainMenu extends MainMenu {
     public void notifyObservers() {
         this.getSceneController().update( this, "Button clicked" );
         super.notifyObservers();
+    }
+
+    @Override
+    public void notifyObservers( Object arg ) {
+        this.getSceneController().update( this, arg );
+        super.notifyObservers( arg );
+    }
+
+    @Override
+    public String toString() {
+        return "de.hsh.alexander.ExampleMainMenu.toString()";
     }
 }

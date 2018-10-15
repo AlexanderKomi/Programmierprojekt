@@ -7,26 +7,30 @@ import java.util.Observer;
 
 public abstract class Game extends java.util.Observable implements GameInterface {
 
-    private GameMenu menu;
     private Pane     gameContentPane;
     private Observer observer;
 
     protected Game( Observer o ) {
         this.observer = o;
-    }
-
-    public void init() {
-        this.menu = initMenu();
         this.gameContentPane = initGameContentWindow();
         this.gameContentPane.getChildren().addAll( createGameContent() );
     }
-
 
     public void notifyObservers() {
         this.observer.update( this, gameContentPane );
     }
 
     protected abstract Node createGameContent();
+
+    @Override
+    public boolean equals( Object obj ) {
+        if ( obj instanceof Game ) {
+            Game g = (Game) obj;
+            return g.observer.equals( this.observer ) &&
+                   g.gameContentPane.equals( this.observer );
+        }
+        return false;
+    }
 
     // ----------------------------------- GETTER & SETTER  -----------------------------------
 
@@ -37,14 +41,4 @@ public abstract class Game extends java.util.Observable implements GameInterface
     public void setGameContentPane( Pane gameContentPane ) {
         this.gameContentPane = gameContentPane;
     }
-
-    public GameMenu getMenu() {
-        return menu;
-    }
-
-    public void setMenu( GameMenu menu ) {
-        this.menu = menu;
-    }
-
-
 }
