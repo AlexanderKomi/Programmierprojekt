@@ -9,7 +9,13 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.util.Observer;
+
 public class ExampleGame extends Game {
+
+    public ExampleGame( Observer o ) {
+        super( o );
+    }
 
     @Override
     public GameMenu initMenu() {

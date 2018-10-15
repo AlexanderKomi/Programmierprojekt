@@ -34,7 +34,7 @@ public class Java2DEngine implements Runnable {
     }
 
     /**
-     * Use init once before start.
+     * Use configMainMenu once before start.
      * Only starts the gameContainer thread.
      */
     public void start() {

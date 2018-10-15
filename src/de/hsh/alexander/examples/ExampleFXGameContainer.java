@@ -1,8 +1,13 @@
 package de.hsh.alexander.examples;
 
 import de.hsh.alexander.engine.FXGameContainer;
+import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.MainMenu;
+import de.hsh.alexander.util.Logger;
 import javafx.stage.Stage;
+
+import java.util.Observable;
+import java.util.Observer;
 
 public class ExampleFXGameContainer extends FXGameContainer {
 
@@ -31,8 +36,18 @@ public class ExampleFXGameContainer extends FXGameContainer {
     }
 
     @Override
-    protected MainMenu configMainMenu() {
-        return new ExampleMainMenu();
+    protected MainMenu configMainMenu( Observer sceneController ) {
+        return new ExampleMainMenu( sceneController );
+    }
+
+    @Override
+    public Game[] addGames( Observer sceneController ) {
+        return new Game[] { new ExampleGame( sceneController ) };
+    }
+
+    @Override
+    public void onUpdate( Observable o, Object arg ) {
+        Logger.log( o.toString() + "\t\t" + arg.toString() );
     }
 
 

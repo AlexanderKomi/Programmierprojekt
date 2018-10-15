@@ -1,14 +1,22 @@
 package de.hsh.alexander.engine;
 
+import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.MainMenu;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+import java.util.Observable;
+import java.util.Observer;
 
+/**
+ * FXGameContainer is a container for a game engine, a main menu and all games.
+ *
+ * @author Alexander Komischke
+ */
 public abstract class FXGameContainer
         extends Application
-        implements GameContainerInterface {
+        implements GameContainerInterface, Observer {
 
 
     // JavaFX Properties
@@ -57,7 +65,8 @@ public abstract class FXGameContainer
     private void initStage( Stage primaryStage ) {
         this.stage = primaryStage; // This line is required, for reference change.
         this.stage = configWindow( this.stage );
-        this.sceneController.init( configMainMenu() );
+        this.sceneController.configMainMenu( configMainMenu( this ) );
+        this.sceneController.addGames( addGames( this ) );
         this.stage.setScene( this.sceneController.getScene() );
         this.stage.setOnCloseRequest( close -> {
             this.stopContainer();
@@ -76,7 +85,9 @@ public abstract class FXGameContainer
      */
     protected abstract Stage configWindow( Stage primaryStage );
 
-    protected abstract MainMenu configMainMenu();
+    protected abstract MainMenu configMainMenu( Observer sceneController );
+
+    public abstract Game[] addGames( Observer sceneController );
 
     /**
      * Stops the Container instance and the running engine.
@@ -89,7 +100,18 @@ public abstract class FXGameContainer
         this.getEngine().setRunning( false );
     }
 
+    @Override
+    public void update( Observable o, Object arg ) {
+        onUpdate( o, arg );
+    }
+
+    public abstract void onUpdate( Observable o, Object arg );
+
     //-------------------------------------- GETTER & SETTER --------------------------------------
+
+    public SceneController getSceneController() {
+        return this.sceneController;
+    }
 
     private void showWindow() {
         if ( this.stage != null ) {

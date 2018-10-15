@@ -2,18 +2,29 @@ package de.hsh.alexander.engine.game;
 
 import javafx.scene.layout.Pane;
 
-public abstract class MainMenu {
+import java.util.Observable;
+import java.util.Observer;
 
-    private Pane pane;
+public abstract class MainMenu extends Observable {
 
-    public MainMenu() {
+    private Pane     pane;
+    private Observer sceneController;
+
+    public MainMenu( Observer sceneController ) {
+        this.sceneController = sceneController;
         this.pane = initScene();
     }
 
     protected abstract Pane initScene();
 
-    public MainMenu( Pane pane ) {
+    public MainMenu( Observer sceneController, Pane pane ) {
+        this.sceneController = sceneController;
         this.pane = pane;
+    }
+
+    @Override
+    public void notifyObservers() {
+        super.notifyObservers();
     }
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
@@ -22,7 +33,15 @@ public abstract class MainMenu {
         return pane;
     }
 
+    public Observer getSceneController() {
+        return sceneController;
+    }
+
     public void setPane( Pane pane ) {
         this.pane = pane;
+    }
+
+    public void setSceneController( Observer sceneController ) {
+        this.sceneController = sceneController;
     }
 }

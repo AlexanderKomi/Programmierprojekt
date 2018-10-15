@@ -3,15 +3,27 @@ package de.hsh.alexander.engine.game;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
-public abstract class Game implements GameInterface {
+import java.util.Observer;
+
+public abstract class Game extends java.util.Observable implements GameInterface {
 
     private GameMenu menu;
     private Pane     gameContentPane;
+    private Observer observer;
 
-    protected Game() {
+    protected Game( Observer o ) {
+        this.observer = o;
+    }
+
+    public void init() {
         this.menu = initMenu();
         this.gameContentPane = initGameContentWindow();
         this.gameContentPane.getChildren().addAll( createGameContent() );
+    }
+
+
+    public void notifyObservers() {
+        this.observer.update( this, gameContentPane );
     }
 
     protected abstract Node createGameContent();
