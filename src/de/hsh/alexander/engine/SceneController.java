@@ -32,8 +32,15 @@ public class SceneController {
         return scene;
     }
 
+    public List<Game> getGames() {
+        return games;
+    }
+
     public void setScene( Scene scene ) {
         this.scene = scene;
     }
 
+    public void setGames( List<Game> games ) {
+        this.games = games;
+    }
 }
