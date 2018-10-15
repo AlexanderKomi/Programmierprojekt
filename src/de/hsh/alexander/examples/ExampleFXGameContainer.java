@@ -6,6 +6,7 @@ import de.hsh.alexander.engine.game.MainMenu;
 import de.hsh.alexander.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.util.Observable;
@@ -48,13 +49,18 @@ public class ExampleFXGameContainer extends FXGameContainer {
     @Override
     public void render() {
         //Logger.log("Rendering...");
-        //Logger.log( String.valueOf( this.getFPS()) );
     }
 
     @Override
     public void onUpdate( Game game, Object arg ) {
-        Logger.log( game.toString() + "\t\t" + arg.toString() );
-        this.setGameShown( game );
+        if ( arg instanceof MouseEvent ) {
+            MouseEvent m = (MouseEvent) arg;
+            Logger.log( "Clicked on : (" + m.getSceneX() + "," + m.getSceneY() + ")" );
+            this.showMainMenu();
+        }
+        else {
+            Logger.log( game.toString() + "\t\t" + arg.toString() );
+        }
     }
 
     @Override
@@ -68,6 +74,7 @@ public class ExampleFXGameContainer extends FXGameContainer {
             if ( a.getSource() instanceof Button ) {
                 Button button = (Button) a.getSource();
                 Logger.log( "Button triggered : " + button.getText() );
+                Logger.log( String.valueOf( this.getFPS() ) );
                 this.setGameShown( 0 ); // Sets game content from list.
             }
         }
@@ -80,7 +87,6 @@ public class ExampleFXGameContainer extends FXGameContainer {
     /***/
     @Override
     public void onUpdate( Observable o, Object arg ) {
-        throw new IllegalArgumentException( "Observable as argument : " + o.toString() );
     }
 
 

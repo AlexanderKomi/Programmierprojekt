@@ -28,6 +28,7 @@ public class ExampleGame extends Game {
         GraphicsContext gc = c.getGraphicsContext2D();
         gc.setFill( Color.PAPAYAWHIP );
         gc.fillRect( 75, 75, 100, 100 );
+        c.setOnMouseClicked( this::notifyObservers );
 
         return c;
     }

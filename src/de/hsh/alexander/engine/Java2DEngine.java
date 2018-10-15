@@ -2,6 +2,8 @@ package de.hsh.alexander.engine;
 
 import de.hsh.alexander.examples.ExampleFXGameContainer;
 
+import java.util.Observable;
+
 /**
  * A simple Java 2 engine.<br>
  * To use the engine, implement an GameContainerInterface.<br>
@@ -14,7 +16,7 @@ import de.hsh.alexander.examples.ExampleFXGameContainer;
  * Example classes:
  * @see ExampleFXGameContainer
  */
-public class Java2DEngine implements Runnable {
+public class Java2DEngine extends Observable implements Runnable {
 
 
     private static final double                 UPDATE_CAP = 1.0 / 60.0;
@@ -111,9 +113,6 @@ public class Java2DEngine implements Runnable {
 
     }
 
-
-    // --------------------- GETTER & SETTER etc...  ---------------------
-
     /**
      * Interrupts the engine thread.
      */
@@ -141,9 +140,7 @@ public class Java2DEngine implements Runnable {
         if ( shouldRender ) {
 
             // START ------------------------ Render gameContainer ------------------------
-
             this.gameContainer.render();
-
             // STOP  ------------------------ Render gameContainer ------------------------
             return 1;
         }

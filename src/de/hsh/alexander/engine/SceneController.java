@@ -4,15 +4,11 @@ import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.MainMenu;
 import javafx.scene.Scene;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 class SceneController {
 
-    private Scene      scene;
-    private MainMenu   mainMenu;
-    private List<Game> games = new ArrayList<>(); // Tracks all the games
+    private Scene    scene;
+    private MainMenu mainMenu;
+    private Game[]   games; // Tracks all the games
 
     void configMainMenu( MainMenu mainMenu ) {
         this.mainMenu = mainMenu;
@@ -20,18 +16,23 @@ class SceneController {
     }
 
     void addGames( Game... games ) {
-        this.games = Arrays.asList( games );
+        this.games = games;
     }
 
     // TODO : Write a function for switching scenes, which can be called by a game and mainmenu. Use Observer Pattern.
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
+
+    public MainMenu getMainMenu() {
+        return mainMenu;
+    }
+
     Scene getScene() {
         return scene;
     }
 
-    List<Game> getGames() {
+    Game[] getGames() {
         return games;
     }
 

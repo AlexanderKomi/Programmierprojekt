@@ -1,5 +1,7 @@
 package de.hsh.alexander.engine;
 
+import java.util.Observable;
+
 public interface GameContainerInterface {
 
     /**
@@ -20,6 +22,8 @@ public interface GameContainerInterface {
      * Use this to update every frame.
      */
     void render();
+
+    void update( Observable o, Object arg );
 
     /**
      * Stops the engine container. Kills every process inside the container.

@@ -44,34 +44,15 @@ public abstract class FXGameContainer
         if ( isLaunched() ) {
             throw new IllegalStateException( "Already isLaunched an JavaFX Application. Use existing Stage instead." );
         }
-
-        this.setRunning( true );
-        this.getEngine().init();
-        this.getEngine().start();
-
-        initStage( primaryStage );
         FXGameContainer.fxApplicationLaunched = true;
+        this.initStage( primaryStage );
+        this.startEngine();
+        this.showWindow();
+
     }
 
-    @Override
-    public void update( Observable o, Object arg ) {
-        if ( o instanceof Game ) {
-            Game g = (Game) o;
-            this.onUpdate( g, arg );
-        }
-        else if ( o instanceof MainMenu ) {
-            MainMenu m = (MainMenu) o;
-            this.onUpdate( m, arg );
-        }
-        else {
-            this.onUpdate( o, arg );
-        }
-    }
-
-    public Java2DEngine getEngine() {return this.engine;}
-
-    protected void setEngine( Java2DEngine java2DEngine ) {
-        this.engine = java2DEngine;
+    public static boolean isLaunched() {
+        return FXGameContainer.fxApplicationLaunched;
     }
 
     private void initStage( Stage primaryStage ) {
@@ -84,7 +65,27 @@ public abstract class FXGameContainer
             this.stopContainer();
             Platform.exit();
         } );
-        this.showWindow();
+    }
+
+    public void startEngine() {
+        this.setRunning( true );
+        this.getEngine().init();
+        this.getEngine().start();
+    }
+
+    public void showWindow() {
+        if ( this.stage != null ) {
+            this.stage.show();
+        }
+        else {
+            throw new NullPointerException( "Stage is not existing anymore." );
+        }
+    }
+
+    public Java2DEngine getEngine() {return this.engine;}
+
+    protected void setEngine( Java2DEngine java2DEngine ) {
+        this.engine = java2DEngine;
     }
 
     /**
@@ -112,19 +113,38 @@ public abstract class FXGameContainer
         this.getEngine().setRunning( false );
     }
 
+    @Override
+    public void update( Observable o, Object arg ) {
+        if ( o instanceof Game ) {
+            Game g = (Game) o;
+            this.onUpdate( g, arg );
+        }
+        else if ( o instanceof MainMenu ) {
+            MainMenu m = (MainMenu) o;
+            this.onUpdate( m, arg );
+        }
+        else {
+            this.onUpdate( o, arg );
+        }
+    }
+
+    public synchronized boolean isRunning() {
+        return running;
+    }
+
+    public synchronized void setRunning( boolean running ) {
+        this.running = running;
+    }
+
     public abstract void onUpdate( Game game, Object arg );
 
     public abstract void onUpdate( MainMenu mainMenu, Object arg );
 
-    public static boolean isLaunched() {
-        return FXGameContainer.fxApplicationLaunched;
-    }
+    public abstract void onUpdate( Observable o, Object arg );
 
     protected int getFPS() {
         return this.engine.getFps();
     }
-
-    public abstract void onUpdate( Observable o, Object arg );
 
     protected void setGameShown( Game g ) {
         Pane p = g.getGameContentPane();
@@ -136,18 +156,9 @@ public abstract class FXGameContainer
         }
     }
 
-    protected void setGameShown( int index ) {
-        Game game = this.sceneController.getGames().get( index );
-        Pane p    = game.getGameContentPane();
-        if ( p != null ) {
-            this.sceneController.getScene().rootProperty().setValue( p );
-        }
-        else {
-            throw new NullPointerException( "Pane is null" );
-        }
+    public void showMainMenu() {
+        this.sceneController.getScene().rootProperty().setValue( this.sceneController.getMainMenu().getPane() );
     }
-
-    //-------------------------------------- GETTER & SETTER --------------------------------------
 
     protected void setMainMenuShown( MainMenu m ) {
         Pane pane = m.getPane();
@@ -159,20 +170,21 @@ public abstract class FXGameContainer
         }
     }
 
-    private void showWindow() {
-        if ( this.stage != null ) {
-            this.stage.show();
+    public Game[] getGames() {
+        return this.sceneController.getGames();
+    }
+
+    //-------------------------------------- GETTER & SETTER --------------------------------------
+
+    protected void setGameShown( int index ) {
+        Game game = this.sceneController.getGames()[ index ];
+        Pane p    = game.getGameContentPane();
+        if ( p != null ) {
+            this.sceneController.getScene().rootProperty().setValue( p );
         }
         else {
-            throw new NullPointerException( "Stage is not existing anymore." );
+            throw new NullPointerException( "Pane is null" );
         }
     }
 
-    public synchronized boolean isRunning() {
-        return running;
-    }
-
-    public synchronized void setRunning( boolean running ) {
-        this.running = running;
-    }
 }
