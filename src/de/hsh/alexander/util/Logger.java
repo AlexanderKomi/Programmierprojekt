@@ -6,8 +6,6 @@ import java.util.GregorianCalendar;
 
 public class Logger {
 
-    private static boolean shouldLog = true;
-
     public static String log( String message ) {
         if ( isUsingDebugMode() ) {
             Calendar         calendar         = new GregorianCalendar();
@@ -20,7 +18,7 @@ public class Logger {
     }
 
     public static boolean isUsingDebugMode() {
-        return Logger.shouldLog;
+        return Configuration.shouldLog();
     }
 
 }
