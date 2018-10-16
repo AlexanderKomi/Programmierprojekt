@@ -12,17 +12,40 @@ import javafx.stage.Stage;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * @author Alexander Komischke
+ */
 public class ExampleFXGameContainer extends FXGameContainer {
 
+    /**
+     * Needed for JavaFX. Do not remove.
+     *
+     * @author Alexander Komischke
+     */
     @Override
     public void startContainer( String[] args ) { launch( args ); }
 
+    /**
+     * @author Alexander Komischke
+     * */
     @Override
     public void startContainer() {
         launch();
     }
 
+    /**
+     * Gets called every frame from engine.
+     *
+     * @author Alexander Komischke
+     */
+    @Override
+    public void render() {
+        //Logger.log("Rendering...");
+    }
 
+    /**
+     * @author Alexander Komischke
+     * */
     @Override
     protected Stage configWindow( Stage primaryStage ) {
         primaryStage.setTitle( "Example" );
@@ -30,27 +53,28 @@ public class ExampleFXGameContainer extends FXGameContainer {
         return primaryStage;
     }
 
+    /**
+     * @author Alexander Komischke
+     * */
     @Override
     protected MainMenu configMainMenu( Observer sceneController ) {
         return new ExampleMainMenu( sceneController );
     }
 
+    //----------- Update
+
+    /**
+     * @author Alexander Komischke
+     * */
     @Override
     public Game[] addGames( Observer sceneController ) {
         ExampleGame e = new ExampleGame( sceneController );
         return new Game[] { e };
     }
 
-    //----------- Update
-
     /**
-     * Gets called every frame.
-     */
-    @Override
-    public void render() {
-        //Logger.log("Rendering...");
-    }
-
+     * @author Alexander Komischke
+     * */
     @Override
     public void onUpdate( Game game, Object arg ) {
         if ( arg instanceof MouseEvent ) {
@@ -63,6 +87,9 @@ public class ExampleFXGameContainer extends FXGameContainer {
         }
     }
 
+    /**
+     * @author Alexander Komischke
+     * */
     @Override
     public void onUpdate( MainMenu mainMenu, Object arg ) {
         if ( arg instanceof String ) { // Send a nice message, if you are kind enough :)
@@ -84,7 +111,9 @@ public class ExampleFXGameContainer extends FXGameContainer {
 
     }
 
-    /***/
+    /**
+     * @author Alexander Komischke
+     * */
     @Override
     public void onUpdate( Observable o, Object arg ) {
     }
