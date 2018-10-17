@@ -1,6 +1,5 @@
 package de.hsh.alexander.engine.game;
 
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 import java.util.Observer;
@@ -13,7 +12,6 @@ public abstract class Game extends java.util.Observable implements GameInterface
     protected Game( Observer o ) {
         this.observer = o;
         this.gameContentPane = initGameContentWindow();
-        this.gameContentPane.getChildren().addAll( createGameContent() );
     }
 
     public void notifyObservers() {
@@ -25,8 +23,6 @@ public abstract class Game extends java.util.Observable implements GameInterface
         this.observer.update( this, arg );
         super.notifyObservers( arg );
     }
-
-    protected abstract Node createGameContent();
 
     @Override
     public boolean equals( Object obj ) {

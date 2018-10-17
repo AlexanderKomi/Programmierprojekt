@@ -1,23 +1,24 @@
 package de.hsh.alexander.game;
 
 import de.hsh.alexander.engine.game.Game;
-import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 import java.util.Observer;
 
 public class PacManCoop extends Game {
+
+    private GameMenu gameMenu;
+
     protected PacManCoop( Observer o ) {
         super( o );
     }
 
     @Override
-    protected Node createGameContent() {
-        return null;
-    }
-
-    @Override
     public Pane initGameContentWindow() {
-        return null;
+        BorderPane bp = new BorderPane();
+        bp.setCenter( new Text( "Placeholder" ) );
+        return bp;
     }
 }
