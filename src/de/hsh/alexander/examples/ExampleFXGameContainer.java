@@ -57,8 +57,8 @@ public class ExampleFXGameContainer extends FXGameContainer {
      * @author Alexander Komischke
      * */
     @Override
-    protected MainMenu configMainMenu( Observer sceneController ) {
-        return new ExampleMainMenu( sceneController );
+    protected MainMenu configMainMenu( Observer sceneController, Game[] games ) {
+        return new ExampleMainMenu( sceneController, games );
     }
 
     //----------- Update

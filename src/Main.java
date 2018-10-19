@@ -1,12 +1,11 @@
-import de.hsh.alexander.examples.ExampleFXGameContainer;
+import common.GameContainer;
 
 public class Main {
 
     public static void main( String[] args ) {
-        ExampleFXGameContainer e1 = new ExampleFXGameContainer();
-        if ( !ExampleFXGameContainer.isLaunched() ) {
-
-            e1.startContainer( args );
+        GameContainer gameContainer = new GameContainer();
+        if ( !GameContainer.isLaunched() ) {
+            gameContainer.startContainer( args );
         }
     }
 

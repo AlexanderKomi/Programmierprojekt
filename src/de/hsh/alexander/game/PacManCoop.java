@@ -11,7 +11,7 @@ public class PacManCoop extends Game {
 
     private GameMenu gameMenu;
 
-    protected PacManCoop( Observer o ) {
+    public PacManCoop( Observer o ) {
         super( o );
     }
 
@@ -20,5 +20,11 @@ public class PacManCoop extends Game {
         BorderPane bp = new BorderPane();
         bp.setCenter( new Text( "Placeholder" ) );
         return bp;
+    }
+
+
+    @Override
+    public void notifyObservers() {
+        super.notifyObservers( "Pacmaaaaan" );
     }
 }

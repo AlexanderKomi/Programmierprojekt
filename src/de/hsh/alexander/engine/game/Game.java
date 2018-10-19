@@ -21,7 +21,6 @@ public abstract class Game extends java.util.Observable implements GameInterface
     @Override
     public void notifyObservers( Object arg ) {
         this.observer.update( this, arg );
-        super.notifyObservers( arg );
     }
 
     @Override

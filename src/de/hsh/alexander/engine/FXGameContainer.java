@@ -58,8 +58,8 @@ public abstract class FXGameContainer
     private void initStage( Stage primaryStage ) {
         this.stage = primaryStage; // This line is required, for reference change.
         this.stage = configWindow( this.stage );
-        this.sceneController.configMainMenu( configMainMenu( this ) );
         this.sceneController.addGames( addGames( this ) );
+        this.sceneController.configMainMenu( configMainMenu( this, this.getGames() ) );
         this.stage.setScene( this.sceneController.getScene() );
         this.stage.setOnCloseRequest( close -> {
             this.stopContainer();
@@ -98,7 +98,7 @@ public abstract class FXGameContainer
      */
     protected abstract Stage configWindow( Stage primaryStage );
 
-    protected abstract MainMenu configMainMenu( Observer sceneController );
+    protected abstract MainMenu configMainMenu( Observer sceneController, Game[] games );
 
     public abstract Game[] addGames( Observer sceneController );
 
@@ -156,7 +156,7 @@ public abstract class FXGameContainer
         }
     }
 
-    public void showMainMenu() {
+    protected void showMainMenu() {
         this.sceneController.getScene().rootProperty().setValue( this.sceneController.getMainMenu().getPane() );
     }
 
@@ -185,6 +185,10 @@ public abstract class FXGameContainer
         else {
             throw new NullPointerException( "Pane is null" );
         }
+    }
+
+    public Stage getStage() {
+        return this.stage;
     }
 
 }

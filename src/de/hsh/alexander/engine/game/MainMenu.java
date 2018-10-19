@@ -10,12 +10,18 @@ public abstract class MainMenu extends Observable {
     private Pane     pane;
     private Observer sceneController;
 
-    public MainMenu( Observer sceneController ) {
+    public MainMenu( Observer sceneController, Game[] games ) {
         this.sceneController = sceneController;
-        this.pane = initScene();
+        this.pane = initScene( games );
     }
 
-    protected abstract Pane initScene();
+    /**
+     * @param games
+     *         The collection of all games. Needed for reference, when selecting a game.
+     *
+     * @return Pane Window content of this menu, when it should be shown.
+     */
+    protected abstract Pane initScene( Game[] games );
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
 

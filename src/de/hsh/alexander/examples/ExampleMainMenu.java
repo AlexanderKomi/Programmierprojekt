@@ -1,5 +1,6 @@
 package de.hsh.alexander.examples;
 
+import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.MainMenu;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -10,12 +11,12 @@ import java.util.Observer;
 
 public class ExampleMainMenu extends MainMenu {
 
-    ExampleMainMenu( Observer sceneController ) {
-        super( sceneController );
+    ExampleMainMenu( Observer sceneController, Game[] games ) {
+        super( sceneController, games );
     }
 
     @Override
-    protected Pane initScene() {
+    protected Pane initScene( Game[] games ) {
         BorderPane bp = new BorderPane();
         bp.setPrefSize( 400, 300 );
         Text text = new Text( "MainMenu" );
