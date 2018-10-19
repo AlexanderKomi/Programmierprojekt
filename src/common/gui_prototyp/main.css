@@ -1,0 +1,78 @@
+#ap_desktop {
+	-fx-background-image: url("./xp_background_800_600.jpg");
+}
+
+#hbox_bar {
+	-fx-background-image: url("./bar.png");
+}
+
+#b_shutdown {
+	-fx-pref-height : 40;
+	-fx-pref-width : 40;
+	-fx-border-width: 0 0 0 0;
+	-fx-graphic: url("./shutdown.png");
+	-fx-background-color: transparent;
+}
+
+#cb_credits {
+	-fx-background-color:
+     	   linear-gradient(#1f7023, #a9ff00),
+     	   radial-gradient(center 50% -12%, radius 220%, #339735 45%, #80c800 50%);
+	-fx-background-radius: 5 15 15 5;
+	-fx-background-insets: 0, 1;
+	-fx-text-fill: #395306;
+}
+
+#b_game_1 {
+	-fx-pref-height : 40;
+	-fx-pref-width : 40;
+	-fx-border-width: 0 0 0 0;
+	-fx-graphic: url("./folder.png");
+	-fx-background-color: transparent;
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+}
+
+#b_game_2 {
+	-fx-pref-height : 40;
+	-fx-pref-width : 40;
+	-fx-border-width: 0 0 0 0;
+	-fx-graphic: url("./folder.png");
+	-fx-background-color: transparent;
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+}
+
+#b_game_3 {
+	-fx-pref-height : 40;
+	-fx-pref-width : 40;
+	-fx-border-width: 0 0 0 0;
+	-fx-graphic: url("./folder.png");
+	-fx-background-color: transparent;
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+}
+
+#b_game_4 {
+	-fx-pref-height : 40;
+	-fx-pref-width : 40;
+	-fx-border-width: 0 0 0 0;
+	-fx-graphic: url("./folder.png");
+	-fx-background-color: transparent;
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+}
+
+#b_game_5 {
+	-fx-pref-height : 40;
+	-fx-pref-width : 40;
+	-fx-border-width: 0 0 0 0;
+	-fx-graphic: url("./folder.png");
+	-fx-background-color: transparent;
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+}
+
+#b_game_6 {
+	-fx-pref-height : 40;
+	-fx-pref-width : 40;
+	-fx-border-width: 0 0 0 0;
+	-fx-graphic: url("./folder.png");
+	-fx-background-color: transparent;
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+}
