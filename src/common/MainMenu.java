@@ -11,6 +11,9 @@ import javafx.scene.text.Text;
 
 import java.util.Observer;
 
+/**
+ * @author Alexander Komischke
+ */
 public class MainMenu extends Menu {
 
 

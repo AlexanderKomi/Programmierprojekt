@@ -4,6 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * Logs information on the console.
+ *
+ * @author Alexander Komischke
+ */
 public class Logger {
 
     private static final String separator = "\t : \t";
@@ -13,7 +18,7 @@ public class Logger {
     }
 
     public static String log( String message ) {
-        if ( isUsingDebugMode() ) {
+        if ( Configuration.shouldLog() ) {
             Calendar         calendar         = new GregorianCalendar();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyy.mm.dd HH:mm:ss" );
             String           new_message      = simpleDateFormat.format( calendar.getTime() ) + separator + message;
@@ -21,10 +26,6 @@ public class Logger {
             return new_message;
         }
         return "";
-    }
-
-    public static boolean isUsingDebugMode() {
-        return Configuration.shouldLog();
     }
 
 }
