@@ -12,6 +12,7 @@ public abstract class MainMenu extends Observable {
 
     public MainMenu( Observer sceneController, Game[] games ) {
         this.sceneController = sceneController;
+        this.addObserver( this.sceneController );
         this.pane = initScene( games );
     }
 
