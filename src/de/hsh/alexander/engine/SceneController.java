@@ -19,12 +19,10 @@ class SceneController {
         this.games = games;
     }
 
-    // TODO : Write a function for switching scenes, which can be called by a game and mainmenu. Use Observer Pattern.
-
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
 
-    public MainMenu getMainMenu() {
+    MainMenu getMainMenu() {
         return mainMenu;
     }
 

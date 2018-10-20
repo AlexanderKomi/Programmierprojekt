@@ -21,7 +21,7 @@ public class ExampleGame extends Game {
      * @author Alexander Komischke
      */
     ExampleGame( Observer o ) {
-        super( o );
+        super( o, "ExampleGame" );
     }
 
     /**

@@ -7,13 +7,11 @@ import java.util.Observer;
 
 public abstract class MainMenu extends Observable {
 
-    private Pane     pane;
-    private Observer sceneController;
+    private Pane pane;
 
     public MainMenu( Observer sceneController, Game[] games ) {
-        this.sceneController = sceneController;
-        this.addObserver( this.sceneController );
         this.pane = initScene( games );
+        this.addObserver( sceneController );
     }
 
     /**
@@ -24,13 +22,14 @@ public abstract class MainMenu extends Observable {
      */
     protected abstract Pane initScene( Game[] games );
 
+    @Override
+    public void notifyObservers( Object arg ) {
+        super.notifyObservers( arg );
+    }
+
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
     public Pane getPane() {
         return pane;
-    }
-
-    protected Observer getSceneController() {
-        return sceneController;
     }
 }

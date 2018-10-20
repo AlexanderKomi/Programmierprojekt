@@ -67,13 +67,13 @@ public abstract class FXGameContainer
         } );
     }
 
-    public void startEngine() {
+    private void startEngine() {
         this.setRunning( true );
         this.getEngine().init();
         this.getEngine().start();
     }
 
-    public void showWindow() {
+    private void showWindow() {
         if ( this.stage != null ) {
             this.stage.show();
         }
@@ -113,21 +113,6 @@ public abstract class FXGameContainer
         this.getEngine().setRunning( false );
     }
 
-    @Override
-    public void update( Observable o, Object arg ) {
-        if ( o instanceof Game ) {
-            Game g = (Game) o;
-            this.onUpdate( g, arg );
-        }
-        else if ( o instanceof MainMenu ) {
-            MainMenu m = (MainMenu) o;
-            this.onUpdate( m, arg );
-        }
-        else {
-            this.onUpdate( o, arg );
-        }
-    }
-
     public synchronized boolean isRunning() {
         return running;
     }
@@ -136,11 +121,11 @@ public abstract class FXGameContainer
         this.running = running;
     }
 
-    public abstract void onUpdate( Game game, Object arg );
+    public abstract void update( Game game, Object arg );
 
-    public abstract void onUpdate( MainMenu mainMenu, Object arg );
+    public abstract void update( MainMenu mainMenu, Object arg );
 
-    public abstract void onUpdate( Observable o, Object arg );
+    public abstract void update( Observable observable, Object arg );
 
     protected int getFPS() {
         return this.engine.getFps();
@@ -170,7 +155,7 @@ public abstract class FXGameContainer
         }
     }
 
-    public Game[] getGames() {
+    private Game[] getGames() {
         return this.sceneController.getGames();
     }
 
@@ -187,7 +172,7 @@ public abstract class FXGameContainer
         }
     }
 
-    public Stage getStage() {
+    protected Stage getStage() {
         return this.stage;
     }
 

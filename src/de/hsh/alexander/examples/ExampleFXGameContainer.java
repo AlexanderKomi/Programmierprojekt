@@ -76,7 +76,7 @@ public class ExampleFXGameContainer extends FXGameContainer {
      * @author Alexander Komischke
      * */
     @Override
-    public void onUpdate( Game game, Object arg ) {
+    public void update( Game game, Object arg ) {
         if ( arg instanceof MouseEvent ) {
             MouseEvent m = (MouseEvent) arg;
             Logger.log( "Clicked on : (" + m.getSceneX() + "," + m.getSceneY() + ")" );
@@ -91,7 +91,7 @@ public class ExampleFXGameContainer extends FXGameContainer {
      * @author Alexander Komischke
      * */
     @Override
-    public void onUpdate( MainMenu mainMenu, Object arg ) {
+    public void update( MainMenu mainMenu, Object arg ) {
         if ( arg instanceof String ) { // Send a nice message, if you are kind enough :)
             String message = (String) arg;
             Logger.log( mainMenu.toString() + "\t\t" + message );
@@ -115,7 +115,7 @@ public class ExampleFXGameContainer extends FXGameContainer {
      * @author Alexander Komischke
      * */
     @Override
-    public void onUpdate( Observable o, Object arg ) {
+    public void update( Observable o, Object arg ) {
     }
 
 

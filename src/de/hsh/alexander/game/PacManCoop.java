@@ -12,7 +12,7 @@ public class PacManCoop extends Game {
     private GameMenu gameMenu;
 
     public PacManCoop( Observer o ) {
-        super( o );
+        super( o, "Pacman Coop" );
     }
 
     @Override
@@ -22,9 +22,4 @@ public class PacManCoop extends Game {
         return bp;
     }
 
-
-    @Override
-    public void notifyObservers() {
-        super.notifyObservers( "Pacmaaaaan" );
-    }
 }

@@ -4,6 +4,7 @@ import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.MainMenu;
 import de.hsh.alexander.game.PacManCoop;
+import de.hsh.alexander.util.Logger;
 import javafx.stage.Stage;
 
 import java.util.Observable;
@@ -36,20 +37,21 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    public void onUpdate( Game game, Object arg ) {
+    public void update( Game game, Object arg ) {
+        Logger.log( game, arg );
         if ( game instanceof PacManCoop ) {
             this.getStage().setTitle( "PacMan Coop" );
         }
     }
 
     @Override
-    public void onUpdate( MainMenu mainMenu, Object arg ) {
-
+    public void update( MainMenu mainMenu, Object arg ) {
+        Logger.log( "MainMenu : " + arg.toString() );
     }
 
     @Override
-    public void onUpdate( Observable o, Object arg ) {
-
+    public void update( Observable o, Object arg ) {
+        Logger.log( o, arg );
     }
 
     @Override
@@ -64,6 +66,6 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     public void render() {
-
+        //Logger.log("Rendering");
     }
 }

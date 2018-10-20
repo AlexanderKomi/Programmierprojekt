@@ -28,14 +28,7 @@ public class ExampleMainMenu extends MainMenu {
     }
 
     @Override
-    public void notifyObservers() {
-        this.getSceneController().update( this, "Button clicked" );
-        super.notifyObservers();
-    }
-
-    @Override
     public void notifyObservers( Object arg ) {
-        this.getSceneController().update( this, arg );
         super.notifyObservers( arg );
     }
 

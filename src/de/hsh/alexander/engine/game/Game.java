@@ -6,34 +6,30 @@ import java.util.Observer;
 
 public abstract class Game extends java.util.Observable implements GameInterface {
 
-    private Pane     gameContentPane;
-    private Observer observer;
+    private final String name;
+    private       Pane   gameContentPane;
 
-    protected Game( Observer o ) {
-        this.observer = o;
+    protected Game( Observer o, String name ) {
+        this.addObserver( o );
+        this.name = name;
         this.gameContentPane = initGameContentWindow();
-    }
-
-    public void notifyObservers() {
-        this.observer.update( this, gameContentPane );
-    }
-
-    @Override
-    public void notifyObservers( Object arg ) {
-        this.observer.update( this, arg );
     }
 
     @Override
     public boolean equals( Object obj ) {
         if ( obj instanceof Game ) {
             Game g = (Game) obj;
-            return g.observer.equals( this.observer ) &&
-                   g.gameContentPane.equals( this.observer );
+            return this.name.equals( g.name ) &&
+                   g.gameContentPane.equals( this.gameContentPane );
         }
         return false;
     }
 
     // ----------------------------------- GETTER & SETTER  -----------------------------------
+
+    public String getName() {
+        return name;
+    }
 
     public Pane getGameContentPane() {
         return gameContentPane;

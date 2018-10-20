@@ -1,16 +1,19 @@
 package common;
 
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.util.Logger;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
+import java.util.HashMap;
 import java.util.Observer;
 
 public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
+
+    private static final HashMap<String, Game> gameMap = new HashMap<>();
 
     MainMenu( Observer sceneController, Game[] games ) {
         super( sceneController, games );
@@ -31,18 +34,35 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
         return bp;
     }
 
-    @Override
-    public void notifyObservers() {
-        String message = "MainMenu : Something changed -> Notifying observers";
-        Logger.log( message );
-        this.getSceneController().update( this, message );
-        super.notifyObservers();
+    public static Game selectGameFromArgument( String gameName ) throws IllegalArgumentException {
+        if ( gameMap.containsKey( gameName ) ) {
+            return gameMap.get( gameName );
+        }
+        else {
+            throw new IllegalArgumentException( "Game is not registered in MainMenu." );
+        }
     }
 
     @Override
     public void notifyObservers( Object arg ) {
-        Logger.log( arg.toString() );
-        this.getSceneController().update( this, "Button clicked" );
+        this.setChanged();
         super.notifyObservers( arg );
+    }
+
+    void notifyObservers( ActionEvent actionEvent ) {
+        if ( actionEvent.getSource() instanceof Button ) {
+            Button button = (Button) actionEvent.getSource();
+            this.setChanged();
+            super.notifyObservers( button );
+        }
+        else {
+            this.setChanged();
+            super.notifyObservers( actionEvent );
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "common.MainMenu";
     }
 }
