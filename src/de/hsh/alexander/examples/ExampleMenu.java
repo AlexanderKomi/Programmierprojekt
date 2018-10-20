@@ -1,7 +1,7 @@
 package de.hsh.alexander.examples;
 
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.engine.game.MainMenu;
+import de.hsh.alexander.engine.game.Menu;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -9,17 +9,17 @@ import javafx.scene.text.Text;
 
 import java.util.Observer;
 
-public class ExampleMainMenu extends MainMenu {
+public class ExampleMenu extends Menu {
 
-    ExampleMainMenu( Observer sceneController, Game[] games ) {
+    ExampleMenu( Observer sceneController, Game[] games ) {
         super( sceneController, games );
     }
 
     @Override
-    protected Pane initScene( Game[] games ) {
+    protected Pane initScene() {
         BorderPane bp = new BorderPane();
         bp.setPrefSize( 400, 300 );
-        Text text = new Text( "MainMenu" );
+        Text text = new Text( "Menu" );
         bp.setTop( text );
         Button startGame = new Button( "Start Game" );
         startGame.setOnAction( this::notifyObservers );
@@ -34,6 +34,6 @@ public class ExampleMainMenu extends MainMenu {
 
     @Override
     public String toString() {
-        return "de.hsh.alexander.ExampleMainMenu.toString()";
+        return "de.hsh.alexander.ExampleMenu.toString()";
     }
 }

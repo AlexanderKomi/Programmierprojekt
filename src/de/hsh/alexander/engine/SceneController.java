@@ -1,18 +1,18 @@
 package de.hsh.alexander.engine;
 
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.engine.game.MainMenu;
+import de.hsh.alexander.engine.game.Menu;
 import javafx.scene.Scene;
 
 class SceneController {
 
-    private Scene    scene;
-    private MainMenu mainMenu;
-    private Game[]   games; // Tracks all the games
+    private Scene  scene;
+    private Menu   menu;
+    private Game[] games; // Tracks all the games
 
-    void configMainMenu( MainMenu mainMenu ) {
-        this.mainMenu = mainMenu;
-        this.scene = new Scene( this.mainMenu.getPane() );
+    void configMainMenu( Menu menu ) {
+        this.menu = menu;
+        this.scene = new Scene( this.menu.getPane() );
     }
 
     void addGames( Game... games ) {
@@ -22,8 +22,8 @@ class SceneController {
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
 
-    MainMenu getMainMenu() {
-        return mainMenu;
+    Menu getMenu() {
+        return menu;
     }
 
     Scene getScene() {

@@ -2,7 +2,7 @@ package common;
 
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.engine.game.MainMenu;
+import de.hsh.alexander.engine.game.Menu;
 import de.hsh.alexander.game.PacManCoop;
 import de.hsh.alexander.util.Logger;
 import javafx.stage.Stage;
@@ -12,9 +12,8 @@ import java.util.Observer;
 
 public class GameContainer extends FXGameContainer {
 
-    public static final double window_width  = 400.0;
-    public static final double window_height = 400.0;
-
+    static final double window_width  = 400.0;
+    static final double window_height = 400.0;
 
     @Override
     protected Stage configWindow( Stage primaryStage ) {
@@ -25,7 +24,7 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    protected MainMenu configMainMenu( Observer sceneController, Game[] games ) {
+    protected Menu configMainMenu( Observer sceneController, Game[] games ) {
         return new common.MainMenu( sceneController, games );
     }
 
@@ -45,8 +44,9 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    public void update( MainMenu mainMenu, Object arg ) {
-        Logger.log( "MainMenu : " + arg.toString() );
+    public void update( Menu menu, Object arg ) {
+
+        Logger.log( "Menu : " + arg.toString() );
     }
 
     @Override

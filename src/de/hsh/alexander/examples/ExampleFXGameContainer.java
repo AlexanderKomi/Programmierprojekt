@@ -2,7 +2,7 @@ package de.hsh.alexander.examples;
 
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.engine.game.MainMenu;
+import de.hsh.alexander.engine.game.Menu;
 import de.hsh.alexander.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -57,8 +57,8 @@ public class ExampleFXGameContainer extends FXGameContainer {
      * @author Alexander Komischke
      * */
     @Override
-    protected MainMenu configMainMenu( Observer sceneController, Game[] games ) {
-        return new ExampleMainMenu( sceneController, games );
+    protected Menu configMainMenu( Observer sceneController, Game[] games ) {
+        return new ExampleMenu( sceneController, games );
     }
 
     //----------- Update
@@ -91,10 +91,10 @@ public class ExampleFXGameContainer extends FXGameContainer {
      * @author Alexander Komischke
      * */
     @Override
-    public void update( MainMenu mainMenu, Object arg ) {
+    public void update( Menu menu, Object arg ) {
         if ( arg instanceof String ) { // Send a nice message, if you are kind enough :)
             String message = (String) arg;
-            Logger.log( mainMenu.toString() + "\t\t" + message );
+            Logger.log( menu.toString() + "\t\t" + message );
         }
         else if ( arg instanceof ActionEvent ) { // Any ActionEvent triggered!
             ActionEvent a = (ActionEvent) arg;
@@ -106,7 +106,7 @@ public class ExampleFXGameContainer extends FXGameContainer {
             }
         }
         else {
-            Logger.log( mainMenu.toString() + "\t\t" + arg );
+            Logger.log( menu.toString() + "\t\t" + arg );
         }
 
     }

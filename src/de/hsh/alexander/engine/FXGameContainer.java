@@ -1,7 +1,7 @@
 package de.hsh.alexander.engine;
 
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.engine.game.MainMenu;
+import de.hsh.alexander.engine.game.Menu;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
@@ -32,6 +32,18 @@ public abstract class FXGameContainer
         this.setEngine( new Java2DEngine() );
         this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
     }
+
+    /**
+     * This is not tested !
+     *
+     * @author Alex
+     */
+    public FXGameContainer( Java2DEngine engine ) {
+        this.setEngine( engine );
+        this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
+    }
+
+
 
     /**
      * Launches the javafx Thread. When using an FX Container, apply every interaction, only after the FXThread isLaunched.
@@ -98,7 +110,9 @@ public abstract class FXGameContainer
      */
     protected abstract Stage configWindow( Stage primaryStage );
 
-    protected abstract MainMenu configMainMenu( Observer sceneController, Game[] games );
+    protected void showMainMenu() {
+        this.sceneController.getScene().rootProperty().setValue( this.sceneController.getMenu().getPane() );
+    }
 
     public abstract Game[] addGames( Observer sceneController );
 
@@ -123,7 +137,7 @@ public abstract class FXGameContainer
 
     public abstract void update( Game game, Object arg );
 
-    public abstract void update( MainMenu mainMenu, Object arg );
+    protected abstract Menu configMainMenu( Observer sceneController, Game[] games );
 
     public abstract void update( Observable observable, Object arg );
 
@@ -141,11 +155,9 @@ public abstract class FXGameContainer
         }
     }
 
-    protected void showMainMenu() {
-        this.sceneController.getScene().rootProperty().setValue( this.sceneController.getMainMenu().getPane() );
-    }
+    public abstract void update( Menu menu, Object arg );
 
-    protected void setMainMenuShown( MainMenu m ) {
+    protected void setMainMenuShown( Menu m ) {
         Pane pane = m.getPane();
         if ( pane != null ) {
             this.sceneController.getScene().rootProperty().setValue( pane );
