@@ -26,8 +26,9 @@ public class ExampleGame extends Game {
 
     /**
      * @return The pane getting drawn, when game should be shown.
+     *
      * @author Alexander Komischke
-     * */
+     */
     @Override
     public Pane initGameContentWindow() {
         Canvas c = new Canvas( 400, 300 );

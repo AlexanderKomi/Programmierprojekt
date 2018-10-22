@@ -33,6 +33,10 @@ public abstract class FXGameContainer
         this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
     }
 
+    public abstract Game[] addGames( Observer sceneController );
+
+    protected abstract Menu configMainMenu( Observer sceneController, Game[] games );
+
     /**
      * This is not tested !
      *
@@ -42,8 +46,6 @@ public abstract class FXGameContainer
         this.setEngine( engine );
         this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
     }
-
-
 
     /**
      * Launches the javafx Thread. When using an FX Container, apply every interaction, only after the FXThread isLaunched.
@@ -94,12 +96,6 @@ public abstract class FXGameContainer
         }
     }
 
-    public Java2DEngine getEngine() {return this.engine;}
-
-    protected void setEngine( Java2DEngine java2DEngine ) {
-        this.engine = java2DEngine;
-    }
-
     /**
      * Configures the whole window. Only call once...
      *
@@ -110,11 +106,21 @@ public abstract class FXGameContainer
      */
     protected abstract Stage configWindow( Stage primaryStage );
 
+    public abstract void update( Game game, Object arg );
+
+    public abstract void update( Observable observable, Object arg );
+
+    public abstract void update( Menu menu, Object arg );
+
     protected void showMainMenu() {
         this.sceneController.getScene().rootProperty().setValue( this.sceneController.getMenu().getPane() );
     }
 
-    public abstract Game[] addGames( Observer sceneController );
+    public Java2DEngine getEngine() {return this.engine;}
+
+    protected void setEngine( Java2DEngine java2DEngine ) {
+        this.engine = java2DEngine;
+    }
 
     /**
      * Stops the Container instance and the running engine.
@@ -135,14 +141,16 @@ public abstract class FXGameContainer
         this.running = running;
     }
 
-    public abstract void update( Game game, Object arg );
-
-    protected abstract Menu configMainMenu( Observer sceneController, Game[] games );
-
-    public abstract void update( Observable observable, Object arg );
+    private Game[] getGames() {
+        return this.sceneController.getGames();
+    }
 
     protected int getFPS() {
         return this.engine.getFps();
+    }
+
+    protected Stage getStage() {
+        return this.stage;
     }
 
     protected void setGameShown( Game g ) {
@@ -155,7 +163,7 @@ public abstract class FXGameContainer
         }
     }
 
-    public abstract void update( Menu menu, Object arg );
+    //-------------------------------------- GETTER & SETTER --------------------------------------
 
     protected void setMainMenuShown( Menu m ) {
         Pane pane = m.getPane();
@@ -167,12 +175,6 @@ public abstract class FXGameContainer
         }
     }
 
-    private Game[] getGames() {
-        return this.sceneController.getGames();
-    }
-
-    //-------------------------------------- GETTER & SETTER --------------------------------------
-
     protected void setGameShown( int index ) {
         Game game = this.sceneController.getGames()[ index ];
         Pane p    = game.getGameContentPane();
@@ -182,10 +184,6 @@ public abstract class FXGameContainer
         else {
             throw new NullPointerException( "Pane is null" );
         }
-    }
-
-    protected Stage getStage() {
-        return this.stage;
     }
 
 }

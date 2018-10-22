@@ -123,10 +123,6 @@ public class Java2DEngine extends Observable implements Runnable {
         }
     }
 
-    int getFps() {
-        return this.fps;
-    }
-
     /**
      * Calls CPU Idle and starts render process of the current gameContainer.<br>
      *
@@ -155,6 +151,10 @@ public class Java2DEngine extends Observable implements Runnable {
             }
         }
         return 0;
+    }
+
+    int getFps() {
+        return this.fps;
     }
 
     void setGameContainer( FXGameContainer fxgame ) {

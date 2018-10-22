@@ -27,7 +27,7 @@ public class ExampleFXGameContainer extends FXGameContainer {
 
     /**
      * @author Alexander Komischke
-     * */
+     */
     @Override
     public void startContainer() {
         launch();
@@ -45,17 +45,16 @@ public class ExampleFXGameContainer extends FXGameContainer {
 
     /**
      * @author Alexander Komischke
-     * */
+     */
     @Override
-    protected Stage configWindow( Stage primaryStage ) {
-        primaryStage.setTitle( "Example" );
-        primaryStage.setResizable( false );
-        return primaryStage;
+    public Game[] addGames( Observer sceneController ) {
+        ExampleGame e = new ExampleGame( sceneController );
+        return new Game[] { e };
     }
 
     /**
      * @author Alexander Komischke
-     * */
+     */
     @Override
     protected Menu configMainMenu( Observer sceneController, Game[] games ) {
         return new ExampleMenu( sceneController, games );
@@ -65,16 +64,17 @@ public class ExampleFXGameContainer extends FXGameContainer {
 
     /**
      * @author Alexander Komischke
-     * */
+     */
     @Override
-    public Game[] addGames( Observer sceneController ) {
-        ExampleGame e = new ExampleGame( sceneController );
-        return new Game[] { e };
+    protected Stage configWindow( Stage primaryStage ) {
+        primaryStage.setTitle( "Example" );
+        primaryStage.setResizable( false );
+        return primaryStage;
     }
 
     /**
      * @author Alexander Komischke
-     * */
+     */
     @Override
     public void update( Game game, Object arg ) {
         if ( arg instanceof MouseEvent ) {
@@ -89,7 +89,14 @@ public class ExampleFXGameContainer extends FXGameContainer {
 
     /**
      * @author Alexander Komischke
-     * */
+     */
+    @Override
+    public void update( Observable o, Object arg ) {
+    }
+
+    /**
+     * @author Alexander Komischke
+     */
     @Override
     public void update( Menu menu, Object arg ) {
         if ( arg instanceof String ) { // Send a nice message, if you are kind enough :)
@@ -109,13 +116,6 @@ public class ExampleFXGameContainer extends FXGameContainer {
             Logger.log( menu.toString() + "\t\t" + arg );
         }
 
-    }
-
-    /**
-     * @author Alexander Komischke
-     * */
-    @Override
-    public void update( Observable o, Object arg ) {
     }
 
 

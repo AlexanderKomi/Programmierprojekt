@@ -3,27 +3,48 @@ package de.hsh.alexander.util;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+/**
+ * This class can be used as a tool for any operations regarding the path of files.
+ *
+ * @author Alexander Komischke
+ */
 public class Path {
 
-    public static void test() {
-        String execLoc = getExecutionLocation();
-        Logger.log( "Files from : " + execLoc, "\t", getAllFileNames( execLoc ), "" );
-    }
-
-    public static String[] getFileNames( String path ) {
-        File   file  = new File( path );
-        File[] files = file.listFiles();
-        if ( files != null ) {
-            String[] result = new String[ files.length ];
-            for ( int i = 0 ; i < result.length ; i++ ) {
-                result[ i ] = files[ i ].getName();
+    public static void main( String[] args ) {
+        ArrayList<String> argsList = new ArrayList<>( Arrays.asList( args ) );
+        if ( argsList.size() > 0 ) {
+            boolean all = false;
+            if ( argsList.remove( "--all" ) || argsList.remove( "-a" ) ) {
+                all = true;
             }
-            return result;
+
+            for ( String a : argsList ) {
+                String temp = getExecutionLocation() + a + "/";
+                if ( all ) {
+                    Logger.log( "All Files from : " + temp, "\t", getAllFileNames( temp ), "" );
+                }
+                else {
+                    Logger.log( "Files from : " + temp, "\t", getFileNames( temp ), "" );
+                }
+            }
         }
-        return new String[] { "" };
+        else {
+            listFiles();
+        }
+
     }
 
+    private static void test() {
+    }
+
+    /**
+     * Lists all files and files in dirs and so on... from a given path.
+     * Its implemented by using recursion, so be careful.
+     *
+     * @author Alexander Komischke
+     */
     public static String[] getAllFileNames( String path ) {
         String[] s = getFileNames( path );
         if ( s == null ) {
@@ -51,9 +72,13 @@ public class Path {
 
         }
 
-        return res.toArray( new String[ res.size() ] );
+        return res.toArray( new String[ 0 ] );
     }
 
+    /**Concats an amount of tabs together.
+     * @param amount the amount of tabs needed.
+     * @return Amount times tabs concatenated together.
+     * */
     private static String addTabs( int amount ) {
         StringBuilder s = new StringBuilder();
         for ( int i = 0 ; i < amount ; i++ ) {
@@ -62,17 +87,70 @@ public class Path {
         return s.toString();
     }
 
-    public static String getExecutionLocation() {
-        return getClassLocationAsURL().getPath();
+    public static URL getClassLocation( Class c ) {
+        return c.getProtectionDomain().getCodeSource().getLocation();
     }
 
-    public static URL getClassLocationAsURL() {
-        return Path.class.getProtectionDomain().getCodeSource().getLocation();
-    }
-
+    /**
+     * Prints all file names in the given path.
+     *
+     * @param url
+     *         Url to the directory
+     *
+     * @return A String Array, each index represents a file.
+     *
+     * @author Alexander Komischke
+     */
     public static String[] getFileNames( URL url ) {
-        return getFileNames( getPath( url ) );
+        return getFileNames( url.getPath() );
     }
 
-    public static String getPath( URL url ) {return url.getPath();}
+    /**
+     * Prints all file names in the given path.
+     *
+     * @param path
+     *         Path of the directory
+     *
+     * @return A String Array, each index represents a file.
+     *
+     * @author Alexander Komischke
+     */
+    public static String[] getFileNames( String path ) {
+        if ( !(path).endsWith( "/" ) ) {
+            path += "/";
+        }
+        File file = new File( path );
+        if ( !file.exists() ) { // Path does not exist.
+            Logger.log( "File does not exists : " + path );
+            return new String[] { "" };
+        }
+        File[] files = file.listFiles();
+        if ( files == null ) { // file-path does not contain any files.
+            return new String[] { "" };
+        }
+        String[] result = new String[ files.length ];
+        for ( int i = 0 ; i < result.length ; i++ ) {
+            result[ i ] = files[ i ].getName();
+        }
+        return result;
+    }
+
+    public static String listFiles() {
+        return listFiles( getExecutionLocation() );
+    }
+
+    public static String listFiles( String directory ) {
+        return Logger.log( "Files from : " + directory, "\t", getFileNames( directory ), "" );
+    }
+
+    /**
+     * Gets the execution location of the main program.
+     *
+     * @return a String representation.
+     *
+     * @author Alexander Komischke
+     */
+    public static String getExecutionLocation() {
+        return getClassLocation( Path.class ).getPath();
+    }
 }
