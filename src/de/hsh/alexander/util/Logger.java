@@ -17,15 +17,27 @@ public class Logger {
         return log( o.toString() + separator + argument.toString() );
     }
 
+    public static String log( Object o ) {
+        return log( o.toString() );
+    }
+
     public static String log( String message ) {
+        String new_message = "";
         if ( Configuration.shouldLog() ) {
             Calendar         calendar         = new GregorianCalendar();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyy.mm.dd HH:mm:ss" );
-            String           new_message      = simpleDateFormat.format( calendar.getTime() ) + separator + message;
+            new_message = simpleDateFormat.format( calendar.getTime() ) + separator + message;
             System.out.println( new_message );
-            return new_message;
         }
-        return "";
+        return new_message;
+    }
+
+    public static String log( String[] messages ) {
+        StringBuilder s = new StringBuilder();
+        for ( String message : messages ) {
+            s.append( log( message ) );
+        }
+        return s.toString();
     }
 
 }
