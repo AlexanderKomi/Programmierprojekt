@@ -5,6 +5,7 @@ import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.Menu;
 import de.hsh.alexander.game.PacManCoop;
 import de.hsh.alexander.util.Logger;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.util.Observable;
@@ -43,15 +44,44 @@ public class GameContainer extends FXGameContainer {
         }
     }
 
+    /**
+     * Cast observables to the correct type, and call the correct method.<br>
+     * Why?<br>
+     * When "notifyObservers()" is called, the argument is always casted to observable.<br>
+     * This is why this method is necessary.<br>
+     *
+     * @param o
+     *         The observable notifying this observer
+     * @param arg
+     *         An object argument from the observable o.
+     *
+     * @author Alexander Komischke
+     */
     @Override
-    public void update( Menu menu, Object arg ) {
-
-        Logger.log( "Menu : " + arg.toString() );
+    public void update( Observable o, Object arg ) {
+        if ( o instanceof Menu ) {
+            update( (Menu) o, arg );
+        }
+        else if ( o instanceof Game ) {
+            update( (Game) o, arg );
+        }
+        else {
+            Logger.log( o, arg );
+        }
     }
 
     @Override
-    public void update( Observable o, Object arg ) {
-        Logger.log( o, arg );
+    public void update( Menu menu, Object arg ) {
+        if ( arg instanceof Button ) {
+            Button button = (Button) arg;
+            if ( button.getText().equals( "Pacman" ) ) {
+                Logger.log( "Pacman-Game selected from Main Menu." );
+                this.setGameShown( 0 );
+            }
+        }
+        else {
+            Logger.log( "Menu : " + arg.toString() );
+        }
     }
 
     @Override

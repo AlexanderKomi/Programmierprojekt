@@ -1,9 +1,7 @@
 package de.hsh.alexander.game;
 
 import de.hsh.alexander.engine.game.Game;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 
 import java.util.Observer;
 
@@ -17,9 +15,13 @@ public class PacManCoop extends Game {
 
     @Override
     public Pane initGameContentWindow() {
-        BorderPane bp = new BorderPane();
-        bp.setCenter( new Text( "Placeholder" ) );
-        return bp;
+        initRessources();
+        gameMenu = new GameMenu();
+        return gameMenu.getMenuPane();
+    }
+
+    private void initRessources() {
+
     }
 
 }
