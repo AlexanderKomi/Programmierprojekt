@@ -7,7 +7,7 @@ import java.util.Observer;
 
 public class PacManCoop extends Game {
 
-    private GameMenu gameMenu;
+    private PacManMenu gameMenu;
 
     public PacManCoop( Observer o ) {
         super( o, "Pacman Coop" );
@@ -16,7 +16,7 @@ public class PacManCoop extends Game {
     @Override
     public Pane initGameContentWindow() {
         initRessources();
-        gameMenu = new GameMenu();
+        gameMenu = new PacManMenu();
         return gameMenu.getMenuPane();
     }
 
