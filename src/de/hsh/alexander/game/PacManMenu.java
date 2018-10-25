@@ -9,16 +9,35 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class PacManMenu extends GameMenu {
 
-    protected BorderPane initMenuPane() {
+    protected Pane initMenuPane() {
+        /*
+        try {
+            String location = "GameMenu.fxml";
+            Pane   p = FXMLLoader.load( getClass().getResource( location ) );
+            return p;
+        }
+        catch ( IOException e ) {
+            e.printStackTrace();
+        }
+        */
+
         BorderPane bp = new BorderPane();
         bp.setTop( createCenterBox() );
         bp.setCenter( createTopBox() );
         bp.setBottom( createBottomBox() );
         return bp;
+    }
+
+    public void initialize() {
+
     }
 
     private Node createCenterBox() {
@@ -58,4 +77,16 @@ public class PacManMenu extends GameMenu {
         return bottomBox;
     }
 
+    @Override
+    public void initialize( URL location, ResourceBundle resources ) {
+        /*
+        Logger.log("initialized");
+        try {
+            this.setMenuPane( FXMLLoader.load( getClass().getResource( "GameMenu.fxml" ) ));
+        }
+        catch ( IOException e ) {
+            e.printStackTrace();
+        }
+        */
+    }
 }
