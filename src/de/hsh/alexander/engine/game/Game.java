@@ -6,12 +6,12 @@ import java.util.Observer;
 
 public abstract class Game extends java.util.Observable implements GameInterface {
 
-    private final String name;
-    private       Pane   gameContentPane;
+    public final String name;
+    private      Pane   gameContentPane;
 
     protected Game( Observer o, String name ) {
-        this.addObserver( o );
         this.name = name;
+        this.addObserver( o );
         this.gameContentPane = initGameContentWindow();
     }
 

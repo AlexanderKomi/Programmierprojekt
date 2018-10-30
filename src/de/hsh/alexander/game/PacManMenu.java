@@ -1,6 +1,7 @@
 package de.hsh.alexander.game;
 
 import de.hsh.alexander.engine.game.GameMenu;
+import de.hsh.alexander.util.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -59,6 +60,9 @@ public class PacManMenu extends GameMenu {
     private Node createBottomBox() {
 
         Button backButton = new Button( "zurück" );
+        backButton.setOnAction( back -> {
+            Logger.log( "Back button pressed" );
+        } );
 
         HBox backButtonBox = new HBox( backButton );
         backButtonBox.setAlignment( Pos.CENTER );
