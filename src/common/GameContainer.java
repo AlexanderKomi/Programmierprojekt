@@ -1,5 +1,6 @@
 package common;
 
+import common.config.WindowConfig;
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.Menu;
@@ -13,13 +14,10 @@ import java.util.Observer;
 
 public class GameContainer extends FXGameContainer {
 
-    static final double window_width  = 400.0;
-    static final double window_height = 400.0;
-
     @Override
     protected Stage configWindow( Stage primaryStage ) {
-        primaryStage.setX( window_width );
-        primaryStage.setY( window_height );
+        primaryStage.setX( WindowConfig.window_width );
+        primaryStage.setY( WindowConfig.window_height );
         primaryStage.setResizable( false );
         return primaryStage;
     }
