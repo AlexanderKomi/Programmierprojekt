@@ -39,7 +39,10 @@ public class GameContainer extends FXGameContainer {
         return new Game[] {
                 new PacManCoop( sceneController ),
                 new AmirsGame( sceneController ),
-
+                new RAM( sceneController ),
+                new DennisGame( sceneController ),
+                new Leertastenklatsche( sceneController ),
+                new KevinGame( sceneController )
                 };
     }
 
@@ -122,6 +125,28 @@ public class GameContainer extends FXGameContainer {
                 this.getStage().setTitle( "PacMan Coop" );
                 this.setGameShown( 1 );
             }
+            else if ( button.getText().equals( "Kevin" ) ) {
+                Logger.log( "Kevin-Game selected from Main Menu." );
+                this.getStage().setTitle( "PacMan Coop" );
+                this.setGameShown( 5 );
+            }
+            else if ( button.getText().equals( "Daniel" ) ) {
+                Logger.log( "Daniel-Game selected from Main Menu." );
+                this.getStage().setTitle( "PacMan Coop" );
+                this.setGameShown( 2 );
+            }
+            else if ( button.getText().equals( "Julian" ) ) {
+                Logger.log( "Julian-Game selected from Main Menu." );
+                this.getStage().setTitle( "PacMan Coop" );
+                this.setGameShown( 4 );
+            }
+            else if ( button.getText().equals( "Dennis" ) ) {
+                Logger.log( "Dennis-Game selected from Main Menu." );
+                this.getStage().setTitle( "PacMan Coop" );
+                this.setGameShown( 3 );
+            }
+
+
         }
         else {
             Logger.log( "Menu : " + arg.toString() );

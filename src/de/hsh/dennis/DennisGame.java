@@ -7,12 +7,12 @@ import java.util.Observer;
 
 public class DennisGame extends Game {
 
-    protected DennisGame( Observer o ) {
+    public DennisGame( Observer o ) {
         super( o, "Dennis" );
     }
 
     @Override
     public Pane initGameContentWindow( Observer observer ) {
-        return null;
+        return new Pane();
     }
 }

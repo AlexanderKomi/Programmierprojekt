@@ -6,7 +6,7 @@ import java.util.Observer;
 
 public class Leertastenklatsche extends Game {
 
-    protected Leertastenklatsche( Observer o ) {
+    public Leertastenklatsche( Observer o ) {
         super( o, "Julian" );
     }
 
