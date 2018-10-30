@@ -3,9 +3,11 @@ package common;
 import common.config.WindowConfig;
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.engine.game.Menu;
 import de.hsh.alexander.game.PacManCoop;
 import de.hsh.alexander.util.Logger;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -38,8 +40,18 @@ public class GameContainer extends FXGameContainer {
     public void update( Game game, Object arg ) {
         Logger.log( game, arg );
         if ( game instanceof PacManCoop ) {
-            this.getStage().setTitle( "PacMan Coop" );
+            if ( arg instanceof ActionEvent ) {
+                ActionEvent event = (ActionEvent) arg;
+                if ( event.getSource() instanceof Button ) {
+                    Button button = (Button) event.getSource();
+                    if ( button.getText().equals( "zurück" ) ) {
+                        Logger.log( arg );
+                        this.showMainMenu();
+                    }
+                }
+            }
         }
+        Logger.log( "Arg : ", arg );
     }
 
     /**
@@ -63,7 +75,11 @@ public class GameContainer extends FXGameContainer {
         else if ( o instanceof Game ) {
             update( (Game) o, arg );
         }
+        else if ( o instanceof GameMenu ) {
+            update( (GameMenu) o, arg );
+        }
         else {
+            System.out.println( "Observable" );
             Logger.log( o, arg );
         }
     }
@@ -74,11 +90,29 @@ public class GameContainer extends FXGameContainer {
             Button button = (Button) arg;
             if ( button.getText().equals( "Pacman" ) ) {
                 Logger.log( "Pacman-Game selected from Main Menu." );
+                this.getStage().setTitle( "PacMan Coop" );
                 this.setGameShown( 0 );
             }
         }
         else {
             Logger.log( "Menu : " + arg.toString() );
+        }
+    }
+
+    @Override
+    public void update( GameMenu gameMenu, Object arg ) {
+        if ( arg instanceof ActionEvent ) {
+            ActionEvent event = (ActionEvent) arg;
+            if ( event.getSource() instanceof Button ) {
+                Button button = (Button) event.getSource();
+                if ( button.getText().equals( "zurück" ) ) {
+                    Logger.log( arg );
+                    this.showMainMenu();
+                }
+            }
+        }
+        else {
+            Logger.log( "GameMenu : " + arg.toString() );
         }
     }
 
