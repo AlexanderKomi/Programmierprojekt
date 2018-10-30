@@ -1,7 +1,6 @@
 package de.hsh.alexander.engine;
 
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.engine.game.Games;
 import de.hsh.alexander.engine.game.Menu;
 import javafx.application.Platform;
@@ -84,11 +83,9 @@ public abstract class FXGameContainer
      */
     protected abstract Stage configWindow( Stage primaryStage );
 
-    protected void showMainMenu() {
+    public void showMainMenu() {
         this.gameSceneController.showMainMenu();
     }
-
-    public abstract void update( Game game, Object arg );
 
     public abstract void update( Observable observable, Object arg );
 
@@ -103,11 +100,11 @@ public abstract class FXGameContainer
         this.getEngine().setRunning( false );
     }
 
-    public abstract void update( Menu menu, Object arg );
+    public Stage getStage() {
+        return this.stage;
+    }
 
-    public abstract void update( GameMenu gameMenu, Object arg );
-
-    protected void setGameShown( Game g ) {
+    public void setGameShown( Game g ) {
         Pane p = g.getGameContentPane();
         if ( p != null ) {
             this.gameSceneController.getScene().rootProperty().setValue( p );
@@ -115,10 +112,6 @@ public abstract class FXGameContainer
         else {
             throw new NullPointerException( "Pane is null" );
         }
-    }
-
-    protected Stage getStage() {
-        return this.stage;
     }
 
     protected void setMainMenuShown( Menu m ) {
