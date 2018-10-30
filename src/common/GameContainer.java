@@ -37,8 +37,10 @@ public class GameContainer extends FXGameContainer {
     @Override
     public Game[] addGames( Observer sceneController ) {
         return new Game[] {
-                new PacManCoop( sceneController )
-        };
+                new PacManCoop( sceneController ),
+                new AmirsGame( sceneController ),
+
+                };
     }
 
     @Override
@@ -114,6 +116,11 @@ public class GameContainer extends FXGameContainer {
                 Logger.log( "Pacman-Game selected from Main Menu." );
                 this.getStage().setTitle( "PacMan Coop" );
                 this.setGameShown( 0 );
+            }
+            else if ( button.getText().equals( "Amir" ) ) {
+                Logger.log( "Amir-Game selected from Main Menu." );
+                this.getStage().setTitle( "PacMan Coop" );
+                this.setGameShown( 1 );
             }
         }
         else {

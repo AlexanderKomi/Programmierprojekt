@@ -7,8 +7,8 @@ import java.util.Observer;
 
 public class DennisGame extends Game {
 
-    protected DennisGame( Observer o, String name ) {
-        super( o, name );
+    protected DennisGame( Observer o ) {
+        super( o, "Dennis" );
     }
 
     @Override

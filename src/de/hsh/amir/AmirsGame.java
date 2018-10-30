@@ -10,8 +10,8 @@ import java.util.Observer;
  */
 public class AmirsGame extends Game {
 
-    protected AmirsGame( Observer o, String name ) {
-        super( o, name );
+    public AmirsGame( Observer o ) {
+        super( o, "Amir" );
     }
 
     @Override

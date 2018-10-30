@@ -6,8 +6,8 @@ import javafx.scene.layout.Pane;
 import java.util.Observer;
 
 public class RAM extends Game {
-    protected RAM( Observer o, String name ) {
-        super( o, name );
+    protected RAM( Observer o ) {
+        super( o, "Daniel" );
     }
 
     @Override

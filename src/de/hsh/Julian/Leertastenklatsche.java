@@ -6,8 +6,8 @@ import java.util.Observer;
 
 public class Leertastenklatsche extends Game {
 
-    protected Leertastenklatsche(Observer o, String name) {
-        super(o, name);
+    protected Leertastenklatsche( Observer o ) {
+        super( o, "Julian" );
     }
 
     @Override
