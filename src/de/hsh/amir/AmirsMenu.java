@@ -11,6 +11,7 @@ public class AmirsMenu extends GameMenu {
 
     public AmirsMenu( Observer observer ) {
         super( observer );
+
     }
 
     @Override

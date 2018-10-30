@@ -21,7 +21,7 @@ public class ExampleMenu extends Menu {
         bp.setPrefSize( 400, 300 );
         Text text = new Text( "Menu" );
         bp.setTop( text );
-        Button startGame = new Button( "Start Game" );
+        Button startGame = new Button( "Start AmirsGame" );
         startGame.setOnAction( this::notifyObservers );
         bp.setCenter( startGame );
         return bp;

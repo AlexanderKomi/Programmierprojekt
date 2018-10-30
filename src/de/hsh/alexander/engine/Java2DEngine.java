@@ -28,7 +28,7 @@ public class Java2DEngine extends Observable implements Runnable {
     /**
      * Must be called before start().
      * <p>
-     * Initializes the Game Thread, with an instance of this class.
+     * Initializes the AmirsGame Thread, with an instance of this class.
      */
     void init() {
         this.gameThread = new Thread( this, "Java 2D Engine" );

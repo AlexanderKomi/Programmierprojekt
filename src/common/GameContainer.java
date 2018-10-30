@@ -39,10 +39,7 @@ public class GameContainer extends FXGameContainer {
         return new Game[] {
                 new PacManCoop( sceneController ),
                 new AmirsGame( sceneController ),
-                new RAM( sceneController ),
-                new DennisGame( sceneController ),
-                new Leertastenklatsche( sceneController ),
-                new KevinGame( sceneController )
+
                 };
     }
 
@@ -115,40 +112,16 @@ public class GameContainer extends FXGameContainer {
     public void update( Menu menu, Object arg ) {
         if ( arg instanceof Button ) {
             Button button = (Button) arg;
-            switch ( button.getText() ) {
-                case "Pacman":
-                    Logger.log( "Pacman-Game selected from Main Menu." );
-                    this.getStage().setTitle( "PacMan Coop" );
-                    this.setGameShown( 0 );
-                    break;
-                case "Amir":
-                    Logger.log( "Amir-Game selected from Main Menu." );
-                    this.getStage().setTitle( "Amir" );
-                    this.setGameShown( 1 );
-                    break;
-                case "Kevin":
-                    Logger.log( "Kevin-Game selected from Main Menu." );
-                    this.getStage().setTitle( "Kevin" );
-                    this.setGameShown( 5 );
-                    break;
-                case "Daniel":
-                    Logger.log( "Daniel-Game selected from Main Menu." );
-                    this.getStage().setTitle( "Daniel" );
-                    this.setGameShown( 2 );
-                    break;
-                case "Julian":
-                    Logger.log( "Julian-Game selected from Main Menu." );
-                    this.getStage().setTitle( "Julian" );
-                    this.setGameShown( 4 );
-                    break;
-                case "Dennis":
-                    Logger.log( "Dennis-Game selected from Main Menu." );
-                    this.getStage().setTitle( "Dennis" );
-                    this.setGameShown( 3 );
-                    break;
+            if ( button.getText().equals( "Pacman" ) ) {
+                Logger.log( "Pacman-AmirsGame selected from Main Menu." );
+                this.getStage().setTitle( "PacMan Coop" );
+                this.setGameShown( 0 );
             }
-
-
+            else if ( button.getText().equals( "Amir" ) ) {
+                Logger.log( "Amir-Game selected from Main Menu." );
+                this.getStage().setTitle( "PacMan Coop" );
+                this.setGameShown( 1 );
+            }
         }
         else {
             Logger.log( "Menu : " + arg.toString() );
