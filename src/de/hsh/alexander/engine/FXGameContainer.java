@@ -2,6 +2,7 @@ package de.hsh.alexander.engine;
 
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.GameMenu;
+import de.hsh.alexander.engine.game.Games;
 import de.hsh.alexander.engine.game.Menu;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
@@ -19,14 +20,12 @@ public abstract class FXGameContainer
         extends Container implements Observer {
 
 
-    private        Stage           stage;
-    private        SceneController sceneController       = new SceneController();
+    private Stage           stage;
+    private SceneController sceneController;
     //Engine properties
 
     public FXGameContainer() {
         super();
-        //this.setEngine( new Java2DEngine() );
-        //this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
     }
 
     /**
@@ -58,7 +57,8 @@ public abstract class FXGameContainer
     }
 
     private void initSceneController() {
-        this.sceneController.addGames( addGames( this ) );
+        this.sceneController = new SceneController();
+        this.sceneController.addGames( createGames( this ) );
         this.sceneController.configMainMenu( configMainMenu( this, this.getGames() ) );
     }
 
@@ -82,11 +82,11 @@ public abstract class FXGameContainer
      */
     protected abstract Stage configWindow( Stage primaryStage );
 
-    public abstract Game[] addGames( Observer sceneController );
+    public abstract Games createGames( Observer sceneController );
 
-    protected abstract Menu configMainMenu( Observer sceneController, Game[] games );
+    protected abstract Menu configMainMenu( Observer sceneController, Games games );
 
-    private Game[] getGames() {
+    private Games getGames() {
         return this.sceneController.getGames();
     }
 

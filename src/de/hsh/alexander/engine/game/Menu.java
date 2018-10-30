@@ -12,10 +12,10 @@ public abstract class Menu extends Observable {
     protected ArrayList<String> gameNames = new ArrayList<>();
     private   Pane              pane;
 
-    public Menu( Observer sceneController, Game[] games ) {
-        for ( Game g : games ) {
+    public Menu( Observer sceneController, Games games ) {
+        games.forEach( g -> {
             gameNames.add( g.getName() );
-        }
+        } );
         this.pane = initScene();
         this.addObserver( sceneController );
     }

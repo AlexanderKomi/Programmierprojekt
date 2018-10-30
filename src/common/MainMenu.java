@@ -1,7 +1,7 @@
 package common;
 
 import common.config.WindowConfig;
-import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.engine.game.Games;
 import de.hsh.alexander.engine.game.Menu;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -18,7 +18,7 @@ import java.util.Observer;
  */
 public class MainMenu extends Menu {
 
-    MainMenu( Observer sceneController, Game[] games ) {
+    MainMenu( Observer sceneController, Games games ) {
         super( sceneController, games );
     }
 

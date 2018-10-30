@@ -1,23 +1,33 @@
 package de.hsh.alexander.engine;
 
 import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.engine.game.Games;
 import de.hsh.alexander.engine.game.Menu;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class SceneController {
 
-    private Scene  scene;
-    private Menu   menu;
-    private Game[] games; // Tracks all the games
+    private Scene scene;
+    private Menu  menu;
+    private Games games = new Games(); // Tracks all the games
+
+    SceneController() {}
+
+    /*
+    SceneController(Games games, Menu menu){
+        this.games = games;
+        this.menu = menu;
+    }
+    */
 
     void configMainMenu( Menu menu ) {
         this.menu = menu;
         this.scene = new Scene( this.menu.getPane() );
     }
 
-    void addGames( Game... games ) {
-        this.games = games;
+    void addGames( Games games ) {
+        this.games.addAll( games );
     }
 
     void showMainMenu() {
@@ -26,7 +36,7 @@ public class SceneController {
     }
 
     void showGame( int index ) {
-        Game game = this.getGames()[ index ];
+        Game game = this.getGames().get( index );
         Pane p    = game.getGameContentPane();
         if ( p != null ) {
             this.menu.logChildren();
@@ -39,7 +49,7 @@ public class SceneController {
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
-    public Game[] getGames() {
+    public Games getGames() {
         return games;
     }
 

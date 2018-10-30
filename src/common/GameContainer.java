@@ -4,6 +4,7 @@ import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.GameMenu;
+import de.hsh.alexander.engine.game.Games;
 import de.hsh.alexander.engine.game.Menu;
 import de.hsh.alexander.game.PacManCoop;
 import de.hsh.alexander.util.Logger;
@@ -27,19 +28,19 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    public Game[] addGames( Observer sceneController ) {
-        return new Game[] {
+    public Games createGames( Observer sceneController ) {
+        return new Games(
                 new PacManCoop( sceneController ),
                 new AmirsGame( sceneController ),
                 new RAM( sceneController ),
                 new KevinGame( sceneController ),
                 new Leertastenklatsche( sceneController ),
                 new DennisGame( sceneController )
-        };
+        );
     }
 
     @Override
-    protected Menu configMainMenu( Observer sceneController, Game[] games ) {
+    protected Menu configMainMenu( Observer sceneController, Games games ) {
         return new common.MainMenu( sceneController, games );
     }
 
@@ -128,9 +129,9 @@ public class GameContainer extends FXGameContainer {
         if ( arg instanceof Button ) {
 
             Button button = (Button) arg;
-            Game[] games  = this.getSceneController().getGames();
-            for ( int i = 0 ; i < games.length ; i++ ) {
-                String gameName = games[ i ].getName();
+            Games  games  = this.getSceneController().getGames();
+            for ( int i = 0 ; i < games.size() ; i++ ) {
+                String gameName = games.get( i ).getName();
                 if ( button.getText().equals( gameName ) ) {
                     Logger.log( gameName + " Game selected from Main Menu." );
                     this.getStage().setTitle( gameName );
