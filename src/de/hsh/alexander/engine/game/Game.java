@@ -27,6 +27,18 @@ public abstract class Game extends java.util.Observable {
         return false;
     }
 
+    @Override
+    public void notifyObservers() {
+        this.setChanged();
+        super.notifyObservers();
+    }
+
+    @Override
+    public void notifyObservers( Object arg ) {
+        this.setChanged();
+        super.notifyObservers( arg );
+    }
+
     // ----------------------------------- GETTER & SETTER  -----------------------------------
 
     public String getName() {

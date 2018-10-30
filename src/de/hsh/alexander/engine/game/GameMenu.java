@@ -15,6 +15,18 @@ public abstract class GameMenu extends Observable implements Initializable {
         this.addObserver( observer );
     }
 
+    @Override
+    public void notifyObservers() {
+        this.setChanged();
+        super.notifyObservers();
+    }
+
+    @Override
+    public void notifyObservers( Object arg ) {
+        this.setChanged();
+        super.notifyObservers( arg );
+    }
+
     protected abstract Pane initMenuPane();
 
     public Pane getMenuPane() {

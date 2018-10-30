@@ -1,7 +1,5 @@
 package de.hsh.alexander.engine;
 
-import de.hsh.alexander.examples.ExampleFXGameContainer;
-
 import java.util.Observable;
 
 /**
@@ -12,9 +10,6 @@ import java.util.Observable;
  *
  * @author Alexander Komischke
  * @see GameContainerInterface
- * <p>
- * Example classes:
- * @see ExampleFXGameContainer
  */
 public class Java2DEngine extends Observable implements Runnable {
 

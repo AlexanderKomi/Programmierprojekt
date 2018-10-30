@@ -60,10 +60,7 @@ public class PacManMenu extends GameMenu {
     private Node createBottomBox() {
 
         Button backButton = new Button( "zurück" );
-        backButton.setOnAction( e -> {
-            this.setChanged();
-            this.notifyObservers( e );
-        } );
+        backButton.setOnAction( this::notifyObservers );
 
         HBox backButtonBox = new HBox( backButton );
         backButtonBox.setAlignment( Pos.CENTER );
