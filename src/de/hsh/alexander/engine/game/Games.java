@@ -2,7 +2,6 @@ package de.hsh.alexander.engine.game;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 public class Games extends ArrayList<Game> {
 
@@ -20,12 +19,18 @@ public class Games extends ArrayList<Game> {
         this.addAll( games );
     }
 
-    public final void addAll( Game... g ) {
-        Collections.addAll( this, g );
+    public Game get( String name ) {
+        return this.stream()
+                   .parallel()
+                   .filter( game -> game.getName().equals( name ) )
+                   .findFirst()
+                   .get();
     }
 
-    @Override
-    public Game get( int index ) {
-        return super.get( index );
+    public void addAll( Game... g ) {
+        for ( Game game : g ) {
+            this.add( game );
+        }
     }
+
 }

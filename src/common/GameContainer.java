@@ -103,7 +103,7 @@ public class GameContainer extends FXGameContainer {
             update( (MainMenu) menu, arg );
         }
         else {
-            Logger.log( menu, arg );
+            Logger.log( "Not a known menu : " + menu, arg );
         }
     }
 
@@ -128,16 +128,16 @@ public class GameContainer extends FXGameContainer {
 
         if ( arg instanceof Button ) {
 
-            Button button = (Button) arg;
-            Games  games  = this.getGames();
-            for ( int i = 0 ; i < games.size() ; i++ ) {
-                String gameName = games.get( i ).getName();
-                if ( button.getText().equals( gameName ) ) {
-                    Logger.log( gameName + " Game selected from Main Menu." );
-                    this.getStage().setTitle( gameName );
-                    this.setGameShown( i );
-                }
-            }
+            Button button   = (Button) arg;
+            String gameName = button.getText();
+            Games  games    = this.getGames();
+            Game   g        = games.get( gameName );
+            this.setGameShown( g );
+            this.getStage().setTitle( gameName );
+            Logger.log( "Game set : " + gameName );
+        }
+        else {
+            Logger.log( "Can not parse : update(MainMenu, Object)" );
         }
         Logger.log( menu, arg );
     }

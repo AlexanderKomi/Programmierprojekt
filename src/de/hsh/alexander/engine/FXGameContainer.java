@@ -44,7 +44,7 @@ public abstract class FXGameContainer
     }
 
     private void initSceneController() {
-        Games games = createGames( this );
+        this.setGames( createGames( this ) );
         this.gameSceneController = new GameSceneController();
         this.gameSceneController.setMenu( configMainMenu( this, games ) );
         this.gameSceneController.setScene( new Scene( this.gameSceneController.getMenu().getPane() ) );
@@ -86,10 +86,6 @@ public abstract class FXGameContainer
 
     protected void showMainMenu() {
         this.gameSceneController.showMainMenu();
-    }
-
-    public GameSceneController getGameSceneController() {
-        return gameSceneController;
     }
 
     public abstract void update( Game game, Object arg );
