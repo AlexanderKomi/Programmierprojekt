@@ -1,12 +1,16 @@
 package common;
 
 import common.config.WindowConfig;
+import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.engine.game.Menu;
 import de.hsh.alexander.game.PacManCoop;
 import de.hsh.alexander.util.Logger;
+import de.hsh.amir.AmirsGame;
+import de.hsh.daniel.RAM;
+import de.hsh.dennis.DennisGame;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -51,7 +55,21 @@ public class GameContainer extends FXGameContainer {
                 }
             }
         }
-        Logger.log( "Arg : ", arg );
+        else if ( game instanceof AmirsGame ) {
+            Logger.log( game, arg );
+        }
+        else if ( game instanceof RAM ) {
+            Logger.log( game, arg );
+        }
+        else if ( game instanceof DennisGame ) {
+            Logger.log( game, arg );
+        }
+        else if ( game instanceof Leertastenklatsche ) {
+            Logger.log( game, arg );
+        }
+        else {
+            Logger.log( "Arg : ", arg );
+        }
     }
 
     /**
