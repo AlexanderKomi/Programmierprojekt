@@ -30,7 +30,7 @@ public class ExampleGame extends Game {
      * @author Alexander Komischke
      */
     @Override
-    public Pane initGameContentWindow() {
+    public Pane initGameContentWindow( Observer observer ) {
         Canvas c = new Canvas( 400, 300 );
 
         GraphicsContext gc = c.getGraphicsContext2D();

@@ -14,9 +14,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class PacManMenu extends GameMenu {
+
+    PacManMenu( Observer observer ) {
+        super( observer );
+    }
 
     protected Pane initMenuPane() {
         /*
@@ -35,10 +40,6 @@ public class PacManMenu extends GameMenu {
         bp.setCenter( createTopBox() );
         bp.setBottom( createBottomBox() );
         return bp;
-    }
-
-    public void initialize() {
-
     }
 
     private Node createCenterBox() {
@@ -62,6 +63,7 @@ public class PacManMenu extends GameMenu {
         Button backButton = new Button( "zurück" );
         backButton.setOnAction( back -> {
             Logger.log( "Back button pressed" );
+            this.notifyObservers( back );
         } );
 
         HBox backButtonBox = new HBox( backButton );

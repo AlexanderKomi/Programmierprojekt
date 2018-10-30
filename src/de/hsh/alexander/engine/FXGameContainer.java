@@ -113,7 +113,7 @@ public abstract class FXGameContainer
     public abstract void update( Menu menu, Object arg );
 
     protected void showMainMenu() {
-        this.sceneController.getScene().rootProperty().setValue( this.sceneController.getMenu().getPane() );
+        this.sceneController.showMainMenu();
     }
 
     public Java2DEngine getEngine() {return this.engine;}
@@ -176,14 +176,7 @@ public abstract class FXGameContainer
     }
 
     protected void setGameShown( int index ) {
-        Game game = this.sceneController.getGames()[ index ];
-        Pane p    = game.getGameContentPane();
-        if ( p != null ) {
-            this.sceneController.getScene().rootProperty().setValue( p );
-        }
-        else {
-            throw new NullPointerException( "Pane is null" );
-        }
+        this.sceneController.showGame( index );
     }
 
 }

@@ -12,7 +12,7 @@ public abstract class Game extends java.util.Observable implements GameInterface
     protected Game( Observer o, String name ) {
         this.name = name;
         this.addObserver( o );
-        this.gameContentPane = initGameContentWindow();
+        this.gameContentPane = initGameContentWindow( o );
     }
 
     @Override
