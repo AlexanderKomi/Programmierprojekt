@@ -48,17 +48,19 @@ public class ExampleFXGameContainer extends FXGameContainer {
      * @author Alexander Komischke
      */
     @Override
-    public Game[] addGames( Observer sceneController ) {
-        ExampleGame e = new ExampleGame( sceneController );
-        return new Game[] { e };
+    protected Stage configWindow( Stage primaryStage ) {
+        primaryStage.setTitle( "Example" );
+        primaryStage.setResizable( false );
+        return primaryStage;
     }
 
     /**
      * @author Alexander Komischke
      */
     @Override
-    protected Menu configMainMenu( Observer sceneController, Game[] games ) {
-        return new ExampleMenu( sceneController, games );
+    public Game[] addGames( Observer sceneController ) {
+        ExampleGame e = new ExampleGame( sceneController );
+        return new Game[] { e };
     }
 
     //----------- Update
@@ -67,10 +69,8 @@ public class ExampleFXGameContainer extends FXGameContainer {
      * @author Alexander Komischke
      */
     @Override
-    protected Stage configWindow( Stage primaryStage ) {
-        primaryStage.setTitle( "Example" );
-        primaryStage.setResizable( false );
-        return primaryStage;
+    protected Menu configMainMenu( Observer sceneController, Game[] games ) {
+        return new ExampleMenu( sceneController, games );
     }
 
     /**

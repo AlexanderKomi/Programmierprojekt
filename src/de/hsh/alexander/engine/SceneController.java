@@ -39,6 +39,9 @@ public class SceneController {
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
+    public Game[] getGames() {
+        return games;
+    }
 
     Menu getMenu() {
         return menu;
@@ -46,10 +49,6 @@ public class SceneController {
 
     Scene getScene() {
         return scene;
-    }
-
-    public Game[] getGames() {
-        return games;
     }
 
 }

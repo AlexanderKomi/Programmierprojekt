@@ -24,19 +24,21 @@ public abstract class FXGameContainer
     // JavaFX Properties
     private static boolean         fxApplicationLaunched = false;
     private        Stage           stage;
+    private        SceneController sceneController       = new SceneController();
     //Engine properties
     private        Java2DEngine    engine;
     private        boolean         running               = false;
-    private        SceneController sceneController       = new SceneController();
 
     public FXGameContainer() {
         this.setEngine( new Java2DEngine() );
         this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
     }
 
-    public abstract Game[] addGames( Observer sceneController );
+    public Java2DEngine getEngine() {return this.engine;}
 
-    protected abstract Menu configMainMenu( Observer sceneController, Game[] games );
+    protected void setEngine( Java2DEngine java2DEngine ) {
+        this.engine = java2DEngine;
+    }
 
     /**
      * This is not tested !
@@ -111,23 +113,19 @@ public abstract class FXGameContainer
      */
     protected abstract Stage configWindow( Stage primaryStage );
 
+    public abstract Game[] addGames( Observer sceneController );
+
+    protected abstract Menu configMainMenu( Observer sceneController, Game[] games );
+
+    private Game[] getGames() {
+        return this.sceneController.getGames();
+    }
+
     public abstract void update( Game game, Object arg );
 
+    //-------------------------------------- GETTER & SETTER --------------------------------------
+
     public abstract void update( Observable observable, Object arg );
-
-    public abstract void update( Menu menu, Object arg );
-
-    public abstract void update( GameMenu gameMenu, Object arg );
-
-    protected void showMainMenu() {
-        this.sceneController.showMainMenu();
-    }
-
-    public Java2DEngine getEngine() {return this.engine;}
-
-    protected void setEngine( Java2DEngine java2DEngine ) {
-        this.engine = java2DEngine;
-    }
 
     /**
      * Stops the Container instance and the running engine.
@@ -148,8 +146,12 @@ public abstract class FXGameContainer
         this.running = running;
     }
 
-    private Game[] getGames() {
-        return this.sceneController.getGames();
+    public abstract void update( Menu menu, Object arg );
+
+    public abstract void update( GameMenu gameMenu, Object arg );
+
+    protected void showMainMenu() {
+        this.sceneController.showMainMenu();
     }
 
     protected int getFPS() {
@@ -160,6 +162,10 @@ public abstract class FXGameContainer
         return this.stage;
     }
 
+    public SceneController getSceneController() {
+        return sceneController;
+    }
+
     protected void setGameShown( Game g ) {
         Pane p = g.getGameContentPane();
         if ( p != null ) {
@@ -168,13 +174,6 @@ public abstract class FXGameContainer
         else {
             throw new NullPointerException( "Pane is null" );
         }
-    }
-
-    //-------------------------------------- GETTER & SETTER --------------------------------------
-
-
-    public SceneController getSceneController() {
-        return sceneController;
     }
 
     protected void setMainMenuShown( Menu m ) {

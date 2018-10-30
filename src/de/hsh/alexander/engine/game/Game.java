@@ -15,6 +15,8 @@ public abstract class Game extends java.util.Observable {
         this.gameContentPane = initGameContentWindow( o );
     }
 
+    public abstract Pane initGameContentWindow( Observer observer );
+
     @Override
     public boolean equals( Object obj ) {
         if ( obj instanceof Game ) {
@@ -24,9 +26,6 @@ public abstract class Game extends java.util.Observable {
         }
         return false;
     }
-
-
-    public abstract Pane initGameContentWindow( Observer observer );
 
     // ----------------------------------- GETTER & SETTER  -----------------------------------
 

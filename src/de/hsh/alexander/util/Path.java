@@ -75,10 +75,14 @@ public class Path {
         return res.toArray( new String[ 0 ] );
     }
 
-    /**Concats an amount of tabs together.
-     * @param amount the amount of tabs needed.
+    /**
+     * Concats an amount of tabs together.
+     *
+     * @param amount
+     *         the amount of tabs needed.
+     *
      * @return Amount times tabs concatenated together.
-     * */
+     */
     private static String addTabs( int amount ) {
         StringBuilder s = new StringBuilder();
         for ( int i = 0 ; i < amount ; i++ ) {

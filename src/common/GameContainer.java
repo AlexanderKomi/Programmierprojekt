@@ -27,11 +27,6 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    protected Menu configMainMenu( Observer sceneController, Game[] games ) {
-        return new common.MainMenu( sceneController, games );
-    }
-
-    @Override
     public Game[] addGames( Observer sceneController ) {
         return new Game[] {
                 new PacManCoop( sceneController ),
@@ -40,7 +35,12 @@ public class GameContainer extends FXGameContainer {
                 new KevinGame( sceneController ),
                 new Leertastenklatsche( sceneController ),
                 new DennisGame( sceneController )
-                };
+        };
+    }
+
+    @Override
+    protected Menu configMainMenu( Observer sceneController, Game[] games ) {
+        return new common.MainMenu( sceneController, games );
     }
 
     @Override
@@ -49,58 +49,23 @@ public class GameContainer extends FXGameContainer {
             update( (PacManCoop) game, arg );
         }
         else if ( game instanceof AmirsGame ) {
-            update( (AmirsGame) game, arg);
+            update( (AmirsGame) game, arg );
         }
         else if ( game instanceof RAM ) {
-            update( (RAM) game, arg);
+            update( (RAM) game, arg );
         }
         else if ( game instanceof DennisGame ) {
-            update( (DennisGame) game, arg);
+            update( (DennisGame) game, arg );
         }
         else if ( game instanceof Leertastenklatsche ) {
-            update( (Leertastenklatsche) game, arg);
+            update( (Leertastenklatsche) game, arg );
         }
         else if ( game instanceof KevinGame ) {
-            update( (KevinGame) game, arg);
+            update( (KevinGame) game, arg );
         }
         else {
             Logger.log( game, arg );
         }
-    }
-
-
-    public void update(AmirsGame game, Object arg){
-        Logger.log( game, arg );
-    }
-
-    public void update(RAM game, Object arg){
-        Logger.log( game, arg );
-    }
-
-    public void update(DennisGame game, Object arg){
-        Logger.log( game, arg );
-    }
-
-    public void update(Leertastenklatsche game, Object arg){
-        Logger.log( game, arg );
-    }
-
-    public void update(KevinGame game, Object arg){
-        Logger.log( game, arg );
-    }
-
-
-    public void update( PacManCoop pacManCoop, Object arg ) {
-        if ( arg instanceof ActionEvent ) {
-            ActionEvent event = (ActionEvent) arg;
-            if ( event.getSource() instanceof Button ) {
-                Button button = (Button) event.getSource();
-                if ( button.getText().equals( "zurück" ) ) {
-                    this.showMainMenu();
-                }
-            }
-        }
-        Logger.log( pacManCoop, arg );
     }
 
     /**
@@ -141,6 +106,23 @@ public class GameContainer extends FXGameContainer {
         }
     }
 
+    @Override
+    public void update( GameMenu gameMenu, Object arg ) {
+        if ( arg instanceof ActionEvent ) {
+            ActionEvent event = (ActionEvent) arg;
+            if ( event.getSource() instanceof Button ) {
+                Button button = (Button) event.getSource();
+                if ( button.getText().equals( "zurück" ) ) {
+                    Logger.log( arg );
+                    this.showMainMenu();
+                }
+            }
+        }
+        else {
+            Logger.log( gameMenu, arg );
+        }
+    }
+
     public void update( MainMenu menu, Object arg ) {
 
         if ( arg instanceof Button ) {
@@ -159,21 +141,37 @@ public class GameContainer extends FXGameContainer {
         Logger.log( menu, arg );
     }
 
-    @Override
-    public void update( GameMenu gameMenu, Object arg ) {
+    public void update( PacManCoop pacManCoop, Object arg ) {
         if ( arg instanceof ActionEvent ) {
             ActionEvent event = (ActionEvent) arg;
             if ( event.getSource() instanceof Button ) {
                 Button button = (Button) event.getSource();
                 if ( button.getText().equals( "zurück" ) ) {
-                    Logger.log( arg );
                     this.showMainMenu();
                 }
             }
         }
-        else {
-            Logger.log( gameMenu, arg );
-        }
+        Logger.log( pacManCoop, arg );
+    }
+
+    public void update( AmirsGame game, Object arg ) {
+        Logger.log( game, arg );
+    }
+
+    public void update( RAM game, Object arg ) {
+        Logger.log( game, arg );
+    }
+
+    public void update( DennisGame game, Object arg ) {
+        Logger.log( game, arg );
+    }
+
+    public void update( Leertastenklatsche game, Object arg ) {
+        Logger.log( game, arg );
+    }
+
+    public void update( KevinGame game, Object arg ) {
+        Logger.log( game, arg );
     }
 
     @Override
