@@ -115,35 +115,37 @@ public class GameContainer extends FXGameContainer {
     public void update( Menu menu, Object arg ) {
         if ( arg instanceof Button ) {
             Button button = (Button) arg;
-            if ( button.getText().equals( "Pacman" ) ) {
-                Logger.log( "Pacman-Game selected from Main Menu." );
-                this.getStage().setTitle( "PacMan Coop" );
-                this.setGameShown( 0 );
-            }
-            else if ( button.getText().equals( "Amir" ) ) {
-                Logger.log( "Amir-Game selected from Main Menu." );
-                this.getStage().setTitle( "PacMan Coop" );
-                this.setGameShown( 1 );
-            }
-            else if ( button.getText().equals( "Kevin" ) ) {
-                Logger.log( "Kevin-Game selected from Main Menu." );
-                this.getStage().setTitle( "PacMan Coop" );
-                this.setGameShown( 5 );
-            }
-            else if ( button.getText().equals( "Daniel" ) ) {
-                Logger.log( "Daniel-Game selected from Main Menu." );
-                this.getStage().setTitle( "PacMan Coop" );
-                this.setGameShown( 2 );
-            }
-            else if ( button.getText().equals( "Julian" ) ) {
-                Logger.log( "Julian-Game selected from Main Menu." );
-                this.getStage().setTitle( "PacMan Coop" );
-                this.setGameShown( 4 );
-            }
-            else if ( button.getText().equals( "Dennis" ) ) {
-                Logger.log( "Dennis-Game selected from Main Menu." );
-                this.getStage().setTitle( "PacMan Coop" );
-                this.setGameShown( 3 );
+            switch ( button.getText() ) {
+                case "Pacman":
+                    Logger.log( "Pacman-Game selected from Main Menu." );
+                    this.getStage().setTitle( "PacMan Coop" );
+                    this.setGameShown( 0 );
+                    break;
+                case "Amir":
+                    Logger.log( "Amir-Game selected from Main Menu." );
+                    this.getStage().setTitle( "Amir" );
+                    this.setGameShown( 1 );
+                    break;
+                case "Kevin":
+                    Logger.log( "Kevin-Game selected from Main Menu." );
+                    this.getStage().setTitle( "Kevin" );
+                    this.setGameShown( 5 );
+                    break;
+                case "Daniel":
+                    Logger.log( "Daniel-Game selected from Main Menu." );
+                    this.getStage().setTitle( "Daniel" );
+                    this.setGameShown( 2 );
+                    break;
+                case "Julian":
+                    Logger.log( "Julian-Game selected from Main Menu." );
+                    this.getStage().setTitle( "Julian" );
+                    this.setGameShown( 4 );
+                    break;
+                case "Dennis":
+                    Logger.log( "Dennis-Game selected from Main Menu." );
+                    this.getStage().setTitle( "Dennis" );
+                    this.setGameShown( 3 );
+                    break;
             }
 
 
