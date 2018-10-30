@@ -1,5 +1,6 @@
 package common;
 
+import common.config.WindowConfig;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.Menu;
 import javafx.event.ActionEvent;
@@ -30,7 +31,7 @@ public class MainMenu extends Menu {
         hbox.getChildren().addAll( pacmanButton );
 
         BorderPane bp = new BorderPane();
-        bp.setPrefSize( GameContainer.window_width, GameContainer.window_height );
+        bp.setPrefSize( WindowConfig.window_width, WindowConfig.window_height );
         bp.setTop( new Text( "Spielesammlung" ) );
         bp.setCenter( hbox );
         return bp;
