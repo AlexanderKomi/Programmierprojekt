@@ -4,6 +4,7 @@ import common.config.WindowConfig;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.Menu;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -24,17 +25,46 @@ public class MainMenu extends Menu {
 
     @Override
     protected Pane initScene() {
-        Button pacmanButton = new Button( "Pacman" );
-        pacmanButton.setOnAction( this::notifyObservers );
-
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll( pacmanButton );
 
         BorderPane bp = new BorderPane();
         bp.setPrefSize( WindowConfig.window_width, WindowConfig.window_height );
         bp.setTop( new Text( "Spielesammlung" ) );
-        bp.setCenter( hbox );
+        bp.setCenter( createButtons() );
         return bp;
+    }
+
+    private HBox createButtons() {
+        Button pacmanButton = new Button( "Pacman" );
+        pacmanButton.setOnAction( this::notifyObservers );
+
+        Button amirButton = new Button( "Amir" );
+        amirButton.setOnAction( this::notifyObservers );
+
+        Button kevinButton = new Button( "Kevin" );
+        kevinButton.setOnAction( this::notifyObservers );
+
+        Button danielButton = new Button( "Daniel" );
+        danielButton.setOnAction( this::notifyObservers );
+
+        Button julianButton = new Button( "Julian" );
+        julianButton.setOnAction( this::notifyObservers );
+
+        Button dennisButton = new Button( "Dennis" );
+        dennisButton.setOnAction( this::notifyObservers );
+
+        HBox hbox = new HBox();
+        hbox.setSpacing( 10 );
+        hbox.setPadding( new Insets( 10, 10, 10, 10 ) );
+        hbox.getChildren().addAll(
+                pacmanButton,
+                amirButton,
+                kevinButton,
+                danielButton,
+                julianButton,
+                dennisButton
+                                 );
+
+        return hbox;
     }
 
     @Override

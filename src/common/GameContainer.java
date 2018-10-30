@@ -11,6 +11,7 @@ import de.hsh.alexander.util.Logger;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
+import de.hsh.kevin.KevinGame;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -65,6 +66,9 @@ public class GameContainer extends FXGameContainer {
             Logger.log( game, arg );
         }
         else if ( game instanceof Leertastenklatsche ) {
+            Logger.log( game, arg );
+        }
+        else if ( game instanceof KevinGame ) {
             Logger.log( game, arg );
         }
         else {
