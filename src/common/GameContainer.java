@@ -144,9 +144,9 @@ public class GameContainer extends FXGameContainer {
     public void update( MainMenu menu, Object arg ) {
 
         if ( arg instanceof Button ) {
+
             Button button = (Button) arg;
             Game[] games  = this.getSceneController().getGames();
-
             for ( int i = 0 ; i < games.length ; i++ ) {
                 String gameName = games[ i ].getName();
                 if ( button.getText().equals( gameName ) ) {
@@ -172,7 +172,7 @@ public class GameContainer extends FXGameContainer {
             }
         }
         else {
-            Logger.log( "GameMenu : " + arg.toString() );
+            Logger.log( gameMenu, arg );
         }
     }
 
@@ -189,5 +189,12 @@ public class GameContainer extends FXGameContainer {
     @Override
     public void render() {
         //Logger.log("Rendering");
+    }
+
+    @Override
+    public String toString() {
+        return "GameContainer(" +
+               "superclass:" + super.toString() +
+               ")";
     }
 }
