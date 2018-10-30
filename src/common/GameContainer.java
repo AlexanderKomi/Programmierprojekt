@@ -50,16 +50,7 @@ public class GameContainer extends FXGameContainer {
     public void update( Game game, Object arg ) {
         Logger.log( game, arg );
         if ( game instanceof PacManCoop ) {
-            if ( arg instanceof ActionEvent ) {
-                ActionEvent event = (ActionEvent) arg;
-                if ( event.getSource() instanceof Button ) {
-                    Button button = (Button) event.getSource();
-                    if ( button.getText().equals( "zurück" ) ) {
-                        Logger.log( arg );
-                        this.showMainMenu();
-                    }
-                }
-            }
+            update( (PacManCoop) game, arg );
         }
         else if ( game instanceof AmirsGame ) {
             Logger.log( game, arg );
@@ -79,6 +70,19 @@ public class GameContainer extends FXGameContainer {
         else {
             Logger.log( "Arg : ", arg );
         }
+    }
+
+    public void update( PacManCoop pacManCoop, Object arg ) {
+        if ( arg instanceof ActionEvent ) {
+            ActionEvent event = (ActionEvent) arg;
+            if ( event.getSource() instanceof Button ) {
+                Button button = (Button) event.getSource();
+                if ( button.getText().equals( "zurück" ) ) {
+                    this.showMainMenu();
+                }
+            }
+        }
+        Logger.log( pacManCoop, arg );
     }
 
     /**
