@@ -5,7 +5,7 @@ import de.hsh.alexander.engine.game.Menu;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
-class SceneController {
+public class SceneController {
 
     private Scene  scene;
     private Menu   menu;
@@ -48,7 +48,7 @@ class SceneController {
         return scene;
     }
 
-    Game[] getGames() {
+    public Game[] getGames() {
         return games;
     }
 

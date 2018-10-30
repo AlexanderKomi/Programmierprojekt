@@ -36,7 +36,10 @@ public class GameContainer extends FXGameContainer {
         return new Game[] {
                 new PacManCoop( sceneController ),
                 new AmirsGame( sceneController ),
-
+                new RAM( sceneController ),
+                new KevinGame( sceneController ),
+                new Leertastenklatsche( sceneController ),
+                new DennisGame( sceneController )
                 };
     }
 
@@ -130,22 +133,30 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     public void update( Menu menu, Object arg ) {
-        if ( arg instanceof Button ) {
-            Button button = (Button) arg;
-            if ( button.getText().equals( "Pacman" ) ) {
-                Logger.log( "Pacman-AmirsGame selected from Main Menu." );
-                this.getStage().setTitle( "PacMan Coop" );
-                this.setGameShown( 0 );
-            }
-            else if ( button.getText().equals( "Amir" ) ) {
-                Logger.log( "Amir-Game selected from Main Menu." );
-                this.getStage().setTitle( "PacMan Coop" );
-                this.setGameShown( 1 );
-            }
+        if ( menu instanceof MainMenu ) {
+            update( (MainMenu) menu, arg );
         }
         else {
-            Logger.log( "Menu : " + arg.toString() );
+            Logger.log( menu, arg );
         }
+    }
+
+    public void update( MainMenu menu, Object arg ) {
+
+        if ( arg instanceof Button ) {
+            Button button = (Button) arg;
+            Game[] games  = this.getSceneController().getGames();
+
+            for ( int i = 0 ; i < games.length ; i++ ) {
+                String gameName = games[ i ].getName();
+                if ( button.getText().equals( gameName ) ) {
+                    Logger.log( gameName + " Game selected from Main Menu." );
+                    this.getStage().setTitle( gameName );
+                    this.setGameShown( i );
+                }
+            }
+        }
+        Logger.log( menu, arg );
     }
 
     @Override

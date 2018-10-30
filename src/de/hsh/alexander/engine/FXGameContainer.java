@@ -168,6 +168,11 @@ public abstract class FXGameContainer
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
+
+    public SceneController getSceneController() {
+        return sceneController;
+    }
+
     protected void setMainMenuShown( Menu m ) {
         Pane pane = m.getPane();
         if ( pane != null ) {
