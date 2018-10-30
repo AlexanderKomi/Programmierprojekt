@@ -18,7 +18,6 @@ import java.util.Observer;
  */
 public class MainMenu extends Menu {
 
-
     MainMenu( Observer sceneController, Game[] games ) {
         super( sceneController, games );
     }
@@ -34,35 +33,15 @@ public class MainMenu extends Menu {
     }
 
     private HBox createButtons() {
-        Button pacmanButton = new Button( "Pacman" );
-        pacmanButton.setOnAction( this::notifyObservers );
-
-        Button amirButton = new Button( "Amir" );
-        amirButton.setOnAction( this::notifyObservers );
-
-        Button kevinButton = new Button( "Kevin" );
-        kevinButton.setOnAction( this::notifyObservers );
-
-        Button danielButton = new Button( "Daniel" );
-        danielButton.setOnAction( this::notifyObservers );
-
-        Button julianButton = new Button( "Julian" );
-        julianButton.setOnAction( this::notifyObservers );
-
-        Button dennisButton = new Button( "Dennis" );
-        dennisButton.setOnAction( this::notifyObservers );
-
         HBox hbox = new HBox();
         hbox.setSpacing( 10 );
         hbox.setPadding( new Insets( 10, 10, 10, 10 ) );
-        hbox.getChildren().addAll(
-                pacmanButton,
-                amirButton,
-                kevinButton,
-                danielButton,
-                julianButton,
-                dennisButton
-                                 );
+
+        gameNames.forEach( name -> {
+            Button selectGameButton = new Button( name );
+            selectGameButton.setOnAction( this::notifyObservers );
+            hbox.getChildren().add( selectGameButton );
+        } );
 
         return hbox;
     }

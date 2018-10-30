@@ -11,7 +11,7 @@ import java.util.Observer;
 public class AmirsGame extends Game {
 
     public AmirsGame( Observer o ) {
-        super( o, "Amir" );
+        super( o, "AmirsGame" );
     }
 
     @Override
