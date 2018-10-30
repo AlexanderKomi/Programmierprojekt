@@ -3,7 +3,6 @@ package de.hsh.alexander.engine;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.engine.game.Menu;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -17,37 +16,17 @@ import java.util.Observer;
  * @author Alexander Komischke
  */
 public abstract class FXGameContainer
-        extends Application
-        implements GameContainerInterface, Observer {
+        extends Container implements Observer {
 
 
-    // JavaFX Properties
-    private static boolean         fxApplicationLaunched = false;
     private        Stage           stage;
     private        SceneController sceneController       = new SceneController();
     //Engine properties
-    private        Java2DEngine    engine;
-    private        boolean         running               = false;
 
     public FXGameContainer() {
-        this.setEngine( new Java2DEngine() );
-        this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
-    }
-
-    public Java2DEngine getEngine() {return this.engine;}
-
-    protected void setEngine( Java2DEngine java2DEngine ) {
-        this.engine = java2DEngine;
-    }
-
-    /**
-     * This is not tested !
-     *
-     * @author Alex
-     */
-    public FXGameContainer( Java2DEngine engine ) {
-        this.setEngine( engine );
-        this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
+        super();
+        //this.setEngine( new Java2DEngine() );
+        //this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
     }
 
     /**
@@ -61,17 +40,12 @@ public abstract class FXGameContainer
         if ( isLaunched() ) {
             throw new IllegalStateException( "Already isLaunched an JavaFX Application. Use existing Stage instead." );
         }
-        FXGameContainer.fxApplicationLaunched = true;
+        Container.setLaunched( true );
         this.initStage( primaryStage );
         initSceneController();
         this.stage.setScene( this.sceneController.getScene() );
         this.startEngine();
         this.showWindow();
-
-    }
-
-    public static boolean isLaunched() {
-        return FXGameContainer.fxApplicationLaunched;
     }
 
     private void initStage( Stage primaryStage ) {
@@ -88,11 +62,6 @@ public abstract class FXGameContainer
         this.sceneController.configMainMenu( configMainMenu( this, this.getGames() ) );
     }
 
-    private void startEngine() {
-        this.setRunning( true );
-        this.getEngine().init();
-        this.getEngine().start();
-    }
 
     private void showWindow() {
         if ( this.stage != null ) {
@@ -123,8 +92,6 @@ public abstract class FXGameContainer
 
     public abstract void update( Game game, Object arg );
 
-    //-------------------------------------- GETTER & SETTER --------------------------------------
-
     public abstract void update( Observable observable, Object arg );
 
     /**
@@ -138,13 +105,6 @@ public abstract class FXGameContainer
         this.getEngine().setRunning( false );
     }
 
-    public synchronized boolean isRunning() {
-        return running;
-    }
-
-    public synchronized void setRunning( boolean running ) {
-        this.running = running;
-    }
 
     public abstract void update( Menu menu, Object arg );
 
@@ -152,10 +112,6 @@ public abstract class FXGameContainer
 
     protected void showMainMenu() {
         this.sceneController.showMainMenu();
-    }
-
-    protected int getFPS() {
-        return this.engine.getFps();
     }
 
     protected Stage getStage() {

@@ -157,7 +157,7 @@ public class Java2DEngine extends Observable implements Runnable {
         return this.fps;
     }
 
-    void setGameContainer( FXGameContainer fxgame ) {
+    <T extends Container> void setGameContainer( T fxgame ) {
         this.gameContainer = fxgame;
     }
 
