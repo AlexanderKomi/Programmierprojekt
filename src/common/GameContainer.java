@@ -28,20 +28,20 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    public Games createGames( Observer sceneController ) {
+    public Games createGames( Observer container ) {
         return new Games(
-                new PacManCoop( sceneController ),
-                new AmirsGame( sceneController ),
-                new RAM( sceneController ),
-                new KevinGame( sceneController ),
-                new Leertastenklatsche( sceneController ),
-                new DennisGame( sceneController )
+                new PacManCoop( container ),
+                new AmirsGame( container ),
+                new RAM( container ),
+                new KevinGame( container ),
+                new Leertastenklatsche( container ),
+                new DennisGame( container )
         );
     }
 
     @Override
-    protected Menu configMainMenu( Observer sceneController, Games games ) {
-        return new common.MainMenu( sceneController, games );
+    protected Menu configMainMenu( Observer container, Games games ) {
+        return new common.MainMenu( container, games );
     }
 
     @Override
@@ -129,7 +129,7 @@ public class GameContainer extends FXGameContainer {
         if ( arg instanceof Button ) {
 
             Button button = (Button) arg;
-            Games  games  = this.getSceneController().getGames();
+            Games  games  = this.getGames();
             for ( int i = 0 ; i < games.size() ; i++ ) {
                 String gameName = games.get( i ).getName();
                 if ( button.getText().equals( gameName ) ) {
