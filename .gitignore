@@ -2,22 +2,35 @@
 # Compiled class file
 .class
 
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+
+# output folders
+out/
+JavaDoc/
+
+# Jar Building Artifacts
+src/META-INF
+
+# IDE STUFF
+# ------------------------------------
+
+# IntelliJ IDE
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings
+
+# Visual Studio Code
+.vscode/
+
 # BlueJ files
 *.ctxt
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
-# Editor stuff and IDE
-.idea/
-.vscode/
-Java2DEngine.iml
-
-# output folders
-out/
-JavaDoc/
-
-src/META-INF
