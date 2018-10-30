@@ -61,6 +61,8 @@ public abstract class FXGameContainer
         }
         FXGameContainer.fxApplicationLaunched = true;
         this.initStage( primaryStage );
+        initSceneController();
+        this.stage.setScene( this.sceneController.getScene() );
         this.startEngine();
         this.showWindow();
 
@@ -73,13 +75,15 @@ public abstract class FXGameContainer
     private void initStage( Stage primaryStage ) {
         this.stage = primaryStage; // This line is required, for reference change.
         this.stage = configWindow( this.stage );
-        this.sceneController.addGames( addGames( this ) );
-        this.sceneController.configMainMenu( configMainMenu( this, this.getGames() ) );
-        this.stage.setScene( this.sceneController.getScene() );
         this.stage.setOnCloseRequest( close -> {
             this.stopContainer();
             Platform.exit();
         } );
+    }
+
+    private void initSceneController() {
+        this.sceneController.addGames( addGames( this ) );
+        this.sceneController.configMainMenu( configMainMenu( this, this.getGames() ) );
     }
 
     private void startEngine() {
