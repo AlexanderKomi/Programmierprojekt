@@ -14,9 +14,9 @@ public class PacManCoop extends Game {
     }
 
     @Override
-    public Pane initGameContentWindow() {
+    public Pane initGameContentWindow( Observer observer ) {
         initRessources();
-        gameMenu = new PacManMenu();
+        gameMenu = new PacManMenu( observer );
         return gameMenu.getMenuPane();
     }
 

@@ -4,12 +4,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 
 import java.util.Observable;
+import java.util.Observer;
 
 public abstract class GameMenu extends Observable implements Initializable {
 
     private Pane menuPane;
 
-    public GameMenu() {
+    public GameMenu( Observer observer ) {
+        this.addObserver( observer );
         this.menuPane = initMenuPane();
     }
 
