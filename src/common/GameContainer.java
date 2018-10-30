@@ -1,6 +1,5 @@
 package common;
 
-import common.config.WindowConfig;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Game;
@@ -23,8 +22,6 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     protected Stage configWindow( Stage primaryStage ) {
-        primaryStage.setX( WindowConfig.window_width );
-        primaryStage.setY( WindowConfig.window_height );
         primaryStage.setResizable( false );
         return primaryStage;
     }
