@@ -2,6 +2,7 @@ package de.hsh.alexander.examples;
 
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.engine.game.Menu;
 import de.hsh.alexander.util.Logger;
 import javafx.event.ActionEvent;
@@ -116,6 +117,11 @@ public class ExampleFXGameContainer extends FXGameContainer {
             Logger.log( menu.toString() + "\t\t" + arg );
         }
 
+    }
+
+    @Override
+    public void update( GameMenu gameMenu, Object arg ) {
+        Logger.log( gameMenu.toString() + "\t\t" + arg );
     }
 
 

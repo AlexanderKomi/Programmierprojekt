@@ -1,6 +1,7 @@
 package de.hsh.alexander.engine;
 
 import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.engine.game.Menu;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -111,6 +112,8 @@ public abstract class FXGameContainer
     public abstract void update( Observable observable, Object arg );
 
     public abstract void update( Menu menu, Object arg );
+
+    public abstract void update( GameMenu gameMenu, Object arg );
 
     protected void showMainMenu() {
         this.sceneController.showMainMenu();

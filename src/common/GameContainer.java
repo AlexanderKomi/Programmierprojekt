@@ -3,6 +3,7 @@ package common;
 import common.config.WindowConfig;
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.engine.game.Menu;
 import de.hsh.alexander.game.PacManCoop;
 import de.hsh.alexander.util.Logger;
@@ -50,6 +51,7 @@ public class GameContainer extends FXGameContainer {
                 }
             }
         }
+        Logger.log( "Arg : ", arg );
     }
 
     /**
@@ -73,7 +75,11 @@ public class GameContainer extends FXGameContainer {
         else if ( o instanceof Game ) {
             update( (Game) o, arg );
         }
+        else if ( o instanceof GameMenu ) {
+            update( (GameMenu) o, arg );
+        }
         else {
+            System.out.println( "Observable" );
             Logger.log( o, arg );
         }
     }
@@ -90,6 +96,23 @@ public class GameContainer extends FXGameContainer {
         }
         else {
             Logger.log( "Menu : " + arg.toString() );
+        }
+    }
+
+    @Override
+    public void update( GameMenu gameMenu, Object arg ) {
+        if ( arg instanceof ActionEvent ) {
+            ActionEvent event = (ActionEvent) arg;
+            if ( event.getSource() instanceof Button ) {
+                Button button = (Button) event.getSource();
+                if ( button.getText().equals( "zurück" ) ) {
+                    Logger.log( arg );
+                    this.showMainMenu();
+                }
+            }
+        }
+        else {
+            Logger.log( "GameMenu : " + arg.toString() );
         }
     }
 
