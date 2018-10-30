@@ -45,29 +45,50 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     public void update( Game game, Object arg ) {
-        Logger.log( game, arg );
         if ( game instanceof PacManCoop ) {
             update( (PacManCoop) game, arg );
         }
         else if ( game instanceof AmirsGame ) {
-            Logger.log( game, arg );
+            update( (AmirsGame) game, arg);
         }
         else if ( game instanceof RAM ) {
-            Logger.log( game, arg );
+            update( (RAM) game, arg);
         }
         else if ( game instanceof DennisGame ) {
-            Logger.log( game, arg );
+            update( (DennisGame) game, arg);
         }
         else if ( game instanceof Leertastenklatsche ) {
-            Logger.log( game, arg );
+            update( (Leertastenklatsche) game, arg);
         }
         else if ( game instanceof KevinGame ) {
-            Logger.log( game, arg );
+            update( (KevinGame) game, arg);
         }
         else {
-            Logger.log( "Arg : ", arg );
+            Logger.log( game, arg );
         }
     }
+
+
+    public void update(AmirsGame game, Object arg){
+        Logger.log( game, arg );
+    }
+
+    public void update(RAM game, Object arg){
+        Logger.log( game, arg );
+    }
+
+    public void update(DennisGame game, Object arg){
+        Logger.log( game, arg );
+    }
+
+    public void update(Leertastenklatsche game, Object arg){
+        Logger.log( game, arg );
+    }
+
+    public void update(KevinGame game, Object arg){
+        Logger.log( game, arg );
+    }
+
 
     public void update( PacManCoop pacManCoop, Object arg ) {
         if ( arg instanceof ActionEvent ) {
@@ -92,8 +113,6 @@ public class GameContainer extends FXGameContainer {
      *         The observable notifying this observer
      * @param arg
      *         An object argument from the observable o.
-     *
-     * @author Alexander Komischke
      */
     @Override
     public void update( Observable o, Object arg ) {
