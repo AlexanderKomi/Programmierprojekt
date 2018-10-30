@@ -146,9 +146,13 @@ public class GameContainer extends FXGameContainer {
         if ( arg instanceof ActionEvent ) {
             ActionEvent event = (ActionEvent) arg;
             if ( event.getSource() instanceof Button ) {
-                Button button = (Button) event.getSource();
-                if ( button.getText().equals( "zurück" ) ) {
+                Button button     = (Button) event.getSource();
+                String buttonText = button.getText();
+                if ( buttonText.equals( "zurück" ) ) {
                     this.showMainMenu();
+                }
+                else if ( buttonText.equals( "OK" ) ) {
+                    // TODO : Implement change to gameplay screen
                 }
             }
         }

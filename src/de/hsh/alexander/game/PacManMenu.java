@@ -66,6 +66,7 @@ public class PacManMenu extends GameMenu {
         backButtonBox.setAlignment( Pos.CENTER );
 
         Button okButton    = new Button( "OK" );
+        okButton.setOnAction( this::notifyObservers );
         HBox   okButtonBox = new HBox( okButton );
         okButtonBox.setAlignment( Pos.CENTER );
 
