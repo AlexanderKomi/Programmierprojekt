@@ -1,8 +1,12 @@
 package de.hsh.alexander.util;
 
+import javafx.scene.Node;
+import javafx.scene.Parent;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Optional;
 
 /**
  * Logs information on the console.
@@ -69,6 +73,14 @@ public class Logger {
 
     public static String log( String topic, String prefix, String[] messages ) {
         return log( topic, prefix, messages, "" );
+    }
+
+    public static String logChildren( Parent parent ) {
+        String parentName = parent.toString();
+        Optional<String> children = parent.getChildrenUnmodifiable().stream()
+                                          .map( Node::toString )
+                                          .findAny();
+        return log( parentName, children );
     }
 
 }
