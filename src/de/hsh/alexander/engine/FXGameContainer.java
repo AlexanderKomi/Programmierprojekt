@@ -2,7 +2,7 @@ package de.hsh.alexander.engine;
 
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.Games;
-import de.hsh.alexander.engine.game.Menu;
+import de.hsh.alexander.engine.game.MainMenu;
 import de.hsh.alexander.game.PacManCoop;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -59,8 +60,10 @@ public abstract class FXGameContainer
     private void initSceneController() {
         this.setGames( createGames( this ) );
         this.gameSceneController = new GameSceneController();
-        this.gameSceneController.setMenu( configMainMenu( this, games ) );
-        this.gameSceneController.setScene( new Scene( this.gameSceneController.getMenu().getPane() ) );
+        this.gameSceneController.setMenu( configMainMenu( this, games.getNames() ) );
+        MainMenu menu = this.gameSceneController.getMenu();
+        Pane     p    = menu.getPane();
+        this.gameSceneController.setScene( new Scene( p ) );
     }
     //Engine properties
 
@@ -75,7 +78,7 @@ public abstract class FXGameContainer
         } );
     }
 
-    protected abstract Menu configMainMenu( Observer container, Games games );
+    protected abstract MainMenu configMainMenu( Observer container, ArrayList<String> games );
 
 
     private void showWindow() {
@@ -136,7 +139,7 @@ public abstract class FXGameContainer
         }
     }
 
-    protected void setMainMenuShown( Menu m ) {
+    protected void setMainMenuShown( MainMenu m ) {
         Pane pane = m.getPane();
         if ( pane != null ) {
             this.gameSceneController.getScene().rootProperty().setValue( pane );

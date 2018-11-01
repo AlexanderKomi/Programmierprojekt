@@ -10,6 +10,8 @@ public abstract class GameMenu extends Observable implements Initializable {
 
     private Pane menuPane;
 
+    public GameMenu() {}
+
     public GameMenu( Observer observer ) {
         this.menuPane = initMenuPane();
         this.addObserver( observer );

@@ -3,7 +3,7 @@ package common;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Games;
-import de.hsh.alexander.engine.game.Menu;
+import de.hsh.alexander.engine.game.MainMenu;
 import de.hsh.alexander.game.PacManCoop;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
@@ -12,6 +12,7 @@ import de.hsh.example.ExampleGame;
 import de.hsh.kevin.KevinGame;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -30,6 +31,7 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     public Games createGames( Observer container ) {
+        // TODO : Make games only create on request from main menu
         return new Games(
                 new PacManCoop( container ),
                 new AmirsGame( container ),
@@ -42,8 +44,9 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    protected Menu configMainMenu( Observer container, Games games ) {
-        return new common.MainMenu( container, games );
+    protected MainMenu configMainMenu( Observer container, ArrayList<String> games ) {
+
+        return new common.MainMenu();
     }
 
 
