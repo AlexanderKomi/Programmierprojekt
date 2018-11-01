@@ -39,11 +39,11 @@ public class PacManCoop extends Game implements Observer {
             if ( event.getSource() instanceof Button ) {
                 Button button = (Button) event.getSource();
                 if ( button.getText().equals( "zurück" ) ) {
-                    this.notifyObservers( "Changed to mainmenu ! :)" );
+                    this.notifyObservers( "Mainmenu" );
                 }
                 else if ( button.getText().equals( "OK" ) ) {
                     this.setGameContentPane( gamePane );
-                    this.notifyObservers( "Changed to ready ! :)" );
+                    this.notifyObservers( "Start Game" );
                 }
             }
         }
