@@ -3,18 +3,16 @@ package de.hsh.alexander.engine;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.Games;
 import de.hsh.alexander.engine.game.MainMenu;
-import de.hsh.alexander.game.PacManCoop;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 /**
  * FXGameContainer is a container for a game engine, a main menu and all games.
@@ -25,8 +23,15 @@ public abstract class FXGameContainer
         extends Container implements Observer {
 
     private Stage               stage;
-    private GameSceneController gameSceneController;
     private Games               games = new Games(); // Tracks all the games
+
+    private MainMenu menu = new MainMenu() {
+
+        @Override
+        public void initialize( URL location, ResourceBundle resources ) {
+            this.setPane( new Pane() );
+        }
+    };
 
     /**
      * Launches the javafx Thread. When using an FX Container, apply every interaction, only after the FXThread isLaunched.
@@ -42,40 +47,29 @@ public abstract class FXGameContainer
         Container.setLaunched( true );
         this.initStage( primaryStage );
         initSceneController();
-        this.stage.setScene( this.gameSceneController.getScene() );
+        this.setGames( createGames( this ) );
+        MainMenu m = configMainMenu( this, games.getNames() );
+        this.setMenu( m );
+        Pane p = m.getPane();
+        this.stage.setScene( new Scene( p ) );
         this.startEngine();
-        this.loadTestFXML();
         this.showWindow();
     }
 
-    private void loadTestFXML() {
-        try {
-            Parent test = FXMLLoader.load( PacManCoop.class.getResource( "GameMenu.fxml" ) );
-        }
-        catch ( IOException e ) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initSceneController() {
-        this.setGames( createGames( this ) );
-        this.gameSceneController = new GameSceneController();
-        this.gameSceneController.setMenu( configMainMenu( this, games.getNames() ) );
-        MainMenu menu = this.gameSceneController.getMenu();
-        Pane     p    = menu.getPane();
-        this.gameSceneController.setScene( new Scene( p ) );
+    private void initStage( Stage primaryStage ) {
+        this.stage = primaryStage; // This line is required, for reference change.
+        this.stage.setResizable( false );
+        this.stage.setOnCloseRequest( close -> {
+            this.stopContainer();
+            Platform.exit();
+        } );
     }
     //Engine properties
 
     public abstract Games createGames( Observer container );
 
-    private void initStage( Stage primaryStage ) {
-        this.stage = primaryStage; // This line is required, for reference change.
-        this.stage = configWindow( this.stage );
-        this.stage.setOnCloseRequest( close -> {
-            this.stopContainer();
-            Platform.exit();
-        } );
+    private void initSceneController() {
+
     }
 
     protected abstract MainMenu configMainMenu( Observer container, ArrayList<String> games );
@@ -90,18 +84,12 @@ public abstract class FXGameContainer
         }
     }
 
-    /**
-     * Configures the whole window. Only call once...
-     *
-     * @param primaryStage
-     *         Window which is created, when calling launch. Needs to be modified.
-     *
-     * @return Returns the modified version of the parameter.
-     */
-    protected abstract Stage configWindow( Stage primaryStage );
-
     public void showMainMenu() {
-        this.gameSceneController.showMainMenu();
+        this.stage.getScene().rootProperty().setValue( this.getMenu().getPane() );
+    }
+
+    public MainMenu getMenu() {
+        return menu;
     }
 
     public abstract void update( Observable observable, Object arg );
@@ -121,6 +109,10 @@ public abstract class FXGameContainer
         return this.stage;
     }
 
+    public void setMenu( MainMenu menu ) {
+        this.menu = menu;
+    }
+
     public void setGameShown( String gameName ) {
         Game g = this.getGames().get( gameName );
         if ( g == null ) {
@@ -132,7 +124,7 @@ public abstract class FXGameContainer
     public void setGameShown( Game g ) {
         Pane p = g.getGameContentPane();
         if ( p != null ) {
-            this.gameSceneController.getScene().rootProperty().setValue( p );
+            this.stage.getScene().rootProperty().setValue( p );
         }
         else {
             throw new NullPointerException( "Pane is null" );
@@ -142,7 +134,7 @@ public abstract class FXGameContainer
     protected void setMainMenuShown( MainMenu m ) {
         Pane pane = m.getPane();
         if ( pane != null ) {
-            this.gameSceneController.getScene().rootProperty().setValue( pane );
+            this.stage.getScene().rootProperty().setValue( pane );
         }
         else {
             throw new NullPointerException( "Pane is null" );
@@ -150,7 +142,7 @@ public abstract class FXGameContainer
     }
 
     protected void setGameShown( int index ) {
-        this.gameSceneController.showGame( this.getGames().get( index ) );
+        this.showGame( this.getGames().get( index ) );
     }
 
     public Games getGames() {
@@ -161,4 +153,13 @@ public abstract class FXGameContainer
         this.games = games;
     }
 
+    void showGame( Game game ) {
+        Pane p = game.getGameContentPane();
+        if ( p != null ) {
+            this.stage.getScene().rootProperty().setValue( p );
+        }
+        else {
+            throw new NullPointerException( "Pane is null" );
+        }
+    }
 }

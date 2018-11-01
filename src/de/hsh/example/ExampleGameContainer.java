@@ -4,7 +4,6 @@ import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Games;
 import de.hsh.alexander.engine.game.MainMenu;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,11 +28,6 @@ public class ExampleGameContainer extends FXGameContainer {
             exampleGameMenu = new ExampleGameMenu();
         }
         return exampleGameMenu;
-    }
-
-    @Override
-    protected Stage configWindow( Stage primaryStage ) {
-        return null;
     }
 
     @Override
