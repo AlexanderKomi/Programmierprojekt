@@ -4,7 +4,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.Observer;
 
-public abstract class Game extends java.util.Observable {
+public abstract class Game extends java.util.Observable implements Observer {
 
     public final String name;
     private      Pane   gameContentPane;
