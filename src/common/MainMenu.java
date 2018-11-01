@@ -1,30 +1,26 @@
 package common;
 
 import common.config.WindowConfig;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
 /**
  * @author Alexander Komischke
  */
-public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
+public class MainMenu extends VBox {
 
+    public ArrayList<String> gameNames = new ArrayList<>();
 
     @FXML
     public AnchorPane ap_desktop;
+    public VBox       vbox;
 
     public MainMenu() {
 
@@ -88,6 +84,7 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
         return hbox;
     }
 
+    /*
     @Override
     public void notifyObservers( Object arg ) {
         this.setChanged();
@@ -105,14 +102,14 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
             super.notifyObservers( actionEvent );
         }
     }
-
+*/
     @Override
     public String toString() {
         return "common.MainMenu";
     }
 
-    @Override
-    public void initialize( URL location, ResourceBundle resources ) {
-
+    public void setGameNames( ArrayList<String> gameNames ) {
+        this.gameNames = gameNames;
     }
+
 }
