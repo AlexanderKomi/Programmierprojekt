@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 import java.util.Observable;
 import java.util.Observer;
 
-public class PacManCoop extends Game implements Observer {
+public class PacManCoop extends Game {
 
     private PacManMenu gameMenu;
     private BorderPane gamePane;

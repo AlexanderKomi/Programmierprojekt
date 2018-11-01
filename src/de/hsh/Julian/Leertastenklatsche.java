@@ -1,8 +1,6 @@
 package de.hsh.Julian;
 
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.util.Logger;
-import de.hsh.alexander.util.Path;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -15,6 +13,7 @@ import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 import java.util.Observer;
 
 import static de.hsh.alexander.util.Path.getExecutionLocation;
@@ -26,6 +25,11 @@ public class Leertastenklatsche extends Game {
 
     public Leertastenklatsche( Observer o ) {
         super( o, "Julian" );
+    }
+
+    @Override
+    public void update( Observable o, Object arg ) {
+
     }
 
     @Override
