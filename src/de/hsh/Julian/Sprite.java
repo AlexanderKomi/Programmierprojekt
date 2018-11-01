@@ -1,7 +1,5 @@
 package de.hsh.Julian;
 
-import de.hsh.alexander.util.Logger;
-import de.hsh.alexander.util.Path;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -39,7 +37,7 @@ public class Sprite
                 setImage( i );
             }
             catch ( IllegalArgumentException e ) {
-                e.printStackTrace();
+                //e.printStackTrace();
 
 
             }
