@@ -9,7 +9,7 @@ import java.util.Observer;
  * Created by 424-ml6-u1 on 30.10.18.
  */
 public class AmirsGame extends Game {
-
+    private int x;
     public AmirsGame( Observer o ) {
         super( o, "AmirsGame" );
     }
