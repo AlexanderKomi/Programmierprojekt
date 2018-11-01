@@ -13,27 +13,13 @@ import java.util.Arrays;
 public class Path {
 
     public static void main( String[] args ) {
-        ArrayList<String> argsList = new ArrayList<>( Arrays.asList( args ) );
-        if ( argsList.size() > 0 ) {
-            boolean all = false;
-            if ( argsList.remove( "--all" ) || argsList.remove( "-a" ) ) {
-                all = true;
-            }
+        //standAlone( args );
 
-            for ( String a : argsList ) {
-                String temp = getExecutionLocation() + a + "/";
-                if ( all ) {
-                    Logger.log( "All Files from : " + temp, "\t", getAllFileNames( temp ), "" );
-                }
-                else {
-                    Logger.log( "Files from : " + temp, "\t", getFileNames( temp ), "" );
-                }
-            }
-        }
-        else {
-            listFiles();
-        }
+        Logger.log( "Dir : " + getExecutionLocation(), Path.getAllFileNames() );
+    }
 
+    public static String[] getAllFileNames() {
+        return getAllFileNames( getExecutionLocation() );
     }
 
     private static void test() {
@@ -71,8 +57,30 @@ public class Path {
             }
 
         }
-
         return res.toArray( new String[ 0 ] );
+    }
+
+    public static void standAlone( String[] args ) {
+        ArrayList<String> argsList = new ArrayList<>( Arrays.asList( args ) );
+        if ( argsList.size() > 0 ) {
+            boolean all = false;
+            if ( argsList.remove( "--all" ) || argsList.remove( "-a" ) ) {
+                all = true;
+            }
+
+            for ( String a : argsList ) {
+                String temp = getExecutionLocation() + a + "/";
+                if ( all ) {
+                    Logger.log( "All Files from : " + temp, "\t", getAllFileNames( temp ), "" );
+                }
+                else {
+                    Logger.log( "Files from : " + temp, "\t", getFileNames( temp ), "" );
+                }
+            }
+        }
+        else {
+            Logger.log( Path.getAllFileNames( getExecutionLocation() ) );
+        }
     }
 
     /**
@@ -125,7 +133,7 @@ public class Path {
         }
         File file = new File( path );
         if ( !file.exists() ) { // Path does not exist.
-            Logger.log( "File does not exists : " + path );
+            //Logger.log( "File does not exists : " + path );
             return new String[] { "" };
         }
         File[] files = file.listFiles();
@@ -144,7 +152,7 @@ public class Path {
     }
 
     public static String listFiles( String directory ) {
-        return Logger.log( "Files from : " + directory, "\t", getFileNames( directory ), "" );
+        return Logger.log( "Files from : " + directory, "\t", getAllFileNames( directory ), "" );
     }
 
     /**

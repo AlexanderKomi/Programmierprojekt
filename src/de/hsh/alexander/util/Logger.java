@@ -55,7 +55,7 @@ public class Logger {
         }
         StringBuilder s = new StringBuilder();
         for ( String message : messages ) {
-            s.append( log( prefix + message + suffix ) );
+            s.append( log( prefix, message, suffix ) );
         }
         return s.toString();
     }
