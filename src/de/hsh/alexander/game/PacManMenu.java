@@ -22,23 +22,7 @@ public class PacManMenu extends GameMenu {
         super( observer );
     }
 
-    PacManMenu( Observer gameContainer, Observer game ) {
-        super( gameContainer );
-        this.addObserver( game );
-    }
-
     protected Pane initMenuPane() {
-        /*
-        try {
-            String location = "GameMenu.fxml";
-            Pane   p = FXMLLoader.load( getClass().getResource( location ) );
-            return p;
-        }
-        catch ( IOException e ) {
-            e.printStackTrace();
-        }
-        */
-
         BorderPane bp = new BorderPane();
         bp.setTop( createCenterBox() );
         bp.setCenter( createTopBox() );
