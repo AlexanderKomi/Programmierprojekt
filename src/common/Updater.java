@@ -83,8 +83,11 @@ public class Updater {
             if ( event.getSource() instanceof Button ) {
                 Button button = (Button) event.getSource();
                 if ( button.getText().equals( "zurück" ) ) {
-                    Logger.log( arg );
+                    Logger.log( button );
                     gameContainer.showMainMenu();
+                }
+                else if ( button.getText().equals( "OK" ) ) {
+                    Logger.log( button );
                 }
             }
         }
@@ -122,6 +125,7 @@ public class Updater {
                 }
                 else if ( buttonText.equals( "OK" ) ) {
                     // TODO : Implement change to gameplay screen
+                    gameContainer.setGameShown( "Pacman Coop" );
                 }
             }
         }

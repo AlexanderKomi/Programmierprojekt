@@ -22,6 +22,11 @@ public class PacManMenu extends GameMenu {
         super( observer );
     }
 
+    PacManMenu( Observer gameContainer, Observer game ) {
+        super( gameContainer );
+        this.addObserver( game );
+    }
+
     protected Pane initMenuPane() {
         /*
         try {
