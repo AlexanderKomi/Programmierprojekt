@@ -1,7 +1,8 @@
 package de.hsh.Julian;
-import javafx.scene.image.Image;
-import javafx.scene.canvas.GraphicsContext;
+
 import javafx.geometry.Rectangle2D;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 public class Sprite
 {
@@ -30,8 +31,13 @@ public class Sprite
 
     public void setImage(String filename)
     {
-        Image i = new Image(filename);
-        setImage(i);
+        try {
+            Image i = new Image( filename );
+            setImage( i );
+        }
+        catch ( IllegalArgumentException e ) {
+            e.printStackTrace();
+        }
     }
 
     public void setPosition(double x, double y)

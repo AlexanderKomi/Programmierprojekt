@@ -1,25 +1,23 @@
 package de.hsh.Julian;
 
 import de.hsh.alexander.engine.game.Game;
-import javafx.scene.layout.Pane;
-//
-import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.Group;
+import de.hsh.alexander.util.Path;
+import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
+
 import java.util.ArrayList;
 import java.util.Iterator;
-//
 import java.util.Observer;
+
+//
+//
 
 public class Leertastenklatsche extends Game {
 
@@ -29,30 +27,15 @@ public class Leertastenklatsche extends Game {
 
     @Override
     public Pane initGameContentWindow( Observer observer ) {
-        Pane p = new Pane();
-        return p;
-    }
 
-   /* public static void main(String[] args)
-    {
-        launch(args);
-    }
-*/
-    //@Override
-    public void start(Stage theStage)
-    {
-        theStage.setTitle( "Collect the Money Bags!" );
-
-        Group root = new Group();
-        Scene theScene = new Scene( root );
-        theStage.setScene( theScene );
+        Pane root = new Pane();
 
         Canvas canvas = new Canvas( 512, 512 );
         root.getChildren().add( canvas );
 
         ArrayList<String> input = new ArrayList<String>();
 
-        theScene.setOnKeyPressed(
+        root.setOnKeyPressed(
                 new EventHandler<KeyEvent>()
                 {
                     public void handle(KeyEvent e)
@@ -61,9 +44,9 @@ public class Leertastenklatsche extends Game {
                         if ( !input.contains(code) )
                             input.add( code );
                     }
-                });
+                } );
 
-        theScene.setOnKeyReleased(
+        root.setOnKeyReleased(
                 new EventHandler<KeyEvent>()
                 {
                     public void handle(KeyEvent e)
@@ -71,7 +54,7 @@ public class Leertastenklatsche extends Game {
                         String code = e.getCode().toString();
                         input.remove( code );
                     }
-                });
+                } );
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -82,7 +65,8 @@ public class Leertastenklatsche extends Game {
         gc.setLineWidth(1);
 
         Sprite briefcase = new Sprite();
-        briefcase.setImage("briefcase.png");
+        String location  = Path.getExecutionLocation() + "de/hsh/Julian";
+        briefcase.setImage( location + "/briefcase.png" );
         briefcase.setPosition(200, 0);
 
         ArrayList<Sprite> moneybagList = new ArrayList<Sprite>();
@@ -149,7 +133,6 @@ public class Leertastenklatsche extends Game {
                 gc.strokeText( pointsText, 360, 36 );
             }
         }.start();
-
-        theStage.show();
+        return root;
     }
 }
