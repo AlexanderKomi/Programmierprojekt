@@ -1,0 +1,1 @@
+Alle .fxml Dateien sollen nicht in dieses Package, sondern in src/resources/[dein Name]Res/, um sie von dort zu laden!
