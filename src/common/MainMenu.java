@@ -1,8 +1,6 @@
 package common;
 
 import common.config.WindowConfig;
-import de.hsh.alexander.engine.game.Games;
-import de.hsh.alexander.engine.game.Menu;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -11,15 +9,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 /**
  * @author Alexander Komischke
  */
-public class MainMenu extends Menu {
+public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
 
-    MainMenu( Observer sceneController, Games games ) {
+    MainMenu( Observer sceneController, ArrayList<String> games ) {
         super( sceneController, games );
+    }
+
+    MainMenu() {
+
     }
 
     @Override
@@ -66,6 +71,11 @@ public class MainMenu extends Menu {
 
     @Override
     public String toString() {
-        return "common.Menu";
+        return "common.MainMenu";
+    }
+
+    @Override
+    public void initialize( URL location, ResourceBundle resources ) {
+
     }
 }

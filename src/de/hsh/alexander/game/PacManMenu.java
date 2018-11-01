@@ -31,7 +31,7 @@ public class PacManMenu extends GameMenu {
     }
 
     private Node createCenterBox() {
-        HBox titleBox = new HBox( new Text( "Pac Man Coop AmirsGame Menu" ) );
+        HBox titleBox = new HBox( new Text( "Pac Man Coop AmirsGame MainMenu" ) );
         titleBox.setAlignment( Pos.CENTER );
         return titleBox;
     }

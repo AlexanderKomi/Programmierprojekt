@@ -1,4 +1,14 @@
 package de.hsh.alexander.game;
 
-public class ExampleController {
+import javafx.fxml.Initializable;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ExampleController implements Initializable {
+
+    @Override
+    public void initialize( URL location, ResourceBundle resources ) {
+        //System.out.println("initialized");
+    }
 }
