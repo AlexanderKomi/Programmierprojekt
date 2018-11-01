@@ -40,7 +40,7 @@ public class Leertastenklatsche extends Game {
 */
     //@Override
     public void start(Stage theStage)
-    {
+    {/*
         theStage.setTitle( "Collect the Money Bags!" );
 
         Group root = new Group();
@@ -81,6 +81,7 @@ public class Leertastenklatsche extends Game {
         gc.setStroke( Color.BLACK );
         gc.setLineWidth(1);
 
+        /*
         Sprite briefcase = new Sprite();
         briefcase.setImage("briefcase.png");
         briefcase.setPosition(200, 0);
@@ -148,8 +149,9 @@ public class Leertastenklatsche extends Game {
                 gc.fillText( pointsText, 360, 36 );
                 gc.strokeText( pointsText, 360, 36 );
             }
-        }.start();
+            */
+        //}.start();
 
-        theStage.show();
+        //theStage.show();
     }
 }
