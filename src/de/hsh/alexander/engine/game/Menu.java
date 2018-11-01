@@ -30,12 +30,13 @@ public abstract class Menu extends Observable {
             Logger.log( super.toString() + " is empty." );
         }
         else {
-            pane.getChildren().forEach( Logger::log );
+            pane.getChildren().stream().parallel().map( Logger::log );
         }
     }
 
     @Override
     public void notifyObservers( Object arg ) {
+        this.setChanged();
         super.notifyObservers( arg );
     }
 
