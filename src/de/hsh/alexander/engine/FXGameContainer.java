@@ -115,9 +115,7 @@ public abstract class FXGameContainer
     public void setGameShown( Game g ) {
         Pane p = g.getGameContentPane();
         if ( p != null ) {
-            Platform.runLater( () -> {
-                this.gameSceneController.getScene().rootProperty().setValue( p );
-            } );
+            this.gameSceneController.getScene().rootProperty().setValue( p );
         }
         else {
             throw new NullPointerException( "Pane is null" );
