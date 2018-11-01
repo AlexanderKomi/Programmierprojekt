@@ -1,6 +1,7 @@
 package de.hsh.Julian;
 
 import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.util.Logger;
 import de.hsh.alexander.util.Path;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observer;
 
+import static de.hsh.alexander.util.Path.getExecutionLocation;
+
 //
 //
 
@@ -28,6 +31,7 @@ public class Leertastenklatsche extends Game {
     @Override
     public Pane initGameContentWindow( Observer observer ) {
 
+     //   Logger.log( "Dir : " + getExecutionLocation(),  Path.getAllFileNames(getExecutionLocation()) );
         Pane root = new Pane();
 
         Canvas canvas = new Canvas( 512, 512 );
@@ -65,7 +69,7 @@ public class Leertastenklatsche extends Game {
         gc.setLineWidth(1);
 
         Sprite briefcase = new Sprite();
-        String location  = Path.getExecutionLocation() + "de/hsh/Julian";
+        String location  = getExecutionLocation() + "de/hsh/Julian";
         briefcase.setImage( location + "/briefcase.png" );
         briefcase.setPosition(200, 0);
 
