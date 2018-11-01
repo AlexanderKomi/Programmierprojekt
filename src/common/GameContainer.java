@@ -10,19 +10,15 @@ import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.example.ExampleGame;
 import de.hsh.kevin.KevinGame;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 public class GameContainer extends FXGameContainer {
-
-    @Override
-    protected Stage configWindow( Stage primaryStage ) {
-        primaryStage.setResizable( false );
-        return primaryStage;
-    }
 
     @Override
     public void update( Observable observable, Object arg ) {
@@ -45,8 +41,18 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     protected MainMenu configMainMenu( Observer container, ArrayList<String> games ) {
+        MainMenu mainMenu = new common.MainMenu();
+        try {
+            URL location = getClass().getResource( "gui/P3_Gui.fxml" );
+            mainMenu = FXMLLoader.load( location );
+        }
+        catch ( IOException e ) {
+            e.printStackTrace();
+        }
 
-        return new common.MainMenu();
+        mainMenu.setGameNames( games );
+        mainMenu.addObserver( container );
+        return mainMenu;
     }
 
 
