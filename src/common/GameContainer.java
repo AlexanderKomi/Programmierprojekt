@@ -3,7 +3,6 @@ package common;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Games;
-import de.hsh.alexander.engine.game.MainMenu;
 import de.hsh.alexander.game.PacManCoop;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
@@ -11,6 +10,7 @@ import de.hsh.dennis.DennisGame;
 import de.hsh.example.ExampleGame;
 import de.hsh.kevin.KevinGame;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,10 +41,14 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     protected MainMenu configMainMenu( Observer container, ArrayList<String> games ) {
-        MainMenu mainMenu = null;
+        common.MainMenu mainMenu = new MainMenu();
         try {
-            URL location = getClass().getResource( "gui/P3_Gui.fxml" );
-            mainMenu = FXMLLoader.load( location );
+            URL        location = getClass().getResource( "gui/P3_Gui.fxml" );
+            FXMLLoader fl       = new FXMLLoader();
+            VBox       v        = FXMLLoader.load( location );
+            fl.setController( mainMenu );
+            mainMenu.vbox = v;
+            System.out.println( fl.getController().toString() );
         }
         catch ( IOException e ) {
             mainMenu = new common.MainMenu();
@@ -52,7 +56,6 @@ public class GameContainer extends FXGameContainer {
         }
 
         mainMenu.setGameNames( games );
-        mainMenu.addObserver( container );
         return mainMenu;
     }
 

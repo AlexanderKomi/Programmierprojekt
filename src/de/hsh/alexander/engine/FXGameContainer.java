@@ -1,18 +1,16 @@
 package de.hsh.alexander.engine;
 
+import common.MainMenu;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.Games;
-import de.hsh.alexander.engine.game.MainMenu;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
 /**
  * FXGameContainer is a container for a game engine, a main menu and all games.
@@ -25,13 +23,7 @@ public abstract class FXGameContainer
     private Stage               stage;
     private Games               games = new Games(); // Tracks all the games
 
-    private MainMenu menu = new MainMenu() {
-
-        @Override
-        public void initialize( URL location, ResourceBundle resources ) {
-            this.setPane( new Pane() );
-        }
-    };
+    private common.MainMenu menu;
 
     /**
      * Launches the javafx Thread. When using an FX Container, apply every interaction, only after the FXThread isLaunched.
@@ -48,9 +40,9 @@ public abstract class FXGameContainer
         this.initStage( primaryStage );
         initSceneController();
         this.setGames( createGames( this ) );
-        MainMenu m = configMainMenu( this, games.getNames() );
+        common.MainMenu m = configMainMenu( this, games.getNames() );
         this.setMenu( m );
-        Pane p = m.getPane();
+        Pane p = m.vbox;
         this.stage.setScene( new Scene( p ) );
         this.startEngine();
         this.showWindow();
@@ -72,7 +64,7 @@ public abstract class FXGameContainer
 
     }
 
-    protected abstract MainMenu configMainMenu( Observer container, ArrayList<String> games );
+    protected abstract common.MainMenu configMainMenu( Observer container, ArrayList<String> games );
 
 
     private void showWindow() {
@@ -85,7 +77,7 @@ public abstract class FXGameContainer
     }
 
     public void showMainMenu() {
-        this.stage.getScene().rootProperty().setValue( this.getMenu().getPane() );
+        this.stage.getScene().rootProperty().setValue( this.getMenu() );
     }
 
     public MainMenu getMenu() {
@@ -132,9 +124,8 @@ public abstract class FXGameContainer
     }
 
     protected void setMainMenuShown( MainMenu m ) {
-        Pane pane = m.getPane();
-        if ( pane != null ) {
-            this.stage.getScene().rootProperty().setValue( pane );
+        if ( m != null ) {
+            this.stage.getScene().rootProperty().setValue( m );
         }
         else {
             throw new NullPointerException( "Pane is null" );

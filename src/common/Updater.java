@@ -26,10 +26,7 @@ public class Updater {
      *         The observable notifying this observer
      */
     public static void update( Observable o, Object arg, GameContainer gameContainer ) {
-        if ( o instanceof MainMenu ) {
-            update( (MainMenu) o, arg, gameContainer );
-        }
-        else if ( o instanceof Game ) {
+        if ( o instanceof Game ) {
             Game game = (Game) o;
             if ( game instanceof PacManCoop ) {
                 update( (PacManCoop) game, arg, gameContainer );
