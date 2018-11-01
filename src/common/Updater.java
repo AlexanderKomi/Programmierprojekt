@@ -39,7 +39,6 @@ public class Updater {
             update( (GameMenu) o, arg, gameContainer );
         }
         else {
-            System.out.println( "Observable" );
             Logger.log( o, arg );
         }
     }
@@ -115,18 +114,18 @@ public class Updater {
     }
 
     public static void update( PacManCoop pacManCoop, Object arg, GameContainer gameContainer ) {
-        if ( arg instanceof ActionEvent ) {
-            ActionEvent event = (ActionEvent) arg;
-            if ( event.getSource() instanceof Button ) {
-                Button button     = (Button) event.getSource();
-                String buttonText = button.getText();
-                if ( buttonText.equals( "zurück" ) ) {
-                    gameContainer.showMainMenu();
-                }
-                else if ( buttonText.equals( "OK" ) ) {
-                    gameContainer.setGameShown( "Pacman Coop" );
-                }
+        if ( arg instanceof String ) {
+            String message = (String) arg;
+            if ( message.equalsIgnoreCase( "Start Game" ) ) {
+                gameContainer.setGameShown( "Pacman Coop" );
             }
+            else if ( message.equals( "Mainmenu" ) ) {
+                gameContainer.showMainMenu();
+            }
+            else {
+                throw new IllegalArgumentException( "Unknown String argument" );
+            }
+
         }
         else {
             Logger.log( pacManCoop, arg );
