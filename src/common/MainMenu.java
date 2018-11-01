@@ -26,7 +26,7 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
     @FXML
     public AnchorPane ap_desktop;
 
-    MainMenu() {
+    public MainMenu() {
 
     }
 

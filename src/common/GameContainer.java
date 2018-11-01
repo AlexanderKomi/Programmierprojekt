@@ -41,12 +41,13 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     protected MainMenu configMainMenu( Observer container, ArrayList<String> games ) {
-        MainMenu mainMenu = new common.MainMenu();
+        MainMenu mainMenu = null;
         try {
             URL location = getClass().getResource( "gui/P3_Gui.fxml" );
             mainMenu = FXMLLoader.load( location );
         }
         catch ( IOException e ) {
+            mainMenu = new common.MainMenu();
             e.printStackTrace();
         }
 
