@@ -3,11 +3,15 @@ package de.hsh.alexander.engine;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.Games;
 import de.hsh.alexander.engine.game.Menu;
+import de.hsh.alexander.game.PacManCoop;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -39,7 +43,17 @@ public abstract class FXGameContainer
         initSceneController();
         this.stage.setScene( this.gameSceneController.getScene() );
         this.startEngine();
+        this.loadTestFXML();
         this.showWindow();
+    }
+
+    private void loadTestFXML() {
+        try {
+            Parent test = FXMLLoader.load( PacManCoop.class.getResource( "GameMenu.fxml" ) );
+        }
+        catch ( IOException e ) {
+            e.printStackTrace();
+        }
     }
 
     private void initSceneController() {
