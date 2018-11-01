@@ -104,10 +104,20 @@ public abstract class FXGameContainer
         return this.stage;
     }
 
+    public void setGameShown( String gameName ) {
+        Game g = this.getGames().get( gameName );
+        if ( g == null ) {
+            throw new IllegalArgumentException( "Game not found" );
+        }
+        setGameShown( g );
+    }
+
     public void setGameShown( Game g ) {
         Pane p = g.getGameContentPane();
         if ( p != null ) {
-            this.gameSceneController.getScene().rootProperty().setValue( p );
+            Platform.runLater( () -> {
+                this.gameSceneController.getScene().rootProperty().setValue( p );
+            } );
         }
         else {
             throw new NullPointerException( "Pane is null" );
