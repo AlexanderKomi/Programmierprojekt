@@ -124,12 +124,13 @@ public class Updater {
                     gameContainer.showMainMenu();
                 }
                 else if ( buttonText.equals( "OK" ) ) {
-                    // TODO : Implement change to gameplay screen
                     gameContainer.setGameShown( "Pacman Coop" );
                 }
             }
         }
-        Logger.log( pacManCoop, arg );
+        else {
+            Logger.log( pacManCoop, arg );
+        }
     }
 
     public static void update( AmirsGame game, Object arg, GameContainer gameContainer ) {

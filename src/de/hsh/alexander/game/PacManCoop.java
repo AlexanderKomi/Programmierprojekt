@@ -22,7 +22,7 @@ public class PacManCoop extends Game implements Observer {
     @Override
     public Pane initGameContentWindow( Observer observer ) {
         initRessources();
-        gameMenu = new PacManMenu( observer, this );
+        gameMenu = new PacManMenu( this );
         return gameMenu.getMenuPane();
     }
 
@@ -34,16 +34,16 @@ public class PacManCoop extends Game implements Observer {
 
     @Override
     public void update( Observable o, Object arg ) {
-        if ( o instanceof PacManMenu ) {
-            PacManMenu p = (PacManMenu) o;
-            if ( arg instanceof ActionEvent ) {
-                ActionEvent event = (ActionEvent) arg;
-                if ( event.getSource() instanceof Button ) {
-                    Button b = (Button) event.getSource();
-                    if ( b.getText().equals( "OK" ) ) {
-                        this.setGameContentPane( gamePane );
-                        this.notifyObservers( "Changed to ready ! :)" );
-                    }
+        if ( arg instanceof ActionEvent ) {
+            ActionEvent event = (ActionEvent) arg;
+            if ( event.getSource() instanceof Button ) {
+                Button button = (Button) event.getSource();
+                if ( button.getText().equals( "zurück" ) ) {
+                    this.notifyObservers( "Changed to mainmenu ! :)" );
+                }
+                else if ( button.getText().equals( "OK" ) ) {
+                    this.setGameContentPane( gamePane );
+                    this.notifyObservers( "Changed to ready ! :)" );
                 }
             }
         }
