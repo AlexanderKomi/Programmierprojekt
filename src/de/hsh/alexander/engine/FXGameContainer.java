@@ -111,6 +111,14 @@ public abstract class FXGameContainer
         setGameShown( g );
     }
 
+    public boolean containsGame( Game game ) {
+        return this.getGames().contains( game );
+    }
+
+    public boolean containsGame( String gameName ) {
+        return this.getGames().contains( gameName );
+    }
+
     public void setGameShown( Game g ) {
         Pane p = g.getGameContentPane();
         if ( p != null ) {
