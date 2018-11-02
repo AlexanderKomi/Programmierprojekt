@@ -33,6 +33,10 @@ public class Games extends ArrayList<Game> {
         }
     }
 
+    public Games[] toArray() {
+        return (Games[]) super.toArray();
+    }
+
     public ArrayList<String> getNames() {
         ArrayList<String> temp = new ArrayList<>();
         this.forEach( game -> temp.add( game.getName() ) );

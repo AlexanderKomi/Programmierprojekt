@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class MainMenu extends Observable implements Initializable {
 
@@ -39,6 +40,10 @@ public class MainMenu extends Observable implements Initializable {
 
     public void setGameNames( ArrayList<String> gameNames ) {
         this.gameNames = gameNames;
+    }
+
+    public void setGameNames( Games games ) {
+        this.gameNames = games.stream().map( Game::getName ).collect( Collectors.toCollection( ArrayList::new ) );
     }
 
     public Pane getPane() {
