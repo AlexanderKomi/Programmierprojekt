@@ -50,7 +50,7 @@ public abstract class FXGameContainer
 
     private void initStage( Stage primaryStage ) {
         this.stage = primaryStage; // This line is required, for reference change.
-        this.stage.setResizable( false );
+        //this.stage.setResizable( false );
         this.stage.setOnCloseRequest( close -> {
             this.stopContainer();
             Platform.exit();
