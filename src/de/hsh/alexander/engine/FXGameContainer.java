@@ -42,6 +42,7 @@ public abstract class FXGameContainer
         this.initStage( primaryStage );
         this.setGames( createGames( this ) );
         this.setMenu( configMainMenu( this, games.getNames() ) );
+        this.getMenu().addObserver( this );
         this.scene = new Scene( this.getMenu().vbox );
         this.stage.setScene( this.scene );
         this.startEngine();
@@ -50,7 +51,7 @@ public abstract class FXGameContainer
 
     private void initStage( Stage primaryStage ) {
         this.stage = primaryStage; // This line is required, for reference change.
-        //this.stage.setResizable( false );
+        this.stage.setResizable( false );
         this.stage.setOnCloseRequest( close -> {
             this.stopContainer();
             Platform.exit();
