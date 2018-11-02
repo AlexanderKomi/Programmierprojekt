@@ -87,7 +87,7 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
                 HBox   shutdownBox    = (HBox) this.vbox.getChildren().get( 1 ); // HBox with buttons
                 Button shutdownButton = (Button) shutdownBox.getChildren().get( 0 );
                 shutdownButton.setOnAction( shutdownEvent -> {
-                    this.notifyObservers( "Shutdown Button pressed" );
+                    this.notifyObservers( "Shutdown" );
                 } );
             }
             catch ( NullPointerException npe ) {
