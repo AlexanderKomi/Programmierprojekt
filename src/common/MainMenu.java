@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -72,23 +73,22 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
             try {
                 // TODO : Implement correct mapping...
                 AnchorPane      p    = (AnchorPane) this.vbox.getChildren().get( 0 );
-                ArrayList<Text> list = new ArrayList<>();
                 for ( int i = 0 ; i < 6 ; i++ ) {
-                    list.add( (Text) ((VBox) p.getChildren().get( i )).getChildren().get( 1 ) );
+                    String gameName = this.gameNames.get( i );
+                    VBox   box      = (VBox) p.getChildren().get( i ); // Get a VBox from FXML
+                    ((Text) (box).getChildren().get( 1 )) // Get the Text in the VBox
+                                                          .setText( gameName ); // Set the Text to the game name
+                    Button b = (Button) box.getChildren().get( 0 );
+
+                    b.setOnAction( buttonEvent -> {
+                        this.notifyObservers( gameName );
+                    } );
                 }
-                for ( int i = 0 ; i < 6 ; i++ ) {
-                    list.get( i ).setText( this.gameNames.get( i ) );
-                }
-
-                System.out.println( "VBOX : " + (this.txt_game_1 != null) );
-                txt_game_1.setText( this.gameNames.get( 0 ) ); // Das funktioniert leider nicht :(
-                txt_game_2.setText( this.gameNames.get( 1 ) );
-                txt_game_3.setText( this.gameNames.get( 2 ) );
-                txt_game_4.setText( this.gameNames.get( 3 ) );
-                txt_game_5.setText( this.gameNames.get( 4 ) );
-                txt_game_6.setText( this.gameNames.get( 5 ) );
-
-
+                HBox   shutdownBox    = (HBox) this.vbox.getChildren().get( 1 ); // HBox with buttons
+                Button shutdownButton = (Button) shutdownBox.getChildren().get( 0 );
+                shutdownButton.setOnAction( shutdownEvent -> {
+                    this.notifyObservers( "Shutdown Button pressed" );
+                } );
             }
             catch ( NullPointerException npe ) {
                 npe.printStackTrace();
