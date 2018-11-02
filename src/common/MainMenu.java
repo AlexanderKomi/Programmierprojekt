@@ -1,5 +1,6 @@
 package common;
 
+import common.config.Authors;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -51,7 +52,7 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
     @FXML
     public Button           b_shutdown;
     @FXML
-    public ComboBox<String> cb_credits;
+    public ComboBox<String> cb_credits = new ComboBox<>();
 
     @Override
     public String toString() {
@@ -60,13 +61,8 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
-        this.cb_credits.getItems().setAll(
-                "Alexander Komischke",
-                "Dennis Sellemann",
-                "Julian Sender",
-                "Daniel Diele",
-                "Kevin",
-                "Amir-Hossein Ebrahimzadeh" );
+        this.cb_credits.getItems().setAll( Authors.authorNames );
+        super.initialize( location, resources );
     }
 
     public void initGameNames() {
@@ -87,7 +83,7 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
                 HBox   shutdownBox    = (HBox) this.vbox.getChildren().get( 1 ); // HBox with buttons
                 Button shutdownButton = (Button) shutdownBox.getChildren().get( 0 );
                 shutdownButton.setOnAction( shutdownEvent -> {
-                    this.notifyObservers( "Shutdown" );
+                    this.notifyObservers( UpdateCodes.MainMenu.shutdown );
                 } );
             }
             catch ( NullPointerException npe ) {
