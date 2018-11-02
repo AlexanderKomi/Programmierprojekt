@@ -33,6 +33,20 @@ public class Games extends ArrayList<Game> {
         }
     }
 
+    @Override
+    public boolean contains( Object o ) {
+        if ( o instanceof Game ) {
+            Game   g        = (Game) o;
+            String gameName = g.getName();
+            return this.stream().parallel().anyMatch( game -> game.getName().equals( gameName ) );
+        }
+        else if ( o instanceof String ) {
+            String gameName = (String) o;
+            return this.stream().parallel().anyMatch( game -> game.getName().equals( gameName ) );
+        }
+        return false;
+    }
+
     public Games[] toArray() {
         return (Games[]) super.toArray();
     }

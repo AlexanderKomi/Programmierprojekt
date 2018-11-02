@@ -11,6 +11,7 @@ import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.KevinGame;
 import javafx.scene.control.Button;
 
+import java.awt.event.ActionEvent;
 import java.util.Observable;
 
 public class Updater {
@@ -49,6 +50,9 @@ public class Updater {
             Logger.log( "ATTENTION : UNKNOWN OBSERVABLE OF TYPE GAME IS NOT PARSED" );
             Logger.log( o, arg );
         }
+        else if ( o instanceof MainMenu ) {
+            update( (MainMenu) o, arg, gameContainer );
+        }
         else {
             Logger.log( "ATTENTION : UNKNOWN OBSERVABLE TYPE IS NOT PARSED" );
             Logger.log( o, arg );
@@ -56,15 +60,23 @@ public class Updater {
     }
 
     public static void update( MainMenu menu, Object arg, GameContainer gameContainer ) {
-        if ( arg instanceof Button ) {
-
-            Button button   = (Button) arg;
-            String gameName = button.getText();
-            Games  games    = gameContainer.getGames();
-            Game   g        = games.get( gameName );
-            gameContainer.setGameShown( g );
-            gameContainer.getStage().setTitle( gameName );
-            Logger.log( "Game set : " + gameName );
+        if ( arg instanceof ActionEvent ) {
+            ActionEvent event = (ActionEvent) arg;
+            if ( event.getSource() instanceof Button ) {
+                Button button   = (Button) event.getSource();
+                String gameName = button.getText();
+                Games  games    = gameContainer.getGames();
+                Game   g        = games.get( gameName );
+                gameContainer.setGameShown( g );
+                gameContainer.getStage().setTitle( gameName );
+                Logger.log( "Game set : " + gameName );
+            }
+        }
+        else if ( arg instanceof String ) {
+            String message = (String) arg;
+            if ( gameContainer.containsGame( message ) ) {
+                gameContainer.setGameShown( message );
+            }
         }
         else {
             Logger.log( "Can not parse : update(MainMenu, Object)" );
