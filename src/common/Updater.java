@@ -2,16 +2,13 @@ package common;
 
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.engine.game.Games;
 import de.hsh.alexander.game.PacManCoop;
 import de.hsh.alexander.util.Logger;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.KevinGame;
-import javafx.scene.control.Button;
 
-import java.awt.event.ActionEvent;
 import java.util.Observable;
 
 public class Updater {
@@ -60,6 +57,7 @@ public class Updater {
     }
 
     public static void update( MainMenu menu, Object arg, GameContainer gameContainer ) {
+        /*
         if ( arg instanceof ActionEvent ) {
             ActionEvent event = (ActionEvent) arg;
             if ( event.getSource() instanceof Button ) {
@@ -72,10 +70,14 @@ public class Updater {
                 Logger.log( "Game set : " + gameName );
             }
         }
-        else if ( arg instanceof String ) {
+        else */
+        if ( arg instanceof String ) {
             String message = (String) arg;
             if ( gameContainer.containsGame( message ) ) {
                 gameContainer.setGameShown( message );
+            }
+            else if ( message.equals( "Shutdown" ) ) {
+                gameContainer.stopContainer();
             }
         }
         else {

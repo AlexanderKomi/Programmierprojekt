@@ -56,7 +56,6 @@ public abstract class FXGameContainer
         this.stage.setResizable( false );
         this.stage.setOnCloseRequest( close -> {
             this.stopContainer();
-            Platform.exit();
         } );
     }
 
@@ -93,6 +92,7 @@ public abstract class FXGameContainer
     public void stopContainer() {
         this.setRunning( false );
         this.getEngine().setRunning( false );
+        Platform.exit();
     }
 
     public Stage getStage() {
