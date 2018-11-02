@@ -1,6 +1,5 @@
 package common;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -70,29 +69,30 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
     }
 
     public void initGameNames() {
-        Platform.runLater( () -> {
             try {
                 // TODO : Implement correct mapping...
-                AnchorPane p = (AnchorPane) this.vbox.getChildren().get( 0 );
-                VBox       v = (VBox) p.getChildren().get( 0 );
-                v.getChildren().forEach( System.out::println );
-                Text t = (Text) v.getChildren().get( 1 );
+                AnchorPane      p    = (AnchorPane) this.vbox.getChildren().get( 0 );
+                ArrayList<Text> list = new ArrayList<>();
+                for ( int i = 0 ; i < 6 ; i++ ) {
+                    list.add( (Text) ((VBox) p.getChildren().get( i )).getChildren().get( 1 ) );
+                }
+                for ( int i = 0 ; i < 6 ; i++ ) {
+                    list.get( i ).setText( this.gameNames.get( i ) );
+                }
 
                 System.out.println( "VBOX : " + (this.txt_game_1 != null) );
-                txt_game_1.setText( this.gameNames.get( 0 ) );
+                txt_game_1.setText( this.gameNames.get( 0 ) ); // Das funktioniert leider nicht :(
                 txt_game_2.setText( this.gameNames.get( 1 ) );
                 txt_game_3.setText( this.gameNames.get( 2 ) );
                 txt_game_4.setText( this.gameNames.get( 3 ) );
                 txt_game_5.setText( this.gameNames.get( 4 ) );
                 txt_game_6.setText( this.gameNames.get( 5 ) );
 
-                t.setText( txt_game_1.getText() );
 
             }
             catch ( NullPointerException npe ) {
                 npe.printStackTrace();
             }
-        } );
 
     }
 
