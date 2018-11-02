@@ -1,7 +1,6 @@
 package common;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
@@ -10,13 +9,12 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 /**
  * @author Alexander Komischke
  */
-public class MainMenu extends Observable implements Initializable {
+public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
 
     private GameContainer     gameContainer;
     private ArrayList<String> gameNames = new ArrayList<>();
@@ -26,33 +24,33 @@ public class MainMenu extends Observable implements Initializable {
     public VBox       vbox;
 
     @FXML
-    public Button      b_game_1;
+    public Button           b_game_1;
     @FXML
-    public Text        txt_game_1;
+    public Text             txt_game_1;
     @FXML
-    public Button      b_game_2;
+    public Button           b_game_2;
     @FXML
-    public Text        txt_game_2;
+    public Text             txt_game_2;
     @FXML
-    public Button      b_game_3;
+    public Button           b_game_3;
     @FXML
-    public Text        txt_game_3;
+    public Text             txt_game_3;
     @FXML
-    public Button      b_game_4;
+    public Button           b_game_4;
     @FXML
-    public Text        txt_game_4;
+    public Text             txt_game_4;
     @FXML
-    public Button      b_game_5;
+    public Button           b_game_5;
     @FXML
-    public Text        txt_game_5;
+    public Text             txt_game_5;
     @FXML
-    public Button      b_game_6;
+    public Button           b_game_6;
     @FXML
-    public Text        txt_game_6;
+    public Text             txt_game_6;
     @FXML
-    public Button      b_shutdown;
+    public Button           b_shutdown;
     @FXML
-    public ComboBox<?> cb_credits;
+    public ComboBox<String> cb_credits;
 
     @Override
     public String toString() {
@@ -61,8 +59,20 @@ public class MainMenu extends Observable implements Initializable {
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
+        this.cb_credits.getItems().setAll(
+                "Alexander Komischke",
+                "Dennis Sellemann",
+                "Julian Sender",
+                "Daniel Diele",
+                "Kevin",
+                "Amir-Hossein Ebrahimzadeh" );
+        addButtonListener();
+    }
+
+    private void addButtonListener() {
 
     }
+
 
     public void setGameContainer( GameContainer gameContainer ) {
         this.gameContainer = gameContainer;
