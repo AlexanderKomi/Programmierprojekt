@@ -11,16 +11,15 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 /**
  * @author Alexander Komischke
  */
-public class MainMenu implements Initializable, Observer {
+public class MainMenu extends Observable implements Initializable {
 
-    public GameContainer     gameContainer;
-    public ArrayList<String> gameNames = new ArrayList<>();
+    private GameContainer     gameContainer;
+    private ArrayList<String> gameNames = new ArrayList<>();
 
     @FXML
     public AnchorPane ap_desktop;
@@ -62,11 +61,6 @@ public class MainMenu implements Initializable, Observer {
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
-
-    }
-
-    @Override
-    public void update( Observable o, Object arg ) {
 
     }
 

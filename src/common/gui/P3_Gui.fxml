@@ -1,51 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.net.URL?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vbox" fx:controller="common.MainMenu" maxHeight="-Infinity"
-      maxWidth="-Infinity"
-      minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1">
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+      minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1"
+      fx:controller="common.MainMenu">
+   <AnchorPane fx:id="ap_desktop" VBox.vgrow="ALWAYS">
+      <VBox alignment="CENTER" layoutX="80.0" layoutY="50.0">
+         <Button fx:id="b_game_1" mnemonicParsing="false"/>
+         <Text fx:id="txt_game_1" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 1"/>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="160.0" layoutY="50.0">
+         <Button fx:id="b_game_2" mnemonicParsing="false"/>
+         <Text fx:id="txt_game_2" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 2"/>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="240.0" layoutY="50.0">
+         <Button fx:id="b_game_3" mnemonicParsing="false"/>
+         <Text fx:id="txt_game_3" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 3"/>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="80.0" layoutY="180.0">
+         <Button fx:id="b_game_4" mnemonicParsing="false"/>
+         <Text fx:id="txt_game_4" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 4"/>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="160.0" layoutY="180.0">
+         <Button fx:id="b_game_5" mnemonicParsing="false"/>
+         <Text fx:id="txt_game_5" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 5"/>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="240.0" layoutY="180.0">
+         <Button fx:id="b_game_6" mnemonicParsing="false"/>
+         <Text fx:id="txt_game_6" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 6"/>
+      </VBox>
+   </AnchorPane>
+   <HBox prefHeight="40.0" VBox.vgrow="NEVER">
+      <Button fx:id="b_shutdown" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+              mnemonicParsing="false" HBox.hgrow="ALWAYS"/>
+      <ComboBox fx:id="cb_credits" prefHeight="40.0" prefWidth="150.0" promptText="Credits" HBox.hgrow="NEVER"/>
+   </HBox>
    <stylesheets>
       <URL value="@main.css"/>
       <URL value="@dimensions.css"/>
    </stylesheets>
-   <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" HBox.hgrow="ALWAYS">
-         <AnchorPane fx:id="ap_desktop" VBox.vgrow="ALWAYS">
-            <VBox alignment="CENTER" layoutX="80.0" layoutY="50.0">
-               <Button fx:id="b_game_1" mnemonicParsing="false"/>
-               <Text fx:id="txt_game_1" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 1"/>
-            </VBox>
-            <VBox alignment="CENTER" layoutX="160.0" layoutY="50.0">
-               <Button fx:id="b_game_2" mnemonicParsing="false"/>
-               <Text fx:id="txt_game_2" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 2"/>
-            </VBox>
-            <VBox alignment="CENTER" layoutX="240.0" layoutY="50.0">
-               <Button fx:id="b_game_3" mnemonicParsing="false"/>
-               <Text fx:id="txt_game_3" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 3"/>
-            </VBox>
-            <VBox alignment="CENTER" layoutX="80.0" layoutY="180.0">
-               <Button fx:id="b_game_4" mnemonicParsing="false"/>
-               <Text fx:id="txt_game_4" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 4"/>
-            </VBox>
-            <VBox alignment="CENTER" layoutX="160.0" layoutY="180.0">
-               <Button fx:id="b_game_5" mnemonicParsing="false"/>
-               <Text fx:id="txt_game_5" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 5"/>
-            </VBox>
-            <VBox alignment="CENTER" layoutX="240.0" layoutY="180.0">
-               <Button fx:id="b_game_6" mnemonicParsing="false"/>
-               <Text fx:id="txt_game_6" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 6"/>
-            </VBox>
-         </AnchorPane>
-         <HBox prefHeight="40.0" VBox.vgrow="NEVER">
-            <Button fx:id="b_shutdown" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                    minWidth="-Infinity" mnemonicParsing="false" HBox.hgrow="ALWAYS"/>
-            <ComboBox fx:id="cb_credits" prefHeight="40.0" prefWidth="150.0" promptText="Credits"
-                      HBox.hgrow="NEVER"/>
-         </HBox>
-      </VBox>
-   </HBox>
 </VBox>
