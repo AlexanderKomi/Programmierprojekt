@@ -44,8 +44,8 @@ public abstract class FXGameContainer
         this.setMenu( configMainMenu( this, games.getNames() ) );
         this.getMenu().addObserver( this );
         this.getMenu().setGameNames( this.games );
-        this.scene = new Scene( this.getMenu().vbox );
         this.getMenu().initGameNames();
+        this.scene = new Scene( this.getMenu().vbox );
         this.stage.setScene( this.scene );
         this.startEngine();
         this.showWindow();

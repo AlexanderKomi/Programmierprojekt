@@ -1,13 +1,15 @@
 package de.hsh.alexander.game;
 
 import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,15 +21,29 @@ public class PacManCoop extends Game implements Initializable {
 
     private PacManMenu gameMenu;
     private BorderPane gamePane;
-
     public PacManCoop( Observer o ) {
         super( o, "Pacman Coop" );
-        if ( !loadMenuFXML() ) {
+        if ( !loadMenuFXML() ) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane( new Pane() );
         }
-        //gameMenu.addObserver( o );
     }
 
+    private boolean loadMenuFXML() {
+        try {
+            VBox node = FXMLLoader.load( getClass().getResource( "PacManMenu.fxml" ) );
+            this.gameMenu = new PacManMenu();
+            this.gameMenu.setMenuPane( node );
+            this.gameMenu.addObserver( this );
+            this.setGameContentPane( this.gameMenu.getMenuPane() );
+            return true;
+        }
+        catch ( IOException e ) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /* Currently not used... */
     @Override
     public void update( Observable o, Object arg ) {
         if ( arg instanceof ActionEvent ) {
@@ -43,18 +59,11 @@ public class PacManCoop extends Game implements Initializable {
                 }
             }
         }
+        Logger.log( "In PacMan Coop update : from observable : " + o + " Argument could not be parsed : " + arg );
     }
 
-    private boolean loadMenuFXML() {
-        try {
-            AnchorPane node = FXMLLoader.load( getClass().getResource( "PacManMenu.fxml" ) );
-            this.setGameContentPane( node );
-            return true;
-        }
-        catch ( IOException e ) {
-            e.printStackTrace();
-        }
-        return false;
+    public Node getStartingScreen() {
+        return this.gameMenu.getMenuPane();
     }
 
     @Override
