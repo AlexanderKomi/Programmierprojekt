@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
 
 public class PacManMenu extends GameMenu {
 
+    private static final String titleName = "Pac Man Coop";
+
     PacManMenu( Observer observer ) {
         super( observer );
     }
@@ -31,7 +33,7 @@ public class PacManMenu extends GameMenu {
     }
 
     private Node createCenterBox() {
-        HBox titleBox = new HBox( new Text( "Pac Man Coop AmirsGame MainMenu" ) );
+        HBox titleBox = new HBox( new Text() );
         titleBox.setAlignment( Pos.CENTER );
         return titleBox;
     }

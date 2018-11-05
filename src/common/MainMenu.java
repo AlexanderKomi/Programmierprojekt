@@ -1,6 +1,7 @@
 package common;
 
 import common.config.Authors;
+import common.updates.UpdateCodes;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -68,8 +69,6 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
     public void initGameNames() {
             try {
                 // TODO : Implement correct mapping...
-                printGamesNames( gameNames );
-
                 AnchorPane      p    = (AnchorPane) this.vbox.getChildren().get( 0 );
                 for ( int i = 0 ; i < this.gameNames.size() ; i++ ) {
                     try {
@@ -94,11 +93,6 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
             }
 
     }
-
-    private void printGamesNames( ArrayList<String> gameNames ) {
-
-    }
-
 
     public void setGameContainer( GameContainer gameContainer ) {
         this.gameContainer = gameContainer;
