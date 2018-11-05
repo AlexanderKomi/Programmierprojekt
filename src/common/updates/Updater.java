@@ -15,9 +15,9 @@ import java.util.Observable;
 
 public class Updater {
 
-    private final static String unknownErrorCode  = "ATTENTION : UNKNOWN OBSERVABLE OF TYPE GAME IS NOT PARSED";
-    private final static String unkownParsingCode = "Unknown String argument: ";
-    private final static String parsingErrorCode  = "Can not parse : ";
+    final static String unknownErrorCode  = "ATTENTION : UNKNOWN OBSERVABLE OF TYPE GAME IS NOT PARSED";
+    final static String unkownParsingCode = "Unknown String argument: ";
+    final static String parsingErrorCode  = "Can not parse : ";
 
     /**
      * Cast observables to the correct type, and call the correct method.<br>
@@ -32,7 +32,7 @@ public class Updater {
         if ( o instanceof Game ) {
             Game game = (Game) o;
             if ( game instanceof PacManCoop ) {
-                update( (PacManCoop) game, arg, gameContainer );
+                UpdatePacman.update( (PacManCoop) game, arg, gameContainer );
             }
             else if ( game instanceof AmirsGame ) {
                 update( (AmirsGame) game, arg, gameContainer );
@@ -53,61 +53,12 @@ public class Updater {
             Logger.log( o, arg );
         }
         else if ( o instanceof MainMenu ) {
-            update( (MainMenu) o, arg, gameContainer );
+            UpdateMainMenu.update( (MainMenu) o, arg, gameContainer );
         }
         else {
             Logger.log( unknownErrorCode );
             Logger.log( o, arg );
         }
-    }
-
-    public static void update( PacManCoop pacManCoop, Object arg, GameContainer gameContainer ) {
-        if ( arg instanceof String ) {
-            String message = (String) arg;
-            switch ( message ) {
-                case "Start Game":
-                    gameContainer.setGameShown( "Pacman Coop" );
-                    break;
-                case "Mainmenu":
-                    gameContainer.showMainMenu();
-                    break;
-                default:
-                    throw new IllegalArgumentException( unkownParsingCode + message );
-            }
-        }
-        else {
-            Logger.log( pacManCoop, arg );
-        }
-    }
-
-    public static void update( MainMenu menu, Object arg, GameContainer gameContainer ) {
-        /*
-        if ( arg instanceof ActionEvent ) {
-            ActionEvent event = (ActionEvent) arg;
-            if ( event.getSource() instanceof Button ) {
-                Button button   = (Button) event.getSource();
-                String gameName = button.getText();
-                Games  games    = gameContainer.getGames();
-                Game   g        = games.get( gameName );
-                gameContainer.setGameShown( g );
-                gameContainer.getStage().setTitle( gameName );
-                Logger.log( "Game set : " + gameName );
-            }
-        }
-        else */
-        if ( arg instanceof String ) {
-            String message = (String) arg;
-            if ( gameContainer.containsGame( message ) ) {
-                gameContainer.setGameShown( message );
-            }
-            else if ( message.equals( UpdateCodes.MainMenu.shutdown ) ) {
-                gameContainer.stopContainer();
-            }
-        }
-        else {
-            Logger.log( parsingErrorCode + " update(MainMenu, Object)" );
-        }
-        Logger.log( menu, arg );
     }
 
     public static void update( AmirsGame game, Object arg, GameContainer gameContainer ) {
