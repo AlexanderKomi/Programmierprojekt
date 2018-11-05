@@ -28,14 +28,17 @@ public class GameContainer extends FXGameContainer {
     @Override
     public Games createGames( Observer container ) {
         // TODO : Make games only create on request from main menu
-        return new Games(
-                new PacManCoop( container ),
+        PacManCoop pacManCoop = new PacManCoop( container );
+        Games      games      = new Games();
+        games.addAll(
+                pacManCoop,
                 new AmirsGame( container ),
                 new RAM( container ),
                 new KevinGame( container ),
                 new Leertastenklatsche( container ),
                 new DennisGame( container )
-        );
+                    );
+        return games;
     }
 
     @Override
