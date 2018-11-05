@@ -12,7 +12,6 @@ public class ExampleGame extends Game {
         super( o, "Example" );
     }
 
-    @Override
     public Pane initGameContentWindow( Observer observer ) {
 
 
