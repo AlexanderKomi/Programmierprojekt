@@ -25,6 +25,7 @@ public class Leertastenklatsche extends Game {
 
     public Leertastenklatsche( Observer o ) {
         super( o, "Julian" );
+        this.setGameContentPane( this.initGameContentWindow( o ) );
     }
 
     @Override
@@ -32,7 +33,6 @@ public class Leertastenklatsche extends Game {
 
     }
 
-    @Override
     public Pane initGameContentWindow( Observer observer ) {
 
      //   Logger.log( "Dir : " + getExecutionLocation(),  Path.getAllFileNames(getExecutionLocation()) );

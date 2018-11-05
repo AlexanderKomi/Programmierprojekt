@@ -10,15 +10,11 @@ public class KevinGame extends Game {
 
     public KevinGame( Observer o ) {
         super( o, "Kevin" );
+        this.setGameContentPane( new Pane() );
     }
 
     @Override
     public void update( Observable o, Object arg ) {
 
-    }
-
-    @Override
-    public Pane initGameContentWindow( Observer observer ) {
-        return new Pane();
     }
 }

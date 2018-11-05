@@ -10,11 +10,7 @@ public class ExampleGame extends Game {
 
     public ExampleGame( Observer o ) {
         super( o, "Example" );
-    }
-
-    @Override
-    public Pane initGameContentWindow( Observer observer ) {
-        return new Pane();
+        this.setGameContentPane( new Pane() );
     }
 
     @Override
