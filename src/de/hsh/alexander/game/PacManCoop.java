@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
@@ -21,8 +22,9 @@ public class PacManCoop extends Game implements Initializable {
 
     public PacManCoop( Observer o ) {
         super( o, "Pacman Coop" );
-        loadMenuFXML();
-        this.setGameContentPane( new Pane() );
+        if ( !loadMenuFXML() ) {
+            this.setGameContentPane( new Pane() );
+        }
         //gameMenu.addObserver( o );
     }
 
@@ -43,13 +45,16 @@ public class PacManCoop extends Game implements Initializable {
         }
     }
 
-    private void loadMenuFXML() {
+    private boolean loadMenuFXML() {
         try {
-            Object node = FXMLLoader.load( getClass().getResource( "PacManMenu.fxml" ) );
+            AnchorPane node = FXMLLoader.load( getClass().getResource( "PacManMenu.fxml" ) );
+            this.setGameContentPane( node );
+            return true;
         }
         catch ( IOException e ) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override
