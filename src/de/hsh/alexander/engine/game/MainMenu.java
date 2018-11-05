@@ -10,7 +10,7 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class MainMenu extends Observable implements Initializable {
+public abstract class MainMenu extends Observable implements Initializable {
 
     public ArrayList<String> gameNames = new ArrayList<>();
     public Pane              pane      = new Pane();

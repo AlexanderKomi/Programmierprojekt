@@ -68,27 +68,34 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
     public void initGameNames() {
             try {
                 // TODO : Implement correct mapping...
-                AnchorPane      p    = (AnchorPane) this.vbox.getChildren().get( 0 );
-                for ( int i = 0 ; i < 6 ; i++ ) {
-                    String gameName = this.gameNames.get( i );
-                    VBox   box      = (VBox) p.getChildren().get( i ); // Get a VBox from FXML
-                    ((Text) (box).getChildren().get( 1 )) // Get the Text in the VBox
-                                                          .setText( gameName ); // Set the Text to the game name
-                    Button b = (Button) box.getChildren().get( 0 );
+                printGamesNames( gameNames );
 
-                    b.setOnAction( buttonEvent -> {
-                        this.notifyObservers( gameName );
-                    } );
+                AnchorPane      p    = (AnchorPane) this.vbox.getChildren().get( 0 );
+                for ( int i = 0 ; i < this.gameNames.size() ; i++ ) {
+                    try {
+                        String gameName = this.gameNames.get( i );
+                        VBox   box      = (VBox) p.getChildren().get( i ); // Get a VBox from FXML
+                        ((Text) (box).getChildren().get( 1 )) // Get the Text in the VBox
+                                                              .setText( gameName ); // Set the Text to the game name
+                        Button b = (Button) box.getChildren().get( 0 );
+
+                        b.setOnAction( buttonEvent -> this.notifyObservers( gameName ) );
+                    }
+                    catch ( IndexOutOfBoundsException ioobe ) {
+                        ioobe.printStackTrace();
+                    }
                 }
                 HBox   shutdownBox    = (HBox) this.vbox.getChildren().get( 1 ); // HBox with buttons
                 Button shutdownButton = (Button) shutdownBox.getChildren().get( 0 );
-                shutdownButton.setOnAction( shutdownEvent -> {
-                    this.notifyObservers( UpdateCodes.MainMenu.shutdown );
-                } );
+                shutdownButton.setOnAction( shutdownEvent -> this.notifyObservers( UpdateCodes.MainMenu.shutdown ) );
             }
             catch ( NullPointerException npe ) {
                 npe.printStackTrace();
             }
+
+    }
+
+    private void printGamesNames( ArrayList<String> gameNames ) {
 
     }
 

@@ -7,7 +7,6 @@ import de.hsh.alexander.game.PacManCoop;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
-import de.hsh.example.ExampleGame;
 import de.hsh.kevin.KevinGame;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
@@ -34,8 +33,7 @@ public class GameContainer extends FXGameContainer {
                 new RAM( container ),
                 new KevinGame( container ),
                 new Leertastenklatsche( container ),
-                new DennisGame( container ),
-                new ExampleGame( container )
+                new DennisGame( container )
         );
     }
 
