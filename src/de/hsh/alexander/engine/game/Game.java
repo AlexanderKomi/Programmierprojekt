@@ -12,10 +12,7 @@ public abstract class Game extends java.util.Observable implements Observer {
     protected Game( Observer o, String name ) {
         this.name = name;
         this.addObserver( o );
-        this.gameContentPane = initGameContentWindow( o );
     }
-
-    public abstract Pane initGameContentWindow( Observer observer );
 
     @Override
     public boolean equals( Object obj ) {

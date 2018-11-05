@@ -13,11 +13,7 @@ public class AmirsGame extends Game {
     private int x;
     public AmirsGame( Observer o ) {
         super( o, "AmirsGame" );
-    }
-
-    @Override
-    public Pane initGameContentWindow( Observer observer ) {
-        return new Pane();
+        this.setGameContentPane( new Pane() );
     }
 
     @Override

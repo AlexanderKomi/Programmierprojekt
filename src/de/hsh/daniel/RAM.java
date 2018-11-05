@@ -15,11 +15,7 @@ import java.util.Observer;
 public class RAM extends Game {
     public RAM( Observer o ) {
         super( o, "Daniel" );
-    }
-
-    @Override
-    public Pane initGameContentWindow( Observer observer ) {
-        return new Pane();
+        this.setGameContentPane( new Pane() );
     }
 
 
