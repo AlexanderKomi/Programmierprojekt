@@ -29,10 +29,69 @@ public class Leertastenklatsche extends Game {
         this.setGameContentPane( this.initGameContentWindow( o ) );
     }
 
+    int score =0;
+    GraphicsContext gc;
+
     @Override
     public void update( Observable o, Object arg ) {
 
     }
+    public AnimationTimer createAnimationTimer(Sprite briefcase, ArrayList<Sprite> moneybagList, ArrayList<String> input){
+        LongValue lastNanoTime = new LongValue( System.nanoTime() );
+        return
+        new AnimationTimer()
+        {
+            public void handle(long currentNanoTime)
+            {
+                // calculate time since last update.
+                double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
+                lastNanoTime.value = currentNanoTime;
+
+                // game logic
+
+                briefcase.setVelocity(0,0);
+                if (input.contains("LEFT")) {
+                    Logger.log("Leertastenklatsche : Left klicked");
+                }
+                briefcase.addVelocity(-50,0);
+                if (input.contains("RIGHT"))
+                    Logger.log("Leertastenklatsche : Right klicked");
+                briefcase.addVelocity(50,0);
+                if (input.contains("UP"))
+                    briefcase.addVelocity(0,-50);
+                if (input.contains("DOWN"))
+                    briefcase.addVelocity(0,50);
+                //Logger.log(briefcase);
+
+                briefcase.update(elapsedTime);
+
+                // collision detection
+
+                Iterator<Sprite> moneybagIter = moneybagList.iterator();
+                while ( moneybagIter.hasNext() )
+                {
+                    Sprite moneybag = moneybagIter.next();
+                    if ( briefcase.intersects(moneybag) )
+                    {
+                        moneybagIter.remove();
+                        score++;
+                    }
+                }
+
+                // render
+
+                gc.clearRect(0, 0, 512,512);
+                briefcase.render( gc );
+
+                for (Sprite moneybag : moneybagList )
+                    moneybag.render( gc );
+
+                String pointsText = "Cash: $" + (100 * score);
+                gc.fillText( pointsText, 360, 36 );
+                gc.strokeText( pointsText, 360, 36 );
+            }
+        };
+    };
 
     public Pane initGameContentWindow( Observer observer ) {
 
@@ -57,7 +116,7 @@ public class Leertastenklatsche extends Game {
                     input.remove( code );
                 });
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc = canvas.getGraphicsContext2D();
 
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 24 );
         gc.setFont( theFont );
@@ -84,66 +143,8 @@ public class Leertastenklatsche extends Game {
             moneybag.setPosition(px,py);
             moneybagList.add( moneybag );
         }
+        createAnimationTimer(briefcase, moneybagList,  input);
 
-        LongValue lastNanoTime = new LongValue( System.nanoTime() );
-
-        IntValue score = new IntValue(99);
-
-        Platform.runLater(()->{
-            new AnimationTimer()
-        {
-            public void handle(long currentNanoTime)
-            {
-                // calculate time since last update.
-                double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
-                lastNanoTime.value = currentNanoTime;
-
-                // game logic
-
-                briefcase.setVelocity(0,0);
-                if (input.contains("LEFT")) {
-                    Logger.log("Leertastenklatsche : Left klicked");
-                }
-                briefcase.addVelocity(-50,0);
-                if (input.contains("RIGHT"))
-                    Logger.log("Leertastenklatsche : Right klicked");
-                    briefcase.addVelocity(50,0);
-                if (input.contains("UP"))
-                    briefcase.addVelocity(0,-50);
-                if (input.contains("DOWN"))
-                    briefcase.addVelocity(0,50);
-                //Logger.log(briefcase);
-
-                briefcase.update(elapsedTime);
-
-                // collision detection
-
-                Iterator<Sprite> moneybagIter = moneybagList.iterator();
-                while ( moneybagIter.hasNext() )
-                {
-                    Sprite moneybag = moneybagIter.next();
-                    if ( briefcase.intersects(moneybag) )
-                    {
-                        moneybagIter.remove();
-                        score.value++;
-                    }
-                }
-
-                // render
-
-                gc.clearRect(0, 0, 512,512);
-                briefcase.render( gc );
-
-                for (Sprite moneybag : moneybagList )
-                    moneybag.render( gc );
-
-                String pointsText = "Cash: $" + (100 * score.value);
-                gc.fillText( pointsText, 360, 36 );
-                gc.strokeText( pointsText, 360, 36 );
-            }
-        }.start();
-
-        });
         return root;
     }
 }
