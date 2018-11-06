@@ -1,5 +1,6 @@
 package de.hsh.alexander.engine;
 
+import common.KeyEventManager;
 import common.MainMenu;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.Games;
@@ -20,9 +21,10 @@ import java.util.Observer;
 public abstract class FXGameContainer
         extends Container implements Observer {
 
-    private Stage stage;
-    private Scene scene;
-    private Games games = new Games(); // Tracks all the games
+    private        Stage           stage;
+    private        Scene           scene;
+    private        Games           games = new Games(); // Tracks all the games
+    private static KeyEventManager keyEventManager;
     //Engine properties
 
     private common.MainMenu menu;
@@ -40,16 +42,21 @@ public abstract class FXGameContainer
         }
         Container.setLaunched( true );
         this.initStage( primaryStage );
-        this.setGames( createGames( this ) );
+        keyEventManager = new KeyEventManager();
+        this.setGames( createGames( this, keyEventManager ) );
         this.setMenu( configMainMenu( this, games.getNames() ) );
         this.getMenu().addObserver( this );
         this.getMenu().setGameNames( this.games );
         this.getMenu().initGameNames();
         this.scene = new Scene( this.getMenu().vbox );
+        addKeyListeners( keyEventManager );
+        this.games.addKeyEventManager( keyEventManager );
         this.stage.setScene( this.scene );
         this.startEngine();
         this.showWindow();
     }
+
+    public abstract Games createGames( Observer container, KeyEventManager keyEventManager );
 
     private void initStage( Stage primaryStage ) {
         this.stage = primaryStage; // This line is required, for reference change.
@@ -59,7 +66,11 @@ public abstract class FXGameContainer
         } );
     }
 
-    public abstract Games createGames( Observer container );
+    private void addKeyListeners( KeyEventManager keyEventManager ) {
+        this.scene.setOnKeyPressed( keyEventManager::keyPressed );
+        this.scene.setOnKeyReleased( keyEventManager::keyReleased );
+        this.scene.setOnKeyTyped( keyEventManager::keyTyped );
+    }
 
     protected abstract common.MainMenu configMainMenu( Observer container, ArrayList<String> games );
 

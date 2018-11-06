@@ -1,5 +1,6 @@
 package de.hsh.alexander.engine.game;
 
+import common.KeyEventManager;
 import javafx.scene.layout.Pane;
 
 import java.util.Observer;
@@ -34,6 +35,10 @@ public abstract class Game extends java.util.Observable implements Observer {
     public void notifyObservers( Object arg ) {
         this.setChanged();
         super.notifyObservers( arg );
+    }
+
+    public void addObservable( KeyEventManager keyEventManager ) {
+        keyEventManager.addObserver( this );
     }
 
     // ----------------------------------- GETTER & SETTER  -----------------------------------

@@ -1,5 +1,7 @@
 package de.hsh.alexander.engine.game;
 
+import common.KeyEventManager;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -49,6 +51,12 @@ public class Games extends ArrayList<Game> {
 
     public Games[] toArray() {
         return (Games[]) super.toArray();
+    }
+
+    public void addKeyEventManager( KeyEventManager keyEventManager ) {
+        this.forEach( game -> {
+            game.addObservable( keyEventManager );
+        } );
     }
 
     public ArrayList<String> getNames() {

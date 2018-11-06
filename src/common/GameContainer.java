@@ -26,7 +26,7 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    public Games createGames( Observer container ) {
+    public Games createGames( Observer container, KeyEventManager keyEventManager ) {
         // TODO : Make games only create on request from main menu
         PacManController pacManController = new PacManController( container );
         //pacManController.addObserver( container );
@@ -38,6 +38,8 @@ public class GameContainer extends FXGameContainer {
                 new Leertastenklatsche( container ),
                 new DennisGame( container )
         );
+
+        return games;
     }
 
     @Override
@@ -73,6 +75,9 @@ public class GameContainer extends FXGameContainer {
     @Override
     public void render() {
         //Logger.log("Rendering");
+        if ( this.getGames() != null ) {
+            ((Leertastenklatsche) this.getGames().get( "Leertastenklatsche" )).render();
+        }
     }
 
     @Override

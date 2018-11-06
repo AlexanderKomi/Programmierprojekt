@@ -1,5 +1,6 @@
 package de.hsh.alexander.game;
 
+import common.KeyEventManager;
 import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.util.Logger;
@@ -80,6 +81,9 @@ public class PacManController extends Game implements Initializable {
             else {
                 logParsingError( o, arg );
             }
+        }
+        else if ( o instanceof KeyEventManager ) {
+
         }
         else {
             logParsingError( o, arg );
