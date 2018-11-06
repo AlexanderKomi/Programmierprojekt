@@ -3,11 +3,10 @@ package de.hsh.dennis.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class ddd_MainMenue_controller {
+public class levelMenu_controller {
 
     @FXML
     private HBox hbox_1;
@@ -16,7 +15,7 @@ public class ddd_MainMenue_controller {
     private VBox vbox_1;
 
     @FXML
-    private ImageView pic_header;
+    private Button b_play1;
 
     @FXML
     private Button b_play;
@@ -26,6 +25,9 @@ public class ddd_MainMenue_controller {
 
     @FXML
     private Button b_exit;
+
+    @FXML
+    private Button b_exit1;
 
     @FXML
     void button_clicked(ActionEvent event) {

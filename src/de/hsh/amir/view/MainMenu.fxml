@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 <HBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
       minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-      xmlns="http://javafx.com/javafx/10.0.1" fx:controller="de.hsh.amir.controller.mainMenu_controller">
+      xmlns="http://javafx.com/javafx/8.0.152" fx:controller="de.hsh.amir.controller.mainMenu_controller">
     <children>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
             <children>

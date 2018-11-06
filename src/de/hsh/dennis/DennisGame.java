@@ -25,7 +25,7 @@ public class DennisGame extends Game implements Initializable {
 
     private boolean loadMenuFXML() {
         try {
-            HBox node = FXMLLoader.load(getClass().getResource("view/ddd_MainMenu.fxml"));
+            HBox node = FXMLLoader.load(getClass().getResource("view/mainMenu.fxml"));
             this.gameMenu = new DennisMenu();
             this.gameMenu.setMenuPane(node);
             this.gameMenu.addObserver(this);

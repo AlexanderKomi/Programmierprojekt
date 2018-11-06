@@ -6,7 +6,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class ddd_Level_controller {
+public class level_controller {
 
     @FXML
     private HBox hbox_1;
