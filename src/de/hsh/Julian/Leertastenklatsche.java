@@ -24,7 +24,7 @@ import static de.hsh.alexander.util.Path.getExecutionLocation;
 public class Leertastenklatsche extends Game {
 
     public Leertastenklatsche( Observer o ) {
-        super( o, "Julian" );
+        super( o, "Leertastenklatsche" );
         this.setGameContentPane( this.initGameContentWindow( o ) );
     }
 

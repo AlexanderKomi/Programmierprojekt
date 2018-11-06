@@ -1,5 +1,6 @@
 package de.hsh.alexander.game;
 
+import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.util.Logger;
 import javafx.event.ActionEvent;
@@ -30,10 +31,11 @@ public class PacManCoop extends Game implements Initializable {
 
     private boolean loadMenuFXML() {
         try {
+            this.gameMenu = new PacManMenu( this );
             VBox node = FXMLLoader.load( getClass().getResource( "PacManMenu.fxml" ) );
-            this.gameMenu = new PacManMenu();
+
+            //this.gameMenu.addObserver( this );
             this.gameMenu.setMenuPane( node );
-            this.gameMenu.addObserver( this );
             this.setGameContentPane( this.gameMenu.getMenuPane() );
             return true;
         }
@@ -51,12 +53,15 @@ public class PacManCoop extends Game implements Initializable {
             if ( event.getSource() instanceof Button ) {
                 Button button = (Button) event.getSource();
                 if ( button.getText().equals( "zurück" ) ) {
-                    this.notifyObservers( "Mainmenu" );
+                    this.notifyObservers( UpdateCodes.PacMan.mainMenu );
                 }
                 else if ( button.getText().equals( "OK" ) ) {
                     this.setGameContentPane( gamePane );
-                    this.notifyObservers( "Start Game" );
+                    this.notifyObservers( UpdateCodes.PacMan.startGame );
                 }
+            }
+            else {
+                Logger.log( "Pacman Coop : Unknown Source" );
             }
         }
         Logger.log( "In PacMan Coop update : from observable : " + o + " Argument could not be parsed : " + arg );
