@@ -11,7 +11,7 @@ public class UpdatePacman {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
-                    gameContainer.setGameShown( "Pacman Coop" );
+                    gameContainer.setGameShown( UpdateCodes.PacMan.gameName );
                     break;
                 case UpdateCodes.PacMan.mainMenu:
                     gameContainer.showMainMenu();

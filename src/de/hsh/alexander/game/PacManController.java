@@ -6,6 +6,7 @@ import de.hsh.alexander.util.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -25,6 +26,20 @@ public class PacManController extends Game implements Initializable {
         if ( !loadMenuFXML() ) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane( new Pane() );
         }
+        loadGameFXML();
+    }
+
+    private boolean loadGameFXML() {
+        try {
+            this.game = new PacManGame( this );
+            AnchorPane node = FXMLLoader.load( PacManGame.class.getResource( PacManGame.fxml ) );
+            this.game.gamePane = node;
+            return true;
+        }
+        catch ( IOException e ) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private boolean loadMenuFXML() {
@@ -51,6 +66,7 @@ public class PacManController extends Game implements Initializable {
                 String message = (String) arg;
                 switch ( message ) {
                     case UpdateCodes.PacMan.startGame:
+                        this.setGameContentPane( game.gamePane );
                         this.notifyObservers( message );
                         break;
                     case UpdateCodes.PacMan.mainMenu:

@@ -1,18 +1,35 @@
 package de.hsh.alexander.game;
 
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.AnchorPane;
 
+import java.net.URL;
 import java.util.Observable;
+import java.util.Observer;
+import java.util.ResourceBundle;
 
-public class PacManGame extends Observable {
+public class PacManGame extends Observable implements Initializable {
 
-    private Canvas canvas = new Canvas();
+    public static  String     fxml = "PacManGame.fxml";
+    private static Observer   temp;
+    @FXML
+    public         Canvas     gameCanvas;
+    @FXML
+    public         AnchorPane gamePane;
 
-    public Canvas getCanvas() {
-        return canvas;
+    public PacManGame() {}
+
+    public PacManGame( Observer o ) {
+        temp = o;
     }
 
-    public void setCanvas( Canvas canvas ) {
-        this.canvas = canvas;
+    @Override
+    public void initialize( URL location, ResourceBundle resources ) {
+        this.addObserver( temp );
+        GraphicsContext c = this.gameCanvas.getGraphicsContext2D();
+        c.fillText( "Test text", 100.0, 100.0 );
     }
 }
