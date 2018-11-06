@@ -10,6 +10,7 @@ import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.KevinGame;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,8 +28,10 @@ public class GameContainer extends FXGameContainer {
     @Override
     public Games createGames( Observer container ) {
         // TODO : Make games only create on request from main menu
+        PacManCoop pacManCoop = new PacManCoop( container );
+        //pacManCoop.addObserver( container );
         return new Games(
-                new PacManCoop(container),
+                pacManCoop,
                 new AmirsGame( container ),
                 new RAM( container ),
                 new KevinGame( container ),
@@ -39,10 +42,12 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     protected common.MainMenu configMainMenu(Observer container, ArrayList<String> games) {
-        common.MainMenu mainMenu = null;
+        common.MainMenu mainMenu = new MainMenu();
         try {
-            URL location = getClass().getResource("gui/P3_Gui.fxml");
-            mainMenu = FXMLLoader.load(location);
+            URL  location = getClass().getResource( "gui/P3_Gui.fxml" );
+            VBox vbox     = FXMLLoader.load( location );
+            mainMenu.vbox = vbox;
+            mainMenu.setPane( mainMenu.vbox );
         }
         catch ( IOException e ) {
             mainMenu = new common.MainMenu();
