@@ -1,6 +1,7 @@
 package de.hsh.Julian;
 
 import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.util.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -73,7 +74,10 @@ public class Leertastenklatsche extends Game {
         gc.setLineWidth(1);
 
         Sprite briefcase = new Sprite();
-        String location  = getExecutionLocation() + "de/hsh/Julian";
+        StringBuilder sb = new StringBuilder(getExecutionLocation());
+        //sb.deleteCharAt(0);
+
+        String location  = sb.toString() + "de/hsh/Julian";
         briefcase.setImage( location + "/briefcase.png" );
         briefcase.setPosition(200, 0);
 
@@ -82,7 +86,7 @@ public class Leertastenklatsche extends Game {
         for (int i = 0; i < 15; i++)
         {
             Sprite moneybag = new Sprite();
-            moneybag.setImage("moneybag.png");
+            moneybag.setImage(location + "/moneybag.png");
             double px = 350 * Math.random() + 50;
             double py = 350 * Math.random() + 50;
             moneybag.setPosition(px,py);
@@ -91,7 +95,7 @@ public class Leertastenklatsche extends Game {
 
         LongValue lastNanoTime = new LongValue( System.nanoTime() );
 
-        IntValue score = new IntValue(0);
+        IntValue score = new IntValue(99);
 
         new AnimationTimer()
         {
@@ -112,6 +116,7 @@ public class Leertastenklatsche extends Game {
                     briefcase.addVelocity(0,-50);
                 if (input.contains("DOWN"))
                     briefcase.addVelocity(0,50);
+                Logger.log(briefcase);
 
                 briefcase.update(elapsedTime);
 

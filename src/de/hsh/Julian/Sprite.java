@@ -1,8 +1,13 @@
 package de.hsh.Julian;
 
+import de.hsh.alexander.util.Logger;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class Sprite
 {
@@ -32,16 +37,22 @@ public class Sprite
     public void setImage(String filename)
         {
             try {
+                File file = new File(filename);
+                if(file.exists()){
+                    Image i = new Image( new FileInputStream(filename) );
+                    setImage( i );
+                }
+                else{
+                    Logger.log(filename);
+                }
 
-                Image i = new Image( filename );
-                setImage( i );
             }
             catch ( IllegalArgumentException e ) {
-                //e.printStackTrace();
-
-
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-    }
+        }
 
     public void setPosition(double x, double y)
     {
