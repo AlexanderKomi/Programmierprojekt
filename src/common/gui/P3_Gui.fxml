@@ -25,27 +25,27 @@
              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
            </rowConstraints>
             <children>
-               <VBox alignment="CENTER">
+               <VBox alignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                    <Button fx:id="b_game_1" mnemonicParsing="false" />
                    <Text fx:id="txt_game_1" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 1" />
                </VBox>
-               <VBox alignment="CENTER" GridPane.columnIndex="1">
+               <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                    <Button fx:id="b_game_2" mnemonicParsing="false" />
                    <Text fx:id="txt_game_2" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 2" />
                </VBox>
-               <VBox alignment="CENTER" GridPane.columnIndex="2">
+               <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                    <Button fx:id="b_game_4" mnemonicParsing="false" />
                    <Text fx:id="txt_game_4" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 4" />
                </VBox>
-               <VBox alignment="CENTER" GridPane.rowIndex="1">
+               <VBox alignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                    <Button fx:id="b_game_3" mnemonicParsing="false" />
                    <Text fx:id="txt_game_3" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 3" />
                </VBox>
-               <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                    <Button fx:id="b_game_5" mnemonicParsing="false" />
                    <Text fx:id="txt_game_5" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 5" />
                </VBox>
-               <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                    <Button fx:id="b_game_6" mnemonicParsing="false" />
                    <Text fx:id="txt_game_6" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel 6" />
                </VBox>
