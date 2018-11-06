@@ -1,0 +1,14 @@
+#vbox_1 {
+    -fx-min-width: 1200;
+    -fx-min-height: 700;
+}
+
+#vbox_2 {
+    -fx-min-width: 1200;
+    -fx-min-height: 700;
+}
+
+#hbox_1 {
+    -fx-min-width: 1200;
+    -fx-min-height: 700;
+}
