@@ -8,6 +8,7 @@ import de.hsh.alexander.util.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -33,7 +34,7 @@ public class PacManController extends Game implements Initializable {
     private boolean loadGameFXML() {
         try {
             this.game = new PacManGame( this );
-            this.game.gamePane = FXMLLoader.load( PacManGame.class.getResource( PacManGame.fxml ) );
+            PacManGame.gamePane = FXMLLoader.load( PacManGame.class.getResource( PacManGame.fxml ) );
             return true;
         }
         catch ( IOException e ) {
@@ -80,7 +81,7 @@ public class PacManController extends Game implements Initializable {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
-                    this.setGameContentPane( game.gamePane );
+                    this.setGameContentPane( PacManGame.gamePane );
                     this.notifyObservers( message );
                     break;
                 case UpdateCodes.PacMan.mainMenu:
@@ -96,14 +97,21 @@ public class PacManController extends Game implements Initializable {
         }
     }
 
-    private void update( KeyEventManager o, Object arg )   {}
+    private void update( KeyEventManager o, Object arg ) {
+        if ( arg instanceof KeyEvent ) {
+            KeyEvent keyEvent = (KeyEvent) arg;
+            this.game.movePacMan1( keyEvent );
+        }
+    }
 
     private void update( MouseEventManager o, Object arg ) {}
 
-
-
     private void logParsingError( Observable o, Object arg ) {
         Logger.log( "In PacMan Coop update : from observable : " + o + " Argument could not be parsed : " + arg );
+    }
+
+    public void render() {
+        this.game.render();
     }
 
     public Node getStartingScreen() {

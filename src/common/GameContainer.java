@@ -1,5 +1,6 @@
 package common;
 
+import common.updates.UpdateCodes;
 import common.updates.Updater;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.FXGameContainer;
@@ -75,6 +76,7 @@ public class GameContainer extends FXGameContainer {
         //Logger.log("Rendering");
         if ( this.getGames() != null ) {
             ((Leertastenklatsche) this.getGames().get( "Leertastenklatsche" )).render();
+            ((PacManController) this.getGames().get( UpdateCodes.PacMan.gameName )).render();
         }
     }
 

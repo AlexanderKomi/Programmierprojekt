@@ -1,35 +1,17 @@
 package de.hsh.alexander.game.actor;
 
-import de.hsh.alexander.util.Path;
-import javafx.scene.image.Image;
+public class PacMan extends Actor {
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
-public class PacMan {
+    private static final double start_x = 100;
+    private static final double start_y = 100;
 
-    private Image picture;
-
-    public PacMan() {
-        loadPicture();
+    public PacMan( String pictureFileName ) {
+        super( pictureFileName, start_x, start_y );
     }
 
-    private void loadPicture() {
-        try {
-            String location = Path.getExecutionLocation() + "de/hsh/alexander/game/actor/" + "Bug.png";
-            picture = new Image( new FileInputStream( location ) );
-        }
-        catch ( FileNotFoundException e ) {
-            e.printStackTrace();
-        }
+    public PacMan( String pictureFileName, double x, double y ) {
+        super( pictureFileName, x, y );
     }
 
-
-    public Image getPicture() {
-        return picture;
-    }
-
-    public void setPicture( Image picture ) {
-        this.picture = picture;
-    }
 }
