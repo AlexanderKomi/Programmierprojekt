@@ -1,6 +1,7 @@
 package de.hsh.alexander.game;
 
 import common.events.KeyEventManager;
+import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.util.Logger;
@@ -66,6 +67,9 @@ public class PacManController extends Game implements Initializable {
         else if ( o instanceof KeyEventManager ) {
             update( (KeyEventManager) o, arg );
         }
+        else if ( o instanceof MouseEventManager ) {
+            update( (MouseEventManager) o, arg );
+        }
         else {
             logParsingError( o, arg );
         }
@@ -92,9 +96,11 @@ public class PacManController extends Game implements Initializable {
         }
     }
 
-    private void update( KeyEventManager o, Object arg ) {
+    private void update( KeyEventManager o, Object arg )   {}
 
-    }
+    private void update( MouseEventManager o, Object arg ) {}
+
+
 
     private void logParsingError( Observable o, Object arg ) {
         Logger.log( "In PacMan Coop update : from observable : " + o + " Argument could not be parsed : " + arg );

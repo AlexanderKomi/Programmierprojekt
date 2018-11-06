@@ -1,5 +1,6 @@
 package de.hsh.alexander.game;
 
+import de.hsh.alexander.game.actor.PacMan;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -29,7 +30,14 @@ public class PacManGame extends Observable implements Initializable {
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
         this.addObserver( temp );
+        fillCanvas();
+
+    }
+
+    private void fillCanvas() {
         GraphicsContext c = this.gameCanvas.getGraphicsContext2D();
         c.fillText( "Test text", 100.0, 100.0 );
+        PacMan pacMan1 = new PacMan();
+        c.drawImage( pacMan1.getPicture(), 150, 150, 100, 100 );
     }
 }
