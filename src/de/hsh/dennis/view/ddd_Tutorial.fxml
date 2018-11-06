@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
+<HBox xmlns:fx="http://javafx.com/fxml/1" fx:id="hbox_1" prefHeight="100.0" prefWidth="200.0"
+      xmlns="http://javafx.com/javafx/10.0.1">
+    <children>
+        <VBox fx:id="vbox_1" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <children>
+                <AnchorPane VBox.vgrow="ALWAYS">
+                    <children>
+                        <ImageView fx:id="imageView" fitHeight="300.0" fitWidth="600.0" layoutX="300.0" layoutY="150.0"
+                                   pickOnBounds="true" preserveRatio="true"/>
+                        <Button fx:id="b_left" layoutX="284.0" layoutY="560.0" mnemonicParsing="false"
+                                onAction="#button_clicked" text="&lt;--"/>
+                        <Button fx:id="b_right" layoutX="886.0" layoutY="560.0" mnemonicParsing="false"
+                                onAction="#button_clicked" text="--&gt;"/>
+                        <Button fx:id="b_exit" layoutX="579.0" layoutY="620.0" mnemonicParsing="false"
+                                onAction="#button_clicked" text="exit"/>
+                        <TextArea fx:id="ta_left" layoutX="14.0" layoutY="150.0" prefHeight="300.0" prefWidth="200.0"
+                                  text="Beschreibung" AnchorPane.leftAnchor="40.0"/>
+                        <TextArea fx:id="ta_right" layoutX="986.0" layoutY="150.0" prefHeight="300.0" prefWidth="200.0"
+                                  text="Beschreibung" AnchorPane.rightAnchor="40.0"/>
+                        <Text fx:id="t_subject" layoutX="520.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Subject" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0"
+                              AnchorPane.topAnchor="60.0">
+                            <font>
+                                <Font size="42.0"/>
+                            </font>
+                        </Text>
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+    </children>
+    <stylesheets>
+        <URL value="@../../../../../../gui/gui_prototyp_game/dimensions.css"/>
+        <URL value="@../../../../../../gui/gui_prototyp_game/main.css"/>
+    </stylesheets>
+</HBox>
