@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
-      minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1"
+      minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.152"
       fx:controller="common.MainMenu">
    <AnchorPane fx:id="ap_desktop" VBox.vgrow="ALWAYS">
       <VBox alignment="CENTER" layoutX="80.0" layoutY="50.0">

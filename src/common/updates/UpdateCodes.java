@@ -11,4 +11,9 @@ public class UpdateCodes {
         public static final String mainMenu  = "Mainmenu";
     }
 
+    public class Dennis {
+        public static final String startGame = "Start Game";
+
+    }
+
 }

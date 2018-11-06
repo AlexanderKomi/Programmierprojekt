@@ -37,47 +37,17 @@ public class PacManMenu extends GameMenu {
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
         this.addObserver( observer );
-        okButton.setOnAction( e -> {
-            Logger.log( "PacManMenu : Ok Button pressed" );
-            if ( this.countObservers() < 1 ) {
-                try {
-                    throw new Exception( "Less than one observer are registered." );
-                }
-                catch ( Exception e1 ) {
-                    e1.printStackTrace();
-                }
-            }
-
-            this.setChanged();
-            this.notifyObservers( UpdateCodes.PacMan.startGame );
-        } );
-        backButton.setOnAction( e -> {
-            Logger.log( "PacManMenu : Back Button pressed" );
-            if ( this.countObservers() < 1 ) {
-                try {
-                    throw new Exception( "Less than one observer are registered." );
-                }
-                catch ( Exception e1 ) {
-                    e1.printStackTrace();
-                }
-            }
-            this.setChanged();
-            this.notifyObservers( UpdateCodes.PacMan.mainMenu );
-        } );
-
     }
 
     public void backButtonPressed( ActionEvent actionEvent ) {
         Logger.log( "PacManMenu : Back Button pressed" );
-        Logger.log( "PacManMenu : count observers : " + this.countObservers() );
         this.setChanged();
-        this.notifyObservers( "Back" );
+        this.notifyObservers( UpdateCodes.PacMan.mainMenu );
     }
 
     public void okButtonPressed( ActionEvent actionEvent ) {
         Logger.log( "PacManMenu : Ok Button pressed" );
-        Logger.log( "PacManMenu : count observers : " + this.countObservers() );
         this.setChanged();
-        this.notifyObservers( "Ok" );
+        this.notifyObservers( UpdateCodes.PacMan.startGame );
     }
 }
