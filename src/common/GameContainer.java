@@ -28,10 +28,8 @@ public class GameContainer extends FXGameContainer {
     @Override
     public Games createGames( Observer container, KeyEventManager keyEventManager ) {
         // TODO : Make games only create on request from main menu
-        PacManController pacManController = new PacManController( container );
-        //pacManController.addObserver( container );
-        return new Games(
-                pacManController,
+        Games games = new Games(
+                new PacManCoop( container ),
                 new AmirsGame( container ),
                 new RAM( container ),
                 new KevinGame( container ),
