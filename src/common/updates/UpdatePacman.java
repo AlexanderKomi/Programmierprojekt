@@ -10,10 +10,10 @@ public class UpdatePacman {
         if ( arg instanceof String ) {
             String message = (String) arg;
             switch ( message ) {
-                case "Start Game":
+                case UpdateCodes.PacMan.startGame:
                     gameContainer.setGameShown( "Pacman Coop" );
                     break;
-                case "Mainmenu":
+                case UpdateCodes.PacMan.mainMenu:
                     gameContainer.showMainMenu();
                     break;
                 default:
