@@ -3,13 +3,18 @@ package de.hsh.dennis.controller;
 import de.hsh.alexander.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class mainMenu_controller {
+import java.net.URL;
+import java.util.Observable;
+import java.util.ResourceBundle;
+
+public class mainMenu_controller extends Observable implements Initializable {
 
     @FXML
     private HBox hbox_1;
@@ -34,6 +39,8 @@ public class mainMenu_controller {
         String id = getId(event);
         switch (id){
             case "b_play":
+                this.setChanged();
+                this.notifyObservers( "b_play" );
                 Logger.log("button_clicked Aufruf mit b_play.");
                 break;
             case "b_tutorial":
@@ -52,4 +59,8 @@ public class mainMenu_controller {
         return ((Node) event.getSource()).getId();
     }
 
+    @Override
+    public void initialize( URL location, ResourceBundle resources ) {
+
+    }
 }
