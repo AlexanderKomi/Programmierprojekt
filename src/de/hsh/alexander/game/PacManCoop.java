@@ -3,11 +3,9 @@ package de.hsh.alexander.game;
 import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.util.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -48,22 +46,31 @@ public class PacManCoop extends Game implements Initializable {
     /* Currently not used... */
     @Override
     public void update( Observable o, Object arg ) {
-        if ( arg instanceof ActionEvent ) {
-            ActionEvent event = (ActionEvent) arg;
-            if ( event.getSource() instanceof Button ) {
-                Button button = (Button) event.getSource();
-                if ( button.getText().equals( "zurück" ) ) {
-                    this.notifyObservers( UpdateCodes.PacMan.mainMenu );
-                }
-                else if ( button.getText().equals( "OK" ) ) {
-                    this.setGameContentPane( gamePane );
-                    this.notifyObservers( UpdateCodes.PacMan.startGame );
+        if ( o instanceof PacManMenu ) {
+            if ( arg instanceof String ) {
+                String message = (String) arg;
+                switch ( message ) {
+                    case UpdateCodes.PacMan.startGame:
+                        this.notifyObservers( message );
+                        break;
+                    case UpdateCodes.PacMan.mainMenu:
+                        this.notifyObservers( message );
+                        break;
+                    default:
+                        logParsingError( o, arg );
+                        break;
                 }
             }
             else {
-                Logger.log( "Pacman Coop : Unknown Source" );
+                logParsingError( o, arg );
             }
         }
+        else {
+            logParsingError( o, arg );
+        }
+    }
+
+    private void logParsingError( Observable o, Object arg ) {
         Logger.log( "In PacMan Coop update : from observable : " + o + " Argument could not be parsed : " + arg );
     }
 

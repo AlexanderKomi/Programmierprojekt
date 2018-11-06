@@ -49,8 +49,9 @@ public class Updater {
             else if ( game instanceof KevinGame ) {
                 update( (KevinGame) game, arg, gameContainer );
             }
-            Logger.log( unknownErrorCode + " type : " + Game.class );
-            Logger.log( o, arg );
+            else {
+                Logger.log( unknownErrorCode + " type : " + Game.class );
+            }
         }
         else if ( o instanceof MainMenu ) {
             UpdateMainMenu.update( (MainMenu) o, arg, gameContainer );
