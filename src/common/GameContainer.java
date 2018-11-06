@@ -4,7 +4,7 @@ import common.updates.Updater;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.FXGameContainer;
 import de.hsh.alexander.engine.game.Games;
-import de.hsh.alexander.game.PacManCoop;
+import de.hsh.alexander.game.PacManController;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
@@ -28,10 +28,10 @@ public class GameContainer extends FXGameContainer {
     @Override
     public Games createGames( Observer container ) {
         // TODO : Make games only create on request from main menu
-        PacManCoop pacManCoop = new PacManCoop( container );
-        //pacManCoop.addObserver( container );
+        PacManController pacManController = new PacManController( container );
+        //pacManController.addObserver( container );
         return new Games(
-                pacManCoop,
+                pacManController,
                 new AmirsGame( container ),
                 new RAM( container ),
                 new KevinGame( container ),

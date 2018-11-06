@@ -6,7 +6,6 @@ import de.hsh.alexander.util.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -16,11 +15,12 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class PacManCoop extends Game implements Initializable {
+public class PacManController extends Game implements Initializable {
 
     private PacManMenu gameMenu;
-    private BorderPane gamePane;
-    public PacManCoop( Observer o ) {
+    private PacManGame game;
+
+    public PacManController( Observer o ) {
         super( o, UpdateCodes.PacMan.gameName );
         if ( !loadMenuFXML() ) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane( new Pane() );
