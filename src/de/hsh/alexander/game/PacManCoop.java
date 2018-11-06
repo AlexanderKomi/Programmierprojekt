@@ -21,7 +21,7 @@ public class PacManCoop extends Game implements Initializable {
     private PacManMenu gameMenu;
     private BorderPane gamePane;
     public PacManCoop( Observer o ) {
-        super( o, "Pacman Coop" );
+        super( o, UpdateCodes.PacMan.gameName );
         if ( !loadMenuFXML() ) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane( new Pane() );
         }
@@ -30,7 +30,7 @@ public class PacManCoop extends Game implements Initializable {
     private boolean loadMenuFXML() {
         try {
             this.gameMenu = new PacManMenu( this );
-            VBox node = FXMLLoader.load( getClass().getResource( "PacManMenu.fxml" ) );
+            VBox node = FXMLLoader.load( PacManMenu.class.getResource( PacManMenu.fxml ) );
 
             //this.gameMenu.addObserver( this );
             this.gameMenu.setMenuPane( node );

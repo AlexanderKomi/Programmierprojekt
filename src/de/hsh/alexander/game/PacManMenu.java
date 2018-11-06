@@ -14,6 +14,9 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class PacManMenu extends GameMenu {
+
+    public static final String fxml = "PacManMenu.fxml";
+
     @FXML
     public        VBox     basicPane;
     public static Observer observer;

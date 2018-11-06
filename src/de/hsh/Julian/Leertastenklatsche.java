@@ -1,7 +1,6 @@
 package de.hsh.Julian;
 
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.util.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -116,7 +115,7 @@ public class Leertastenklatsche extends Game {
                     briefcase.addVelocity(0,-50);
                 if (input.contains("DOWN"))
                     briefcase.addVelocity(0,50);
-                Logger.log(briefcase);
+                //Logger.log(briefcase);
 
                 briefcase.update(elapsedTime);
 
