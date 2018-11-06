@@ -1,13 +1,12 @@
 package de.hsh.alexander.game;
 
-import common.KeyEventManager;
+import common.events.KeyEventManager;
 import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.util.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -33,8 +32,7 @@ public class PacManController extends Game implements Initializable {
     private boolean loadGameFXML() {
         try {
             this.game = new PacManGame( this );
-            AnchorPane node = FXMLLoader.load( PacManGame.class.getResource( PacManGame.fxml ) );
-            this.game.gamePane = node;
+            this.game.gamePane = FXMLLoader.load( PacManGame.class.getResource( PacManGame.fxml ) );
             return true;
         }
         catch ( IOException e ) {
@@ -63,31 +61,39 @@ public class PacManController extends Game implements Initializable {
     @Override
     public void update( Observable o, Object arg ) {
         if ( o instanceof PacManMenu ) {
-            if ( arg instanceof String ) {
-                String message = (String) arg;
-                switch ( message ) {
-                    case UpdateCodes.PacMan.startGame:
-                        this.setGameContentPane( game.gamePane );
-                        this.notifyObservers( message );
-                        break;
-                    case UpdateCodes.PacMan.mainMenu:
-                        this.notifyObservers( message );
-                        break;
-                    default:
-                        logParsingError( o, arg );
-                        break;
-                }
-            }
-            else {
-                logParsingError( o, arg );
-            }
+            update( (PacManMenu) o, arg );
         }
         else if ( o instanceof KeyEventManager ) {
-
+            update( (KeyEventManager) o, arg );
         }
         else {
             logParsingError( o, arg );
         }
+    }
+
+    private void update( PacManMenu o, Object arg ) {
+        if ( arg instanceof String ) {
+            String message = (String) arg;
+            switch ( message ) {
+                case UpdateCodes.PacMan.startGame:
+                    this.setGameContentPane( game.gamePane );
+                    this.notifyObservers( message );
+                    break;
+                case UpdateCodes.PacMan.mainMenu:
+                    this.notifyObservers( message );
+                    break;
+                default:
+                    logParsingError( o, arg );
+                    break;
+            }
+        }
+        else {
+            logParsingError( o, arg );
+        }
+    }
+
+    private void update( KeyEventManager o, Object arg ) {
+
     }
 
     private void logParsingError( Observable o, Object arg ) {

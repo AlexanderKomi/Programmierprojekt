@@ -1,6 +1,6 @@
 package de.hsh.Julian;
 
-import common.KeyEventManager;
+import common.events.KeyEventManager;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.util.Logger;
 import javafx.scene.canvas.Canvas;

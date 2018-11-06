@@ -1,6 +1,7 @@
 package de.hsh.alexander.engine.game;
 
-import common.KeyEventManager;
+import common.events.KeyEventManager;
+import common.events.MouseEventManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,6 +57,12 @@ public class Games extends ArrayList<Game> {
     public void addKeyEventManager( KeyEventManager keyEventManager ) {
         this.forEach( game -> {
             game.addObservable( keyEventManager );
+        } );
+    }
+
+    public void addMouseEventManager( MouseEventManager mouseEventManager ) {
+        this.forEach( game -> {
+            game.addObservable( mouseEventManager );
         } );
     }
 

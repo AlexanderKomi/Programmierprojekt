@@ -1,4 +1,4 @@
-package common;
+package common.events;
 
 import javafx.scene.input.KeyEvent;
 
