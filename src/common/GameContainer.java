@@ -29,7 +29,7 @@ public class GameContainer extends FXGameContainer {
     public Games createGames( Observer container, KeyEventManager keyEventManager ) {
         // TODO : Make games only create on request from main menu
         Games games = new Games(
-                new PacManCoop( container ),
+                new PacManController( container ),
                 new AmirsGame( container ),
                 new RAM( container ),
                 new KevinGame( container ),
