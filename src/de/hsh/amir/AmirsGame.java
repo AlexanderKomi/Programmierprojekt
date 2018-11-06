@@ -20,7 +20,7 @@ public class AmirsGame extends Game implements Initializable {
     private AmirsMenu gameMenu;
 
     public AmirsGame( Observer o ) {
-        super(o, "DDos Defender");
+        super(o, "Amirs Game");
         if (!loadMenuFXML()) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane(new Pane());
         }
@@ -28,7 +28,7 @@ public class AmirsGame extends Game implements Initializable {
 
     private boolean loadMenuFXML() {
         try {
-            HBox node = FXMLLoader.load(getClass().getResource("view/ddd_MainMenu.fxml"));
+            HBox node = FXMLLoader.load(getClass().getResource("view/MainMenu.fxml"));
             this.gameMenu = new AmirsMenu();
             this.gameMenu.setMenuPane(node);
             this.gameMenu.addObserver(this);

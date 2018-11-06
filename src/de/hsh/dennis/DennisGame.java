@@ -17,7 +17,7 @@ public class DennisGame extends Game implements Initializable {
     private DennisMenu gameMenu;
 
     public DennisGame( Observer o ) {
-        super(o, "Amirs Game");
+        super(o, "DDos Defender");
         if (!loadMenuFXML()) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane(new Pane());
         }
@@ -25,7 +25,7 @@ public class DennisGame extends Game implements Initializable {
 
     private boolean loadMenuFXML() {
         try {
-            HBox node = FXMLLoader.load(getClass().getResource("view/ÄnderMich.fxml"));
+            HBox node = FXMLLoader.load(getClass().getResource("view/ddd_MainMenu.fxml"));
             this.gameMenu = new DennisMenu();
             this.gameMenu.setMenuPane(node);
             this.gameMenu.addObserver(this);
