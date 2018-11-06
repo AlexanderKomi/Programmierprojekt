@@ -2,6 +2,7 @@ package de.hsh.Julian;
 
 import de.hsh.alexander.engine.game.Game;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -39,30 +40,22 @@ public class Leertastenklatsche extends Game {
         Pane root = new Pane();
 
         Canvas canvas = new Canvas( 512, 512 );
-        root.getChildren().add( canvas );
 
         ArrayList<String> input = new ArrayList<String>();
 
-        root.setOnKeyPressed(
-                new EventHandler<KeyEvent>()
-                {
-                    public void handle(KeyEvent e)
-                    {
-                        String code = e.getCode().toString();
-                        if ( !input.contains(code) )
-                            input.add( code );
-                    }
-                } );
+        canvas.setOnKeyPressed( e -> {
+            String code = e.getCode().toString();
+            //Logger.log("KeyCode : " + code);
+            if ( !input.contains(code) )
+                input.add( code );
+        });
+        root.getChildren().add( canvas );
 
         root.setOnKeyReleased(
-                new EventHandler<KeyEvent>()
-                {
-                    public void handle(KeyEvent e)
-                    {
-                        String code = e.getCode().toString();
-                        input.remove( code );
-                    }
-                } );
+                e -> {
+                    String code = e.getCode().toString();
+                    input.remove( code );
+                });
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -96,7 +89,8 @@ public class Leertastenklatsche extends Game {
 
         IntValue score = new IntValue(99);
 
-        new AnimationTimer()
+        Platform.runLater(()->{
+            new AnimationTimer()
         {
             public void handle(long currentNanoTime)
             {
@@ -107,9 +101,12 @@ public class Leertastenklatsche extends Game {
                 // game logic
 
                 briefcase.setVelocity(0,0);
-                if (input.contains("LEFT"))
-                    briefcase.addVelocity(-50,0);
+                if (input.contains("LEFT")) {
+                    Logger.log("Leertastenklatsche : Left klicked");
+                }
+                briefcase.addVelocity(-50,0);
                 if (input.contains("RIGHT"))
+                    Logger.log("Leertastenklatsche : Right klicked");
                     briefcase.addVelocity(50,0);
                 if (input.contains("UP"))
                     briefcase.addVelocity(0,-50);
@@ -145,6 +142,8 @@ public class Leertastenklatsche extends Game {
                 gc.strokeText( pointsText, 360, 36 );
             }
         }.start();
+
+        });
         return root;
     }
 }
