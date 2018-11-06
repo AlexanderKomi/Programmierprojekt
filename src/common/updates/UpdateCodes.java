@@ -7,6 +7,7 @@ public class UpdateCodes {
     }
 
     public class PacMan {
+        public static final String gameName  = "Pacman Coop";
         public static final String startGame = "Start Game";
         public static final String mainMenu  = "Mainmenu";
     }

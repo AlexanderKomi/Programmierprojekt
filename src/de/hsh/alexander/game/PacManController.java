@@ -6,7 +6,7 @@ import de.hsh.alexander.util.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -16,21 +16,36 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class PacManCoop extends Game implements Initializable {
+public class PacManController extends Game implements Initializable {
 
     private PacManMenu gameMenu;
-    private BorderPane gamePane;
-    public PacManCoop( Observer o ) {
-        super( o, "Pacman Coop" );
+    private PacManGame game;
+
+    public PacManController( Observer o ) {
+        super( o, UpdateCodes.PacMan.gameName );
         if ( !loadMenuFXML() ) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane( new Pane() );
         }
+        loadGameFXML();
+    }
+
+    private boolean loadGameFXML() {
+        try {
+            this.game = new PacManGame( this );
+            AnchorPane node = FXMLLoader.load( PacManGame.class.getResource( PacManGame.fxml ) );
+            this.game.gamePane = node;
+            return true;
+        }
+        catch ( IOException e ) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private boolean loadMenuFXML() {
         try {
             this.gameMenu = new PacManMenu( this );
-            VBox node = FXMLLoader.load( getClass().getResource( "PacManMenu.fxml" ) );
+            VBox node = FXMLLoader.load( PacManMenu.class.getResource( PacManMenu.fxml ) );
 
             //this.gameMenu.addObserver( this );
             this.gameMenu.setMenuPane( node );
@@ -51,6 +66,7 @@ public class PacManCoop extends Game implements Initializable {
                 String message = (String) arg;
                 switch ( message ) {
                     case UpdateCodes.PacMan.startGame:
+                        this.setGameContentPane( game.gamePane );
                         this.notifyObservers( message );
                         break;
                     case UpdateCodes.PacMan.mainMenu:

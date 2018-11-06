@@ -4,7 +4,7 @@ import common.GameContainer;
 import common.MainMenu;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.game.PacManCoop;
+import de.hsh.alexander.game.PacManController;
 import de.hsh.alexander.util.Logger;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
@@ -31,8 +31,8 @@ public class Updater {
     public static void update( Observable o, Object arg, GameContainer gameContainer ) {
         if ( o instanceof Game ) {
             Game game = (Game) o;
-            if ( game instanceof PacManCoop ) {
-                UpdatePacman.update( (PacManCoop) game, arg, gameContainer );
+            if ( game instanceof PacManController ) {
+                UpdatePacman.update( (PacManController) game, arg, gameContainer );
             }
             else if ( game instanceof AmirsGame ) {
                 update( (AmirsGame) game, arg, gameContainer );
