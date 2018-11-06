@@ -4,14 +4,11 @@ import de.hsh.alexander.engine.game.GameMenu;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class AmirsMenu extends GameMenu {
 
-    public AmirsMenu( Observer observer ) {
-        super( observer );
-
+    public AmirsMenu() {
     }
 
     @Override
