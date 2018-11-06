@@ -10,7 +10,6 @@ import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.KevinGame;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,29 +27,22 @@ public class GameContainer extends FXGameContainer {
     @Override
     public Games createGames( Observer container ) {
         // TODO : Make games only create on request from main menu
-        PacManCoop pacManCoop = new PacManCoop( container );
-        Games      games      = new Games();
-        games.addAll(
-                pacManCoop,
+        return new Games(
+                new PacManCoop(container),
                 new AmirsGame( container ),
                 new RAM( container ),
                 new KevinGame( container ),
                 new Leertastenklatsche( container ),
                 new DennisGame( container )
-                    );
-        return games;
+        );
     }
 
     @Override
-    protected MainMenu configMainMenu( Observer container, ArrayList<String> games ) {
-        common.MainMenu mainMenu = new MainMenu();
+    protected common.MainMenu configMainMenu(Observer container, ArrayList<String> games) {
+        common.MainMenu mainMenu = null;
         try {
-            URL        location = getClass().getResource( "gui/P3_Gui.fxml" );
-            FXMLLoader fl       = new FXMLLoader();
-            VBox       v        = FXMLLoader.load( location );
-            fl.setController( mainMenu );
-            mainMenu.vbox = v;
-            System.out.println( fl.getController().toString() );
+            URL location = getClass().getResource("gui/P3_Gui.fxml");
+            mainMenu = FXMLLoader.load(location);
         }
         catch ( IOException e ) {
             mainMenu = new common.MainMenu();
@@ -58,6 +50,7 @@ public class GameContainer extends FXGameContainer {
         }
 
         mainMenu.setGameNames( games );
+        mainMenu.addObserver(container);
         return mainMenu;
     }
 
