@@ -38,7 +38,7 @@ public class Updater {
                 update( (AmirsGame) game, arg, gameContainer );
             }
             else if ( game instanceof RAM ) {
-                update( (RAM) game, arg, gameContainer );
+                UpdateRAM.update( (RAM) game, arg, gameContainer );
             }
             else if ( game instanceof DennisGame ) {
                 update( (DennisGame) game, arg, gameContainer );
@@ -66,9 +66,6 @@ public class Updater {
         Logger.log( game, arg );
     }
 
-    public static void update( RAM game, Object arg, GameContainer gameContainer ) {
-        Logger.log( game, arg );
-    }
 
     public static void update( DennisGame game, Object arg, GameContainer gameContainer ) {
         Logger.log( game, arg );
