@@ -25,6 +25,5 @@
     </children>
     <stylesheets>
         <URL value="@resources/dimensions.css"/>
-        <URL value="@resources/main.css"/>
     </stylesheets>
 </HBox>

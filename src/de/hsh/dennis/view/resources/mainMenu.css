@@ -1,4 +1,4 @@
-pic_header {
+#pic_header {
     -fx-image: url("header.jpg");
 }
 

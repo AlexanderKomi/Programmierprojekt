@@ -44,12 +44,15 @@ public class mainMenu_controller extends Observable implements Initializable {
                 Logger.log("button_clicked Aufruf mit b_play.");
                 break;
             case "b_tutorial":
+                this.notifyObservers( "b_tutorial" );
                 Logger.log("button_clicked Aufruf mit b_tutorial.");
                 break;
             case "b_exit":
+                this.notifyObservers( "b_exit" );
                 Logger.log("button_clicked Aufruf mit b_exit.");
                 break;
             default:
+                this.notifyObservers( "error" );
                 Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
 
         }
