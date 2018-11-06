@@ -3,11 +3,13 @@ package de.hsh.dennis.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
-public class ddd_BreakMenu_controller {
+public class tutorial_controller {
 
     @FXML
     private HBox hbox_1;
@@ -16,16 +18,25 @@ public class ddd_BreakMenu_controller {
     private VBox vbox_1;
 
     @FXML
-    private TextField tf_score;
+    private ImageView imageView;
 
     @FXML
-    private Button b_play;
+    private Button b_left;
 
     @FXML
-    private Button b_tutorial;
+    private Button b_right;
 
     @FXML
     private Button b_exit;
+
+    @FXML
+    private TextArea ta_left;
+
+    @FXML
+    private TextArea ta_right;
+
+    @FXML
+    private Text t_subject;
 
     @FXML
     void button_clicked(ActionEvent event) {
