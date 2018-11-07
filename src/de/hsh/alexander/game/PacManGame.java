@@ -67,7 +67,6 @@ public class PacManGame extends Observable implements Initializable {
         pacMan1KeyMap.put( "Left", Direction.Left );
         pacMan1KeyMap.put( "Right", Direction.Right );
         pacMan1 = new PacMan( "Bug.png", pacMan1KeyMap );
-        pacMan1.setSpeed( 10 );
     }
 
     private void initPacMan2() {
@@ -77,12 +76,11 @@ public class PacManGame extends Observable implements Initializable {
         pacMan2KeyMap.put( "A", Direction.Left );
         pacMan2KeyMap.put( "D", Direction.Right );
         pacMan2 = new PacMan( "Bug.png", pacMan2KeyMap );
-        pacMan2.setSpeed( 10 );
     }
 
     void movePacMan1( KeyEvent keyEvent ) {
-        pacMan1.move( keyEvent.getCode().getName() );
-        pacMan2.move( keyEvent.getCode().getName() );
+        pacMan1.move( keyEvent );
+        pacMan2.move( keyEvent );
 
         /*
         String keyName = keyEvent.getCode().getName();
