@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="gamePane" prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/10.0.1" fx:controller="de.hsh.alexander.game.PacManGame">
-    <Canvas fx:id="gameCanvas" height="200.0" layoutX="118.0" layoutY="65.0" width="378.0"/>
+    <Canvas fx:id="gameCanvas" height="865.0" width="1318.0"/>
 </AnchorPane>

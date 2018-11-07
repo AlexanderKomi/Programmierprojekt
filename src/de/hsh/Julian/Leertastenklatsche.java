@@ -1,8 +1,8 @@
 package de.hsh.Julian;
 
+import common.events.KeyEventManager;
 import de.hsh.alexander.engine.game.Game;
-import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
+import de.hsh.alexander.util.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -12,7 +12,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -23,128 +22,151 @@ import static de.hsh.alexander.util.Path.getExecutionLocation;
 
 public class Leertastenklatsche extends Game {
 
+    private GraphicsContext   gc;
+    private Pane              root         = new Pane();
+    private Canvas            canvas       = new Canvas( 512, 512 );
+    private int               score        = 0;
+    private Sprite            briefcase    = new Sprite();
+    private String            location     = getLocation();
+    private ArrayList<String> input        = new ArrayList<String>();
+    private ArrayList<Sprite> moneybagList = new ArrayList<Sprite>();
+
     public Leertastenklatsche( Observer o ) {
         super( o, "Leertastenklatsche" );
         this.setGameContentPane( this.initGameContentWindow( o ) );
-    }
-
-    @Override
-    public void update( Observable o, Object arg ) {
-
+        this.getGameContentPane().setOnKeyPressed(
+                e -> {
+                    String code = e.getCode().toString();
+                    if ( !input.contains( code ) ) {
+                        input.add( code );
+                    }
+                    Logger.log( "Key pressed : " + code );
+                } );
     }
 
     public Pane initGameContentWindow( Observer observer ) {
 
      //   Logger.log( "Dir : " + getExecutionLocation(),  Path.getAllFileNames(getExecutionLocation()) );
-        Pane root = new Pane();
-
-        Canvas canvas = new Canvas( 512, 512 );
+        addKeyListener();
         root.getChildren().add( canvas );
+        initializeGraphicsContext();
 
-        ArrayList<String> input = new ArrayList<String>();
+        briefcase.setImage( location + "/briefcase.png" );
+        briefcase.setPosition(200, 0);
+        collisionDetection();
+        createMoneyBags();
+        parseInput( input );
+        render();
+        return root;
+    }
 
-        root.setOnKeyPressed(
-                new EventHandler<KeyEvent>()
-                {
-                    public void handle(KeyEvent e)
-                    {
-                        String code = e.getCode().toString();
-                        if ( !input.contains(code) )
-                            input.add( code );
+    private void addKeyListener() {
+        canvas.setOnKeyPressed(
+                e -> {
+                    String code = e.getCode().toString();
+                    if ( !input.contains( code ) ) {
+                        input.add( code );
                     }
+                    Logger.log( "Key pressed : " + code );
                 } );
 
+        root.setOnKeyPressed( e -> {
+            String code = e.getCode().toString();
+            if ( !input.contains( code ) ) {
+                input.add( code );
+            }
+            Logger.log( "Key pressed : " + code );
+        } );
         root.setOnKeyReleased(
-                new EventHandler<KeyEvent>()
-                {
-                    public void handle(KeyEvent e)
-                    {
-                        String code = e.getCode().toString();
-                        input.remove( code );
-                    }
+                e -> {
+                    String code = e.getCode().toString();
+                    input.remove( code );
+                    Logger.log( "Key pressed : " + code );
                 } );
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+    }
 
+    private void initializeGraphicsContext() {
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 24 );
+        gc = canvas.getGraphicsContext2D();
         gc.setFont( theFont );
         gc.setFill( Color.GREEN );
         gc.setStroke( Color.BLACK );
-        gc.setLineWidth(1);
+        gc.setLineWidth( 1 );
+    }
 
-        Sprite briefcase = new Sprite();
-        StringBuilder sb = new StringBuilder(getExecutionLocation());
-        //sb.deleteCharAt(0);
+    private void collisionDetection() {
+        for ( Sprite moneybag : moneybagList ) {
+            if ( briefcase.intersects( moneybag ) ) {
+                score++;
+            }
+        }
+    }
 
-        String location  = sb.toString() + "de/hsh/Julian";
-        briefcase.setImage( location + "/briefcase.png" );
-        briefcase.setPosition(200, 0);
-
-        ArrayList<Sprite> moneybagList = new ArrayList<Sprite>();
-
-        for (int i = 0; i < 15; i++)
-        {
+    private void createMoneyBags() {
+        for ( int i = 0 ; i < 15 ; i++ ) {
             Sprite moneybag = new Sprite();
-            moneybag.setImage(location + "/moneybag.png");
+            moneybag.setImage( location + "/moneybag.png" );
             double px = 350 * Math.random() + 50;
             double py = 350 * Math.random() + 50;
-            moneybag.setPosition(px,py);
+            moneybag.setPosition( px, py );
             moneybagList.add( moneybag );
         }
+    }
 
-        LongValue lastNanoTime = new LongValue( System.nanoTime() );
+    private void parseInput( ArrayList<String> input ) {
+        int v = 5;
+        briefcase.setVelocity( 0, 0 );
+        if ( input.contains( "LEFT" ) ) {
+            briefcase.addVelocity( -v, 0 );
+        }
+        if ( input.contains( "RIGHT" ) ) {
+            briefcase.addVelocity( v, 0 );
+        }
+        if ( input.contains( "UP" ) ) {
+            briefcase.addVelocity( 0, -v );
+        }
+        if ( input.contains( "DOWN" ) ) {
+            briefcase.addVelocity( 0, v );
+        }
+    }
 
-        IntValue score = new IntValue(99);
+    public void render() {
+        parseInput( input );
+        gc.clearRect( 0, 0, 512, 512 );
 
-        new AnimationTimer()
-        {
-            public void handle(long currentNanoTime)
-            {
-                // calculate time since last update.
-                double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
-                lastNanoTime.value = currentNanoTime;
+        for ( Sprite moneybag : moneybagList ) { moneybag.render( gc ); }
 
-                // game logic
+        String pointsText = "Cash: $" + (100 * score);
+        gc.fillText( pointsText, 360, 36 );
+        gc.strokeText( pointsText, 360, 36 );
 
-                briefcase.setVelocity(0,0);
-                if (input.contains("LEFT"))
-                    briefcase.addVelocity(-50,0);
-                if (input.contains("RIGHT"))
-                    briefcase.addVelocity(50,0);
-                if (input.contains("UP"))
-                    briefcase.addVelocity(0,-50);
-                if (input.contains("DOWN"))
-                    briefcase.addVelocity(0,50);
-                //Logger.log(briefcase);
+        briefcase.update( 10 );
+        briefcase.render( gc );
+    }
 
-                briefcase.update(elapsedTime);
-
-                // collision detection
-
-                Iterator<Sprite> moneybagIter = moneybagList.iterator();
-                while ( moneybagIter.hasNext() )
-                {
-                    Sprite moneybag = moneybagIter.next();
-                    if ( briefcase.intersects(moneybag) )
-                    {
-                        moneybagIter.remove();
-                        score.value++;
+    @Override
+    public void update( Observable o, Object arg ) {
+        if ( o instanceof KeyEventManager ) {
+            if ( arg instanceof KeyEvent ) {
+                KeyEvent keyEvent = (KeyEvent) arg;
+                String   type     = keyEvent.getEventType().getName();
+                if ( type.equals( "KEY_PRESSED" ) ) {
+                    String code = keyEvent.getCode().toString();
+                    if ( !input.contains( code ) ) {
+                        input.add( code );
                     }
                 }
-
-                // render
-
-                gc.clearRect(0, 0, 512,512);
-                briefcase.render( gc );
-
-                for (Sprite moneybag : moneybagList )
-                    moneybag.render( gc );
-
-                String pointsText = "Cash: $" + (100 * score.value);
-                gc.fillText( pointsText, 360, 36 );
-                gc.strokeText( pointsText, 360, 36 );
+                else if ( type.equals( "KEY_RELEASED" ) ) {
+                    String code = keyEvent.getCode().toString();
+                    input.remove( code );
+                }
             }
-        }.start();
-        return root;
+        }
     }
+
+    private String getLocation() {
+        return getExecutionLocation() + "de/hsh/Julian";
+    }
+
 }

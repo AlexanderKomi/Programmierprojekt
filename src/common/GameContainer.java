@@ -1,5 +1,6 @@
 package common;
 
+import common.updates.UpdateCodes;
 import common.updates.Updater;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.FXGameContainer;
@@ -28,16 +29,16 @@ public class GameContainer extends FXGameContainer {
     @Override
     public Games createGames( Observer container ) {
         // TODO : Make games only create on request from main menu
-        PacManController pacManController = new PacManController( container );
-        //pacManController.addObserver( container );
-        return new Games(
-                pacManController,
+        Games games = new Games(
+                new PacManController( container ),
                 new AmirsGame( container ),
                 new RAM( container ),
                 new KevinGame( container ),
                 new Leertastenklatsche( container ),
                 new DennisGame( container )
         );
+
+        return games;
     }
 
     @Override
@@ -73,6 +74,10 @@ public class GameContainer extends FXGameContainer {
     @Override
     public void render() {
         //Logger.log("Rendering");
+        if ( this.getGames() != null ) {
+            ((Leertastenklatsche) this.getGames().get( "Leertastenklatsche" )).render();
+            ((PacManController) this.getGames().get( UpdateCodes.PacMan.gameName )).render();
+        }
     }
 
     @Override

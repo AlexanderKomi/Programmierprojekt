@@ -1,9 +1,9 @@
 #ap_desktop {
-	-fx-background-image: url("./xp_background_1280x800.jpg");
+	-fx-background-image: url("xp_background_1280x800.jpg");
 }
 
 #hbox_bar {
-	-fx-background-image: url("./bar.png");
+	-fx-background-image: url("bar.png");
 }
 
 #b_shutdown {
