@@ -62,6 +62,7 @@ public class PacManController extends Game implements Initializable {
     /* Currently not used... */
     @Override
     public void update( Observable o, Object arg ) {
+        this.game.init();
         if ( o instanceof PacManMenu ) {
             update( (PacManMenu) o, arg );
         }

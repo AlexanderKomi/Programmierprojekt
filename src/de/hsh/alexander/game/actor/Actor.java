@@ -17,6 +17,7 @@ public abstract class Actor {
     private double height;
     private double width;
 
+
     private Image picture;
 
     Actor( String pictureFileName ) {
@@ -31,6 +32,14 @@ public abstract class Actor {
         this.setY( y );
     }
 
+    Actor( String pictureFileName, double x, double y, double height, double width ) {
+        loadPicture( pictureFileName );
+        this.setHeight( height );
+        this.setWidth( width );
+        this.setX( x );
+        this.setY( y );
+    }
+
     private void loadPicture( String fileName ) {
         try {
             String location = actorLocation + fileName;
@@ -41,33 +50,6 @@ public abstract class Actor {
         }
     }
 
-    public void setHeight( double height ) {
-        this.height = height;
-    }
-
-    public Image getPicture() {
-        return picture;
-    }
-
-    public void setPicture( Image picture ) {
-        this.picture = picture;
-    }
-
-    public void setWidth( double width ) {
-        this.width = width;
-    }
-
-    Actor( String pictureFileName, double x, double y, double height, double width ) {
-        loadPicture( pictureFileName );
-        this.setHeight( height );
-        this.setWidth( width );
-        this.setX( x );
-        this.setY( y );
-    }
-
-    public void draw( GraphicsContext gc ) {
-        gc.drawImage( this.picture, this.x, this.y, this.width, this.height );
-    }
 
     public void setPos( double x, double y ) {
         this.setX( x );
@@ -78,6 +60,7 @@ public abstract class Actor {
         this.setX( this.getX() + horizontal );
         this.setY( this.getY() + vertical );
     }
+
 
     public double getX() {
         return x;
@@ -93,5 +76,25 @@ public abstract class Actor {
 
     void setX( double x ) {
         this.x = x;
+    }
+
+    public void setHeight( double height ) {
+        this.height = height;
+    }
+
+    public void setWidth( double width ) {
+        this.width = width;
+    }
+
+    public void draw( GraphicsContext gc ) {
+        gc.drawImage( this.picture, this.x, this.y, this.width, this.height );
+    }
+
+    public Image getPicture() {
+        return picture;
+    }
+
+    public void setPicture( Image picture ) {
+        this.picture = picture;
     }
 }
