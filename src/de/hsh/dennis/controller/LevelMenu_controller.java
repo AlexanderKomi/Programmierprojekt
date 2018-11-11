@@ -3,13 +3,12 @@ package de.hsh.dennis.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
-public class tutorial_controller {
+import java.util.Observable;
+
+public class LevelMenu_controller extends Observable {
 
     @FXML
     private HBox hbox_1;
@@ -18,25 +17,19 @@ public class tutorial_controller {
     private VBox vbox_1;
 
     @FXML
-    private ImageView imageView;
+    private Button b_play1;
 
     @FXML
-    private Button b_left;
+    private Button b_play;
 
     @FXML
-    private Button b_right;
+    private Button b_tutorial;
 
     @FXML
     private Button b_exit;
 
     @FXML
-    private TextArea ta_left;
-
-    @FXML
-    private TextArea ta_right;
-
-    @FXML
-    private Text t_subject;
+    private Button b_exit1;
 
     @FXML
     void button_clicked(ActionEvent event) {

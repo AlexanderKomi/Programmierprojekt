@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class mainMenu_controller extends Observable implements Initializable {
+public class MainMenu_controller extends Observable implements Initializable {
 
     @FXML
     private HBox hbox_1;
@@ -27,33 +27,39 @@ public class mainMenu_controller extends Observable implements Initializable {
 
     @FXML
     private Button b_play;
-
     @FXML
     private Button b_tutorial;
 
     @FXML
     private Button b_exit;
 
+
     @FXML
     void button_clicked(ActionEvent event) {
         String id = getId(event);
         switch (id){
             case "b_play":
-                this.setChanged();
-                this.notifyObservers( "b_play" );
                 Logger.log("button_clicked Aufruf mit b_play.");
+                this.setChanged();
+                this.notifyObservers("play");
                 break;
+
             case "b_tutorial":
-                this.notifyObservers( "b_tutorial" );
                 Logger.log("button_clicked Aufruf mit b_tutorial.");
+                this.setChanged();
+                this.notifyObservers("tutorial");
                 break;
+
             case "b_exit":
-                this.notifyObservers( "b_exit" );
                 Logger.log("button_clicked Aufruf mit b_exit.");
+                this.setChanged();
+                this.notifyObservers("exitToGameCollection");
                 break;
+
             default:
-                this.notifyObservers( "error" );
                 Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
+                this.setChanged();
+                this.notifyObservers( "error" );
 
         }
     }

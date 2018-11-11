@@ -6,7 +6,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class level_controller {
+import java.util.Observable;
+
+public class Level_controller extends Observable {
 
     @FXML
     private HBox hbox_1;

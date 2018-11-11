@@ -13,8 +13,8 @@ public class UpdateCodes {
     }
 
     public class Dennis {
-        public static final String startGame = "Start Game";
-
+        public static final String error = "error";
+        public static final String exitToGameCollection = "exitToGameCollection";
     }
 
 }

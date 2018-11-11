@@ -7,7 +7,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class breakMenu_controller {
+import java.util.Observable;
+
+public class BreakMenu_controller extends Observable {
 
     @FXML
     private HBox hbox_1;
