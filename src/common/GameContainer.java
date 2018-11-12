@@ -35,7 +35,7 @@ public class GameContainer extends FXGameContainer {
                 new RAM( container ),
                 new KevinGame( container ),
                 new Leertastenklatsche( container ),
-                new DennisGame( container )
+                new DennisGame(container)
         );
 
         return games;

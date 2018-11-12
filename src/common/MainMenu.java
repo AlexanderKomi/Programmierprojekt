@@ -3,7 +3,6 @@ package common;
 import common.config.Authors;
 import common.updates.UpdateCodes;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
@@ -82,7 +81,7 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
                 b.setOnAction(buttonEvent -> this.notifyObservers(gameName));
             }
 
-            HBox shutdownBox = (HBox) this.vbox.getChildren().get(1); // HBox with buttons
+            HBox shutdownBox = (HBox) this.vbox.getChildren().get(1);
             Button shutdownButton = (Button) shutdownBox.getChildren().get(0);
             shutdownButton.setOnAction(shutdownEvent -> this.notifyObservers(UpdateCodes.MainMenu.shutdown));
         } catch (NullPointerException npe) {

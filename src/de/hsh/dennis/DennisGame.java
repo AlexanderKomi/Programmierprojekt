@@ -18,7 +18,6 @@ import java.util.ResourceBundle;
 //extends Game == Observer!!!
 public class DennisGame extends Game implements Initializable {
 
-    private final String init = "init";
     private final String breakMenu = "breakMenu";
     private final String level = "level";
     private final String levelMenu = "levelMenu";
@@ -33,31 +32,51 @@ public class DennisGame extends Game implements Initializable {
     public DennisGame(Observer o) {
         super(o, "DDos Defender");
 
+        gameMenu = new DennisMenu();
+        gameMenu.addObserver(this);
 
-        if (!loadMenuFXML(init)) { // In case FXML could not be loaded, a default pane is set
+        if (!loadMenuFXML()) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane(new Pane());
         }
 
 
     }
 
+    private boolean loadMenuFXML() {
+        try {
+            MainMenu_controller controller = new MainMenu_controller();
+            controller.addObserver(this);
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("view/mainMenu.fxml"));
+            fxmlLoader.setController(controller);
+            root = fxmlLoader.load();
+
+            this.gameMenu.setMenuPane((HBox) root);
+            this.gameMenu.addObserver(this);
+            this.setGameContentPane(this.gameMenu.getMenuPane());
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     private boolean loadMenuFXML(String fxml) {
 
+        //TODO: switch fxml
         switch (fxml) {
-            case init:
+            //TODO: currently working
+            case levelMenu:
                 try {
-                    MainMenu_controller controller = new MainMenu_controller();
+                    LevelMenu_controller controller = new LevelMenu_controller();
                     controller.addObserver(this);
                     FXMLLoader fxmlLoader = new FXMLLoader();
-                    fxmlLoader.setLocation(getClass().getResource("view/mainMenu.fxml"));
+                    fxmlLoader.setLocation(getClass().getResource("view/levelMenu.fxml"));
                     fxmlLoader.setController(controller);
-                    root = fxmlLoader.load();
+                    Pane temp = fxmlLoader.load();
 
-                    this.gameMenu = new DennisMenu();
-                    this.gameMenu.setMenuPane((HBox) root);
-                    this.gameMenu.addObserver(this);
-                    this.setGameContentPane(this.gameMenu.getMenuPane());
+                    gameMenu.setMenuPane(temp);
+                    this.setGameContentPane(temp);
                     return true;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -70,32 +89,13 @@ public class DennisGame extends Game implements Initializable {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("view/mainMenu.fxml"));
                     fxmlLoader.setController(controller);
-                    //root.;
-                    //TODO: switch fxml
-                    this.gameMenu = new DennisMenu();
+
+
                     this.gameMenu.setMenuPane((HBox) root);
                     this.gameMenu.addObserver(this);
                     this.setGameContentPane(this.gameMenu.getMenuPane());
                     return true;
                 } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            case levelMenu:
-                try {
-                    LevelMenu_controller controller = new LevelMenu_controller();
-                    controller.addObserver(this);
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    fxmlLoader.setLocation(getClass().getResource("view/levelMenu.fxml"));
-                    fxmlLoader.setController(controller);
-                    root = fxmlLoader.load();
-
-                    this.gameMenu = new DennisMenu();
-                    this.gameMenu.setMenuPane((HBox) root);
-                    this.gameMenu.addObserver(this);
-                    this.setGameContentPane(this.gameMenu.getMenuPane());
-                    return true;
-                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
@@ -108,7 +108,6 @@ public class DennisGame extends Game implements Initializable {
                     fxmlLoader.setController(controller);
                     root = fxmlLoader.load();
 
-                    this.gameMenu = new DennisMenu();
                     this.gameMenu.setMenuPane((HBox) root);
                     this.gameMenu.addObserver(this);
                     this.setGameContentPane(this.gameMenu.getMenuPane());
@@ -126,7 +125,6 @@ public class DennisGame extends Game implements Initializable {
                     fxmlLoader.setController(controller);
                     root = fxmlLoader.load();
 
-                    this.gameMenu = new DennisMenu();
                     this.gameMenu.setMenuPane((HBox) root);
                     this.gameMenu.addObserver(this);
                     this.setGameContentPane(this.gameMenu.getMenuPane());
@@ -144,7 +142,6 @@ public class DennisGame extends Game implements Initializable {
                     fxmlLoader.setController(controller);
                     root = fxmlLoader.load();
 
-                    this.gameMenu = new DennisMenu();
                     this.gameMenu.setMenuPane((HBox) root);
                     this.gameMenu.addObserver(this);
                     this.setGameContentPane(this.gameMenu.getMenuPane());

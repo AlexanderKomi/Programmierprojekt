@@ -14,7 +14,9 @@ public class UpdateCodes {
 
     public class Dennis {
         public static final String error = "error";
-        public static final String exitToGameCollection = "exitToGameCollection";
+        public static final String exit = "exit";
+        public static final String levelMenu = "levelMenu";
+        public static final String tutorial = "tutorial";
     }
 
 }
