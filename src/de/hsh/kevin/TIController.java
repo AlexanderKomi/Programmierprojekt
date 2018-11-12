@@ -32,22 +32,22 @@ public class TIController extends Game implements Initializable {
     }
 
     private boolean loadMenuFXML() {
-	try {
-            this.gameMenu = new KevinMenu( this );
-            VBox node = FXMLLoader.load( KevinMenu.class.getResource( "res/TIMenu.fxml" ) );
-
-            this.gameMenu.setMenuPane( node );
-            this.gameMenu.addObserver(this);
-            this.setGameContentPane( this.gameMenu.getMenuPane() );
-            return true;
-        }
-        catch ( IOException e ) {
-            e.printStackTrace();
-        }
-        return false;
+//	try {
+//            this.gameMenu = new KevinMenu( this );
+//            VBox node = FXMLLoader.load( KevinMenu.class.getResource( "res/TIMenu.fxml" ) );
+//
+//            this.gameMenu.setMenuPane( node );
+//            this.gameMenu.addObserver(this);
+//            this.setGameContentPane( this.gameMenu.getMenuPane() );
+//            return true;
+//        }
+//        catch ( IOException e ) {
+//            e.printStackTrace();
+//        }
+//        return false;
 	
-	//this.gameMenu = new KevinMenu(this);
-	//return true;
+	this.gameMenu = new KevinMenu(this);
+	return true;
     }
 
     @Override
