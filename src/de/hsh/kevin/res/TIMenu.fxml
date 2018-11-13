@@ -24,7 +24,7 @@
 						<ImageView fitHeight="800.0" fitWidth="1280.0"
 							pickOnBounds="true">
 							<image>
-								<Image url="@res/background.jpg" />
+								<Image url="@background.jpg" />
 							</image>
 						</ImageView>
 						<AnchorPane layoutX="40.0" layoutY="138.0"
@@ -89,7 +89,7 @@
 							AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0"
 							AnchorPane.topAnchor="40.0">
 							<image>
-								<Image url="@res/steuerung.jpg" />
+								<Image url="@steuerung.jpg" />
 							</image>
 						</ImageView>
 						<Button id="btn_exit" layoutX="939.0" layoutY="709.0"
