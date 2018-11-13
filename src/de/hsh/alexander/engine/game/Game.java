@@ -8,7 +8,7 @@ import java.util.Observer;
 public abstract class Game extends java.util.Observable implements Observer {
 
     public final String name;
-    private      Pane   gameContentPane;
+    private      Pane   gameContentPane = new Pane();
 
     protected Game( Observer o, String name ) {
         this.name = name;

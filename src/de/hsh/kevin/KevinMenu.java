@@ -30,7 +30,7 @@ public class KevinMenu extends GameMenu {
     public Button btn_exit;
     
     
-    
+    public KevinMenu() {}
     public KevinMenu( Observer observer ) {
         super( observer );
         
