@@ -1,6 +1,5 @@
 package de.hsh.alexander.game.actor;
 
-import de.hsh.alexander.util.Logger;
 import javafx.scene.input.KeyEvent;
 
 import java.util.HashMap;
@@ -34,7 +33,7 @@ public class Player extends Actor {
             String keyName = keyEvent.getCode().getName();
             movement.getKeymap().forEach( ( key, value ) -> {
                 if ( key.equals( keyName ) ) {
-                    Logger.log( keyName );
+                    //Logger.log( keyName );
                     this.movePos( this.movement.getKeymap().get( key ) );
                 }
             } );
