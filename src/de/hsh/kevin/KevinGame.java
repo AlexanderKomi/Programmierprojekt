@@ -9,7 +9,7 @@ import java.util.Observer;
 public class KevinGame extends Game {
 
     public KevinGame( Observer o ) {
-        super( o, "Kevin" );
+        super( o, "Tunnel Invader" );
         this.setGameContentPane( new Pane() );
     }
 

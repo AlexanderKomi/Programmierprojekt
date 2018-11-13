@@ -16,5 +16,10 @@ public class UpdateCodes {
         public static final String startGame = "Start Game";
 
     }
+    
+    public class TunnelInvader {
+        public static final String gameName  = "Tunnel Invader";
+        public static final String startGame = "Start Game";
+    }
 
 }
