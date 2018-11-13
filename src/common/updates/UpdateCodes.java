@@ -18,5 +18,10 @@ public class UpdateCodes {
         public static final String levelMenu = "levelMenu";
         public static final String tutorial = "tutorial";
     }
+    
+    public class TunnelInvader {
+        public static final String gameName  = "Tunnel Invader";
+        public static final String startGame = "Start Game";
+    }
 
 }
