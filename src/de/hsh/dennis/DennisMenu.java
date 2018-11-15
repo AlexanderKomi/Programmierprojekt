@@ -12,7 +12,7 @@ public class DennisMenu extends GameMenu {
 
     @Override
     protected Pane initMenuPane() {
-        return null;
+        return new Pane();
     }
 
     @Override

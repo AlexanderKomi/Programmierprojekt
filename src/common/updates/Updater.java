@@ -42,7 +42,7 @@ public class Updater {
                 update( (RAM) game, arg, gameContainer );
             }
             else if ( game instanceof DennisGame ) {
-                update( (DennisGame) game, arg, gameContainer );
+                UpdateDDOSDefender.update( (DennisGame) game, arg, gameContainer );
             }
             else if ( game instanceof Leertastenklatsche ) {
                 update( (Leertastenklatsche) game, arg, gameContainer );
@@ -71,8 +71,7 @@ public class Updater {
         Logger.log( game, arg );
     }
 
-    public static void update( DennisGame game, Object arg, GameContainer gameContainer ) {
-        Logger.log( game, arg );
+    public static void update( DennisGame game, Object arg, GameContainer gameContainer ) { Logger.log( game, arg );
     }
 
     public static void update( Leertastenklatsche game, Object arg, GameContainer gameContainer ) {

@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Observable;
@@ -39,27 +40,22 @@ public class MainMenu_controller extends Observable implements Initializable {
         String id = getId(event);
         switch (id){
             case "b_play":
-                Logger.log("button_clicked Aufruf mit b_play.");
-                this.setChanged();
-                this.notifyObservers("play");
+                setChanged();
+                notifyObservers(id);
                 break;
 
             case "b_tutorial":
-                Logger.log("button_clicked Aufruf mit b_tutorial.");
-                this.setChanged();
-                this.notifyObservers("tutorial");
+                setChanged();
+                notifyObservers(id);
                 break;
 
             case "b_exit":
-                Logger.log("button_clicked Aufruf mit b_exit.");
-                this.setChanged();
-                this.notifyObservers("exitToGameCollection");
+                setChanged();
+                notifyObservers(id);
                 break;
 
             default:
                 Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
-                this.setChanged();
-                this.notifyObservers( "error" );
 
         }
     }

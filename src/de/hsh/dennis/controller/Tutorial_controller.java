@@ -1,7 +1,9 @@
 package de.hsh.dennis.controller;
 
+import de.hsh.alexander.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -42,7 +44,31 @@ public class Tutorial_controller extends Observable {
 
     @FXML
     void button_clicked(ActionEvent event) {
+        String id = getId(event);
+        switch (id){
+            case "b_left":
+                setChanged();
+                notifyObservers(id);
+                break;
 
+            case "b_right":
+                setChanged();
+                notifyObservers(id);
+                break;
+
+            case "b_exit":
+                setChanged();
+                notifyObservers(id);
+                break;
+
+            default:
+                Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
+
+        }
+    }
+
+    private String getId(ActionEvent event){
+        return ((Node) event.getSource()).getId();
     }
 
 }
