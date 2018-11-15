@@ -28,7 +28,7 @@ public class AmirsGame extends Game implements Initializable {
 
     private boolean loadMenuFXML() {
         try {
-            HBox node = FXMLLoader.load(getClass().getResource("view/MainMenu.fxml"));
+            HBox node = FXMLLoader.load(getClass().getResource("view/AmirsMenu.fxml"));
             this.gameMenu = new AmirsMenu();
             this.gameMenu.setMenuPane(node);
             this.gameMenu.addObserver(this);

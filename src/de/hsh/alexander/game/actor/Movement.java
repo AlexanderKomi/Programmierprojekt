@@ -6,7 +6,8 @@ public class Movement {
 
     private HashMap<String, Direction>  keymap;
     private HashMap<Direction, Boolean> holdDown = initHoldDown();
-    private double                      speed;
+    Direction direction;
+    private double velocity;
 
     private HashMap<Direction, Boolean> initHoldDown() {
         HashMap<Direction, Boolean> hashMap = new HashMap<>();
@@ -17,6 +18,10 @@ public class Movement {
         return hashMap;
     }
 
+    boolean contains( String keyName ) {
+        return keymap.keySet().contains( keyName );
+    }
+
     boolean isHoldDown( String keyName ) {
         Direction d = this.keymap.get( keyName );
         if ( d != null ) {
@@ -25,10 +30,10 @@ public class Movement {
         return false;
     }
 
-    boolean setKeyHoldDown( String keyName ) {
+    boolean setKeyHoldDown( String keyName, boolean b ) {
         Direction d = this.keymap.get( keyName );
         if ( d != null ) {
-            this.holdDown.put( d, Boolean.TRUE );
+            this.holdDown.put( d, b );
             return true;
         }
         return false;
@@ -40,12 +45,12 @@ public class Movement {
 
     // ------------- GETTER and Setter --------------
 
-    public double getSpeed() {
-        return speed;
+    public double getVelocity() {
+        return velocity;
     }
 
-    public void setSpeed( int i ) {
-        this.speed = i;
+    public void setVelocity( double i ) {
+        this.velocity = i;
     }
 
     public void setKeyMap( HashMap<String, Direction> keymap ) {

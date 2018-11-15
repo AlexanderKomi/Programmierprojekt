@@ -28,30 +28,33 @@ public class Player extends Actor {
 
 
     public void move( KeyEvent keyEvent ) {
-        if ( keyEvent.getEventType().getName().equals( "KEY_PRESSED" ) ||
-             keyEvent.getEventType().getName().equals( "KEY_RELEASED" ) ) {
-            String keyName = keyEvent.getCode().getName();
-            movement.getKeymap().forEach( ( key, value ) -> {
-                if ( key.equals( keyName ) ) {
-                    //Logger.log( keyName );
-                    this.movePos( this.movement.getKeymap().get( key ) );
+        String keyName = keyEvent.getCode().getName();
+        if ( keyEvent.getEventType().getName().equals( "KEY_PRESSED" ) ) {
+            if ( !movement.isHoldDown( keyName ) ) {
+                if ( movement.contains( keyName ) ) {
+                    movement.setKeyHoldDown( keyName, true );
+                    movement.direction = movement.getKeymap().get( keyName );
                 }
-            } );
+            }
+        }
+        else if ( keyEvent.getEventType().getName().equals( "KEY_RELEASED" ) ) {
+            movement.setKeyHoldDown( keyName, false );
         }
     }
 
-    public void movePos( Direction direction ) {
+    public void movePos() {
+        Direction direction = movement.direction;
         if ( direction == Direction.Down ) {
-            this.movePos( movement.getSpeed(), 0 );
+            super.movePos( movement.getVelocity(), 0 );
         }
         else if ( direction == Direction.Up ) {
-            this.movePos( -movement.getSpeed(), 0 );
+            super.movePos( -movement.getVelocity(), 0 );
         }
         else if ( direction == Direction.Left ) {
-            this.movePos( 0, -movement.getSpeed() );
+            super.movePos( 0, -movement.getVelocity() );
         }
         else if ( direction == Direction.Right ) {
-            this.movePos( 0, movement.getSpeed() );
+            super.movePos( 0, movement.getVelocity() );
         }
     }
 
@@ -59,7 +62,7 @@ public class Player extends Actor {
         this.movement.setKeyMap( keyMap );
     }
 
-    public void setSpeed( int speed ) {
-        this.movement.setSpeed( speed );
+    public void setSpeed( double speed ) {
+        this.movement.setVelocity( speed );
     }
 }

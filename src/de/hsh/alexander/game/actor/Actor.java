@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public abstract class Actor {
+public class Actor {
 
     static final String actorLocation = Path.getExecutionLocation() + "de/hsh/alexander/game/actor/";
 

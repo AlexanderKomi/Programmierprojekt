@@ -108,6 +108,8 @@ public class PacManGame extends Observable implements Initializable {
             gc.fillRect( 0, 0, 1200, 800 );
             pacMan1.draw( gc );
             pacMan2.draw( gc );
+            pacMan1.movePos();
+            pacMan2.movePos();
         } );
 
     }
