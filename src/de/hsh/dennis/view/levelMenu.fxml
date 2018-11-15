@@ -9,15 +9,15 @@
         <VBox fx:id="vbox_1" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
             <children>
                 <Pane prefHeight="200.0" prefWidth="200.0"/>
-                <Button fx:id="b_play1" mnemonicParsing="false" onAction="#button_clicked" text="easy"/>
+                <Button fx:id="b_easy" mnemonicParsing="false" onAction="#button_clicked" text="easy"/>
                 <Pane prefHeight="200.0" prefWidth="200.0"/>
-                <Button fx:id="b_play" mnemonicParsing="false" onAction="#button_clicked" text="medium"/>
+                <Button fx:id="b_medium" mnemonicParsing="false" onAction="#button_clicked" text="medium"/>
                 <Pane prefHeight="200.0" prefWidth="200.0"/>
-                <Button fx:id="b_tutorial" mnemonicParsing="false" onAction="#button_clicked" text="hard"/>
+                <Button fx:id="b_hard" mnemonicParsing="false" onAction="#button_clicked" text="hard"/>
                 <Pane prefHeight="200.0" prefWidth="200.0"/>
-                <Button fx:id="b_exit" mnemonicParsing="false" onAction="#button_clicked" text="nightmare"/>
+                <Button fx:id="b_nightmare" mnemonicParsing="false" onAction="#button_clicked" text="nightmare"/>
                 <Pane prefHeight="200.0" prefWidth="200.0"/>
-                <Button fx:id="b_exit1" mnemonicParsing="false" onAction="#button_clicked" text="back"/>
+                <Button fx:id="b_back" mnemonicParsing="false" onAction="#button_clicked" text="back"/>
                 <Pane prefHeight="200.0" prefWidth="200.0"/>
             </children>
         </VBox>

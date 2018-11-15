@@ -24,11 +24,11 @@
                     </VBox.margin>
                 </TextField>
                 <Pane prefHeight="200.0" prefWidth="200.0"/>
-                <Button fx:id="b_play" mnemonicParsing="false" onAction="#button_clicked" text="replay"/>
+                <Button fx:id="b_replay" mnemonicParsing="false" onAction="#button_clicked" text="replay"/>
                 <Pane prefHeight="200.0" prefWidth="200.0"/>
-                <Button fx:id="b_tutorial" mnemonicParsing="false" onAction="#button_clicked" text="main menu"/>
+                <Button fx:id="b_main_menu" mnemonicParsing="false" onAction="#button_clicked" text="main menu"/>
                 <Pane prefHeight="200.0" prefWidth="200.0"/>
-                <Button fx:id="b_exit" mnemonicParsing="false" onAction="#button_clicked" text="continue"/>
+                <Button fx:id="b_continue" mnemonicParsing="false" onAction="#button_clicked" text="continue"/>
                 <Pane prefHeight="200.0" prefWidth="200.0"/>
             </children>
         </VBox>
