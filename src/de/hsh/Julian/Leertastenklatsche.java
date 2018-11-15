@@ -1,5 +1,6 @@
 package de.hsh.Julian;
 
+import common.config.WindowConfig;
 import common.events.KeyEventManager;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.util.Logger;
@@ -32,7 +33,7 @@ public class Leertastenklatsche extends Game {
     private ArrayList<Sprite> moneybagList = new ArrayList<Sprite>();
 
     public Leertastenklatsche( Observer o ) {
-        super( o, "Leertastenklatsche" );
+        super( o, WindowConfig.julian_title);
         this.setGameContentPane( this.initGameContentWindow( o ) );
         this.getGameContentPane().setOnKeyPressed(
                 e -> {

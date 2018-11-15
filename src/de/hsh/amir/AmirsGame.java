@@ -1,5 +1,6 @@
 package de.hsh.amir;
 
+import common.config.WindowConfig;
 import de.hsh.alexander.engine.game.Game;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,7 +21,7 @@ public class AmirsGame extends Game implements Initializable {
     private AmirsMenu gameMenu;
 
     public AmirsGame( Observer o ) {
-        super(o, "Amirs Game");
+        super(o, WindowConfig.amir_title);
         if (!loadMenuFXML()) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane(new Pane());
         }

@@ -1,5 +1,6 @@
 package de.hsh.alexander.game;
 
+import common.config.WindowConfig;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
@@ -24,7 +25,7 @@ public class PacManController extends Game implements Initializable {
     private PacManGame game;
 
     public PacManController( Observer o ) {
-        super( o, UpdateCodes.PacMan.gameName );
+        super( o, WindowConfig.alexander_title );
         if ( !loadMenuFXML() ) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane( new Pane() );
         }

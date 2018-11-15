@@ -1,5 +1,6 @@
 package de.hsh.kevin;
 
+import common.config.WindowConfig;
 import de.hsh.alexander.engine.game.Game;
 import javafx.scene.layout.Pane;
 
@@ -9,7 +10,7 @@ import java.util.Observer;
 public class KevinGame extends Game {
 
     public KevinGame( Observer o ) {
-        super( o, "Tunnel Invader" );
+        super( o, WindowConfig.kevin_title );
         this.setGameContentPane( new Pane() );
     }
 
