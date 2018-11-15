@@ -61,7 +61,7 @@ public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.cb_credits.getItems().setAll(Authors.authorNames);
+        this.cb_credits.getItems().setAll(Authors.authorNamesWithTitles);
         super.initialize(location, resources);
     }
 
