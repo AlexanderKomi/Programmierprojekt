@@ -1,6 +1,8 @@
 package de.hsh.amir;
 
 import common.config.WindowConfig;
+import common.events.KeyEventManager;
+import common.events.MouseEventManager;
 import de.hsh.alexander.engine.game.Game;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -47,7 +49,22 @@ public class AmirsGame extends Game implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize( URL location, ResourceBundle resources ) {
+
+    }
+
+    @Override
+    public void update( KeyEventManager keyEventManager, Object arg ) {
+
+    }
+
+    @Override
+    public void update( MouseEventManager mouseEventManagerManager, Object arg ) {
+
+    }
+
+    @Override
+    public void render() {
 
     }
 }

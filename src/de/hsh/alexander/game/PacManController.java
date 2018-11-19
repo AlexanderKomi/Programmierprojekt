@@ -99,14 +99,14 @@ public class PacManController extends Game implements Initializable {
         }
     }
 
-    private void update( KeyEventManager o, Object arg ) {
+    public void update( KeyEventManager o, Object arg ) {
         if ( arg instanceof KeyEvent ) {
             KeyEvent keyEvent = (KeyEvent) arg;
             this.game.movePacMan1( keyEvent );
         }
     }
 
-    private void update( MouseEventManager o, Object arg ) {}
+    public void update( MouseEventManager o, Object arg ) {}
 
     private void logParsingError( Observable o, Object arg ) {
         Logger.log( "In PacMan Coop update : from observable : " + o + " Argument could not be parsed : " + arg );
