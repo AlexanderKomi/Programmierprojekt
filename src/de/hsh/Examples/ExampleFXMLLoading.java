@@ -2,6 +2,7 @@ package de.hsh.Examples;
 
 import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.engine.game.GameController;
 import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.util.Logger;
 
@@ -12,7 +13,7 @@ import java.util.Observable;
  * Ewt überarbeiten
  *
  */
-public class ExampleFXMLLoading extends FxmlController {
+public class ExampleFXMLLoading extends GameController {
 
     //Harte Strings zum switchen der FXML-Fälle
     private final String erstesFxml = "erstesFxml";
@@ -50,37 +51,8 @@ public class ExampleFXMLLoading extends FxmlController {
 
             //Erstes FXML nochmal laden. Wenn man aus einem anderen Menu zu diesem Menu zurückkehren will!
             case erstesFxml:
-                try {
-                    FXExampleController controller = new FXExampleController();
-                    controller.addObserver(this);
-                    changeScene(fxml_1_path, controller);
-                    return true;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
                 break;
-
-            //Zweites FXML für ein anderes Menu laden.
-            case zweitesFxml:
-                /*
-                try {
-                    ZweiterController controller = new Zweiter_controller();
-                    controller.addObserver(this);
-                    temp = loadFxml(fxml_2_path, controller);              //benutze temp als Zwischenspeicher statt root!
-                    window.setScene(new Scene(temp));                      //Setze in der stage eine neue Scene mit dem geladenen FXML über die Window-Referenz.
-
-                    return true;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                */
-                break;
-
-            //verlasse dein Spiel und lade das Haupt-Menu.
-            case UpdateCodes.DefaultCodes.exitToMainGUI:
-                getGame().exitToMainGUI();       //rufe in deinem Spiel die Verlassen-Methode auf.
-                break;
-
             default:
                 Logger.log("ExampleFXMLLoading Switchcase -> default");
                 return false;
@@ -101,14 +73,16 @@ public class ExampleFXMLLoading extends FxmlController {
         switch (code) {
             case ExampleUpdateCodes.ErsteGui.code1:
                 //lade das erste FXML
-                loadFxmlMenu(erstesFxml);
+                try {
+                    FXExampleController controller;
+                    controller = new FXExampleController();
+                    controller.addObserver( this );
+                    changeScene( fxml_1_path, controller );
+                }
+                catch ( Exception e ) {
+                    e.printStackTrace();
+                }
                 break;
-
-            case ExampleUpdateCodes.ErsteGui.code2:
-                //lade das zweite FXML
-                loadFxmlMenu(zweitesFxml);
-                break;
-
             case UpdateCodes.DefaultCodes.exitToMainGUI:
                 //kehre zur Haupt-Gui zurück
                 getGame().exitToMainGUI();
@@ -120,34 +94,6 @@ public class ExampleFXMLLoading extends FxmlController {
         }
 
     }
-
-    /*
-    private void handle_Anderen_controller(String code) {
-
-        //gucke welcher Button gedrückt wurde und handel dem entsprechend.
-        switch (code) {
-            case "button_1_ID":
-                //lade das anderes erste FXML
-                loadFxmlMenu(erstesFxml);
-                break;
-
-            case "button_2_ID":
-                //lade das andere zweite FXML
-                loadFxmlMenu(zweitesFxml);
-                break;
-
-            case "button_exit":
-                //kehre zur Haupt-Gui zurück
-                loadFxmlMenu(exitToMain);
-                break;
-
-            default:
-                //default Fall, fals kein 'case' zutrifft
-                Logger.log("handle_FXExample_controller: default erreicht");
-        }
-
-    }
-    */
 
     /**
      * Update Methode dieses Observers um die notifyObserver der Unter-Controller hier auswerten!
