@@ -11,12 +11,8 @@ import java.util.Observer;
 public class ExampleGame extends Game
 {
 
-    private ExampleFXMLLoading efl;
-
-
     protected ExampleGame(Observer o, String name) {
         super(o, "ExampleGame_Name");
-        efl = new ExampleFXMLLoading(this);
     }
 
     @Override
