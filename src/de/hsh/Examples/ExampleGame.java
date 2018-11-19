@@ -19,11 +19,6 @@ public class ExampleGame extends Game
         efl = new ExampleFXMLLoading(this);
     }
 
-    public void exitToMainGui(){
-        setChanged();
-        notifyObservers(UpdateCodes.Dennis.exitToMainGui);
-    }
-
     @Override
     public void update( Observable o, Object arg ) {
 
@@ -42,5 +37,11 @@ public class ExampleGame extends Game
     @Override
     public void render() {
 
+    }
+
+    @Override
+    public void exitToMainGUI() {
+        setChanged();
+        notifyObservers( UpdateCodes.Dennis.exitToMainGui );
     }
 }

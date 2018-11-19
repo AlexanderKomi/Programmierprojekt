@@ -12,4 +12,6 @@ public interface IGame extends Observer {
     void update( MouseEventManager mouseEventManagerManager, Object arg );
 
     void render();
+
+    void exitToMainGUI();
 }

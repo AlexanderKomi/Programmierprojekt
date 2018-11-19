@@ -1,5 +1,7 @@
 package de.hsh.Examples;
 
+import de.hsh.alexander.engine.game.Game;
+import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.util.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,8 +20,8 @@ import java.util.Observer;
  */
 public class ExampleFXMLLoading implements Observer {
 
-    private ExampleGame game;               //Deine Game Klasse
-    private ExampleGameMenu gameMenu;       //Deine GameMenu Klasse
+    private Game     game;               //Deine Game Klasse
+    private GameMenu gameMenu;       //Deine GameMenu Klasse
 
     private Stage window;                   //Die Stage, für dynamisches Übergeben.
     private Parent root;                    //root dient als Referenz auf das erste Object des ersten FXMLs und wird einmalig bei der Innitialisierung gesetzt.
@@ -62,23 +64,22 @@ public class ExampleFXMLLoading implements Observer {
 
         String                  fxmlLocation = "Path/To/First/Fxml/To/be/Loaded.fxml";
             FXExampleController controller   = new FXExampleController();
-        boolean                 f            = init( fxmlLocation, controller );
-        if ( f ) {
+        boolean                 f            = false;
+        try {
             //muss alles einmalig gesetzt werden nach der Init-Phase.
+            f = init( fxmlLocation, controller );
             this.gameMenu.setMenuPane( (HBox) root );
             this.gameMenu.addObserver( this );
             game.setGameContentPane( this.gameMenu.getMenuPane() );
-
         }
-        else {
+        catch ( IOException e ) {
             // FXML konnte nicht geladen werden. Fehlerbehandlung notwendig.
+            e.printStackTrace();
         }
-
         return f;
     }
 
-    private boolean init( String fxmlLocation, Observable controller ) {
-        try {
+    private boolean init( String fxmlLocation, Observable controller ) throws IOException {
             controller.addObserver( this );
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation( getClass().getResource( fxmlLocation ) );
@@ -87,11 +88,6 @@ public class ExampleFXMLLoading implements Observer {
                     fxmlLoader.load();                       //setzt root einmalig. Warum auch immer funtioniert temp als
             // Object hier nicht!
             return true;
-        }
-        catch ( IOException e ) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     /**
@@ -149,7 +145,7 @@ public class ExampleFXMLLoading implements Observer {
 
             //verlasse dein Spiel und lade das Haupt-Menu.
             case exitToMain:
-                game.exitToMainGui();       //rufe in deinem Spiel die Verlassen-Methode auf.
+                game.exitToMainGUI();       //rufe in deinem Spiel die Verlassen-Methode auf.
                 break;
 
             default:

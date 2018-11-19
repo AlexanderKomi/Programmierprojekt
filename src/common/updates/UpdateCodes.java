@@ -4,6 +4,10 @@ import common.config.WindowConfig;
 
 public class UpdateCodes {
 
+    public class DefaultCodes {
+        public static final String exitToMainGUI = "exitToMainGui";
+    }
+
     public class MainMenu {
         public static final String shutdown = "Shutdown";
     }
