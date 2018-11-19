@@ -45,6 +45,12 @@ public class ExampleFXMLLoading implements Observer {
         if (!initFXML()) {                          //Initialisiere das erste FXML
             game.setGameContentPane(new Pane());    // Falls das FXML nicht gelladen wird, ein leeres neues Pane zurück geben.
         }
+        else {
+            //muss alles einmalig gesetzt werden nach der Init-Phase.
+            this.gameMenu.setMenuPane( (HBox) root );
+            this.gameMenu.addObserver( this );
+            game.setGameContentPane( this.gameMenu.getMenuPane() );
+        }
     }
 
     /**
@@ -53,21 +59,36 @@ public class ExampleFXMLLoading implements Observer {
      *  Setzt die Referenz auf die Stage und das root Object.
      * */
     private boolean initFXML() {
-        try {
-            FXExampleController controller = new FXExampleController();
-            controller.addObserver(this);
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("Path/To/First/Fxml/To/be/Loaded.fxml"));
-            fxmlLoader.setController(controller);
-            root = fxmlLoader.load();                       //setzt root einmalig. Warum auch immer funtioniert temp als Object hier nicht!
 
+        String                  fxmlLocation = "Path/To/First/Fxml/To/be/Loaded.fxml";
+            FXExampleController controller   = new FXExampleController();
+        boolean                 f            = init( fxmlLocation, controller );
+        if ( f ) {
             //muss alles einmalig gesetzt werden nach der Init-Phase.
-            this.gameMenu.setMenuPane((HBox) root);
-            this.gameMenu.addObserver(this);
-            game.setGameContentPane(this.gameMenu.getMenuPane());
+            this.gameMenu.setMenuPane( (HBox) root );
+            this.gameMenu.addObserver( this );
+            game.setGameContentPane( this.gameMenu.getMenuPane() );
 
+        }
+        else {
+            // FXML konnte nicht geladen werden. Fehlerbehandlung notwendig.
+        }
+
+        return f;
+    }
+
+    private boolean init( String fxmlLocation, Observable controller ) {
+        try {
+            controller.addObserver( this );
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation( getClass().getResource( fxmlLocation ) );
+            fxmlLoader.setController( controller );
+            root =
+                    fxmlLoader.load();                       //setzt root einmalig. Warum auch immer funtioniert temp als
+            // Object hier nicht!
             return true;
-        } catch (IOException e) {
+        }
+        catch ( IOException e ) {
             e.printStackTrace();
         }
         return false;
