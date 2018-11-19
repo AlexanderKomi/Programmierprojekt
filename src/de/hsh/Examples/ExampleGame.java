@@ -1,9 +1,9 @@
 package de.hsh.Examples;
 
-import common.config.WindowConfig;
+import common.events.KeyEventManager;
+import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
-import de.hsh.dennis.controller.BigBrother;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -25,7 +25,22 @@ public class ExampleGame extends Game
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update( Observable o, Object arg ) {
+
+    }
+
+    @Override
+    public void update( KeyEventManager keyEventManager, Object arg ) {
+
+    }
+
+    @Override
+    public void update( MouseEventManager mouseEventManagerManager, Object arg ) {
+
+    }
+
+    @Override
+    public void render() {
 
     }
 }
