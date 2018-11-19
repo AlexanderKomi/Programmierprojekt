@@ -1,5 +1,6 @@
 package de.hsh.Examples;
 
+import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.util.Logger;
@@ -14,24 +15,29 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+
 /**
  * Ewt überarbeiten
  *
  */
 public class ExampleFXMLLoading implements Observer {
 
-    private Game     game;               //Deine Game Klasse
-    private GameMenu gameMenu;       //Deine GameMenu Klasse
+    private Game     game;                  //Deine Game Klasse
+    private GameMenu gameMenu;              //Deine GameMenu Klasse
 
     private Stage window;                   //Die Stage, für dynamisches Übergeben.
     private Parent root;                    //root dient als Referenz auf das erste Object des ersten FXMLs und wird einmalig bei der Innitialisierung gesetzt.
-    private Pane temp;                      //gleiche Aufgabe wie 'root', allerdings zum mehrfach überschreiben benutzt.
+    private Parent temp;                    //gleiche Aufgabe wie 'root', allerdings zum mehrfach überschreiben benutzt.
 
 
-    //Harte String zum switchen der FXML-Fälle
+    //Harte Strings zum switchen der FXML-Fälle
     private final String erstesFxml = "erstesFxml";
     private final String zweitesFxml = "zweitesFxml";
-    private final String exitToMain = "exitToMain";
+
+    //Paths to .fxmls
+    private final String fxmlInitLocation = "Pfad/zum/Init/Fxml.fxml";
+    private final String fxml_1_path = ""; //ambesten == fxmlInitLocation
+    private final String fxml_2_path = "";
 
     /**
      *  Konstruktor der aus dem Game.class aufgeruft werden soll und das Game Object überreicht.
@@ -42,11 +48,12 @@ public class ExampleFXMLLoading implements Observer {
 
         this.game = game;                           //Referenz auf deine Spiele Klasse
         gameMenu = new ExampleGameMenu();           //erstmaliges erstellen deiner Menu Klasse
-        gameMenu.addObserver(this);              //Diese Klasse dem GameMenue als Observable eintragen.
+        gameMenu.addObserver(this);             //Diese Klasse dem GameMenue als Observable eintragen.
 
-        if (!initFXML()) {                          //Initialisiere das erste FXML
+        if (!init()) {                              //Initialisiere das erste FXML
             game.setGameContentPane(new Pane());    // Falls das FXML nicht gelladen wird, ein leeres neues Pane zurück geben.
         }
+
     }
 
     /**
@@ -54,34 +61,30 @@ public class ExampleFXMLLoading implements Observer {
      *  Einmaliger Aufruf am Anfang!!!
      *  Setzt die Referenz auf die Stage und das root Object.
      * */
-    private boolean initFXML() {
-
-        String                  fxmlLocation = "Path/To/First/Fxml/To/be/Loaded.fxml";
-            FXExampleController controller   = new FXExampleController();
-        boolean                 f            = false;
+    private boolean init() {
+        FXExampleController     controller   = new FXExampleController();
         try {
             //muss alles einmalig gesetzt werden nach der Init-Phase.
-            f = init( fxmlLocation, controller );
-            this.gameMenu.setMenuPane( (HBox) root );
-            this.gameMenu.addObserver( this );
-            game.setGameContentPane( this.gameMenu.getMenuPane() );
+            root = loadFxml( fxmlInitLocation, controller );
+            gameMenu.setMenuPane( (HBox) root );
+            gameMenu.addObserver( this );
+            game.setGameContentPane( gameMenu.getMenuPane() );
+            return true;
         }
         catch ( IOException e ) {
             // FXML konnte nicht geladen werden. Fehlerbehandlung notwendig.
             e.printStackTrace();
         }
-        return f;
+        return false;
     }
 
-    private boolean init( String fxmlLocation, Observable controller ) throws IOException {
-            controller.addObserver( this );
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation( getClass().getResource( fxmlLocation ) );
-            fxmlLoader.setController( controller );
-            root =
-                    fxmlLoader.load();                       //setzt root einmalig. Warum auch immer funtioniert temp als
-            // Object hier nicht!
-            return true;
+    private Parent loadFxml( String fxmlLocation, Observable controller ) throws IOException {
+        controller.addObserver( this );
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation( getClass().getResource( fxmlLocation ) );
+        fxmlLoader.setController( controller );
+        return fxmlLoader.load();                       //setzt root einmalig. Warum auch immer funtioniert temp als Object hier nicht!
+
     }
 
     /**
@@ -92,9 +95,9 @@ public class ExampleFXMLLoading implements Observer {
      *
      * @return Boolean-Wert ob das laden funtioniert hat oder nicht.
      * */
-    private boolean loadMenuFXML(String fxml) {
+    private boolean loadFxmlMenu(String fxml) {
 
-        //setze die Stage einmallig !!!nach!!! dem die FXML Init-Phase abgeschlossen ist.
+        //setze die Stage einmallig !!!nach!!! dem die FXML Init-Phase abgeschlossen ist. Darf nicht in init() oder im Konstruktor stehen!!!
         if (window == null) {
             window = (Stage) (root.getScene().getWindow());
         }
@@ -106,10 +109,7 @@ public class ExampleFXMLLoading implements Observer {
                 try {
                     FXExampleController controller = new FXExampleController();
                     controller.addObserver(this);
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    fxmlLoader.setLocation(getClass().getResource("Path/To/First/Fxml/To/be/Loaded.fxml"));
-                    fxmlLoader.setController(controller);
-                    temp = fxmlLoader.load();                   //benutze temp als Zwischenspeicher statt root!
+                    temp = loadFxml(fxml_1_path, controller);   //benutze temp als Zwischenspeicher statt root!
                     window.setScene(new Scene(temp));           //Setze in der stage eine neue Scene mit dem geladenen FXML über die Window-Referenz.
 
                     return true;
@@ -124,11 +124,8 @@ public class ExampleFXMLLoading implements Observer {
                 try {
                     ZweiterController controller = new Zweiter_controller();
                     controller.addObserver(this);
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    fxmlLoader.setLocation(getClass().getResource("Path/To/Second/Fxml/To/be/Loaded.fxml"));
-                    fxmlLoader.setController(controller);
-                    temp = fxmlLoader.load();                   //benutze temp als Zwischenspeicher statt root!
-                    window.setScene(new Scene(temp));           //Setze in der stage eine neue Scene mit dem geladenen FXML über die Window-Referenz.
+                    temp = loadFxml(fxml_2_path, controller);              //benutze temp als Zwischenspeicher statt root!
+                    window.setScene(new Scene(temp));                      //Setze in der stage eine neue Scene mit dem geladenen FXML über die Window-Referenz.
 
                     return true;
                 } catch (IOException e) {
@@ -138,7 +135,7 @@ public class ExampleFXMLLoading implements Observer {
                 break;
 
             //verlasse dein Spiel und lade das Haupt-Menu.
-            case exitToMain:
+            case UpdateCodes.DefaultCodes.exitToMainGUI:
                 game.exitToMainGUI();       //rufe in deinem Spiel die Verlassen-Methode auf.
                 break;
 
@@ -158,21 +155,21 @@ public class ExampleFXMLLoading implements Observer {
      * */
     private void handle_FXExample_controller(String code) {
 
-        //gucke welcher Button gedrückt wurde und handel dem entsprechend.
+        //gucke welcher UpdateCode behandelt werden soll
         switch (code) {
-            case "button_1_ID":
+            case ExampleUpdateCodes.ErsteGui.code1:
                 //lade das erste FXML
-                loadMenuFXML(erstesFxml);
+                loadFxmlMenu(erstesFxml);
                 break;
 
-            case "button_2_ID":
+            case ExampleUpdateCodes.ErsteGui.code2:
                 //lade das zweite FXML
-                loadMenuFXML(zweitesFxml);
+                loadFxmlMenu(zweitesFxml);
                 break;
 
-            case "button_exit":
+            case UpdateCodes.DefaultCodes.exitToMainGUI:
                 //kehre zur Haupt-Gui zurück
-                loadMenuFXML(exitToMain);
+                game.exitToMainGUI();
                 break;
 
             default:
@@ -189,17 +186,17 @@ public class ExampleFXMLLoading implements Observer {
         switch (code) {
             case "button_1_ID":
                 //lade das anderes erste FXML
-                loadMenuFXML(erstesFxml);
+                loadFxmlMenu(erstesFxml);
                 break;
 
             case "button_2_ID":
                 //lade das andere zweite FXML
-                loadMenuFXML(zweitesFxml);
+                loadFxmlMenu(zweitesFxml);
                 break;
 
             case "button_exit":
                 //kehre zur Haupt-Gui zurück
-                loadMenuFXML(exitToMain);
+                loadFxmlMenu(exitToMain);
                 break;
 
             default:
@@ -215,19 +212,17 @@ public class ExampleFXMLLoading implements Observer {
      *
      * @param o Der Controller der notifyObserver aufruft.
      *
-     * @param arg Der Buttoncode des Controllers der diesen Aufruf auslöst.
+     * @param code Der UpdateCode des Spiels, der behandelt werden soll.
      */
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object code) {
 
-        String code = (String) arg;
-
-        if (o instanceof FXExampleController) {         //gucke aus welchem Controller das NotifyObserver kommt.
-            handle_FXExample_controller(code);          //rufe den entsprechenden Handler auf.
+        if (o instanceof FXExampleController) {                         //gucke aus welchem Controller das NotifyObserver kommt.
+            handle_FXExample_controller((String) code);                 //rufe den entsprechenden Handler auf.
         }
         /*
-        else if (o instanceof AndererFXController) {    //gucke aus welchem Controller das NotifyObserver kommt.
-            handle_Anderen_controller(code);            //rufe den entsprechenden Handler auf.
+        else if (o instanceof AndererFXController) {                    //gucke aus welchem Controller das NotifyObserver kommt.
+            handle_Anderen_controller((ExampleUpdateCodes) code);       //rufe den entsprechenden Handler auf.
         }
         */
         else {

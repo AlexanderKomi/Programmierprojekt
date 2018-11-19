@@ -1,5 +1,6 @@
 package de.hsh.Examples;
 
+import common.updates.UpdateCodes;
 import de.hsh.alexander.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,21 +21,21 @@ public class FXExampleController extends Observable {
 
     @FXML
     void button_clicked(ActionEvent event) {
-        String id = getId(event);
-        switch (id){
+
+        switch (getId(event)){
             case "button_1_ID":
                 setChanged();
-                notifyObservers(id);
+                notifyObservers(ExampleUpdateCodes.ErsteGui.code1);
                 break;
 
             case "button_2_ID":
                 setChanged();
-                notifyObservers(id);
+                notifyObservers(ExampleUpdateCodes.ErsteGui.code2);
                 break;
 
             case "button_exit":
                 setChanged();
-                notifyObservers(id);
+                notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
                 break;
 
             default:
