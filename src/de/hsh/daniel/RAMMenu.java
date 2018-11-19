@@ -18,7 +18,6 @@ public class RAMMenu extends GameMenu {
         return null;
     }
 
-    @Override
     public void initialize( URL location, ResourceBundle resources ) {
 
     }

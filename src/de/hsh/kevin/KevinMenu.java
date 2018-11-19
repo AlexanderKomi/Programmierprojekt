@@ -6,9 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
-import java.net.URL;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
 public class KevinMenu extends GameMenu {
     
@@ -39,11 +37,6 @@ public class KevinMenu extends GameMenu {
     @Override
     protected Pane initMenuPane() {
         return new Pane();
-    }
-
-    @Override
-    public void initialize( URL location, ResourceBundle resources ) {
-
     }
 
     @FXML

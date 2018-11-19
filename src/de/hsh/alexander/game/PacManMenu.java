@@ -5,6 +5,7 @@ import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -13,7 +14,7 @@ import java.net.URL;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class PacManMenu extends GameMenu {
+public class PacManMenu extends GameMenu implements Initializable {
 
     public static final String fxml = "PacManMenu.fxml";
 

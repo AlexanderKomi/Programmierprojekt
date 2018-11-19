@@ -1,17 +1,19 @@
 package de.hsh.kevin;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
-
+import common.events.KeyEventManager;
+import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.ResourceBundle;
 
 public class TIController extends Game implements Initializable {
 
@@ -61,7 +63,17 @@ public class TIController extends Game implements Initializable {
 	// TODO Auto-generated method stub
 
     }
-    
+
+    @Override
+    public void update( KeyEventManager keyEventManager, Object arg ) {
+
+    }
+
+    @Override
+    public void update( MouseEventManager mouseEventManagerManager, Object arg ) {
+
+    }
+
     public void render() {
 	
     }

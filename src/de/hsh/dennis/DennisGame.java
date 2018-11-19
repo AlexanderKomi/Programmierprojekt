@@ -1,6 +1,8 @@
 package de.hsh.dennis;
 
 import common.config.WindowConfig;
+import common.events.KeyEventManager;
+import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.dennis.controller.BigBrother;
@@ -26,6 +28,21 @@ public class DennisGame extends Game implements Initializable {
     public void exitToMainGui(){
         setChanged();
         notifyObservers(UpdateCodes.Dennis.exitToMainGui);
+    }
+
+    @Override
+    public void update( KeyEventManager keyEventManager, Object arg ) {
+
+    }
+
+    @Override
+    public void update( MouseEventManager mouseEventManagerManager, Object arg ) {
+
+    }
+
+    @Override
+    public void render() {
+
     }
 
     public String getName(){
