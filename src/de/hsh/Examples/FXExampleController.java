@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 
 import java.util.Observable;
+import java.util.Observer;
 
 public class FXExampleController extends Observable {
 

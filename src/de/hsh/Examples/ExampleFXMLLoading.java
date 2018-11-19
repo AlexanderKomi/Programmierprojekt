@@ -4,31 +4,15 @@ import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.GameMenu;
 import de.hsh.alexander.util.Logger;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.Observable;
-import java.util.Observer;
 
 
 /**
  * Ewt überarbeiten
  *
  */
-public class ExampleFXMLLoading implements Observer {
-
-    private Game     game;                  //Deine Game Klasse
-    private GameMenu gameMenu;              //Deine GameMenu Klasse
-
-    private Stage window;                   //Die Stage, für dynamisches Übergeben.
-    private Parent root;                    //root dient als Referenz auf das erste Object des ersten FXMLs und wird einmalig bei der Innitialisierung gesetzt.
-    private Parent temp;                    //gleiche Aufgabe wie 'root', allerdings zum mehrfach überschreiben benutzt.
-
+public class ExampleFXMLLoading extends FxmlController {
 
     //Harte Strings zum switchen der FXML-Fälle
     private final String erstesFxml = "erstesFxml";
@@ -44,48 +28,11 @@ public class ExampleFXMLLoading implements Observer {
      *
      * @param game Das Game Object aus dem der Konsturktor aufgerufen wird.
      * */
-    public ExampleFXMLLoading(ExampleGame game) {
-
-        this.game = game;                           //Referenz auf deine Spiele Klasse
-        gameMenu = new ExampleGameMenu();           //erstmaliges erstellen deiner Menu Klasse
-        gameMenu.addObserver(this);             //Diese Klasse dem GameMenue als Observable eintragen.
-
-        if (!init()) {                              //Initialisiere das erste FXML
-            game.setGameContentPane(new Pane());    // Falls das FXML nicht gelladen wird, ein leeres neues Pane zurück geben.
-        }
-
+    public ExampleFXMLLoading(Game game, GameMenu menu) {
+        super(game, menu);
     }
 
-    /**
-     *  Erste Lademethode: Dient als Init-Methode.
-     *  Einmaliger Aufruf am Anfang!!!
-     *  Setzt die Referenz auf die Stage und das root Object.
-     * */
-    private boolean init() {
-        FXExampleController     controller   = new FXExampleController();
-        try {
-            //muss alles einmalig gesetzt werden nach der Init-Phase.
-            root = loadFxml( fxmlInitLocation, controller );
-            gameMenu.setMenuPane( (HBox) root );
-            gameMenu.addObserver( this );
-            game.setGameContentPane( gameMenu.getMenuPane() );
-            return true;
-        }
-        catch ( IOException e ) {
-            // FXML konnte nicht geladen werden. Fehlerbehandlung notwendig.
-            e.printStackTrace();
-        }
-        return false;
-    }
 
-    private Parent loadFxml( String fxmlLocation, Observable controller ) throws IOException {
-        controller.addObserver( this );
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation( getClass().getResource( fxmlLocation ) );
-        fxmlLoader.setController( controller );
-        return fxmlLoader.load();                       //setzt root einmalig. Warum auch immer funtioniert temp als Object hier nicht!
-
-    }
 
     /**
      * Läd die FXML dynamisch nach.
@@ -97,10 +44,7 @@ public class ExampleFXMLLoading implements Observer {
      * */
     private boolean loadFxmlMenu(String fxml) {
 
-        //setze die Stage einmallig !!!nach!!! dem die FXML Init-Phase abgeschlossen ist. Darf nicht in init() oder im Konstruktor stehen!!!
-        if (window == null) {
-            window = (Stage) (root.getScene().getWindow());
-        }
+
 
         switch (fxml) {
 
@@ -109,9 +53,7 @@ public class ExampleFXMLLoading implements Observer {
                 try {
                     FXExampleController controller = new FXExampleController();
                     controller.addObserver(this);
-                    temp = loadFxml(fxml_1_path, controller);   //benutze temp als Zwischenspeicher statt root!
-                    window.setScene(new Scene(temp));           //Setze in der stage eine neue Scene mit dem geladenen FXML über die Window-Referenz.
-
+                    changeScene(fxml_1_path, controller);
                     return true;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -136,7 +78,7 @@ public class ExampleFXMLLoading implements Observer {
 
             //verlasse dein Spiel und lade das Haupt-Menu.
             case UpdateCodes.DefaultCodes.exitToMainGUI:
-                game.exitToMainGUI();       //rufe in deinem Spiel die Verlassen-Methode auf.
+                getGame().exitToMainGUI();       //rufe in deinem Spiel die Verlassen-Methode auf.
                 break;
 
             default:
@@ -169,7 +111,7 @@ public class ExampleFXMLLoading implements Observer {
 
             case UpdateCodes.DefaultCodes.exitToMainGUI:
                 //kehre zur Haupt-Gui zurück
-                game.exitToMainGUI();
+                getGame().exitToMainGUI();
                 break;
 
             default:
