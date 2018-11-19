@@ -9,8 +9,8 @@ import de.hsh.alexander.game.PacManController;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
-import de.hsh.kevin.KevinGame;
-import de.hsh.kevin.TIController;
+import de.hsh.kevin.controller.TIController;
+import de.hsh.kevin.controller.TIGameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 

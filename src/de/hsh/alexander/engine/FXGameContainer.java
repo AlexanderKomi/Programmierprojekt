@@ -14,7 +14,7 @@ import de.hsh.alexander.util.Logger;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
-import de.hsh.kevin.TIController;
+import de.hsh.kevin.controller.TIController;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;

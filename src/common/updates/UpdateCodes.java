@@ -27,6 +27,8 @@ public class UpdateCodes {
     public class TunnelInvader {
         public static final String gameName  = WindowConfig.kevin_title;
         public static final String startGame = "Start Game";
+        public static final String gameOver = "Game Over";
+	public static final String mainMenu = "Main Menu";
     }
 
 }

@@ -9,8 +9,8 @@ import de.hsh.alexander.util.Logger;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
-import de.hsh.kevin.KevinGame;
-import de.hsh.kevin.TIController;
+import de.hsh.kevin.controller.TIController;
+import de.hsh.kevin.controller.TIGameController;
 
 import java.util.Observable;
 
@@ -48,7 +48,7 @@ public class Updater {
                 update( (Leertastenklatsche) game, arg, gameContainer );
             }
             else if ( game instanceof TIController ) {
-                update( (TIController) game, arg, gameContainer );
+                UpdateTunnelInvader.update( (TIController) game, arg, gameContainer );
             }
             else {
                 Logger.log( unknownErrorCode + " type : " + Game.class );
@@ -76,10 +76,6 @@ public class Updater {
 
     public static void update( Leertastenklatsche game, Object arg, GameContainer gameContainer ) {
         Logger.log( game, arg );
-    }
-
-    public static void update( TIController tiController, Object arg, GameContainer gameContainer ) {
-        Logger.log( tiController, arg );
     }
 
 }
