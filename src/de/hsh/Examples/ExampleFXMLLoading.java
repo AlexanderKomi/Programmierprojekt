@@ -47,12 +47,6 @@ public class ExampleFXMLLoading implements Observer {
         if (!initFXML()) {                          //Initialisiere das erste FXML
             game.setGameContentPane(new Pane());    // Falls das FXML nicht gelladen wird, ein leeres neues Pane zurück geben.
         }
-        else {
-            //muss alles einmalig gesetzt werden nach der Init-Phase.
-            this.gameMenu.setMenuPane( (HBox) root );
-            this.gameMenu.addObserver( this );
-            game.setGameContentPane( this.gameMenu.getMenuPane() );
-        }
     }
 
     /**
