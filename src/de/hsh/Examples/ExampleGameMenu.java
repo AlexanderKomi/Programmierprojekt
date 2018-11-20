@@ -1,10 +1,12 @@
-package de.hsh.dennis;
+package de.hsh.Examples;
 
 import de.hsh.alexander.engine.game.GameMenu;
 import javafx.scene.layout.Pane;
 
-public class DennisMenu extends GameMenu {
-    public DennisMenu() {
+public class ExampleGameMenu extends GameMenu {
+
+    public void ExampleGameMenu(){
+
     }
 
     @Override

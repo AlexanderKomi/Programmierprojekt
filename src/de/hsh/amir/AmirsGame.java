@@ -1,5 +1,8 @@
 package de.hsh.amir;
 
+import common.config.WindowConfig;
+import common.events.KeyEventManager;
+import common.events.MouseEventManager;
 import de.hsh.alexander.engine.game.Game;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,7 +23,7 @@ public class AmirsGame extends Game implements Initializable {
     private AmirsMenu gameMenu;
 
     public AmirsGame( Observer o ) {
-        super(o, "Amirs Game");
+        super(o, WindowConfig.amir_title);
         if (!loadMenuFXML()) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane(new Pane());
         }
@@ -28,7 +31,7 @@ public class AmirsGame extends Game implements Initializable {
 
     private boolean loadMenuFXML() {
         try {
-            HBox node = FXMLLoader.load(getClass().getResource("view/MainMenu.fxml"));
+            HBox node = FXMLLoader.load(getClass().getResource("view/AmirsMenu.fxml"));
             this.gameMenu = new AmirsMenu();
             this.gameMenu.setMenuPane(node);
             this.gameMenu.addObserver(this);
@@ -46,7 +49,22 @@ public class AmirsGame extends Game implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize( URL location, ResourceBundle resources ) {
+
+    }
+
+    @Override
+    public void update( KeyEventManager keyEventManager, Object arg ) {
+
+    }
+
+    @Override
+    public void update( MouseEventManager mouseEventManagerManager, Object arg ) {
+
+    }
+
+    @Override
+    public void render() {
 
     }
 }

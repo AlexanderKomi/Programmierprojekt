@@ -3,9 +3,7 @@ package de.hsh.Julian;
 import de.hsh.alexander.engine.game.GameMenu;
 import javafx.scene.layout.Pane;
 
-import java.net.URL;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
 public class LeertastenklatscherMenu extends GameMenu {
 
@@ -18,8 +16,4 @@ public class LeertastenklatscherMenu extends GameMenu {
         return new Pane();
     }
 
-    @Override
-    public void initialize( URL location, ResourceBundle resources ) {
-
-    }
 }

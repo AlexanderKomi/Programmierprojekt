@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <HBox xmlns:fx="http://javafx.com/fxml/1" fx:id="hbox_1" prefHeight="100.0" prefWidth="200.0"
-      xmlns="http://javafx.com/javafx/8.0.152"
-      fx:controller="de.hsh.dennis.controller.mainMenu_controller">
+      xmlns="http://javafx.com/javafx/8.0.161">
     <children>
         <VBox fx:id="vbox_1" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
             <children>

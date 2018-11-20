@@ -1,5 +1,6 @@
 package de.hsh.alexander.game;
 
+import common.config.WindowConfig;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
@@ -24,7 +25,7 @@ public class PacManController extends Game implements Initializable {
     private PacManGame game;
 
     public PacManController( Observer o ) {
-        super( o, UpdateCodes.PacMan.gameName );
+        super( o, WindowConfig.alexander_title );
         if ( !loadMenuFXML() ) { // In case FXML could not be loaded, a default pane is set
             this.setGameContentPane( new Pane() );
         }
@@ -62,6 +63,7 @@ public class PacManController extends Game implements Initializable {
     /* Currently not used... */
     @Override
     public void update( Observable o, Object arg ) {
+        this.game.init();
         if ( o instanceof PacManMenu ) {
             update( (PacManMenu) o, arg );
         }
@@ -97,14 +99,14 @@ public class PacManController extends Game implements Initializable {
         }
     }
 
-    private void update( KeyEventManager o, Object arg ) {
+    public void update( KeyEventManager o, Object arg ) {
         if ( arg instanceof KeyEvent ) {
             KeyEvent keyEvent = (KeyEvent) arg;
             this.game.movePacMan1( keyEvent );
         }
     }
 
-    private void update( MouseEventManager o, Object arg ) {}
+    public void update( MouseEventManager o, Object arg ) {}
 
     private void logParsingError( Observable o, Object arg ) {
         Logger.log( "In PacMan Coop update : from observable : " + o + " Argument could not be parsed : " + arg );

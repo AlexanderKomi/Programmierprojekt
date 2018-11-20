@@ -4,8 +4,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import java.net.URL?>
-<HBox xmlns:fx="http://javafx.com/fxml/1" fx:id="hbox_1" xmlns="http://javafx.com/javafx/8.0.152"
-      fx:controller="de.hsh.dennis.controller.level_controller">
+<HBox xmlns:fx="http://javafx.com/fxml/1" fx:id="hbox_1" xmlns="http://javafx.com/javafx/8.0.161">
     <children>
         <VBox fx:id="vbox_1" alignment="CENTER" HBox.hgrow="ALWAYS">
             <children>

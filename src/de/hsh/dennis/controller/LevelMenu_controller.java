@@ -3,18 +3,14 @@ package de.hsh.dennis.controller;
 import de.hsh.alexander.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.net.URL;
 import java.util.Observable;
-import java.util.ResourceBundle;
 
-public class mainMenu_controller extends Observable implements Initializable {
+public class LevelMenu_controller extends Observable {
 
     @FXML
     private HBox hbox_1;
@@ -23,7 +19,7 @@ public class mainMenu_controller extends Observable implements Initializable {
     private VBox vbox_1;
 
     @FXML
-    private ImageView pic_header;
+    private Button b_play1;
 
     @FXML
     private Button b_play;
@@ -35,24 +31,38 @@ public class mainMenu_controller extends Observable implements Initializable {
     private Button b_exit;
 
     @FXML
+    private Button b_exit1;
+
+    @FXML
     void button_clicked(ActionEvent event) {
         String id = getId(event);
         switch (id){
-            case "b_play":
-                this.setChanged();
-                this.notifyObservers( "b_play" );
-                Logger.log("button_clicked Aufruf mit b_play.");
+            case "b_easy":
+                setChanged();
+                notifyObservers(id);
                 break;
-            case "b_tutorial":
-                this.notifyObservers( "b_tutorial" );
-                Logger.log("button_clicked Aufruf mit b_tutorial.");
+
+            case "b_medium":
+                setChanged();
+                notifyObservers(id);
                 break;
-            case "b_exit":
-                this.notifyObservers( "b_exit" );
-                Logger.log("button_clicked Aufruf mit b_exit.");
+
+            case "b_hard":
+                setChanged();
+                notifyObservers(id);
                 break;
+
+            case "b_nightmare":
+                setChanged();
+                notifyObservers(id);
+                break;
+
+            case "b_back":
+                setChanged();
+                notifyObservers(id);
+                break;
+
             default:
-                this.notifyObservers( "error" );
                 Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
 
         }
@@ -62,8 +72,4 @@ public class mainMenu_controller extends Observable implements Initializable {
         return ((Node) event.getSource()).getId();
     }
 
-    @Override
-    public void initialize( URL location, ResourceBundle resources ) {
-
-    }
 }

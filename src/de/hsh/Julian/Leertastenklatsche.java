@@ -1,6 +1,8 @@
 package de.hsh.Julian;
 
+import common.config.WindowConfig;
 import common.events.KeyEventManager;
+import common.events.MouseEventManager;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.util.Logger;
 import javafx.scene.canvas.Canvas;
@@ -32,7 +34,7 @@ public class Leertastenklatsche extends Game {
     private ArrayList<Sprite> moneybagList = new ArrayList<Sprite>();
 
     public Leertastenklatsche( Observer o ) {
-        super( o, "Leertastenklatsche" );
+        super( o, WindowConfig.julian_title);
         this.setGameContentPane( this.initGameContentWindow( o ) );
         this.getGameContentPane().setOnKeyPressed(
                 e -> {
@@ -129,6 +131,16 @@ public class Leertastenklatsche extends Game {
         if ( input.contains( "DOWN" ) ) {
             briefcase.addVelocity( 0, v );
         }
+    }
+
+    @Override
+    public void update( KeyEventManager keyEventManager, Object arg ) {
+
+    }
+
+    @Override
+    public void update( MouseEventManager mouseEventManagerManager, Object arg ) {
+
     }
 
     public void render() {

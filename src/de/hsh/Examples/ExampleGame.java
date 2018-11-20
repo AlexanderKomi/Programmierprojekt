@@ -1,18 +1,18 @@
-package de.hsh.daniel;
+package de.hsh.Examples;
 
-import common.config.WindowConfig;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
+import common.updates.UpdateCodes;
 import de.hsh.alexander.engine.game.Game;
-import javafx.scene.layout.Pane;
 
 import java.util.Observable;
 import java.util.Observer;
 
-public class RAM extends Game {
-    public RAM( Observer o ) {
-        super( o, WindowConfig.daniel_title );
-        this.setGameContentPane( new Pane() );
+public class ExampleGame extends Game
+{
+
+    protected ExampleGame(Observer o, String name) {
+        super(o, "ExampleGame_Name");
     }
 
     @Override
@@ -33,5 +33,11 @@ public class RAM extends Game {
     @Override
     public void render() {
 
+    }
+
+    @Override
+    public void exitToMainGUI() {
+        setChanged();
+        notifyObservers( UpdateCodes.Dennis.exitToMainGui );
     }
 }

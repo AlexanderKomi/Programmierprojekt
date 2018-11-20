@@ -1,10 +1,20 @@
 package de.hsh.alexander.engine;
 
 import common.MainMenu;
+import common.config.WindowConfig;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
+import common.updates.UpdateDDOSDefender;
+import common.updates.UpdatePacman;
+import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.engine.game.Game;
 import de.hsh.alexander.engine.game.Games;
+import de.hsh.alexander.game.PacManController;
+import de.hsh.alexander.util.Logger;
+import de.hsh.amir.AmirsGame;
+import de.hsh.daniel.RAM;
+import de.hsh.dennis.DennisGame;
+import de.hsh.kevin.controller.TIController;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -70,6 +80,7 @@ public abstract class FXGameContainer
 
     private void initStage( Stage primaryStage ) {
         this.stage = primaryStage; // This line is required, for reference change.
+        this.stage.setTitle(WindowConfig.mainGui_title);
         this.stage.setResizable( false );
         this.stage.setOnCloseRequest( close -> {
             this.stopContainer();
@@ -150,9 +161,34 @@ public abstract class FXGameContainer
         Pane p = g.getGameContentPane();
         if ( p != null ) {
             this.stage.getScene().rootProperty().setValue( p );
+            changeTitle(g);
         }
         else {
             throw new NullPointerException( "Pane is null" );
+        }
+    }
+
+    private void changeTitle(Game g) {
+        if ( g instanceof PacManController) {
+            this.stage.setTitle(WindowConfig.alexander_title);
+        }
+        else if ( g instanceof AmirsGame) {
+            this.stage.setTitle(WindowConfig.amir_title);
+        }
+        else if ( g instanceof RAM) {
+            this.stage.setTitle(WindowConfig.daniel_title);
+        }
+        else if ( g instanceof DennisGame) {
+            this.stage.setTitle(WindowConfig.dennis_title);
+        }
+        else if ( g instanceof Leertastenklatsche) {
+            this.stage.setTitle(WindowConfig.julian_title);
+        }
+        else if ( g instanceof TIController) {
+            this.stage.setTitle(WindowConfig.kevin_title);
+        }
+        else {
+            this.stage.setTitle("ERROR SETTING TITLE");
         }
     }
 
@@ -186,4 +222,6 @@ public abstract class FXGameContainer
             throw new NullPointerException( "Pane is null" );
         }
     }
+
+
 }

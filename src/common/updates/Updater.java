@@ -9,7 +9,8 @@ import de.hsh.alexander.util.Logger;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
-import de.hsh.kevin.KevinGame;
+import de.hsh.kevin.controller.TIController;
+import de.hsh.kevin.controller.TIGameController;
 
 import java.util.Observable;
 
@@ -41,13 +42,13 @@ public class Updater {
                 UpdateRAM.update( (RAM) game, arg, gameContainer );
             }
             else if ( game instanceof DennisGame ) {
-                update( (DennisGame) game, arg, gameContainer );
+                UpdateDDOSDefender.update( (DennisGame) game, arg, gameContainer );
             }
             else if ( game instanceof Leertastenklatsche ) {
                 update( (Leertastenklatsche) game, arg, gameContainer );
             }
-            else if ( game instanceof KevinGame ) {
-                update( (KevinGame) game, arg, gameContainer );
+            else if ( game instanceof TIController ) {
+                UpdateTunnelInvader.update( (TIController) game, arg, gameContainer );
             }
             else {
                 Logger.log( unknownErrorCode + " type : " + Game.class );
@@ -67,15 +68,10 @@ public class Updater {
     }
 
 
-    public static void update( DennisGame game, Object arg, GameContainer gameContainer ) {
-        Logger.log( game, arg );
+    public static void update( DennisGame game, Object arg, GameContainer gameContainer ) { Logger.log( game, arg );
     }
 
     public static void update( Leertastenklatsche game, Object arg, GameContainer gameContainer ) {
-        Logger.log( game, arg );
-    }
-
-    public static void update( KevinGame game, Object arg, GameContainer gameContainer ) {
         Logger.log( game, arg );
     }
 

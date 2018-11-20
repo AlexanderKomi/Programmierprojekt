@@ -9,7 +9,8 @@ import de.hsh.alexander.game.PacManController;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
-import de.hsh.kevin.KevinGame;
+import de.hsh.kevin.controller.TIController;
+import de.hsh.kevin.controller.TIGameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 
@@ -33,9 +34,9 @@ public class GameContainer extends FXGameContainer {
                 new PacManController( container ),
                 new AmirsGame( container ),
                 new RAM( container ),
-                new KevinGame( container ),
+                new TIController( container ),
                 new Leertastenklatsche( container ),
-                new DennisGame( container )
+                new DennisGame(container)
         );
 
         return games;
@@ -77,6 +78,7 @@ public class GameContainer extends FXGameContainer {
         if ( this.getGames() != null ) {
             ((Leertastenklatsche) this.getGames().get( "Leertastenklatsche" )).render();
             ((PacManController) this.getGames().get( UpdateCodes.PacMan.gameName )).render();
+            ((TIController) this.getGames().get( UpdateCodes.TunnelInvader.gameName )).render();
         }
     }
 
