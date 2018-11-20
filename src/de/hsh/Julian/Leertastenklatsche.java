@@ -26,7 +26,7 @@ public class Leertastenklatsche extends Game {
 
     private GraphicsContext   gc;
     private Pane              root         = new Pane();
-    private Canvas            canvas       = new Canvas( 512, 512 );
+    private Canvas            canvas       = new Canvas( 1280, 800 );
     private int               score        = 0;
     private Sprite            briefcase    = new Sprite();
     private String            location     = getLocation();
@@ -117,7 +117,7 @@ public class Leertastenklatsche extends Game {
     }
 
     private void parseInput( ArrayList<String> input ) {
-        int v = 5;
+        int v = 1;
         briefcase.setVelocity( 0, 0 );
         if ( input.contains( "LEFT" ) ) {
             briefcase.addVelocity( -v, 0 );
