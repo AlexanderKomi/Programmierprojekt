@@ -1,10 +1,10 @@
 package de.hsh.dennis;
 
 import common.config.WindowConfig;
+import common.engine.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
-import de.hsh.alexander.engine.game.Game;
 import de.hsh.dennis.controller.BigBrother;
 import javafx.fxml.Initializable;
 

@@ -1,9 +1,9 @@
 package de.hsh.amir;
 
 import common.config.WindowConfig;
+import common.engine.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
-import de.hsh.alexander.engine.game.Game;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;

@@ -1,6 +1,6 @@
 package de.hsh.Julian;
 
-import de.hsh.alexander.engine.game.GameMenu;
+import common.engine.game.GameMenu;
 import javafx.scene.layout.Pane;
 
 import java.util.Observer;

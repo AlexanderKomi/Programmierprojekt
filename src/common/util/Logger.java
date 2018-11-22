@@ -1,4 +1,4 @@
-package de.hsh.alexander.util;
+package common.util;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;

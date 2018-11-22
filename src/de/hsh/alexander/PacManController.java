@@ -1,11 +1,11 @@
-package de.hsh.alexander.game;
+package de.hsh.alexander;
 
 import common.config.WindowConfig;
+import common.engine.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
-import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;

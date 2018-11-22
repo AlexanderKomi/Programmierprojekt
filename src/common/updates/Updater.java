@@ -2,15 +2,14 @@ package common.updates;
 
 import common.GameContainer;
 import common.MainMenu;
+import common.engine.game.Game;
+import common.util.Logger;
 import de.hsh.Julian.Leertastenklatsche;
-import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.game.PacManController;
-import de.hsh.alexander.util.Logger;
+import de.hsh.alexander.PacManController;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.controller.TIController;
-import de.hsh.kevin.controller.TIGameController;
 
 import java.util.Observable;
 

@@ -1,4 +1,4 @@
-package de.hsh.alexander.engine.game;
+package common.engine.game;
 
 import common.updates.UpdateCodes;
 import javafx.scene.layout.Pane;

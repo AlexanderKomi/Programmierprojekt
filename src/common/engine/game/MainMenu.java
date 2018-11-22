@@ -1,4 +1,4 @@
-package de.hsh.alexander.engine.game;
+package common.engine.game;
 
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;

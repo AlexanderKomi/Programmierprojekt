@@ -1,8 +1,8 @@
-package de.hsh.alexander.game;
+package de.hsh.alexander;
 
+import common.engine.game.GameMenu;
 import common.updates.UpdateCodes;
-import de.hsh.alexander.engine.game.GameMenu;
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

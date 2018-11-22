@@ -1,6 +1,6 @@
 package de.hsh.dennis.controller;
 
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
 import de.hsh.dennis.DennisGame;
 import de.hsh.dennis.DennisMenu;
 import javafx.fxml.FXMLLoader;

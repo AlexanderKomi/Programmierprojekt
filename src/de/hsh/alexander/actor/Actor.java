@@ -1,6 +1,6 @@
-package de.hsh.alexander.game.actor;
+package de.hsh.alexander.actor;
 
-import de.hsh.alexander.util.Path;
+import common.util.Path;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 
 public class Actor {
 
-    static final String actorLocation = Path.getExecutionLocation() + "de/hsh/alexander/game/actor/";
+    static final String actorLocation = Path.getExecutionLocation() + "de/hsh/alexander/actor/";
 
     private double x;
     private double y;

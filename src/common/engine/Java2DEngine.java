@@ -1,4 +1,4 @@
-package de.hsh.alexander.engine;
+package common.engine;
 
 import java.util.Observable;
 
@@ -6,7 +6,7 @@ import java.util.Observable;
  * A simple Java 2 engine.<br>
  * To use the engine, implement an GameContainerInterface.<br>
  * <p>
- * For a few examples, take a look at the classes in this package : de.hsh.alexander.engine.examples .
+ * For a few examples, take a look at the classes in this package : common.engine.examples .
  *
  * @author Alexander Komischke
  * @see GameContainerInterface

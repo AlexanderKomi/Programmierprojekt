@@ -1,10 +1,10 @@
 package de.hsh.Julian;
 
 import common.config.WindowConfig;
+import common.engine.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
-import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import static de.hsh.alexander.util.Path.getExecutionLocation;
+import static common.util.Path.getExecutionLocation;
 
 //
 //

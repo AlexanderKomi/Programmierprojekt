@@ -1,7 +1,7 @@
 package common.updates;
 
 import common.GameContainer;
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
 import de.hsh.kevin.controller.TIController;
 
 public class UpdateTunnelInvader {

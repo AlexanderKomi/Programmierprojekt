@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 /**
  * @author Alexander Komischke
  */
-public class MainMenu extends de.hsh.alexander.engine.game.MainMenu {
+public class MainMenu extends common.engine.game.MainMenu {
 
     @FXML
     public AnchorPane ap_desktop;

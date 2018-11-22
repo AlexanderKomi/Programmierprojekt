@@ -2,7 +2,7 @@ package common.updates;
 
 import common.GameContainer;
 import common.MainMenu;
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
 
 public class UpdateMainMenu {
 

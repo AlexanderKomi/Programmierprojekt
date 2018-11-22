@@ -1,16 +1,13 @@
-package de.hsh.alexander.engine;
+package common.engine;
 
 import common.MainMenu;
 import common.config.WindowConfig;
+import common.engine.game.Game;
+import common.engine.game.Games;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
-import common.updates.UpdateDDOSDefender;
-import common.updates.UpdatePacman;
 import de.hsh.Julian.Leertastenklatsche;
-import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.engine.game.Games;
-import de.hsh.alexander.game.PacManController;
-import de.hsh.alexander.util.Logger;
+import de.hsh.alexander.PacManController;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;

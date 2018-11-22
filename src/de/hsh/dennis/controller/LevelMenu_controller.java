@@ -1,6 +1,6 @@
 package de.hsh.dennis.controller;
 
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

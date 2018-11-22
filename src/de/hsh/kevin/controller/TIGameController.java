@@ -1,9 +1,9 @@
 package de.hsh.kevin.controller;
 
 import common.config.WindowConfig;
+import common.engine.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
-import de.hsh.alexander.engine.game.Game;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -1,8 +1,8 @@
 package common.updates;
 
 import common.GameContainer;
-import de.hsh.alexander.game.PacManController;
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
+import de.hsh.alexander.PacManController;
 
 public class UpdatePacman {
 

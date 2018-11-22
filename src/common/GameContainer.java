@@ -1,16 +1,15 @@
 package common;
 
+import common.engine.FXGameContainer;
+import common.engine.game.Games;
 import common.updates.UpdateCodes;
 import common.updates.Updater;
 import de.hsh.Julian.Leertastenklatsche;
-import de.hsh.alexander.engine.FXGameContainer;
-import de.hsh.alexander.engine.game.Games;
-import de.hsh.alexander.game.PacManController;
+import de.hsh.alexander.PacManController;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.controller.TIController;
-import de.hsh.kevin.controller.TIGameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 

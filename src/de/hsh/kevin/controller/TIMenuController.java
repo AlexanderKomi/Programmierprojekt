@@ -1,14 +1,13 @@
 package de.hsh.kevin.controller;
 
-import de.hsh.alexander.engine.game.GameMenu;
+import common.engine.game.GameMenu;
+import common.updates.UpdateCodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 import java.util.Observer;
-
-import common.updates.UpdateCodes;
 
 public class TIMenuController extends GameMenu {
 

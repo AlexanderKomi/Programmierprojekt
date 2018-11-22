@@ -1,4 +1,4 @@
-package de.hsh.alexander.engine;
+package common.engine;
 
 import javafx.application.Application;
 

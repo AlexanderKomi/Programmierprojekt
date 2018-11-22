@@ -1,7 +1,7 @@
-package de.hsh.alexander.game;
+package de.hsh.alexander;
 
-import de.hsh.alexander.game.actor.Direction;
-import de.hsh.alexander.game.actor.PacMan;
+import de.hsh.alexander.actor.Direction;
+import de.hsh.alexander.actor.PacMan;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

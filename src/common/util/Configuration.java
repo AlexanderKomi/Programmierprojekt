@@ -1,4 +1,4 @@
-package de.hsh.alexander.util;
+package common.util;
 
 /**
  * General configuration settings, which should be applied to every program, launched.

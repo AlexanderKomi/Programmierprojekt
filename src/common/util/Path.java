@@ -1,4 +1,4 @@
-package de.hsh.alexander.util;
+package common.util;
 
 import java.io.File;
 import java.net.URL;
