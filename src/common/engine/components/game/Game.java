@@ -50,6 +50,8 @@ public abstract class Game extends FxModul implements IGame {
         observable.addObserver(this);
     }
 
+    public abstract void render();
+
     // ----------------------------------- GETTER & SETTER  -----------------------------------
 
     public String getName() {

@@ -13,7 +13,7 @@ public class UpdatePacman {
                 case UpdateCodes.PacMan.startGame:
                     gameContainer.setGameShown( UpdateCodes.PacMan.gameName );
                     break;
-                case UpdateCodes.PacMan.mainMenu:
+                case UpdateCodes.DefaultCodes.exitToMainGUI:
                     gameContainer.showMainMenu();
                     break;
                 default:
