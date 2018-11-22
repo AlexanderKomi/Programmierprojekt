@@ -4,9 +4,7 @@ import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.engine.components.game.Game;
 import common.util.Logger;
-import de.hsh.dennis.controller.LevelMenu_controller;
-import de.hsh.dennis.controller.MainMenu_controller;
-import de.hsh.dennis.controller.Tutorial_controller;
+import de.hsh.dennis.controller.*;
 
 import java.util.Observable;
 
@@ -17,7 +15,7 @@ public class DennisFxmlChanger extends FxmlChanger {
         super(fxModul, fxmlPath, fxController);
     }
 
-    public void handle_Tutorial_controller(String code) {
+    private void handle_Tutorial_controller(String code) {
         switch (code) {
             case "b_left":
                 Logger.log("handle_Tutorial_controller: b_left erreicht");
@@ -38,7 +36,7 @@ public class DennisFxmlChanger extends FxmlChanger {
         }
     }
 
-    public void handle_LevelMenu_controller(String code) {
+    private void handle_LevelMenu_controller(String code) {
 
         switch (code) {
             case "b_easy":
@@ -71,7 +69,7 @@ public class DennisFxmlChanger extends FxmlChanger {
         }
     }
 
-    public void handle_BreakMenu_controller(String code) {
+    private void handle_BreakMenu_controller(String code) {
         switch (code) {
             case "b_replay":
                 Logger.log("handle_BreakMenu_controller: b_replay erreicht");
@@ -93,11 +91,11 @@ public class DennisFxmlChanger extends FxmlChanger {
         }
     }
 
-    public void handle_Level_controller(String code) {
+    private void handle_Level_controller(String code) {
         //TODO: implement later
     }
 
-    public void handle_MainMenu_controller(String code) {
+    private void handle_MainMenu_controller(String code) {
 
 
         switch (code) {
@@ -128,7 +126,17 @@ public class DennisFxmlChanger extends FxmlChanger {
     @Override
     public void changeFxml(Observable o, String msg) {
 
-
+        if (o instanceof Level_controller) {
+            handle_Level_controller(msg);
+        } else if (o instanceof BreakMenu_controller) {
+            handle_BreakMenu_controller(msg);
+        } else if (o instanceof LevelMenu_controller) {
+            handle_LevelMenu_controller(msg);
+        } else if (o instanceof MainMenu_controller) {
+            handle_MainMenu_controller(msg);
+        } else if (o instanceof Tutorial_controller) {
+            handle_Tutorial_controller(msg);
+        }
     }
 
 

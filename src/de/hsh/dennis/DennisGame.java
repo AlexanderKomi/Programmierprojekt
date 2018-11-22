@@ -4,7 +4,7 @@ import common.config.WindowConfig;
 import common.engine.components.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
-import de.hsh.dennis.controller.*;
+import de.hsh.dennis.controller.MainMenu_controller;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -39,17 +39,8 @@ public class DennisGame extends Game {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (o instanceof Level_controller) {
-            changer.handle_Level_controller((String) arg);
-        } else if (o instanceof BreakMenu_controller) {
-            changer.handle_BreakMenu_controller((String) arg);
-        } else if (o instanceof LevelMenu_controller) {
-            changer.handle_LevelMenu_controller((String) arg);
-        } else if (o instanceof MainMenu_controller) {
-            changer.handle_MainMenu_controller((String) arg);
-        } else if (o instanceof Tutorial_controller) {
-            changer.handle_Tutorial_controller((String) arg);
-        }
+
+        changer.changeFxml(o, (String) arg);
     }
 
 }
