@@ -1,10 +1,11 @@
 package de.hsh.Julian;
 
 import common.config.WindowConfig;
-import common.engine.game.Game;
+import common.engine.components.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.util.Logger;
+import common.util.Path;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -35,6 +36,7 @@ public class Leertastenklatsche extends Game {
 
     public Leertastenklatsche( Observer o ) {
         super( o, WindowConfig.julian_title);
+        /*
         this.setGameContentPane( this.initGameContentWindow( o ) );
         this.getGameContentPane().setOnKeyPressed(
                 e -> {
@@ -44,11 +46,12 @@ public class Leertastenklatsche extends Game {
                     }
                     Logger.log( "Key pressed : " + code );
                 } );
+        */
     }
 
     public Pane initGameContentWindow( Observer observer ) {
 
-     //   Logger.log( "Dir : " + getExecutionLocation(),  Path.getAllFileNames(getExecutionLocation()) );
+        Logger.log("Dir : " + getExecutionLocation(), Path.getAllFileNames(getExecutionLocation()));
         addKeyListener();
         root.getChildren().add( canvas );
         initializeGraphicsContext();
@@ -144,6 +147,7 @@ public class Leertastenklatsche extends Game {
     }
 
     public void render() {
+        /*
         parseInput( input );
         gc.clearRect( 0, 0, 512, 512 );
 
@@ -155,6 +159,7 @@ public class Leertastenklatsche extends Game {
 
         briefcase.update( 10 );
         briefcase.render( gc );
+        */
     }
 
     @Override

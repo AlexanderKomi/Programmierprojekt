@@ -1,14 +1,13 @@
 package de.hsh.kevin.controller;
 
 import common.config.WindowConfig;
-import common.engine.game.Game;
+import common.engine.components.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.Observable;
@@ -31,7 +30,7 @@ public class TIGameController extends Game {
     
     public TIGameController( Observer o ) {
         super( o, WindowConfig.kevin_title );
-        this.setGameContentPane( new Pane() );
+
     }
 
     @Override

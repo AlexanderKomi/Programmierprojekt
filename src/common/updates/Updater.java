@@ -2,7 +2,7 @@ package common.updates;
 
 import common.GameContainer;
 import common.MainMenu;
-import common.engine.game.Game;
+import common.engine.components.game.Game;
 import common.util.Logger;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.PacManController;
@@ -52,8 +52,7 @@ public class Updater {
             else {
                 Logger.log( unknownErrorCode + " type : " + Game.class );
             }
-        }
-        else if ( o instanceof MainMenu ) {
+        } else if (o instanceof MainMenu) {
             UpdateMainMenu.update( (MainMenu) o, arg, gameContainer );
         }
         else {

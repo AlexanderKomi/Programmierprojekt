@@ -3,6 +3,7 @@ package common;
 import common.config.Authors;
 import common.updates.UpdateCodes;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
@@ -18,7 +19,7 @@ import java.util.ResourceBundle;
 /**
  * @author Alexander Komischke
  */
-public class MainMenu extends common.engine.game.MainMenu {
+public class MainMenu extends common.engine.components.menu.MainMenu implements Initializable {
 
     @FXML
     public AnchorPane ap_desktop;
@@ -59,10 +60,10 @@ public class MainMenu extends common.engine.game.MainMenu {
         return "common.MainMenu";
     }
 
-    @Override
+
     public void initialize(URL location, ResourceBundle resources) {
         this.cb_credits.getItems().setAll(Authors.authorNamesWithTitles);
-        super.initialize(location, resources);
+
     }
 
     public void initGameNames() {

@@ -1,7 +1,7 @@
 package de.hsh.dennis;
 
 import common.config.WindowConfig;
-import common.engine.game.Game;
+import common.engine.components.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
@@ -21,7 +21,7 @@ public class DennisGame extends Game implements Initializable {
 
     public DennisGame(Observer o){
         super(o, WindowConfig.dennis_title);
-        bb = new BigBrother(this);
+        bb = new BigBrother();
 
     }
 

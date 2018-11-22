@@ -1,11 +1,10 @@
 package de.hsh.kevin.controller;
 
-import common.engine.game.GameMenu;
+import common.engine.components.menu.GameMenu;
 import common.updates.UpdateCodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 
 import java.util.Observer;
 
@@ -36,10 +35,6 @@ public class TIMenuController extends GameMenu {
 
     }
 
-    @Override
-    protected Pane initMenuPane() {
-	return new Pane();
-    }
 
     @FXML
     void difficultyPressed(ActionEvent event) {

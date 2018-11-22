@@ -2,19 +2,13 @@ package common.engine;
 
 import common.MainMenu;
 import common.config.WindowConfig;
-import common.engine.game.Game;
-import common.engine.game.Games;
+import common.engine.components.game.Game;
+import common.engine.components.game.Games;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
-import de.hsh.Julian.Leertastenklatsche;
-import de.hsh.alexander.PacManController;
-import de.hsh.amir.AmirsGame;
-import de.hsh.daniel.RAM;
-import de.hsh.dennis.DennisGame;
-import de.hsh.kevin.controller.TIController;
+import common.util.Logger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -26,13 +20,11 @@ import java.util.Observer;
  *
  * @author Alexander Komischke
  */
-public abstract class FXGameContainer
-        extends Container implements Observer {
+public abstract class FXGameContainer extends Container implements Observer {
 
     private static KeyEventManager   keyEventManager;
     private static MouseEventManager mouseEventManager;
     private        Stage             stage;
-    private        Scene             scene;
     private        Games             games = new Games(); // Tracks all the games
     //Engine properties
 
@@ -54,49 +46,39 @@ public abstract class FXGameContainer
         keyEventManager = new KeyEventManager();
         mouseEventManager = new MouseEventManager();
 
-        this.setGames( createGames( this ) );
+        this.setGames(createGames(this));
 
-        this.setMenu( configMainMenu( this, games.getNames() ) );
+        this.setMenu(configMainMenu(getGames().getNames()));
         this.getMenu().addObserver( this );
-        this.getMenu().setGameNames( this.games );
         this.getMenu().initGameNames();
 
-        this.scene = new Scene( this.getMenu().vbox );
-
-        addKeyListeners( keyEventManager );
-        addMouseEvents( mouseEventManager );
+        this.stage.setScene(this.getMenu().getScene());
+        //keyEventManager.addKeyEvents( this.getMenu().getScene() );
+        //mouseEventManager.addKeyEvents( this.getMenu().getScene() );
 
         this.games.addKeyEventManager( keyEventManager );
         this.games.addMouseEventManager( mouseEventManager );
-        this.stage.setScene( this.scene );
+        this.stage.setScene(this.getMenu().getScene());
         this.startEngine();
         this.showWindow();
     }
-
-    public abstract Games createGames( Observer container );
 
     private void initStage( Stage primaryStage ) {
         this.stage = primaryStage; // This line is required, for reference change.
         this.stage.setTitle(WindowConfig.mainGui_title);
         this.stage.setResizable( false );
-        this.stage.setOnCloseRequest( close -> {
-            this.stopContainer();
-        } );
+        this.stage.setOnCloseRequest(close -> this.stopContainer());
     }
 
-    private void addKeyListeners( KeyEventManager keyEventManager ) {
-        this.scene.setOnKeyPressed( keyEventManager::keyPressed );
-        this.scene.setOnKeyReleased( keyEventManager::keyReleased );
-        this.scene.setOnKeyTyped( keyEventManager::keyTyped );
+    protected void setGames(Games games) {
+        if (games == null) {
+            throw new IllegalArgumentException("Games are null");
+        } else {
+            this.games = games;
+        }
     }
 
-    private void addMouseEvents( MouseEventManager mouseEventManager ) {
-        this.scene.setOnMouseClicked( mouseEventManager::mouseClicked );
-        this.scene.setOnMouseDragged( mouseEventManager::mouseDragged );
-        this.scene.setOnMouseReleased( mouseEventManager::mouseReleased );
-    }
-
-    protected abstract common.MainMenu configMainMenu( Observer container, ArrayList<String> games );
+    public abstract Games createGames(Observer o);
 
 
     private void showWindow() {
@@ -109,7 +91,7 @@ public abstract class FXGameContainer
     }
 
     public void showMainMenu() {
-        this.stage.getScene().rootProperty().setValue( this.getMenu().vbox );
+        this.stage.setScene(this.getMenu().getScene());
     }
 
     public MainMenu getMenu() {
@@ -138,13 +120,7 @@ public abstract class FXGameContainer
         this.menu = menu;
     }
 
-    public void setGameShown( String gameName ) {
-        Game g = this.getGames().get( gameName );
-        if ( g == null ) {
-            throw new IllegalArgumentException( "Game not found" );
-        }
-        setGameShown( g );
-    }
+    protected abstract common.MainMenu configMainMenu(ArrayList<String> games);
 
     public boolean containsGame( Game game ) {
         return this.getGames().contains( game );
@@ -154,48 +130,8 @@ public abstract class FXGameContainer
         return this.getGames().contains( gameName );
     }
 
-    public void setGameShown( Game g ) {
-        Pane p = g.getGameContentPane();
-        if ( p != null ) {
-            this.stage.getScene().rootProperty().setValue( p );
-            changeTitle(g);
-        }
-        else {
-            throw new NullPointerException( "Pane is null" );
-        }
-    }
-
-    private void changeTitle(Game g) {
-        if ( g instanceof PacManController) {
-            this.stage.setTitle(WindowConfig.alexander_title);
-        }
-        else if ( g instanceof AmirsGame) {
-            this.stage.setTitle(WindowConfig.amir_title);
-        }
-        else if ( g instanceof RAM) {
-            this.stage.setTitle(WindowConfig.daniel_title);
-        }
-        else if ( g instanceof DennisGame) {
-            this.stage.setTitle(WindowConfig.dennis_title);
-        }
-        else if ( g instanceof Leertastenklatsche) {
-            this.stage.setTitle(WindowConfig.julian_title);
-        }
-        else if ( g instanceof TIController) {
-            this.stage.setTitle(WindowConfig.kevin_title);
-        }
-        else {
-            this.stage.setTitle("ERROR SETTING TITLE");
-        }
-    }
-
-    protected void setMainMenuShown( MainMenu m ) {
-        if ( m != null ) {
-            this.stage.getScene().rootProperty().setValue( m.vbox );
-        }
-        else {
-            throw new NullPointerException( "Pane is null" );
-        }
+    public static KeyEventManager getKeyEventManager() {
+        return keyEventManager;
     }
 
     protected void setGameShown( int index ) {
@@ -206,19 +142,37 @@ public abstract class FXGameContainer
         return games;
     }
 
-    protected void setGames( Games games ) {
-        this.games = games;
-    }
-
-    void setGameshown( Game game ) {
-        Pane p = game.getGameContentPane();
-        if ( p != null ) {
-            this.stage.getScene().rootProperty().setValue( p );
+    public void setGameShown(String gameName) {
+        Game g = this.getGames().get(gameName);
+        if (g == null) {
+            throw new IllegalArgumentException("Game not found");
         }
         else {
-            throw new NullPointerException( "Pane is null" );
+            setGameShown(g);
         }
     }
 
+    public void setGameShown(Game game) {
+        Scene s = game.getScene();
+        Logger.log(this.getClass() + ": Game scene : " + s);
+        if (s != null) {
+            if (s.rootProperty().get() != null) {
+                Logger.log(this.getClass() + ": Draw Scene");
 
+                try {
+                    getStage().setScene(s);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                throw new NullPointerException("Scene root property is null.");
+            }
+        } else {
+            throw new NullPointerException("Scene is null");
+        }
+    }
+
+    private void setStage(Stage stage) {
+        this.stage = stage;
+    }
 }

@@ -1,15 +1,11 @@
 package de.hsh.amir;
 
-import common.engine.game.GameMenu;
-import javafx.scene.layout.Pane;
+
+import common.engine.components.menu.GameMenu;
 
 public class AmirsMenu extends GameMenu {
 
     public AmirsMenu() {
     }
 
-    @Override
-    protected Pane initMenuPane() {
-        return new Pane();
-    }
 }

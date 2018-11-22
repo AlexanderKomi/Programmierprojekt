@@ -1,7 +1,7 @@
 package de.hsh.alexander;
 
 import common.config.WindowConfig;
-import common.engine.game.Game;
+import common.engine.components.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -27,7 +26,7 @@ public class PacManController extends Game implements Initializable {
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
         if ( !loadMenuFXML() ) { // In case FXML could not be loaded, a default pane is set
-            this.setGameContentPane( new Pane() );
+            //this.setGameContentPane( new Pane() );
         }
         loadGameFXML();
     }
@@ -51,7 +50,7 @@ public class PacManController extends Game implements Initializable {
 
             //this.gameMenu.addObserver( this );
             this.gameMenu.setMenuPane( node );
-            this.setGameContentPane( this.gameMenu.getMenuPane() );
+            //this.setGameContentPane( this.gameMenu.getMenuPane() );
             return true;
         }
         catch ( IOException e ) {
@@ -83,7 +82,7 @@ public class PacManController extends Game implements Initializable {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
-                    this.setGameContentPane( PacManGame.gamePane );
+                    //this.setGameContentPane( PacManGame.gamePane );
                     this.notifyObservers( message );
                     break;
                 case UpdateCodes.PacMan.mainMenu:

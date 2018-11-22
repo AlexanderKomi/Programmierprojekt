@@ -1,7 +1,7 @@
 package de.hsh.daniel;
 
-import common.engine.game.GameMenu;
-import javafx.scene.layout.Pane;
+
+import common.engine.components.menu.GameMenu;
 
 import java.net.URL;
 import java.util.Observer;
@@ -13,10 +13,6 @@ public class RAMMenu extends GameMenu {
         super( observer );
     }
 
-    @Override
-    protected Pane initMenuPane() {
-        return null;
-    }
 
     public void initialize( URL location, ResourceBundle resources ) {
 

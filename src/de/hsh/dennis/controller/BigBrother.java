@@ -3,14 +3,10 @@ package de.hsh.dennis.controller;
 import common.util.Logger;
 import de.hsh.dennis.DennisGame;
 import de.hsh.dennis.DennisMenu;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -35,7 +31,7 @@ public class BigBrother implements Observer {
     private Parent root;            //root is set in the initializing phase and works as a reference for the stage so the system don't need to pass the stage down to this class.
     private Pane temp;
 
-
+/*
     public BigBrother(DennisGame game) {
 
         this.game = game;
@@ -156,6 +152,8 @@ public class BigBrother implements Observer {
         return false;
     }
 
+    */
+
     private void handle_Tutorial_controller(String code) {
         switch (code) {
             case "b_left":
@@ -170,7 +168,7 @@ public class BigBrother implements Observer {
 
             case "b_exit":
                 Logger.log("handle_Tutorial_controller:  b_exit erreicht");
-                loadMenuFXML(mainMenu);
+                //loadMenuFXML(mainMenu);
                 break;
             default:
                 Logger.log("handle_Tutorial_controller:  default erreicht");
@@ -202,7 +200,7 @@ public class BigBrother implements Observer {
 
             case "b_back":
                 Logger.log("handle_LevelMenu_controller: b_back erreicht");
-                loadMenuFXML(mainMenu);
+                //loadMenuFXML(mainMenu);
                 break;
 
             default:
@@ -219,7 +217,7 @@ public class BigBrother implements Observer {
 
             case "b_main_menu":
                 Logger.log("handle_BreakMenu_controller: b_main_menu erreicht");
-                loadMenuFXML(mainMenu);
+                //loadMenuFXML(mainMenu);
                 break;
 
             case "b_continue":
@@ -243,19 +241,19 @@ public class BigBrother implements Observer {
             case "b_play":
                 Logger.log("handle_MainMenu_controller: b_play erreicht");
                 //lade das Level-Menu
-                loadMenuFXML(levelMenu);
+                //loadMenuFXML(levelMenu);
                 break;
 
             case "b_tutorial":
                 Logger.log("handle_MainMenu_controller: b_tutorial erreicht");
                 //lade das Tutorial-Menu
-                loadMenuFXML(tutorial);
+                //loadMenuFXML(tutorial);
                 break;
 
             case "b_exit":
                 Logger.log("handle_MainMenu_controller: b_exit erreicht");
                 //kehre zur Haupt-Gui zurück
-                loadMenuFXML(exitToMain);
+                //loadMenuFXML(exitToMain);
                 break;
 
             default:
@@ -263,6 +261,7 @@ public class BigBrother implements Observer {
         }
 
     }
+
 
     // notifyObserver der Unter-Controller hier auswerten!
     @Override

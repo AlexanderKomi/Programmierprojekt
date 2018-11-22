@@ -1,12 +1,12 @@
 package de.hsh.kevin.controller;
 
-import common.engine.game.GameMenu;
+
+import common.engine.components.menu.GameMenu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
 import java.util.Observer;
 
@@ -37,10 +37,6 @@ public class TIGameOverController extends GameMenu {
 
     }
 
-    @Override
-    protected Pane initMenuPane() {
-	return new Pane();
-    }
 
     @FXML
     void menuPressed(ActionEvent event) {

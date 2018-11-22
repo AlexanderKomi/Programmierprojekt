@@ -1,13 +1,12 @@
 package de.hsh.kevin.controller;
 
-import common.engine.game.Game;
+import common.engine.components.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +23,7 @@ public class TIController extends Game implements Initializable {
     public TIController(Observer o) {
 	super(o, UpdateCodes.TunnelInvader.gameName);
 	if (!loadMenuFXML()) { // In case FXML could not be loaded, a default pane is set
-	    this.setGameContentPane(new Pane());
+		//this.setGameContentPane(new Pane());
 	}
 
 	 if (!loadGameOverFXML()) {
@@ -40,7 +39,7 @@ public class TIController extends Game implements Initializable {
 	    AnchorPane node = FXMLLoader.load(TIMenuController.class.getResource("../res/TIMenu.fxml"));
 	    this.gameMenu.setMenuPane(node);
 	    this.gameMenu.addObserver(this);
-	    this.setGameContentPane(this.gameMenu.getMenuPane());
+		//this.setGameContentPane(this.gameMenu.getMenuPane());
 	    return true;
 	} catch (IOException e) {
 	    e.printStackTrace();

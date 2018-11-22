@@ -1,13 +1,13 @@
 package de.hsh.alexander;
 
-import common.engine.game.GameMenu;
+
+import common.engine.components.menu.GameMenu;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -32,11 +32,6 @@ public class PacManMenu extends GameMenu implements Initializable {
         observer = o;
     }
 
-
-    @Override
-    protected Pane initMenuPane() {
-        return new Pane();
-    }
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {

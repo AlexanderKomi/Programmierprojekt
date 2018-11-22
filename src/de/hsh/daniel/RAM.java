@@ -1,10 +1,9 @@
 package de.hsh.daniel;
 
 import common.config.WindowConfig;
-import common.engine.game.Game;
+import common.engine.components.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
-import javafx.scene.layout.Pane;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -12,7 +11,7 @@ import java.util.Observer;
 public class RAM extends Game {
     public RAM( Observer o ) {
         super( o, WindowConfig.daniel_title );
-        this.setGameContentPane( new Pane() );
+        //this.setGameContentPane( new Pane() );
     }
 
     @Override
