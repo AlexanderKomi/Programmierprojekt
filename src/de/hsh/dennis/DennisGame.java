@@ -14,12 +14,10 @@ public class DennisGame extends Game {
 
     private DennisFxmlChanger changer;
 
-    private final String gameName = "DDos Defender";
 
     public DennisGame(Observer o){
         super(o, WindowConfig.dennis_title);
         changer = new DennisFxmlChanger(this, "view/mainMenu.fxml", new MainMenu_controller());
-
     }
 
 
@@ -38,9 +36,6 @@ public class DennisGame extends Game {
 
     }
 
-    public String getName(){
-        return gameName;
-    }
 
     @Override
     public void update(Observable o, Object arg) {
