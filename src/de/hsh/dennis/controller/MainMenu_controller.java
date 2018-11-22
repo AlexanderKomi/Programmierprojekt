@@ -65,6 +65,8 @@ public class MainMenu_controller extends Observable implements Initializable {
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
-
+        b_play.setOnAction(this::button_clicked);
+        b_tutorial.setOnAction(this::button_clicked);
+        b_exit.setOnAction(this::button_clicked);
     }
 }

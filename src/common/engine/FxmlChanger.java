@@ -77,11 +77,11 @@ public abstract class FxmlChanger extends Observable {
     /**
      * Insert your changeScene(String fxmlLocation, Observable controller) calls here as you please.
      */
-    public abstract void changeFxml(String msg);
+    public abstract void changeFxml(Observable o, String msg);
 
     // --- Getter & Setter ----------------------------------------------------------------
 
-    private FxModul getFxModul() {
+    public FxModul getFxModul() {
         return this.fxModul;
     }
 

@@ -4,31 +4,24 @@ import common.config.WindowConfig;
 import common.engine.components.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
-import common.updates.UpdateCodes;
-import de.hsh.dennis.controller.BigBrother;
-import javafx.fxml.Initializable;
+import de.hsh.dennis.controller.*;
 
-import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
-//extends Game == Observer!!!
-public class DennisGame extends Game implements Initializable {
 
-    private BigBrother bb;
+public class DennisGame extends Game {
+
+    private DennisFxmlChanger changer;
+
     private final String gameName = "DDos Defender";
 
     public DennisGame(Observer o){
         super(o, WindowConfig.dennis_title);
-        bb = new BigBrother();
+        changer = new DennisFxmlChanger(this, "view/mainMenu.fxml", new MainMenu_controller());
 
     }
 
-    public void exitToMainGui(){
-        setChanged();
-        notifyObservers(UpdateCodes.Dennis.exitToMainGui);
-    }
 
     @Override
     public void update( KeyEventManager keyEventManager, Object arg ) {
@@ -51,11 +44,17 @@ public class DennisGame extends Game implements Initializable {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o instanceof Level_controller) {
+            changer.handle_Level_controller((String) arg);
+        } else if (o instanceof BreakMenu_controller) {
+            changer.handle_BreakMenu_controller((String) arg);
+        } else if (o instanceof LevelMenu_controller) {
+            changer.handle_LevelMenu_controller((String) arg);
+        } else if (o instanceof MainMenu_controller) {
+            changer.handle_MainMenu_controller((String) arg);
+        } else if (o instanceof Tutorial_controller) {
+            changer.handle_Tutorial_controller((String) arg);
+        }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
 }
