@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class PacManGame extends Observable implements Initializable {
 
-    public static  String     fxml = "PacManGame.fxml";
+    public static final String fxml = "PacManGame.fxml";
 
     @FXML
     public AnchorPane gamePane;

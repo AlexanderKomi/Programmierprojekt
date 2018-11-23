@@ -19,7 +19,7 @@ public class PacManController extends GameEntryPoint {
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
-        changer = new PacManFxmlChanger(this, "view/PacManMenu.fxml", new PacManMenu());
+        changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
     }
 
 
@@ -47,7 +47,7 @@ public class PacManController extends GameEntryPoint {
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
                     this.game = new PacManGame();
-                    changer.changeScene( "view/PacManGame.fxml", this.game );
+                    changer.changeScene( PacManGame.fxml, this.game );
                     this.notifyObservers( message );
                     break;
                 case UpdateCodes.PacMan.mainMenu:
