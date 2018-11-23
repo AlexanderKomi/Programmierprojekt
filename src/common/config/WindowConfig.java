@@ -13,6 +13,7 @@ public class WindowConfig {
     public static final int window_width  = 1200;
     public static final int window_height = 800;
 
+    public static final int countGames = 4;
 
     @Override
     public String toString() {

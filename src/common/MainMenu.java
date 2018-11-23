@@ -1,6 +1,7 @@
 package common;
 
 import common.config.Authors;
+import common.config.WindowConfig;
 import common.updates.UpdateCodes;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -71,7 +72,7 @@ public class MainMenu extends common.engine.components.menu.MainMenu implements 
             AnchorPane p = (AnchorPane) this.vbox.getChildren().get(0);
             GridPane g = (GridPane) p.getChildren().get(0);
 
-            for (int i = 0; i <= 5; i++){
+            for (int i = 0; i <= WindowConfig.countGames; i++){
                 VBox tempBox = (VBox) g.getChildren().get(i);
                 String gameName = this.gameNames.get(i);
 

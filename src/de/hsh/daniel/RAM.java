@@ -9,9 +9,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class RAM extends GameEntryPoint {
+
+    private RAMFxmlChanger changer;
+
     public RAM( Observer o ) {
         super( o, WindowConfig.daniel_title );
-        //this.setGameContentPane( new Pane() );
+        //TODO: implement
+        // changer = new RAMFxmlChanger(this, "path.fxml", new Controller());
     }
 
     @Override
