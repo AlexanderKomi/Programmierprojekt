@@ -1,16 +1,15 @@
 package common;
 
+import common.engine.FXGameContainer;
+import common.engine.components.game.Games;
 import common.updates.UpdateCodes;
 import common.updates.Updater;
 import de.hsh.Julian.Leertastenklatsche;
-import de.hsh.alexander.engine.FXGameContainer;
-import de.hsh.alexander.engine.game.Games;
-import de.hsh.alexander.game.PacManController;
+import de.hsh.alexander.PacManController;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.controller.TIController;
-import de.hsh.kevin.controller.TIGameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 
@@ -28,7 +27,7 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    public Games createGames( Observer container ) {
+    public Games createGames(Observer container) {
         // TODO : Make games only create on request from main menu
         Games games = new Games(
                 new PacManController( container ),
@@ -43,13 +42,13 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    protected common.MainMenu configMainMenu(Observer container, ArrayList<String> games) {
+    protected common.MainMenu configMainMenu(ArrayList<String> games) {
         common.MainMenu mainMenu = new MainMenu();
         try {
             URL  location = getClass().getResource( "gui/P3_Gui.fxml" );
             VBox vbox     = FXMLLoader.load( location );
             mainMenu.vbox = vbox;
-            mainMenu.setPane( mainMenu.vbox );
+            mainMenu.setMenuPane(mainMenu.vbox);
         }
         catch ( IOException e ) {
             mainMenu = new common.MainMenu();
@@ -57,7 +56,7 @@ public class GameContainer extends FXGameContainer {
         }
 
         mainMenu.setGameNames( games );
-        mainMenu.addObserver(container);
+        mainMenu.addObserver(this);
         return mainMenu;
     }
 
@@ -74,7 +73,6 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     public void render() {
-        //Logger.log("Rendering");
         if ( this.getGames() != null ) {
             ((Leertastenklatsche) this.getGames().get( "Leertastenklatsche" )).render();
             ((PacManController) this.getGames().get( UpdateCodes.PacMan.gameName )).render();

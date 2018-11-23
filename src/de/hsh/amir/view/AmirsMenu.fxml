@@ -3,9 +3,9 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<HBox xmlns:fx="http://javafx.com/fxml/1" fx:id="hbox_1" prefHeight="800.0" prefWidth="1280.0"
-      xmlns="http://javafx.com/javafx/8.0.161"
-      fx:controller="de.hsh.amir.controller.mainMenu_controller">
+<HBox  fx:id="hbox_1" prefHeight="800" prefWidth="1200"
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      >
     <children>
         <VBox fx:id="vbox_1" alignment="CENTER" prefHeight="800.0" prefWidth="1280.0" HBox.hgrow="ALWAYS">
          <children>
@@ -25,7 +25,7 @@
                <VBox.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </VBox.margin></Button>
-                <Button fx:id="b_5" mnemonicParsing="false" onAction="#button_clicked" prefHeight="50.0" prefWidth="300.0" text="Zurück">
+                <Button fx:id="b_5" mnemonicParsing="false" onAction="#exit" prefHeight="50.0" prefWidth="300.0" text="exit">
                <VBox.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </VBox.margin></Button>

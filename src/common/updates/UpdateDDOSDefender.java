@@ -1,8 +1,7 @@
 package common.updates;
 
 import common.GameContainer;
-import de.hsh.alexander.game.PacManController;
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
 import de.hsh.dennis.DennisGame;
 
 public class UpdateDDOSDefender {
@@ -16,7 +15,7 @@ public class UpdateDDOSDefender {
                 case UpdateCodes.Dennis.startGame:
                     //don't know what belongs in here
                     break;
-                case UpdateCodes.Dennis.exitToMainGui:
+                case UpdateCodes.DefaultCodes.exitToMainGUI:
                     gameContainer.showMainMenu();
                     System.gc();                        //remind the garbage collector. he may trow some unused objects away after the game session should be closed.
                     break;

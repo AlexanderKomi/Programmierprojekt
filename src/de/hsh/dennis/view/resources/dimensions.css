@@ -1,9 +1,9 @@
 #vbox_1 {
-    -fx-min-width: 1280;
+    -fx-min-width: 1200;
     -fx-min-height: 800;
 }
 
 #hbox_1 {
-    -fx-min-width: 1280;
+    -fx-min-width: 1200;
     -fx-min-height: 800;
 }

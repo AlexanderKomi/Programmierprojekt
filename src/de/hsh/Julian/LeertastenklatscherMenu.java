@@ -1,7 +1,7 @@
 package de.hsh.Julian;
 
-import de.hsh.alexander.engine.game.GameMenu;
-import javafx.scene.layout.Pane;
+
+import common.engine.components.menu.GameMenu;
 
 import java.util.Observer;
 
@@ -11,9 +11,5 @@ public class LeertastenklatscherMenu extends GameMenu {
         super( observer );
     }
 
-    @Override
-    protected Pane initMenuPane() {
-        return new Pane();
-    }
 
 }

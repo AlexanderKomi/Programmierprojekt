@@ -1,16 +1,15 @@
 package de.hsh.kevin.controller;
 
-import de.hsh.alexander.engine.game.GameMenu;
+import common.engine.components.menu.GameMenu;
+import common.updates.UpdateCodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 
+import java.util.Observable;
 import java.util.Observer;
 
-import common.updates.UpdateCodes;
-
-public class TIMenuController extends GameMenu {
+public class TIMenuController extends Observable {
 
     public static final String fxml = "../res/TIMenu.fxml";
 
@@ -29,18 +28,6 @@ public class TIMenuController extends GameMenu {
     @FXML
     public Button btn_exit;
 
-    public TIMenuController() {
-    }
-
-    public TIMenuController(Observer observer) {
-	super(observer);
-
-    }
-
-    @Override
-    protected Pane initMenuPane() {
-	return new Pane();
-    }
 
     @FXML
     void difficultyPressed(ActionEvent event) {
@@ -49,7 +36,8 @@ public class TIMenuController extends GameMenu {
 
     @FXML
     void exitPressed(ActionEvent event) {
-
+        setChanged();
+        notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
     }
 
     @FXML

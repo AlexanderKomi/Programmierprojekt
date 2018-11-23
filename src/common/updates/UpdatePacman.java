@@ -1,8 +1,8 @@
 package common.updates;
 
 import common.GameContainer;
-import de.hsh.alexander.game.PacManController;
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
+import de.hsh.alexander.PacManController;
 
 public class UpdatePacman {
 
@@ -13,7 +13,7 @@ public class UpdatePacman {
                 case UpdateCodes.PacMan.startGame:
                     gameContainer.setGameShown( UpdateCodes.PacMan.gameName );
                     break;
-                case UpdateCodes.PacMan.mainMenu:
+                case UpdateCodes.DefaultCodes.exitToMainGUI:
                     gameContainer.showMainMenu();
                     break;
                 default:

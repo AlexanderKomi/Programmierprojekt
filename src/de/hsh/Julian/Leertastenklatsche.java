@@ -1,10 +1,11 @@
 package de.hsh.Julian;
 
 import common.config.WindowConfig;
+import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
-import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
+import common.util.Path;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -17,12 +18,12 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import static de.hsh.alexander.util.Path.getExecutionLocation;
+import static common.util.Path.getExecutionLocation;
 
 //
 //
 
-public class Leertastenklatsche extends Game {
+public class Leertastenklatsche extends GameEntryPoint {
 
     private GraphicsContext   gc;
     private Pane              root         = new Pane();
@@ -35,6 +36,7 @@ public class Leertastenklatsche extends Game {
 
     public Leertastenklatsche( Observer o ) {
         super( o, WindowConfig.julian_title);
+        /*
         this.setGameContentPane( this.initGameContentWindow( o ) );
         this.getGameContentPane().setOnKeyPressed(
                 e -> {
@@ -44,11 +46,12 @@ public class Leertastenklatsche extends Game {
                     }
                     Logger.log( "Key pressed : " + code );
                 } );
+        */
     }
 
     public Pane initGameContentWindow( Observer observer ) {
 
-     //   Logger.log( "Dir : " + getExecutionLocation(),  Path.getAllFileNames(getExecutionLocation()) );
+        Logger.log("Dir : " + getExecutionLocation(), Path.getAllFileNames(getExecutionLocation()));
         addKeyListener();
         root.getChildren().add( canvas );
         initializeGraphicsContext();
@@ -144,6 +147,7 @@ public class Leertastenklatsche extends Game {
     }
 
     public void render() {
+        /*
         parseInput( input );
         gc.clearRect( 0, 0, 512, 512 );
 
@@ -155,6 +159,7 @@ public class Leertastenklatsche extends Game {
 
         briefcase.update( 10 );
         briefcase.render( gc );
+        */
     }
 
     @Override

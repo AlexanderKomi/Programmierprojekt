@@ -2,15 +2,14 @@ package common.updates;
 
 import common.GameContainer;
 import common.MainMenu;
+import common.engine.components.game.GameEntryPoint;
+import common.util.Logger;
 import de.hsh.Julian.Leertastenklatsche;
-import de.hsh.alexander.engine.game.Game;
-import de.hsh.alexander.game.PacManController;
-import de.hsh.alexander.util.Logger;
+import de.hsh.alexander.PacManController;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.controller.TIController;
-import de.hsh.kevin.controller.TIGameController;
 
 import java.util.Observable;
 
@@ -30,31 +29,30 @@ public class Updater {
      *         The observable notifying this observer
      */
     public static void update( Observable o, Object arg, GameContainer gameContainer ) {
-        if ( o instanceof Game ) {
-            Game game = (Game) o;
-            if ( game instanceof PacManController ) {
-                UpdatePacman.update( (PacManController) game, arg, gameContainer );
+        if ( o instanceof GameEntryPoint ) {
+            GameEntryPoint gameEntryPoint = (GameEntryPoint) o;
+            if ( gameEntryPoint instanceof PacManController ) {
+                UpdatePacman.update( (PacManController) gameEntryPoint, arg, gameContainer );
             }
-            else if ( game instanceof AmirsGame ) {
-                update( (AmirsGame) game, arg, gameContainer );
+            else if ( gameEntryPoint instanceof AmirsGame ) {
+                UpdateAmirsGame.update( (AmirsGame) gameEntryPoint, arg, gameContainer );
             }
-            else if ( game instanceof RAM ) {
-                UpdateRAM.update( (RAM) game, arg, gameContainer );
+            else if ( gameEntryPoint instanceof RAM ) {
+                update( (RAM) gameEntryPoint, arg, gameContainer );
             }
-            else if ( game instanceof DennisGame ) {
-                UpdateDDOSDefender.update( (DennisGame) game, arg, gameContainer );
+            else if ( gameEntryPoint instanceof DennisGame ) {
+                UpdateDDOSDefender.update( (DennisGame) gameEntryPoint, arg, gameContainer );
             }
-            else if ( game instanceof Leertastenklatsche ) {
-                update( (Leertastenklatsche) game, arg, gameContainer );
+            else if ( gameEntryPoint instanceof Leertastenklatsche ) {
+                update( (Leertastenklatsche) gameEntryPoint, arg, gameContainer );
             }
-            else if ( game instanceof TIController ) {
-                UpdateTunnelInvader.update( (TIController) game, arg, gameContainer );
+            else if ( gameEntryPoint instanceof TIController ) {
+                UpdateTunnelInvader.update( (TIController) gameEntryPoint, arg, gameContainer );
             }
             else {
-                Logger.log( unknownErrorCode + " type : " + Game.class );
+                Logger.log( unknownErrorCode + " type : " + GameEntryPoint.class );
             }
-        }
-        else if ( o instanceof MainMenu ) {
+        } else if (o instanceof MainMenu) {
             UpdateMainMenu.update( (MainMenu) o, arg, gameContainer );
         }
         else {
@@ -67,6 +65,9 @@ public class Updater {
         Logger.log( game, arg );
     }
 
+    public static void update( RAM game, Object arg, GameContainer gameContainer ) {
+        Logger.log( game, arg );
+    }
 
     public static void update( DennisGame game, Object arg, GameContainer gameContainer ) { Logger.log( game, arg );
     }

@@ -1,6 +1,6 @@
 package de.hsh.Julian;
 
-import de.hsh.alexander.util.Logger;
+import common.util.Logger;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

@@ -1,20 +1,19 @@
 package de.hsh.kevin.controller;
 
 import common.config.WindowConfig;
+import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
-import de.hsh.alexander.engine.game.Game;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.Observable;
 import java.util.Observer;
 
-public class TIGameController extends Game {
+public class TIGameController extends GameEntryPoint {
 
     public static final String fxml = "../res/TIGame.fxml";
     
@@ -31,7 +30,7 @@ public class TIGameController extends Game {
     
     public TIGameController( Observer o ) {
         super( o, WindowConfig.kevin_title );
-        this.setGameContentPane( new Pane() );
+
     }
 
     @Override
