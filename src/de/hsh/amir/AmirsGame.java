@@ -4,6 +4,7 @@ import common.config.WindowConfig;
 import common.engine.components.game.Game;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
+import de.hsh.amir.controller.MainMenu_controller;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -14,24 +15,19 @@ import java.util.ResourceBundle;
 /**
  * Created by 424-ml6-u1 on 30.10.18.
  */
-public class AmirsGame extends Game implements Initializable {
+public class AmirsGame extends Game {
 
-    private AmirsMenu gameMenu;
+    private AmirFxmlChanger changer;
 
     public AmirsGame( Observer o ) {
         super(o, WindowConfig.amir_title);
-
+        changer = new AmirFxmlChanger(this, "view/AmirsMenu.fxml", new MainMenu_controller());
     }
 
 
     @Override
     public void update(Observable o, Object arg ) {
-
-    }
-
-    @Override
-    public void initialize( URL location, ResourceBundle resources ) {
-
+        changer.changeFxml(o, (String) arg);
     }
 
     @Override

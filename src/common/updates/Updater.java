@@ -35,7 +35,7 @@ public class Updater {
                 UpdatePacman.update( (PacManController) game, arg, gameContainer );
             }
             else if ( game instanceof AmirsGame ) {
-                update( (AmirsGame) game, arg, gameContainer );
+                UpdateAmirsGame.update( (AmirsGame) game, arg, gameContainer );
             }
             else if ( game instanceof RAM ) {
                 update( (RAM) game, arg, gameContainer );

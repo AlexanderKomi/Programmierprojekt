@@ -2,17 +2,22 @@ package common.updates;
 
 import common.GameContainer;
 import common.util.Logger;
+import de.hsh.amir.AmirsGame;
 import de.hsh.dennis.DennisGame;
 
-public class UpdateDDOSDefender {
-    public static void update(DennisGame dennisGame, Object arg, GameContainer gameContainer) {
+/**
+ * Created by yy9-mys-u1 on 23.11.18.
+ */
+public class UpdateAmirsGame {
+
+    public static void update(AmirsGame amirGame, Object arg, GameContainer gameContainer) {
         if (arg instanceof String) {
             String message = (String) arg;
             switch (message) {
-                case UpdateCodes.Dennis.gameName:
+                case UpdateCodes.Amir.gameName:
                     //don't know what belongs in here
                     break;
-                case UpdateCodes.Dennis.startGame:
+                case UpdateCodes.Amir.startGame:
                     //don't know what belongs in here
                     break;
                 case UpdateCodes.DefaultCodes.exitToMainGUI:
@@ -23,7 +28,7 @@ public class UpdateDDOSDefender {
                     throw new IllegalArgumentException(Updater.unkownParsingCode + message);
             }
         } else {
-            Logger.log(dennisGame, arg);
+            Logger.log(amirGame, arg);
         }
     }
 }
