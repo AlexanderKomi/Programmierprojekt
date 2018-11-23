@@ -92,6 +92,7 @@ public abstract class FXGameContainer extends Container implements Observer {
 
     public void showMainMenu() {
         this.stage.setScene(this.getMenu().getScene());
+        stage.setTitle(WindowConfig.mainGui_title);
     }
 
     public MainMenu getMenu() {
@@ -154,6 +155,7 @@ public abstract class FXGameContainer extends Container implements Observer {
 
     public void setGameShown( GameEntryPoint gameEntryPoint ) {
         Scene s = gameEntryPoint.getScene();
+        stage.setTitle(gameEntryPoint.getName());
         Logger.log( this.getClass() + ": GameEntryPoint scene : " + s );
         if (s != null) {
             if (s.rootProperty().get() != null) {

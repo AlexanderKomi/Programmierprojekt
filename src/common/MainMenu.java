@@ -1,6 +1,7 @@
 package common;
 
 import common.config.Authors;
+import common.config.WindowConfig;
 import common.updates.UpdateCodes;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

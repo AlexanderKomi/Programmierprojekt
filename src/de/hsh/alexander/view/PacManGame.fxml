@@ -2,8 +2,8 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" fx:id="gamePane" prefHeight="865.0"
-            prefWidth="1318.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" fx:id="gamePane" prefHeight="800"
+            prefWidth="1200"
             >
     <Canvas fx:id="gameCanvas" height="865.0" width="1318.0"/>
 </AnchorPane>
