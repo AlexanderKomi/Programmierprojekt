@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.TextFlow?>
 <VBox xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" fx:id="basicPane" alignment="CENTER"
-      prefHeight="865.0" prefWidth="1318.0">
+      prefHeight="800" prefWidth="1200">
     <TextFlow textAlignment="CENTER">
         <Label text="Spielname"/>
     </TextFlow>
