@@ -13,7 +13,7 @@ public class UpdateTunnelInvader {
 	    case UpdateCodes.TunnelInvader.startGame:
 		gameContainer.setGameShown(UpdateCodes.TunnelInvader.gameName);
 		break;
-	    case UpdateCodes.TunnelInvader.mainMenu:
+	    case UpdateCodes.DefaultCodes.exitToMainGUI:
 		gameContainer.showMainMenu();
 		break;
 	    default:

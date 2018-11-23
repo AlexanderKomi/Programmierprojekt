@@ -6,9 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+import java.util.Observable;
 import java.util.Observer;
 
-public class TIMenuController extends GameMenu {
+public class TIMenuController extends Observable {
 
     public static final String fxml = "../res/TIMenu.fxml";
 
@@ -27,14 +28,6 @@ public class TIMenuController extends GameMenu {
     @FXML
     public Button btn_exit;
 
-    public TIMenuController() {
-    }
-
-    public TIMenuController(Observer observer) {
-	super(observer);
-
-    }
-
 
     @FXML
     void difficultyPressed(ActionEvent event) {
@@ -43,7 +36,8 @@ public class TIMenuController extends GameMenu {
 
     @FXML
     void exitPressed(ActionEvent event) {
-
+        setChanged();
+        notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
     }
 
     @FXML

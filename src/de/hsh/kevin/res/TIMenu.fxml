@@ -9,10 +9,9 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.*?>
 <AnchorPane id="menuPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-			minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.161"
-			xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hsh.kevin.controller.TIMenuController">
+			minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
 					<children>
-						<ImageView fitHeight="800.0" fitWidth="1280.0" pickOnBounds="true">
+						<ImageView fitHeight="800.0" fitWidth="1200.0" pickOnBounds="true">
 							<image>
 								<Image url="@background.jpg" />
 							</image>

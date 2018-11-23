@@ -10,7 +10,7 @@ public class WindowConfig {
     public static final String julian_title = "Leertastenklatsche";
     public static final String kevin_title = "Tunnel Invader";
 
-    public static final int window_width  = 1280;
+    public static final int window_width  = 1200;
     public static final int window_height = 800;
 
 
