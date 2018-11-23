@@ -7,25 +7,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class Games extends ArrayList<Game> {
+public class Games extends ArrayList<GameEntryPoint> {
 
     public Games() {
     }
 
-    public Games(Game game) {
-        this.add(game);
+    public Games( GameEntryPoint gameEntryPoint ) {
+        this.add( gameEntryPoint );
     }
 
-    public Games(Collection<Game> collection) {
+    public Games( Collection<GameEntryPoint> collection ) {
         this.addAll(collection);
     }
 
-    public Games(Game... games) {
-        this.addAll(games);
+    public Games( GameEntryPoint... gameEntryPoints ) {
+        this.addAll( gameEntryPoints );
     }
 
-    public Game get(String name) {
-        for (Game g : this) {
+    public void addAll( GameEntryPoint... g ) {
+        Collections.addAll( this, g );
+    }
+
+    public GameEntryPoint get( String name ) {
+        for ( GameEntryPoint g : this ) {
             if (g.getName().equals(name)) {
                 return g;
             }
@@ -33,17 +37,13 @@ public class Games extends ArrayList<Game> {
         return null;
     }
 
-    public void addAll(Game... g) {
-        Collections.addAll(this, g);
-    }
-
     @Override
     public boolean contains(Object o) {
-        if (o instanceof Game) {
-            Game g = (Game) o;
-            String gameName = g.getName();
-            for (Game game : this) {
-                if (game.getName().equals(gameName)) {
+        if ( o instanceof GameEntryPoint ) {
+            GameEntryPoint g        = (GameEntryPoint) o;
+            String         gameName = g.getName();
+            for ( GameEntryPoint gameEntryPoint : this ) {
+                if ( gameEntryPoint.getName().equals( gameName ) ) {
                     return true;
                 }
             }
@@ -55,7 +55,7 @@ public class Games extends ArrayList<Game> {
     }
 
     public boolean contains(String gameName) {
-        for (Game g : this) {
+        for ( GameEntryPoint g : this ) {
             if (g.getName().equals(gameName)) {
                 return true;
             }

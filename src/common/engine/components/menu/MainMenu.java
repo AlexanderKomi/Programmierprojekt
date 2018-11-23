@@ -1,6 +1,6 @@
 package common.engine.components.menu;
 
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.engine.components.game.Games;
 
 import java.util.ArrayList;
@@ -40,6 +40,6 @@ public abstract class MainMenu extends Menu {
     }
 
     public void setGameNames(Games games) {
-        this.gameNames = games.stream().map(Game::getName).collect(Collectors.toCollection(ArrayList::new));
+        this.gameNames = games.stream().map( GameEntryPoint::getName ).collect( Collectors.toCollection( ArrayList::new ) );
     }
 }

@@ -1,14 +1,14 @@
 package de.hsh.daniel;
 
 import common.config.WindowConfig;
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 
 import java.util.Observable;
 import java.util.Observer;
 
-public class RAM extends Game {
+public class RAM extends GameEntryPoint {
     public RAM( Observer o ) {
         super( o, WindowConfig.daniel_title );
         //this.setGameContentPane( new Pane() );

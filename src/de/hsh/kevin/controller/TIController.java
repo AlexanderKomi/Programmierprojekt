@@ -1,21 +1,15 @@
 package de.hsh.kevin.controller;
 
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
 import de.hsh.kevin.TIFxmlChanger;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
-public class TIController extends Game {
+public class TIController extends GameEntryPoint {
 
     private TIMenuController gameMenu;
     private TIGameController game;

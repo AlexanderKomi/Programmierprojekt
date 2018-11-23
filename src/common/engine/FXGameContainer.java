@@ -2,7 +2,7 @@ package common.engine;
 
 import common.MainMenu;
 import common.config.WindowConfig;
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.engine.components.game.Games;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
@@ -122,8 +122,8 @@ public abstract class FXGameContainer extends Container implements Observer {
 
     protected abstract common.MainMenu configMainMenu(ArrayList<String> games);
 
-    public boolean containsGame( Game game ) {
-        return this.getGames().contains( game );
+    public boolean containsGame( GameEntryPoint gameEntryPoint ) {
+        return this.getGames().contains( gameEntryPoint );
     }
 
     public boolean containsGame( String gameName ) {
@@ -143,18 +143,18 @@ public abstract class FXGameContainer extends Container implements Observer {
     }
 
     public void setGameShown(String gameName) {
-        Game g = this.getGames().get(gameName);
+        GameEntryPoint g = this.getGames().get( gameName );
         if (g == null) {
-            throw new IllegalArgumentException("Game not found");
+            throw new IllegalArgumentException( "GameEntryPoint not found" );
         }
         else {
             setGameShown(g);
         }
     }
 
-    public void setGameShown(Game game) {
-        Scene s = game.getScene();
-        Logger.log(this.getClass() + ": Game scene : " + s);
+    public void setGameShown( GameEntryPoint gameEntryPoint ) {
+        Scene s = gameEntryPoint.getScene();
+        Logger.log( this.getClass() + ": GameEntryPoint scene : " + s );
         if (s != null) {
             if (s.rootProperty().get() != null) {
                 Logger.log(this.getClass() + ": Draw Scene");

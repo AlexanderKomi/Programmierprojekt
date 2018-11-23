@@ -2,7 +2,7 @@ package de.hsh.dennis;
 
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.util.Logger;
 import de.hsh.dennis.controller.*;
 
@@ -114,7 +114,7 @@ public class DennisFxmlChanger extends FxmlChanger {
             case "b_exit":
                 Logger.log("handle_MainMenu_controller: b_exit erreicht");
                 //kehre zur Haupt-Gui zurück
-                ((Game) getFxModul()).exitToMainGUI();
+                ((GameEntryPoint) getFxModul()).exitToMainGUI();
                 break;
 
             default:

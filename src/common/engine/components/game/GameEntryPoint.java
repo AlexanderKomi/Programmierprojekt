@@ -7,24 +7,24 @@ import java.util.Observable;
 import java.util.Observer;
 
 /***
- * Neue Game Klasse mit FxModul als Unterbau
+ * Neue GameEntryPoint Klasse mit FxModul als Unterbau
  *
  * @author Alexander Komischke
  * @author Dennis Sellemann
  *
  * @version 2
  */
-public abstract class Game extends FxModul implements IGame {
+public abstract class GameEntryPoint extends FxModul implements IGame {
 
     private final String name;
 
 
-    public Game(Observer container) {
+    public GameEntryPoint( Observer container ) {
         super(container);
         this.name = "- Name not set -";
     }
 
-    public Game(Observer container, String name) {
+    public GameEntryPoint( Observer container, String name ) {
         super(container);
         this.name = name;
     }
@@ -32,8 +32,8 @@ public abstract class Game extends FxModul implements IGame {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Game) {
-            Game g = (Game) obj;
+        if ( obj instanceof GameEntryPoint ) {
+            GameEntryPoint g = (GameEntryPoint) obj;
             return this.name.equals(g.name) &&
                     g.getScene().equals(this.getScene());
         }

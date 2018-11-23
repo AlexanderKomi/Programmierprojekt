@@ -1,7 +1,7 @@
 package de.hsh.dennis;
 
 import common.config.WindowConfig;
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import de.hsh.dennis.controller.MainMenu_controller;
@@ -10,7 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-public class DennisGame extends Game {
+public class DennisGame extends GameEntryPoint {
 
     private DennisFxmlChanger changer;
 

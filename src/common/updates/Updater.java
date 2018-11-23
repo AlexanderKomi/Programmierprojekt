@@ -2,7 +2,7 @@ package common.updates;
 
 import common.GameContainer;
 import common.MainMenu;
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.util.Logger;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.PacManController;
@@ -29,28 +29,28 @@ public class Updater {
      *         The observable notifying this observer
      */
     public static void update( Observable o, Object arg, GameContainer gameContainer ) {
-        if ( o instanceof Game ) {
-            Game game = (Game) o;
-            if ( game instanceof PacManController ) {
-                UpdatePacman.update( (PacManController) game, arg, gameContainer );
+        if ( o instanceof GameEntryPoint ) {
+            GameEntryPoint gameEntryPoint = (GameEntryPoint) o;
+            if ( gameEntryPoint instanceof PacManController ) {
+                UpdatePacman.update( (PacManController) gameEntryPoint, arg, gameContainer );
             }
-            else if ( game instanceof AmirsGame ) {
-                UpdateAmirsGame.update( (AmirsGame) game, arg, gameContainer );
+            else if ( gameEntryPoint instanceof AmirsGame ) {
+                UpdateAmirsGame.update( (AmirsGame) gameEntryPoint, arg, gameContainer );
             }
-            else if ( game instanceof RAM ) {
-                update( (RAM) game, arg, gameContainer );
+            else if ( gameEntryPoint instanceof RAM ) {
+                update( (RAM) gameEntryPoint, arg, gameContainer );
             }
-            else if ( game instanceof DennisGame ) {
-                UpdateDDOSDefender.update( (DennisGame) game, arg, gameContainer );
+            else if ( gameEntryPoint instanceof DennisGame ) {
+                UpdateDDOSDefender.update( (DennisGame) gameEntryPoint, arg, gameContainer );
             }
-            else if ( game instanceof Leertastenklatsche ) {
-                update( (Leertastenklatsche) game, arg, gameContainer );
+            else if ( gameEntryPoint instanceof Leertastenklatsche ) {
+                update( (Leertastenklatsche) gameEntryPoint, arg, gameContainer );
             }
-            else if ( game instanceof TIController ) {
-                UpdateTunnelInvader.update( (TIController) game, arg, gameContainer );
+            else if ( gameEntryPoint instanceof TIController ) {
+                UpdateTunnelInvader.update( (TIController) gameEntryPoint, arg, gameContainer );
             }
             else {
-                Logger.log( unknownErrorCode + " type : " + Game.class );
+                Logger.log( unknownErrorCode + " type : " + GameEntryPoint.class );
             }
         } else if (o instanceof MainMenu) {
             UpdateMainMenu.update( (MainMenu) o, arg, gameContainer );

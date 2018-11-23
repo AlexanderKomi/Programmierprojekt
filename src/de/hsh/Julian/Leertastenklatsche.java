@@ -1,7 +1,7 @@
 package de.hsh.Julian;
 
 import common.config.WindowConfig;
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.util.Logger;
@@ -23,7 +23,7 @@ import static common.util.Path.getExecutionLocation;
 //
 //
 
-public class Leertastenklatsche extends Game {
+public class Leertastenklatsche extends GameEntryPoint {
 
     private GraphicsContext   gc;
     private Pane              root         = new Pane();

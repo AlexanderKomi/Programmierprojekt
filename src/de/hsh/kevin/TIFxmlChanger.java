@@ -2,7 +2,7 @@ package de.hsh.kevin;
 
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import de.hsh.kevin.controller.TIMenuController;
 
@@ -26,7 +26,7 @@ public class TIFxmlChanger extends FxmlChanger {
     private void handle_TIMenuController(String msg) {
         switch (msg){
             case UpdateCodes.DefaultCodes.exitToMainGUI:
-                ((Game) getFxModul()).exitToMainGUI();
+                ((GameEntryPoint) getFxModul()).exitToMainGUI();
                 break;
         }
     }

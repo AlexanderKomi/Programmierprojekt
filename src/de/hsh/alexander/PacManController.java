@@ -1,7 +1,7 @@
 package de.hsh.alexander;
 
 import common.config.WindowConfig;
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
@@ -11,7 +11,7 @@ import javafx.scene.input.KeyEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-public class PacManController extends Game {
+public class PacManController extends GameEntryPoint {
 
     private PacManFxmlChanger changer;
     private PacManMenu gameMenu;

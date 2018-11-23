@@ -1,7 +1,7 @@
 package de.hsh.kevin.controller;
 
 import common.config.WindowConfig;
-import common.engine.components.game.Game;
+import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import javafx.event.ActionEvent;
@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import java.util.Observable;
 import java.util.Observer;
 
-public class TIGameController extends Game {
+public class TIGameController extends GameEntryPoint {
 
     public static final String fxml = "../res/TIGame.fxml";
     
