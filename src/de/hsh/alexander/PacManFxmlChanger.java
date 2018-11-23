@@ -17,7 +17,7 @@ public class PacManFxmlChanger extends FxmlChanger {
     public void changeFxml(Observable o, String msg) {
         switch (msg) {
             case UpdateCodes.PacMan.startGame:
-                changeScene("view/PacManGame.fxml", new PacManGame());
+
                 break;
             default:
                 Logger.log("changeFxml in PacManFxmlCanger: default");

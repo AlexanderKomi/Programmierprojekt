@@ -69,7 +69,7 @@ public abstract class FxmlChanger extends Observable {
      * @param fxmlLocation Path to the .fxml to be loaded
      * @param controller The controller suitable for the .fxml
      */
-    protected void changeScene(String fxmlLocation, Observable controller) {
+    public void changeScene( String fxmlLocation, Observable controller ) {
         controller.addObserver(getFxModul());
         getFxModul().setRoot(Objects.requireNonNull(loadFxml(fxmlLocation, controller)));
     }

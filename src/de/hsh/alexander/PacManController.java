@@ -46,7 +46,8 @@ public class PacManController extends GameEntryPoint {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
-                    changer.changeFxml(o, message);
+                    this.game = new PacManGame();
+                    changer.changeScene( "view/PacManGame.fxml", this.game );
                     this.notifyObservers( message );
                     break;
                 case UpdateCodes.PacMan.mainMenu:
@@ -78,6 +79,11 @@ public class PacManController extends GameEntryPoint {
 
     @Override
     public void render() {
+        if ( game != null ) {
+            if ( game.initialized ) {
+                game.render();
+            }
+        }
     }
 
 
