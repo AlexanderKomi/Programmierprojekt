@@ -73,7 +73,6 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     public void render() {
-        //Logger.log("Rendering");
         if ( this.getGames() != null ) {
             ((Leertastenklatsche) this.getGames().get( "Leertastenklatsche" )).render();
             ((PacManController) this.getGames().get( UpdateCodes.PacMan.gameName )).render();
