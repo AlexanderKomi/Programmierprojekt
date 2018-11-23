@@ -67,7 +67,7 @@ public class PacManController extends GameEntryPoint {
     public void update( KeyEventManager o, Object arg ) {
         if ( arg instanceof KeyEvent ) {
             KeyEvent keyEvent = (KeyEvent) arg;
-            this.game.movePacMan1( keyEvent );
+            this.game.movePacMan( keyEvent );
         }
     }
 

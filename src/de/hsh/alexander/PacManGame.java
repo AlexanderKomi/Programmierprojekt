@@ -1,5 +1,6 @@
 package de.hsh.alexander;
 
+import common.util.Logger;
 import de.hsh.alexander.actor.Direction;
 import de.hsh.alexander.actor.PacMan;
 import javafx.fxml.FXML;
@@ -22,23 +23,29 @@ public class PacManGame extends Observable implements Initializable {
     public AnchorPane gamePane;
 
     @FXML
-    public         Canvas gameCanvas;
-    private        PacMan pacMan1;
-    private        PacMan pacMan2;
+    private Canvas gameCanvas;
+    private PacMan pacMan1;
+    private PacMan pacMan2;
 
     public boolean initialized = false;
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
         init();
+        bindKeys();
     }
 
-    void init() {
+    private void init() {
         if ( !initialized ) {
             initPacMan1();
             initPacMan2();
             initialized = true;
         }
+    }
+
+    private void bindKeys() {
+        //gameCanvas.setOnKeyPressed( this::movePacMan );
+        //gameCanvas.setOnKeyReleased( this::movePacMan );
     }
 
     private void initPacMan1() {
@@ -59,22 +66,28 @@ public class PacManGame extends Observable implements Initializable {
         pacMan2 = new PacMan( "Bug.png", pacMan2KeyMap );
     }
 
-    void movePacMan1( KeyEvent keyEvent ) {
+    public void test() {
+        Logger.log( "Test: Key Released" );
+    }
+
+    public void movePacMan( KeyEvent keyEvent ) {
+        Logger.log( "Key pressed : " + keyEvent );
         pacMan1.move( keyEvent );
         pacMan2.move( keyEvent );
-
         String keyName = keyEvent.getCode().getName();
-        if ( keyName.equals( "Up" ) ) {
-            pacMan1.movePos( -5, 0 );
-        }
-        else if ( keyName.equals( "Down" ) ) {
-            pacMan1.movePos( 5, 0 );
-        }
-        else if ( keyName.equals( "Left" ) ) {
-            pacMan1.movePos( 0, -5 );
-        }
-        else if ( keyName.equals( "Right" ) ) {
-            pacMan1.movePos( 0, 5 );
+        switch ( keyName ) {
+            case "Up":
+                pacMan1.movePos( -5, 0 );
+                break;
+            case "Down":
+                pacMan1.movePos( 5, 0 );
+                break;
+            case "Left":
+                pacMan1.movePos( 0, -5 );
+                break;
+            case "Right":
+                pacMan1.movePos( 0, 5 );
+                break;
         }
     }
 
@@ -82,10 +95,10 @@ public class PacManGame extends Observable implements Initializable {
             if ( !initialized ) {
                 return;
             }
-        gameCanvas.getGraphicsContext2D().setFill( Color.WHITE );
-        gameCanvas.getGraphicsContext2D().fillRect( 0, 0, 1200, 800 );
-        pacMan1.draw( gameCanvas.getGraphicsContext2D() );
-        pacMan2.draw( gameCanvas.getGraphicsContext2D() );
+        this.gameCanvas.getGraphicsContext2D().setFill( Color.WHITE );
+        this.gameCanvas.getGraphicsContext2D().fillRect( 0, 0, 1200, 800 );
+        pacMan1.draw( this.gameCanvas.getGraphicsContext2D() );
+        pacMan2.draw( this.gameCanvas.getGraphicsContext2D() );
             pacMan1.movePos();
             pacMan2.movePos();
 
