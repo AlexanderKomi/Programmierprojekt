@@ -1,5 +1,8 @@
 package de.hsh.alexander.actor;
 
+import common.actor.ControlableActor;
+import common.actor.Direction;
+
 import java.util.HashMap;
 
 public class PacMan extends ControlableActor {

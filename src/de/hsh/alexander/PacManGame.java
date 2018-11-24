@@ -1,7 +1,7 @@
 package de.hsh.alexander;
 
+import common.actor.Direction;
 import common.util.Logger;
-import de.hsh.alexander.actor.Direction;
 import de.hsh.alexander.actor.PacMan;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,9 +32,9 @@ public class PacManGame extends Observable implements Observer, Initializable {
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
         if ( !initialized ) {
-            this.gameCanvas.setFocusTraversable( true );
-            this.gameCanvas.setOnKeyPressed( this::movePacMan );
-            this.gameCanvas.setOnKeyReleased( this::movePacMan );
+            this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
+            this.gameCanvas.setOnKeyPressed( this::movePacMan ); // Only fires, when traversable
+            this.gameCanvas.setOnKeyReleased( this::movePacMan ); // Only fires, when traversable
             initPacMan1();
             initPacMan2();
             initialized = true;
@@ -75,7 +75,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
             return;
         }
         clearCanvas();
-        pacMan1.draw( this.gameCanvas.getGraphicsContext2D() );
-        pacMan2.draw( this.gameCanvas.getGraphicsContext2D() );
+        pacMan1.draw( this.gameCanvas );
+        pacMan2.draw( this.gameCanvas );
     }
 }

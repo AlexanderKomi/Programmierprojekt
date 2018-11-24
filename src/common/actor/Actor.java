@@ -1,7 +1,7 @@
-package de.hsh.alexander.actor;
+package common.actor;
 
 import common.util.Path;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
@@ -50,6 +50,29 @@ public class Actor {
         }
     }
 
+    public void draw( Canvas canvas, double new_x, double new_y ) {
+
+        double temp_x = new_x;
+        double temp_y = new_y;
+
+        if ( this.x + new_x < 0 || this.x + new_x + this.width > canvas.getWidth() ) {
+            temp_x -= new_x;
+        }
+        else {
+            //temp_x = 0;
+        }
+        if ( this.y + new_y < 0 || this.y + new_y + this.height > canvas.getHeight() ) {
+            temp_y -= new_y;
+        }
+        else {
+            //temp_y = 0;
+        }
+        movePos( temp_x, temp_y );
+        canvas.getGraphicsContext2D().drawImage( this.picture, this.x, this.y, this.width, this.height );
+    }
+
+    // GETTER AND SETTER
+
     void movePos( double vertical, double horizontal ) {
         this.setPos(
                 this.getX() + horizontal,
@@ -86,9 +109,6 @@ public class Actor {
         this.width = width;
     }
 
-    public void draw( GraphicsContext gc ) {
-        gc.drawImage( this.picture, this.x, this.y, this.width, this.height );
-    }
 
     private Image getPicture() {
         return picture;

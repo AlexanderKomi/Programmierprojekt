@@ -1,4 +1,4 @@
-package de.hsh.alexander.actor;
+package common.actor;
 
 import java.util.HashMap;
 import java.util.Set;

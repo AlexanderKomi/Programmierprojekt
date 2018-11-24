@@ -1,4 +1,4 @@
-package de.hsh.alexander.actor;
+package common.actor;
 
 public enum Direction {
     Up,

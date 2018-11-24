@@ -1,6 +1,6 @@
-package de.hsh.alexander.actor;
+package common.actor;
 
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class ControlableActor extends Actor {
         this.movement.setKeyMap( keymap );
     }
 
-    ControlableActor( String pictureFileName, double x, double y, HashMap<String, Direction> keymap ) {
+    protected ControlableActor( String pictureFileName, double x, double y, HashMap<String, Direction> keymap ) {
         super( pictureFileName, x, y );
         this.movement.setKeyMap( keymap );
     }
@@ -45,30 +45,40 @@ public class ControlableActor extends Actor {
         }
     }
 
-    public void movePos() {
-        movement.getDirections().parallelStream().forEach( direction -> {
+    public void draw( Canvas canvas ) {
+        double[] temp = movePos();
+        super.draw( canvas, temp[ 0 ], temp[ 1 ] );
+    }
+
+    public double[] movePos() {
+        double[] xyTuple  = new double[ 2 ];
+        double   velocity = movement.getVelocity();
+
+        movement.getDirections().forEach( direction -> {
             if ( movement.isHoldDown( direction ) ) {
-                double velocity = movement.getVelocity();
                 if ( direction == Direction.Down ) {
-                    super.movePos( velocity, 0 );
+                    xyTuple[ 0 ] += velocity;
+                    xyTuple[ 1 ] += 0;
+                    //super.movePos( velocity, 0 );
                 }
                 if ( direction == Direction.Up ) {
-                    super.movePos( -velocity, 0 );
+                    xyTuple[ 0 ] += -velocity;
+                    xyTuple[ 1 ] += 0;
+                    //super.movePos( -velocity, 0 );
                 }
                 if ( direction == Direction.Left ) {
-                    super.movePos( 0, -velocity );
+                    xyTuple[ 0 ] += 0;
+                    xyTuple[ 1 ] += -velocity;
+                    //super.movePos( 0, -velocity );
                 }
                 if ( direction == Direction.Right ) {
-                    super.movePos( 0, velocity );
+                    xyTuple[ 0 ] += 0;
+                    xyTuple[ 1 ] += velocity;
+                    //super.movePos( 0, velocity );
                 }
             }
         } );
-    }
-
-    @Override
-    public void draw( GraphicsContext gc ) {
-        super.draw( gc );
-        this.movePos();
+        return xyTuple;
     }
 
     public void setKeyMap( HashMap<String, Direction> keyMap ) {
