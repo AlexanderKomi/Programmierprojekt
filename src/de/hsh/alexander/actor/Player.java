@@ -1,5 +1,6 @@
 package de.hsh.alexander.actor;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 
 import java.util.HashMap;
@@ -60,6 +61,12 @@ public class Player extends Actor {
 
     public double getSpeed() {
         return this.movement.getVelocity();
+    }
+
+    @Override
+    public void draw( GraphicsContext gc ) {
+        super.draw( gc );
+        this.movePos();
     }
 
     public void setKeyMap( HashMap<String, Direction> keyMap ) {

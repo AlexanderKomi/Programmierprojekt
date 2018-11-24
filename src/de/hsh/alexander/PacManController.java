@@ -18,6 +18,7 @@ public class PacManController extends GameEntryPoint {
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
+        this.game = new PacManGame();
         changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
     }
 

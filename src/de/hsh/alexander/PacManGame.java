@@ -25,50 +25,27 @@ public class PacManGame extends Observable implements Observer, Initializable {
     private             PacMan  pacMan2;
 
     private void movePacMan( KeyEvent keyEvent ) {
-        Logger.log( "Key pressed : " + keyEvent );
         pacMan1.move( keyEvent );
         pacMan2.move( keyEvent );
-        String keyName = keyEvent.getCode().getName();
-        switch ( keyName ) {
-            case "Up":
-                pacMan1.movePos( -pacMan1.getSpeed(), 0 );
-                break;
-            case "Down":
-                pacMan1.movePos( pacMan1.getSpeed(), 0 );
-                break;
-            case "Left":
-                pacMan1.movePos( 0, -pacMan1.getSpeed() );
-                break;
-            case "Right":
-                pacMan1.movePos( 0, pacMan1.getSpeed() );
-                break;
-            default:
-                Logger.log( this.getClass() + ": Can not find keyname : " + keyName );
-                break;
-        }
+        //render();
     }
 
-    void render() {
-        if ( !initialized ) {
-            init();
-        }
-        clearCanvas();
-        this.drawPacMan( pacMan1 );
-        this.drawPacMan( pacMan2 );
+    @Override
+    public void initialize( URL location, ResourceBundle resources ) {
+        init();
     }
 
     private void init() {
         if ( !initialized ) {
+            this.gameCanvas.setFocusTraversable( true );
+            this.gameCanvas.setOnKeyPressed( this::movePacMan );
+            this.gameCanvas.setOnKeyReleased( this::movePacMan );
             initPacMan1();
             initPacMan2();
             initialized = true;
+            render();
             Logger.log( this.getClass() + ": init executed" );
         }
-    }
-
-    private void drawPacMan( PacMan p ) {
-        p.draw( this.gameCanvas.getGraphicsContext2D() );
-        p.movePos();
     }
 
     private void initPacMan1() {
@@ -99,12 +76,12 @@ public class PacManGame extends Observable implements Observer, Initializable {
         Logger.log( this.getClass() + ": " + o + ", " + arg );
     }
 
-    @Override
-    public void initialize( URL location, ResourceBundle resources ) {
-        Thread t = new Thread( this::render );
-        this.gameCanvas.setFocusTraversable( true );
-        this.gameCanvas.setOnKeyReleased( this::movePacMan );
-        t.start();
-
+    void render() {
+        if ( !initialized ) {
+            return;
+        }
+        clearCanvas();
+        pacMan1.draw( this.gameCanvas.getGraphicsContext2D() );
+        pacMan2.draw( this.gameCanvas.getGraphicsContext2D() );
     }
 }
