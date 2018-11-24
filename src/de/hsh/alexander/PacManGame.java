@@ -4,48 +4,45 @@ import common.util.Logger;
 import de.hsh.alexander.actor.Direction;
 import de.hsh.alexander.actor.PacMan;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Observable;
-import java.util.ResourceBundle;
 
-public class PacManGame extends Observable implements Initializable {
+public class PacManGame extends Observable {
 
-    public static final String fxml = "PacManGame.fxml";
-
-    @FXML
-    public AnchorPane gamePane;
+    public static final String  fxml        = "PacManGame.fxml";
+    private static      boolean initialized = false;
 
     @FXML
-    private Canvas gameCanvas;
-    private PacMan pacMan1;
-    private PacMan pacMan2;
+    private AnchorPane gamePane;
+    @FXML
+    private Canvas     gameCanvas;
+    private PacMan     pacMan1;
+    private PacMan     pacMan2;
 
-    public boolean initialized = false;
-
-    @Override
-    public void initialize( URL location, ResourceBundle resources ) {
-        init();
-        bindKeys();
-    }
-
-    private void init() {
-        if ( !initialized ) {
-            initPacMan1();
-            initPacMan2();
-            initialized = true;
+    void movePacMan( KeyEvent keyEvent ) {
+        Logger.log( "Key pressed : " + keyEvent );
+        pacMan1.move( keyEvent );
+        pacMan2.move( keyEvent );
+        String keyName = keyEvent.getCode().getName();
+        switch ( keyName ) {
+            case "Up":
+                pacMan1.movePos( -pacMan1.getSpeed(), 0 );
+                break;
+            case "Down":
+                pacMan1.movePos( pacMan1.getSpeed(), 0 );
+                break;
+            case "Left":
+                pacMan1.movePos( 0, -pacMan1.getSpeed() );
+                break;
+            case "Right":
+                pacMan1.movePos( 0, pacMan1.getSpeed() );
+                break;
         }
-    }
-
-    private void bindKeys() {
-        //gameCanvas.setOnKeyPressed( this::movePacMan );
-        //gameCanvas.setOnKeyReleased( this::movePacMan );
     }
 
     private void initPacMan1() {
@@ -70,37 +67,32 @@ public class PacManGame extends Observable implements Initializable {
         Logger.log( "Test: Key Released" );
     }
 
-    public void movePacMan( KeyEvent keyEvent ) {
-        Logger.log( "Key pressed : " + keyEvent );
-        pacMan1.move( keyEvent );
-        pacMan2.move( keyEvent );
-        String keyName = keyEvent.getCode().getName();
-        switch ( keyName ) {
-            case "Up":
-                pacMan1.movePos( -5, 0 );
-                break;
-            case "Down":
-                pacMan1.movePos( 5, 0 );
-                break;
-            case "Left":
-                pacMan1.movePos( 0, -5 );
-                break;
-            case "Right":
-                pacMan1.movePos( 0, 5 );
-                break;
+    void render() {
+        init();
+        clearCanvas();
+        this.movePacMan( pacMan1 );
+        this.movePacMan( pacMan2 );
+    }
+
+    private void init() {
+        if ( !initialized ) {
+            initPacMan1();
+            initPacMan2();
+            gamePane.setOnKeyPressed( this::movePacMan );
+            gamePane.setOnKeyReleased( this::movePacMan );
+            initialized = true;
         }
     }
 
-    void render() {
-            if ( !initialized ) {
-                return;
-            }
+    private void clearCanvas() {
         this.gameCanvas.getGraphicsContext2D().setFill( Color.WHITE );
         this.gameCanvas.getGraphicsContext2D().fillRect( 0, 0, 1200, 800 );
-        pacMan1.draw( this.gameCanvas.getGraphicsContext2D() );
-        pacMan2.draw( this.gameCanvas.getGraphicsContext2D() );
-            pacMan1.movePos();
-            pacMan2.movePos();
+    }
 
+    private void movePacMan( PacMan p ) {
+        p.draw( this.gameCanvas.getGraphicsContext2D() );
+        pacMan2.draw( this.gameCanvas.getGraphicsContext2D() );
+        pacMan1.movePos();
+        pacMan2.movePos();
     }
 }

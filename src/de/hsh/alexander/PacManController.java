@@ -80,9 +80,7 @@ public class PacManController extends GameEntryPoint {
     @Override
     public void render() {
         if ( game != null ) {
-            if ( game.initialized ) {
-                game.render();
-            }
+            game.render();
         }
     }
 

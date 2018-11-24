@@ -58,6 +58,10 @@ public class Player extends Actor {
         }
     }
 
+    public double getSpeed() {
+        return this.movement.getVelocity();
+    }
+
     public void setKeyMap( HashMap<String, Direction> keyMap ) {
         this.movement.setKeyMap( keyMap );
     }
