@@ -4,27 +4,27 @@ import common.util.Logger;
 import de.hsh.alexander.actor.Direction;
 import de.hsh.alexander.actor.PacMan;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Observer;
+import java.util.ResourceBundle;
 
-public class PacManGame extends Observable {
+public class PacManGame extends Observable implements Observer, Initializable {
 
     public static final String  fxml        = "PacManGame.fxml";
-    private static      boolean initialized = false;
-
     @FXML
-    private AnchorPane gamePane;
-    @FXML
-    private Canvas     gameCanvas;
-    private PacMan     pacMan1;
-    private PacMan     pacMan2;
+    public              Canvas  gameCanvas;
+    private             boolean initialized = false;
+    private             PacMan  pacMan1;
+    private             PacMan  pacMan2;
 
-    void movePacMan( KeyEvent keyEvent ) {
+    private void movePacMan( KeyEvent keyEvent ) {
         Logger.log( "Key pressed : " + keyEvent );
         pacMan1.move( keyEvent );
         pacMan2.move( keyEvent );
@@ -42,7 +42,33 @@ public class PacManGame extends Observable {
             case "Right":
                 pacMan1.movePos( 0, pacMan1.getSpeed() );
                 break;
+            default:
+                Logger.log( this.getClass() + ": Can not find keyname : " + keyName );
+                break;
         }
+    }
+
+    void render() {
+        if ( !initialized ) {
+            init();
+        }
+        clearCanvas();
+        this.drawPacMan( pacMan1 );
+        this.drawPacMan( pacMan2 );
+    }
+
+    private void init() {
+        if ( !initialized ) {
+            initPacMan1();
+            initPacMan2();
+            initialized = true;
+            Logger.log( this.getClass() + ": init executed" );
+        }
+    }
+
+    private void drawPacMan( PacMan p ) {
+        p.draw( this.gameCanvas.getGraphicsContext2D() );
+        p.movePos();
     }
 
     private void initPacMan1() {
@@ -63,36 +89,22 @@ public class PacManGame extends Observable {
         pacMan2 = new PacMan( "Bug.png", pacMan2KeyMap );
     }
 
-    public void test() {
-        Logger.log( "Test: Key Released" );
-    }
-
-    void render() {
-        init();
-        clearCanvas();
-        this.movePacMan( pacMan1 );
-        this.movePacMan( pacMan2 );
-    }
-
-    private void init() {
-        if ( !initialized ) {
-            initPacMan1();
-            initPacMan2();
-            gamePane.setOnKeyPressed( this::movePacMan );
-            gamePane.setOnKeyReleased( this::movePacMan );
-            initialized = true;
-        }
-    }
-
     private void clearCanvas() {
         this.gameCanvas.getGraphicsContext2D().setFill( Color.WHITE );
         this.gameCanvas.getGraphicsContext2D().fillRect( 0, 0, 1200, 800 );
     }
 
-    private void movePacMan( PacMan p ) {
-        p.draw( this.gameCanvas.getGraphicsContext2D() );
-        pacMan2.draw( this.gameCanvas.getGraphicsContext2D() );
-        pacMan1.movePos();
-        pacMan2.movePos();
+    @Override
+    public void update( Observable o, Object arg ) {
+        Logger.log( this.getClass() + ": " + o + ", " + arg );
+    }
+
+    @Override
+    public void initialize( URL location, ResourceBundle resources ) {
+        Thread t = new Thread( this::render );
+        this.gameCanvas.setFocusTraversable( true );
+        this.gameCanvas.setOnKeyReleased( this::movePacMan );
+        t.start();
+
     }
 }

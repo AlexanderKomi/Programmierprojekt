@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 import java.util.Observable;
-import java.util.Observer;
 
 public class PacManMenu extends Observable {
 
@@ -17,7 +16,6 @@ public class PacManMenu extends Observable {
 
     @FXML
     public        VBox     basicPane;
-    public static Observer observer;
     @FXML
     public        Button   backButton;
     @FXML

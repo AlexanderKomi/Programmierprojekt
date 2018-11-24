@@ -6,7 +6,6 @@ import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import javafx.scene.input.KeyEvent;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -30,11 +29,8 @@ public class PacManController extends GameEntryPoint {
         if ( o instanceof PacManMenu ) {
             update( (PacManMenu) o, arg );
         }
-        else if ( o instanceof KeyEventManager ) {
-            update( (KeyEventManager) o, arg );
-        }
-        else if ( o instanceof MouseEventManager ) {
-            update( (MouseEventManager) o, arg );
+        else if ( o instanceof PacManGame ) {
+            update( (PacManGame) o, arg );
         }
         else {
             logParsingError( o, arg );
@@ -46,8 +42,7 @@ public class PacManController extends GameEntryPoint {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
-                    this.game = new PacManGame();
-                    changer.changeScene( PacManGame.fxml, this.game );
+                    changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     this.notifyObservers( message );
                     break;
                 case UpdateCodes.PacMan.mainMenu:
@@ -64,14 +59,18 @@ public class PacManController extends GameEntryPoint {
         }
     }
 
-    public void update( KeyEventManager o, Object arg ) {
-        if ( arg instanceof KeyEvent ) {
-            KeyEvent keyEvent = (KeyEvent) arg;
-            this.game.movePacMan( keyEvent );
-        }
+    public void update( PacManGame game, Object arg ) {
+        Logger.log( this.getClass() + ": " + game + ", " + arg );
     }
 
-    public void update( MouseEventManager o, Object arg ) {}
+    @Override
+    public void update( KeyEventManager keyEventManager, Object arg ) {
+        Logger.log( this.getClass() + ": " + keyEventManager + ", " + arg );
+    }
+
+    public void update( MouseEventManager o, Object arg ) {
+        Logger.log( this.getClass() + ": " + o + ", " + arg );
+    }
 
     private void logParsingError( Observable o, Object arg ) {
         Logger.log( "In PacMan Coop update : from observable : " + o + " Argument could not be parsed : " + arg );

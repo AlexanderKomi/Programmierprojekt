@@ -11,7 +11,7 @@ public class PacManFxmlChanger extends FxmlChanger {
 
     private static final String fxmlPackage = "view/";
 
-    public PacManFxmlChanger(FxModul fxModul, String fxmlPath, Observable fxController) {
+    PacManFxmlChanger( FxModul fxModul, String fxmlPath, Observable fxController ) {
         super( fxModul, fxmlPackage + fxmlPath, fxController );
     }
 
@@ -24,9 +24,10 @@ public class PacManFxmlChanger extends FxmlChanger {
     public void changeFxml( Observable o, String msg ) {
         switch (msg) {
             case UpdateCodes.PacMan.startGame:
+                this.changeScene( PacManGame.fxml, new PacManGame() );
                 break;
             default:
-                Logger.log( "changeFxml in PacManFxmlCanger: default" );
+                Logger.log( this.getClass() + ": changeFxml in PacManFxmlCanger: default" );
         }
     }
 }
