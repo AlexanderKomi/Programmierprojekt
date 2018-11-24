@@ -1,12 +1,12 @@
 package de.hsh.alexander.actor;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class Movement {
 
     private HashMap<String, Direction>  keymap;
     private HashMap<Direction, Boolean> holdDown = initHoldDown();
-    Direction direction;
     private double velocity;
 
     private HashMap<Direction, Boolean> initHoldDown() {
@@ -30,20 +30,26 @@ public class Movement {
         return false;
     }
 
-    boolean setKeyHoldDown( String keyName, boolean b ) {
+    boolean isHoldDown( Direction direction ) {
+        return this.holdDown.get( direction );
+    }
+
+    void setKeyHoldDownIfPresent( String keyName, boolean b ) {
         Direction d = this.keymap.get( keyName );
         if ( d != null ) {
             this.holdDown.put( d, b );
-            return true;
         }
-        return false;
     }
+
+    // ------------- GETTER and Setter --------------
 
     public HashMap<String, Direction> getKeymap() {
         return keymap;
     }
 
-    // ------------- GETTER and Setter --------------
+    public Set<Direction> getDirections() {
+        return this.holdDown.keySet();
+    }
 
     public double getVelocity() {
         return velocity;
@@ -56,7 +62,6 @@ public class Movement {
     public void setKeyMap( HashMap<String, Direction> keymap ) {
         this.keymap = keymap;
     }
-
 
     public void setHoldDown( HashMap<Direction, Boolean> holdDown ) {
         this.holdDown = holdDown;

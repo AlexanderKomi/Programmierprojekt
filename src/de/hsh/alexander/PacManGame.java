@@ -20,22 +20,17 @@ public class PacManGame extends Observable implements Observer, Initializable {
     public static final String  fxml        = "PacManGame.fxml";
     @FXML
     public              Canvas  gameCanvas;
-    private             boolean initialized = false;
+    private static      boolean initialized = false;
     private             PacMan  pacMan1;
     private             PacMan  pacMan2;
 
     private void movePacMan( KeyEvent keyEvent ) {
         pacMan1.move( keyEvent );
         pacMan2.move( keyEvent );
-        //render();
     }
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
-        init();
-    }
-
-    private void init() {
         if ( !initialized ) {
             this.gameCanvas.setFocusTraversable( true );
             this.gameCanvas.setOnKeyPressed( this::movePacMan );
@@ -43,7 +38,6 @@ public class PacManGame extends Observable implements Observer, Initializable {
             initPacMan1();
             initPacMan2();
             initialized = true;
-            render();
             Logger.log( this.getClass() + ": init executed" );
         }
     }

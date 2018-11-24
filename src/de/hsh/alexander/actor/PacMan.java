@@ -2,7 +2,7 @@ package de.hsh.alexander.actor;
 
 import java.util.HashMap;
 
-public class PacMan extends Player {
+public class PacMan extends ControlableActor {
 
 
     private static final double start_x       = 100;
@@ -11,13 +11,12 @@ public class PacMan extends Player {
 
 
     public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) {
-        super( pictureFileName, start_x, start_y );
-        this.setKeyMap( keyMap );
+        super( pictureFileName, start_x, start_y, keyMap );
         this.setSpeed( default_speed );
     }
 
-    public PacMan( String pictureFileName, double x, double y ) {
-        super( pictureFileName, x, y );
+    public PacMan( String pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) {
+        super( pictureFileName, x, y, keyMap );
     }
 
 }

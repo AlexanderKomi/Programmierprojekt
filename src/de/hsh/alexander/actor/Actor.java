@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 
 public class Actor {
 
-    static final String actorLocation = Path.getExecutionLocation() + "de/hsh/alexander/actor/";
+    private static final String actorLocation = Path.getExecutionLocation() + "de/hsh/alexander/actor/";
 
     private double x;
     private double y;
@@ -50,23 +50,23 @@ public class Actor {
         }
     }
 
+    void movePos( double vertical, double horizontal ) {
+        this.setPos(
+                this.getX() + horizontal,
+                this.getY() + vertical
+                   );
+    }
 
-    public void setPos( double x, double y ) {
+    private void setPos( double x, double y ) {
         this.setX( x );
         this.setY( y );
     }
 
-    public void movePos( double vertical, double horizontal ) {
-        this.setX( this.getX() + horizontal );
-        this.setY( this.getY() + vertical );
-    }
-
-
-    public double getX() {
+    private double getX() {
         return x;
     }
 
-    public double getY() {
+    private double getY() {
         return y;
     }
 
@@ -90,7 +90,7 @@ public class Actor {
         gc.drawImage( this.picture, this.x, this.y, this.width, this.height );
     }
 
-    public Image getPicture() {
+    private Image getPicture() {
         return picture;
     }
 
