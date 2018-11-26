@@ -15,7 +15,7 @@ public class Player {
     private Image skin_down = new Image("de/hsh/dennis/resources/actors/player_down.png");
 
     private int offsetX = 0;
-    private int offsetY = 200;
+    private int offsetY = 100;
 
     private final int posX = (WindowConfig.window_width / 2) - ((int) skin_standard.getWidth() / 2) + offsetX;
     private final int posY = (WindowConfig.window_height / 2) - ((int) skin_standard.getHeight() / 2) + offsetY;

@@ -13,6 +13,9 @@ public class GameModel {
     private Canvas canvas;
     private GraphicsContext gc;
 
+    private int Score = 0;
+    private int Health = 100;
+
     //animation timing values
     private double animationDelay = 0.5; //animation delay in seconds
     private long skinResetTimer;
