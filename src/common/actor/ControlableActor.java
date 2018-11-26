@@ -57,23 +57,23 @@ public class ControlableActor extends Actor {
         movement.getDirections().forEach( direction -> {
             if ( movement.isHoldDown( direction ) ) {
                 if ( direction == Direction.Down ) {
-                    xyTuple[ 0 ] += velocity;
-                    xyTuple[ 1 ] += 0;
+                    xyTuple[ 0 ] += 0;
+                    xyTuple[ 1 ] += velocity;
                     //super.movePos( velocity, 0 );
                 }
                 if ( direction == Direction.Up ) {
-                    xyTuple[ 0 ] += -velocity;
-                    xyTuple[ 1 ] += 0;
+                    xyTuple[ 0 ] += 0;
+                    xyTuple[ 1 ] += -velocity;
                     //super.movePos( -velocity, 0 );
                 }
                 if ( direction == Direction.Left ) {
-                    xyTuple[ 0 ] += 0;
-                    xyTuple[ 1 ] += -velocity;
+                    xyTuple[ 0 ] += -velocity;
+                    xyTuple[ 1 ] += 0;
                     //super.movePos( 0, -velocity );
                 }
                 if ( direction == Direction.Right ) {
-                    xyTuple[ 0 ] += 0;
-                    xyTuple[ 1 ] += velocity;
+                    xyTuple[ 0 ] += velocity;
+                    xyTuple[ 1 ] += 0;
                     //super.movePos( 0, velocity );
                 }
             }

@@ -1,5 +1,6 @@
 package common.actor;
 
+import common.util.Logger;
 import common.util.Path;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -51,29 +52,45 @@ public class Actor {
     }
 
     public void draw( Canvas canvas, double new_x, double new_y ) {
+        double[] temp = checkBounds( canvas, new_x, new_y );
+        movePos( temp[ 0 ], temp[ 1 ] );
+        canvas.getGraphicsContext2D().drawImage( this.picture, this.x, this.y, this.width, this.height );
+    }
 
-        double temp_x = new_x;
-        double temp_y = new_y;
+    private double[] checkBounds( Canvas canvas, double new_x, double new_y ) {
+        boolean debug_changed = false;
+        double[] temp = new double[] {
+                new_x, new_y
+        };
 
-        if ( this.x + new_x < 0 || this.x + new_x + this.width > canvas.getWidth() ) {
-            temp_x -= new_x;
+        if ( (this.x + new_x) < 0 ||
+             (this.x + new_x + this.width) > canvas.getWidth() ) {
+            temp[ 0 ] = (-new_x);
+            debug_changed = true;
         }
         else {
             //temp_x = 0;
         }
-        if ( this.y + new_y < 0 || this.y + new_y + this.height > canvas.getHeight() ) {
-            temp_y -= new_y;
+        if ( (this.y + new_y < 0) ||
+             (this.y + new_y + this.height) > canvas.getHeight() ) {
+            temp[ 1 ] = (-new_y);
+            debug_changed = true;
         }
         else {
             //temp_y = 0;
         }
-        movePos( temp_x, temp_y );
-        canvas.getGraphicsContext2D().drawImage( this.picture, this.x, this.y, this.width, this.height );
+
+        if ( debug_changed ) {
+            Logger.log( this.getClass() + "temp_x : " + temp[ 0 ] );
+            Logger.log( this.getClass() + "temp_y : " + temp[ 1 ] + "\n" );
+        }
+
+        return temp;
     }
 
     // GETTER AND SETTER
 
-    void movePos( double vertical, double horizontal ) {
+    void movePos( double horizontal, double vertical ) {
         this.setPos(
                 this.getX() + horizontal,
                 this.getY() + vertical
@@ -108,7 +125,6 @@ public class Actor {
     public void setWidth( double width ) {
         this.width = width;
     }
-
 
     private Image getPicture() {
         return picture;
