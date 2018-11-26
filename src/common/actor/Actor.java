@@ -20,11 +20,11 @@ public class Actor {
 
     private Image picture;
 
-    Actor( String pictureFileName ) {
+    protected Actor(String pictureFileName) {
         this( pictureFileName, 0, 0 );
     }
 
-    Actor( String pictureFileName, double x, double y ) {
+    protected Actor(String pictureFileName, double x, double y) {
         loadPicture( pictureFileName );
         this.setHeight( this.getPicture().getHeight() );
         this.setWidth( this.getPicture().getWidth() );
@@ -32,7 +32,7 @@ public class Actor {
         this.setY( y );
     }
 
-    Actor( String pictureFileName, double x, double y, double height, double width ) {
+    protected Actor(String pictureFileName, double x, double y, double height, double width) {
         loadPicture( pictureFileName );
         this.setHeight( height );
         this.setWidth( width );
