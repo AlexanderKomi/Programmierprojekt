@@ -3,7 +3,6 @@ package common.updates;
 import common.GameContainer;
 import common.util.Logger;
 import de.hsh.amir.AmirsGame;
-import de.hsh.dennis.DennisGame;
 
 /**
  * Created by yy9-mys-u1 on 23.11.18.

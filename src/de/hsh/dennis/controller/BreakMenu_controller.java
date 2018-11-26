@@ -1,12 +1,12 @@
 package de.hsh.dennis.controller;
 
 import common.util.Logger;
+import de.hsh.dennis.model.KeyLayout;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -34,8 +34,8 @@ public class BreakMenu_controller extends Observable {
     private Button b_continue;
 
     @FXML
-    void heyInputHandler(KeyEvent event) {
-        if (event.getCode() == KeyCode.ESCAPE) {
+    void keyInputHandler(KeyEvent event) {
+        if (event.getCode() == KeyLayout.Control.ESC) {
             setChanged();
             notifyObservers("b_continue");
         }

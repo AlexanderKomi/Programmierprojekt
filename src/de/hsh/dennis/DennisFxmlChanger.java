@@ -4,8 +4,10 @@ import common.config.WindowConfig;
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.engine.components.game.GameEntryPoint;
+import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.dennis.controller.*;
+import de.hsh.dennis.model.KeyLayout;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,26 +49,32 @@ public class DennisFxmlChanger extends FxmlChanger {
     }
 
     private void handle_LevelMenu_controller(String code) {
-
+        Level_controller levelController = new Level_controller();
         switch (code) {
             case "b_easy":
                 Logger.log("handle_LevelMenu_controller: b_easy erreicht");
-                changeScene("view/level.fxml", new Level_controller());
+                changeScene("view/level.fxml", levelController);
+                levelController.passCanvas();
                 break;
 
             case "b_medium":
                 Logger.log("handle_LevelMenu_controller: b_medium erreicht");
-                changeScene("view/level.fxml", new Level_controller());
+                changeScene("view/level.fxml", levelController);
+                levelController.passCanvas();
                 break;
 
             case "b_hard":
                 Logger.log("handle_LevelMenu_controller: b_hard erreicht");
-                changeScene("view/level.fxml", new Level_controller());
+                changeScene("view/level.fxml", levelController);
+                levelController.passCanvas();
                 break;
 
             case "b_nightmare":
                 Logger.log("handle_LevelMenu_controller: b_nightmare erreicht");
-                changeScene("view/level.fxml", new Level_controller());
+                changeScene("view/level.fxml", levelController);
+                levelController.passCanvas();
+                setChanged();
+                notifyObservers(UpdateCodes.Dennis.gameReady);
                 break;
 
             case "b_back":
@@ -105,14 +113,8 @@ public class DennisFxmlChanger extends FxmlChanger {
     }
 
     private void handle_Level_controller(String code) {
-        switch (code) {
-            case "BREAK":
-                Logger.log("open BREAK_MENU");
-                openBreakMenu();
-                break;
-
-            default:
-                Logger.log("handle_Level_controller: default erreicht");
+        if (code.equals(KeyLayout.Control.ESC.toString())) {
+            openBreakMenu();
         }
     }
 
