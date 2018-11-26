@@ -1,8 +1,8 @@
 package common;
 
 import common.engine.FXGameContainer;
+import common.engine.components.game.GameEntryPoint;
 import common.engine.components.game.Games;
-import common.updates.UpdateCodes;
 import common.updates.Updater;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.PacManController;
@@ -74,9 +74,7 @@ public class GameContainer extends FXGameContainer {
     @Override
     public void render() {
         if ( this.getGames() != null ) {
-            ((Leertastenklatsche) this.getGames().get( "Leertastenklatsche" )).render();
-            ((PacManController) this.getGames().get( UpdateCodes.PacMan.gameName )).render();
-            ((TIController) this.getGames().get( UpdateCodes.TunnelInvader.gameName )).render();
+            this.getGames().forEach( GameEntryPoint::render );
         }
     }
 
