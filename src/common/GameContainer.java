@@ -1,8 +1,7 @@
 package common;
 
 import common.engine.FXGameContainer;
-import common.engine.components.game.GameEntryPoint;
-import common.engine.components.game.Games;
+import common.engine.components.game.GameEntryPoints;
 import common.updates.Updater;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.PacManController;
@@ -11,7 +10,6 @@ import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.controller.TIController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,9 +25,9 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    public Games createGames(Observer container) {
-        // TODO : Make games only create on request from main menu
-        Games games = new Games(
+    public GameEntryPoints createGames( Observer container ) {
+        // TODO : Make gameEntryPoints only create on request from main menu
+        return new GameEntryPoints(
                 new PacManController( container ),
                 new AmirsGame( container ),
                 new RAM( container ),
@@ -37,8 +35,6 @@ public class GameContainer extends FXGameContainer {
                 new Leertastenklatsche( container ),
                 new DennisGame(container)
         );
-
-        return games;
     }
 
     @Override
@@ -46,8 +42,7 @@ public class GameContainer extends FXGameContainer {
         common.MainMenu mainMenu = new MainMenu();
         try {
             URL  location = getClass().getResource( "gui/P3_Gui.fxml" );
-            VBox vbox     = FXMLLoader.load( location );
-            mainMenu.vbox = vbox;
+            mainMenu.vbox = FXMLLoader.load( location );
             mainMenu.setMenuPane(mainMenu.vbox);
         }
         catch ( IOException e ) {
@@ -73,8 +68,8 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     public void render() {
-        if ( this.getGames() != null ) {
-            this.getGames().forEach( GameEntryPoint::render );
+        if ( this.getGameEntryPoints() != null ) {
+            this.getGameEntryPoints().render();
         }
     }
 
