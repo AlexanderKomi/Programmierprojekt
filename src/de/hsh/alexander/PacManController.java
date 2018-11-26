@@ -2,8 +2,6 @@ package de.hsh.alexander;
 
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
-import common.events.KeyEventManager;
-import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 
@@ -13,31 +11,27 @@ import java.util.Observer;
 public class PacManController extends GameEntryPoint {
 
     private PacManFxmlChanger changer;
-    private PacManMenu gameMenu;
     private PacManGame game;
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
         this.game = new PacManGame();
-        changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
+        this.changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
     }
 
-
-
-    /* Currently not used... */
     @Override
     public void update( Observable o, Object arg ) {
         if ( o instanceof PacManMenu ) {
             update( (PacManMenu) o, arg );
-        }
-        else if ( o instanceof PacManGame ) {
-            update( (PacManGame) o, arg );
         }
         else {
             logParsingError( o, arg );
         }
     }
 
+    /**
+     * PacManMenu sends a notification to change the fxml.
+     */
     private void update( PacManMenu o, Object arg ) {
         if ( arg instanceof String ) {
             String message = (String) arg;
@@ -58,19 +52,6 @@ public class PacManController extends GameEntryPoint {
         else {
             logParsingError( o, arg );
         }
-    }
-
-    public void update( PacManGame game, Object arg ) {
-        Logger.log( this.getClass() + ": " + game + ", " + arg );
-    }
-
-    @Override
-    public void update( KeyEventManager keyEventManager, Object arg ) {
-        Logger.log( this.getClass() + ": " + keyEventManager + ", " + arg );
-    }
-
-    public void update( MouseEventManager o, Object arg ) {
-        Logger.log( this.getClass() + ": " + o + ", " + arg );
     }
 
     private void logParsingError( Observable o, Object arg ) {

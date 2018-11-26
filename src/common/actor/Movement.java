@@ -11,8 +11,8 @@ public class Movement {
 
     private HashMap<Direction, Boolean> initHoldDown() {
         HashMap<Direction, Boolean> hashMap = new HashMap<>();
-        hashMap.put( Direction.Down, Boolean.FALSE );
         hashMap.put( Direction.Up, Boolean.FALSE );
+        hashMap.put( Direction.Down, Boolean.FALSE );
         hashMap.put( Direction.Left, Boolean.FALSE );
         hashMap.put( Direction.Right, Boolean.FALSE );
         return hashMap;
@@ -30,7 +30,7 @@ public class Movement {
         return false;
     }
 
-    boolean isHoldDown( Direction direction ) {
+    public boolean isHoldDown( Direction direction ) {
         return this.holdDown.get( direction );
     }
 
