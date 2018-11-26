@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
+//TODO: outsorce for mvc!
 public class Level_controller extends Observable implements Initializable {
 
     private static boolean initialized = false;
@@ -35,9 +36,51 @@ public class Level_controller extends Observable implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         if (!initialized) {
             Logger.log("initializing ...");
-
-
+            this.canvas.setFocusTraversable(true);  //!!!must have!!!
+            this.canvas.setOnKeyPressed(this::heyInputHandler);
             Logger.log("initializing DONE");
         }
     }
+
+    private void heyInputHandler(KeyEvent event) {
+        Logger.log(event.getCode());
+
+        switch (event.getCode()) {
+            case ESCAPE:
+                setChanged();
+                notifyObservers("BREAK");
+                break;
+            case P:
+                setChanged();
+                notifyObservers("BREAK");
+                break;
+            case W:
+
+                break;
+            case A:
+
+                break;
+            case S:
+
+                break;
+            case D:
+
+                break;
+            case UP:
+
+                break;
+            case DOWN:
+
+                break;
+            case LEFT:
+
+                break;
+            case RIGHT:
+
+                break;
+
+        }
+
+    }
+
 }

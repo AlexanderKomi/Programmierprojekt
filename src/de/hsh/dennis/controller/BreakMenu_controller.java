@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -23,13 +25,21 @@ public class BreakMenu_controller extends Observable {
     private TextField tf_score;
 
     @FXML
-    private Button b_play;
+    private Button b_replay;
 
     @FXML
-    private Button b_tutorial;
+    private Button b_main_menu;
 
     @FXML
-    private Button b_exit;
+    private Button b_continue;
+
+    @FXML
+    void heyInputHandler(KeyEvent event) {
+        if (event.getCode() == KeyCode.ESCAPE) {
+            setChanged();
+            notifyObservers("b_continue");
+        }
+    }
 
     @FXML
     void button_clicked(ActionEvent event) {
