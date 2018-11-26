@@ -1,6 +1,5 @@
 package common.actor;
 
-import common.util.Logger;
 import common.util.Path;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -58,7 +57,6 @@ public class Actor {
     }
 
     private double[] checkBounds( Canvas canvas, double new_x, double new_y ) {
-        boolean debug_changed = false;
         double[] temp = new double[] {
                 new_x, new_y
         };
@@ -66,31 +64,17 @@ public class Actor {
         if ( (this.x + new_x) < 0 ||
              (this.x + new_x + this.width) > canvas.getWidth() ) {
             temp[ 0 ] = (-new_x);
-            debug_changed = true;
-        }
-        else {
-            //temp_x = 0;
         }
         if ( (this.y + new_y < 0) ||
              (this.y + new_y + this.height) > canvas.getHeight() ) {
             temp[ 1 ] = (-new_y);
-            debug_changed = true;
         }
-        else {
-            //temp_y = 0;
-        }
-
-        if ( debug_changed ) {
-            Logger.log( this.getClass() + "temp_x : " + temp[ 0 ] );
-            Logger.log( this.getClass() + "temp_y : " + temp[ 1 ] + "\n" );
-        }
-
         return temp;
     }
 
     // GETTER AND SETTER
 
-    void movePos( double horizontal, double vertical ) {
+    private void movePos( double horizontal, double vertical ) {
         this.setPos(
                 this.getX() + horizontal,
                 this.getY() + vertical

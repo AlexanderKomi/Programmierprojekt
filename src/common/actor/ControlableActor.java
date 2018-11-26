@@ -9,7 +9,7 @@ public class ControlableActor extends Actor {
 
     private Movement movement = new Movement();
 
-    ControlableActor( String pictureFileName, HashMap<String, Direction> keymap ) {
+    protected ControlableActor( String pictureFileName, HashMap<String, Direction> keymap ) {
         super( pictureFileName );
         this.movement.setKeyMap( keymap );
     }
@@ -19,12 +19,12 @@ public class ControlableActor extends Actor {
         this.movement.setKeyMap( keymap );
     }
 
-    ControlableActor( String pictureFileName,
-                      double x,
-                      double y,
-                      double height,
-                      double width,
-                      HashMap<String, Direction> keymap ) {
+    protected ControlableActor( String pictureFileName,
+                                double x,
+                                double y,
+                                double height,
+                                double width,
+                                HashMap<String, Direction> keymap ) {
         super( pictureFileName, x, y, height, width );
         this.movement.setKeyMap( keymap );
     }
@@ -46,16 +46,16 @@ public class ControlableActor extends Actor {
     }
 
     public void draw( Canvas canvas ) {
-        double[] temp = movePos();
+        double[] temp = this.movePos();
         super.draw( canvas, temp[ 0 ], temp[ 1 ] );
     }
 
-    public double[] movePos() {
+    protected double[] movePos() {
         double[] xyTuple  = new double[ 2 ];
-        double   velocity = movement.getVelocity();
+        double   velocity = getMovement().getVelocity();
 
-        movement.getDirections().forEach( direction -> {
-            if ( movement.isHoldDown( direction ) ) {
+        getMovement().getDirections().forEach( direction -> {
+            if ( getMovement().isHoldDown( direction ) ) {
                 if ( direction == Direction.Down ) {
                     xyTuple[ 0 ] += 0;
                     xyTuple[ 1 ] += velocity;
@@ -91,5 +91,9 @@ public class ControlableActor extends Actor {
 
     public double getSpeed() {
         return this.movement.getVelocity();
+    }
+
+    public Movement getMovement() {
+        return movement;
     }
 }

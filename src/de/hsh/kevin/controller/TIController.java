@@ -1,8 +1,6 @@
 package de.hsh.kevin.controller;
 
 import common.engine.components.game.GameEntryPoint;
-import common.events.KeyEventManager;
-import common.events.MouseEventManager;
 import common.updates.UpdateCodes;
 import de.hsh.kevin.TIFxmlChanger;
 
@@ -26,16 +24,6 @@ public class TIController extends GameEntryPoint {
 
     	//weiterleiten an den changer
 		changer.changeFxml(o, (String) arg);
-
-    }
-
-    @Override
-    public void update(KeyEventManager keyEventManager, Object arg) {
-
-    }
-
-    @Override
-    public void update(MouseEventManager mouseEventManagerManager, Object arg) {
 
     }
 

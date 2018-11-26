@@ -30,7 +30,7 @@ public class Movement {
         return false;
     }
 
-    boolean isHoldDown( Direction direction ) {
+    public boolean isHoldDown( Direction direction ) {
         return this.holdDown.get( direction );
     }
 
