@@ -14,7 +14,7 @@ public class TIGameOverController extends GameMenu {
 
     public static AnchorPane gameOverPane;
 
-     public static final String fxml = "../res/TIGameOver.fxml";
+     public static final String fxml = "res/TIGameOver.fxml";
     
     @FXML
     public Button btn_start;

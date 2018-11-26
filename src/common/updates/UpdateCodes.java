@@ -27,7 +27,7 @@ public class UpdateCodes {
         public static final String gameName  = WindowConfig.kevin_title;
         public static final String startGame = "Start GameEntryPoint";
         public static final String gameOver  = "GameEntryPoint Over";
-        public static final String mainMenu  = "Main Menu";
+        public static final String gameMenu  = "Game Menu";
     }
 
     public class Amir {
