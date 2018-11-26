@@ -11,6 +11,7 @@ import common.util.Logger;
 class BoundsChecks {
 
     static boolean doesCollide( Actor a, Actor b ) {
+        // TODO : Implementiere check 1 bis 5 und teste das.
         return BoundsChecks.check1( a, b ) ||
                BoundsChecks.check2( a, b ) ||
                BoundsChecks.check3( a, b ) ||
