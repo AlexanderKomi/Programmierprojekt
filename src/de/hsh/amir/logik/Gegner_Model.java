@@ -11,9 +11,15 @@ public class Gegner_Model extends Observable {
     private boolean isTouched = false;
 
 
+    public Gegner_Model() {
+        isTouched = false;
+    }
 
-
-
+    public Gegner_Model(int x, int y, int modelType) {
+        this.x = x;
+        this.y = y;
+        this.modelType = modelType; // um Gegnertypen später zu definieren und ihr Verhalten zu steuern
+    }
 
     public void move(final char direction_Char) {
         switch (direction_Char) {
