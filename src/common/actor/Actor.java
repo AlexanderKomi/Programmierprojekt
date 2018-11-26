@@ -14,9 +14,10 @@ public class Actor {
     private double x;
     private double y;
 
-    private double height;
-    private double width;
+    double height;
+    double width;
 
+    private String name;
 
     private Image picture;
 
@@ -42,6 +43,7 @@ public class Actor {
 
     private void loadPicture( String fileName ) {
         try {
+            this.name = fileName;
             String location = actorLocation + fileName;
             picture = new Image( new FileInputStream( location ) );
         }
@@ -50,7 +52,7 @@ public class Actor {
         }
     }
 
-    public void draw( Canvas canvas, double new_x, double new_y ) {
+    void draw( Canvas canvas, double new_x, double new_y ) {
         double[] temp = checkBounds( canvas, new_x, new_y );
         movePos( temp[ 0 ], temp[ 1 ] );
         canvas.getGraphicsContext2D().drawImage( this.picture, this.x, this.y, this.width, this.height );
@@ -72,6 +74,21 @@ public class Actor {
         return temp;
     }
 
+    public boolean doesCollide( Actor other ) {
+        return BoundsChecks.doesCollide( this, other ) || BoundsChecks.doesCollide( other, this );
+    }
+
+    @Override
+    public String toString() {
+        String result = "Actor(";
+        result += "name:" + this.name + ", ";
+        result += "x:" + this.getX() + ", ";
+        result += "y:" + this.getY() + ", ";
+        result += "width:" + this.width + ", ";
+        result += "height:" + this.height;
+        return result + ")";
+    }
+
     // GETTER AND SETTER
 
     private void movePos( double horizontal, double vertical ) {
@@ -86,11 +103,11 @@ public class Actor {
         this.setY( y );
     }
 
-    private double getX() {
+    double getX() {
         return x;
     }
 
-    private double getY() {
+    double getY() {
         return y;
     }
 
@@ -117,4 +134,6 @@ public class Actor {
     public void setPicture( Image picture ) {
         this.picture = picture;
     }
+
+
 }

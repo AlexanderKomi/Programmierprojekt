@@ -27,6 +27,9 @@ public class PacManGame extends Observable implements Observer, Initializable {
     private void movePacMan( KeyEvent keyEvent ) {
         pacMan1.move( keyEvent );
         pacMan2.move( keyEvent );
+        if ( pacMan1.doesCollide( pacMan2 ) ) {
+            //Logger.log( "Pacman1 collides with pacman2" );
+        }
     }
 
     @Override
@@ -48,7 +51,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
         pacMan1KeyMap.put( "Down", Direction.Down );
         pacMan1KeyMap.put( "Left", Direction.Left );
         pacMan1KeyMap.put( "Right", Direction.Right );
-        pacMan1 = new PacMan( "Bug.png", pacMan1KeyMap );
+        pacMan1 = new PacMan( "p1_stand.png", pacMan1KeyMap );
     }
 
     private void initPacMan2() {
@@ -57,7 +60,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
         pacMan2KeyMap.put( "S", Direction.Down );
         pacMan2KeyMap.put( "A", Direction.Left );
         pacMan2KeyMap.put( "D", Direction.Right );
-        pacMan2 = new PacMan( "Bug.png", pacMan2KeyMap );
+        pacMan2 = new PacMan( "snailWalk2.png", pacMan2KeyMap );
     }
 
     private void clearCanvas() {
