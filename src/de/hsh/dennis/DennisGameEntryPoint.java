@@ -3,7 +3,6 @@ package de.hsh.dennis;
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
-import common.util.Logger;
 import de.hsh.dennis.controller.MainMenu_controller;
 import de.hsh.dennis.model.GameModel;
 import de.hsh.dennis.model.KeyLayout;
@@ -30,8 +29,6 @@ public class DennisGameEntryPoint extends GameEntryPoint {
     @Override
     public void render() {
         if (rendering) {
-
-            Logger.log("rendering");
             gm.render();
         }
     }
@@ -49,7 +46,6 @@ public class DennisGameEntryPoint extends GameEntryPoint {
         } else if (arg instanceof String) {
             if (((String) arg).equals(UpdateCodes.Dennis.gameReady)) {
                 rendering = true;
-                Logger.log("ready to render!"); //TODO: repair
             } else {
                 changer.changeFxml(o, (String) arg);
             }

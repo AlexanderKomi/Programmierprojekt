@@ -8,7 +8,7 @@
     <children>
         <VBox fx:id="vbox_1" alignment="CENTER" HBox.hgrow="ALWAYS">
             <children>
-                <Canvas fx:id="canvas" height="800.0" onKeyPressed="#key_pressed" width="1200.0" VBox.vgrow="ALWAYS"/>
+                <Canvas fx:id="canvas" onKeyPressed="#key_pressed" VBox.vgrow="ALWAYS"/>
             </children>
         </VBox>
     </children>

@@ -1,5 +1,6 @@
 package de.hsh.dennis.controller;
 
+import common.updates.UpdateCodes;
 import common.util.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +16,8 @@ import java.util.ResourceBundle;
 public class Level_controller extends Observable implements Initializable {
 
     private static boolean initialized = false;
+    private static double canvasX = 1200;
+    private static double canvasY = 800;
 
     @FXML
     private HBox hbox_1;
@@ -36,6 +39,8 @@ public class Level_controller extends Observable implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         if (!initialized) {
             Logger.log("initializing ...");
+            canvas.setWidth(canvasX);
+            canvas.setHeight(canvasY);
             this.canvas.setFocusTraversable(true);  //!!!must have!!! for a working canvas
             Logger.log("initializing DONE");
         }
@@ -44,5 +49,7 @@ public class Level_controller extends Observable implements Initializable {
     public void passCanvas() {
         setChanged();
         notifyObservers(canvas);
+        setChanged();
+        notifyObservers(UpdateCodes.Dennis.gameReady);
     }
 }

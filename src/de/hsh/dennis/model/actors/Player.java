@@ -1,6 +1,7 @@
 package de.hsh.dennis.model.actors;
 
 import common.actor.Direction;
+import common.config.WindowConfig;
 import javafx.scene.image.Image;
 
 public class Player {
@@ -13,13 +14,16 @@ public class Player {
     private Image skin_up = new Image("de/hsh/dennis/resources/actors/player_up.png");
     private Image skin_down = new Image("de/hsh/dennis/resources/actors/player_down.png");
 
-    private final int posX = 600;
-    private final int posY = 400;
+    private int offsetX = 0;
+    private int offsetY = 200;
+
+    private final int posX = (WindowConfig.window_width / 2) - ((int) skin_standard.getWidth() / 2) + offsetX;
+    private final int posY = (WindowConfig.window_height / 2) - ((int) skin_standard.getHeight() / 2) + offsetY;
 
     private Image skin_current;
 
     public Player() {
-        skin_current = skin_standard;
+        setSkinToDefault();
     }
 
     public void changeSkin(Direction dir) {
@@ -40,6 +44,9 @@ public class Player {
         }
     }
 
+    public void setSkinToDefault() {
+        skin_current = skin_standard;
+    }
 
     public Image getSkin_current() {
         return skin_current;

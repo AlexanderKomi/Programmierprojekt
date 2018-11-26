@@ -4,7 +4,6 @@ import common.config.WindowConfig;
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.engine.components.game.GameEntryPoint;
-import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.dennis.controller.*;
 import de.hsh.dennis.model.KeyLayout;
@@ -73,8 +72,6 @@ public class DennisFxmlChanger extends FxmlChanger {
                 Logger.log("handle_LevelMenu_controller: b_nightmare erreicht");
                 changeScene("view/level.fxml", levelController);
                 levelController.passCanvas();
-                setChanged();
-                notifyObservers(UpdateCodes.Dennis.gameReady);
                 break;
 
             case "b_back":
