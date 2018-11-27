@@ -72,7 +72,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
         pacMan2KeyMap.put( "A", Direction.Left );
         pacMan2KeyMap.put( "D", Direction.Right );
         try {
-            pacMan2 = new PacMan( actorLocation + "snailWalk2.png", pacMan2KeyMap );
+            pacMan2 = new PacMan( actorLocation + "snailWalk2.png", 500, 500, pacMan2KeyMap );
         }
         catch ( FileNotFoundException e ) {
             e.printStackTrace();
@@ -94,7 +94,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
             return;
         }
         clearCanvas();
-        pacMan1.draw( this.gameCanvas );
-        pacMan2.draw( this.gameCanvas );
+        pacMan1.drawAndApplyCollision( this.gameCanvas, pacMan2 );
+        pacMan2.drawAndApplyCollision( this.gameCanvas, pacMan1 );
     }
 }

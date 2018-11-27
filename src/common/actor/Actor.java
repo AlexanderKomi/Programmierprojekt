@@ -72,8 +72,7 @@ public class Actor {
     }
 
     void draw( Canvas canvas, double new_x, double new_y ) {
-        double[] temp = checkBounds( canvas, new_x, new_y );
-        setPos( temp[ 0 ], temp[ 1 ] );
+        setPos( canvas, new_x, new_y );
         switchImages();
         canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
@@ -101,6 +100,16 @@ public class Actor {
 
     public boolean doesCollide( Actor other ) {
         return BoundsChecks.doesCollide( this, other ) || BoundsChecks.doesCollide( other, this );
+    }
+
+    protected void setPos( Canvas canvas, double new_x, double new_y ) {
+        double[] temp = checkBounds( canvas, new_x, new_y );
+        setPos( temp[ 0 ], temp[ 1 ] );
+    }
+
+    protected void setPos( double x, double y ) {
+        this.setX( x );
+        this.setY( y );
     }
 
     private double[] checkBounds( Canvas canvas, double new_x, double new_y ) {
@@ -139,16 +148,39 @@ public class Actor {
                    );
     }
 
-    private void setPos( double x, double y ) {
-        this.setX( x );
-        this.setY( y );
+    /**
+     * Returns new coordinates for this actor, when colliding or not.
+     */
+    protected double[] checkBounds( Actor other, double new_x, double new_y ) {
+        double temp_x = this.x;
+        double temp_y = this.y;
+
+        this.x = new_x;
+        this.y = new_y;
+
+        if ( this.doesCollide( other ) ) {
+            this.x = temp_x;
+            this.y = temp_y;
+        }
+        return new double[] {
+                this.x, this.y
+        };
     }
 
-    double getX() {
+    public double[] getPos() {
+        return new double[] { this.getX(), this.getY() };
+    }
+
+    public void setPos( double[] pos ) {
+        this.setX( pos[ 0 ] );
+        this.setY( pos[ 1 ] );
+    }
+
+    protected double getX() {
         return x;
     }
 
-    double getY() {
+    protected double getY() {
         return y;
     }
 

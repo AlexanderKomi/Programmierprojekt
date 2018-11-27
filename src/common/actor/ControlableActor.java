@@ -46,11 +46,11 @@ public class ControlableActor extends Actor {
     }
 
     public void draw( Canvas canvas ) {
-        double[] temp = this.movePos();
+        double[] temp = this.calculateNewPosFromInput();
         super.draw( canvas, temp[ 0 ], temp[ 1 ] );
     }
 
-    protected double[] movePos() {
+    protected double[] calculateNewPosFromInput() {
         double[] xyTuple  = new double[ 2 ];
         double   velocity = getMovement().getVelocity();
 
@@ -59,26 +59,35 @@ public class ControlableActor extends Actor {
                 if ( direction == Direction.Down ) {
                     xyTuple[ 0 ] += 0;
                     xyTuple[ 1 ] += velocity;
-                    //super.movePos( velocity, 0 );
+                    //super.calculateNewPosFromInput( velocity, 0 );
                 }
                 if ( direction == Direction.Up ) {
                     xyTuple[ 0 ] += 0;
                     xyTuple[ 1 ] += -velocity;
-                    //super.movePos( -velocity, 0 );
+                    //super.calculateNewPosFromInput( -velocity, 0 );
                 }
                 if ( direction == Direction.Left ) {
                     xyTuple[ 0 ] += -velocity;
                     xyTuple[ 1 ] += 0;
-                    //super.movePos( 0, -velocity );
+                    //super.calculateNewPosFromInput( 0, -velocity );
                 }
                 if ( direction == Direction.Right ) {
                     xyTuple[ 0 ] += velocity;
                     xyTuple[ 1 ] += 0;
-                    //super.movePos( 0, velocity );
+                    //super.calculateNewPosFromInput( 0, velocity );
                 }
             }
         } );
         return xyTuple;
+    }
+
+    public void drawAndApplyCollision( Canvas canvas, Actor other ) {
+        double[] backup = this.getPos();
+        double[] temp   = this.calculateNewPosFromInput();
+        super.draw( canvas, temp[ 0 ], temp[ 1 ] );
+        if ( this.doesCollide( other ) ) {
+            this.setPos( backup );
+        }
     }
 
     public void setKeyMap( HashMap<String, Direction> keyMap ) {
