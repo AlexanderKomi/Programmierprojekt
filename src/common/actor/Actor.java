@@ -53,7 +53,6 @@ public class Actor {
             }
         }
         this.switchingDelay = 25;
-
     }
 
     private Actor( double x, double y ) {
