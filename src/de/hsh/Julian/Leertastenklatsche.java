@@ -79,21 +79,14 @@ public class Leertastenklatsche extends GameEntryPoint {
                     if ( !input.contains( code ) ) {
                         input.add( code );
                     }
-                    Logger.log( "Key pressed : " + code );
+                    Logger.log(this.getClass()+ "Key pressed : " + code );
                 } );
 
-        root.setOnKeyPressed( e -> {
-            String code = e.getCode().toString();
-            if ( !input.contains( code ) ) {
-                input.add( code );
-            }
-            Logger.log( "Key pressed : " + code );
-        } );
         root.setOnKeyReleased(
                 e -> {
                     String code = e.getCode().toString();
                     input.remove( code );
-                    Logger.log( "Key pressed : " + code );
+                    Logger.log(this.getClass()+ "Key pressed : " + code );
                 } );
 
     }
