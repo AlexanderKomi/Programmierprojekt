@@ -4,6 +4,7 @@ import common.actor.Direction;
 import common.util.Logger;
 import de.hsh.dennis.model.KeyLayout.Movement.Custom;
 import de.hsh.dennis.model.actors.Player;
+import de.hsh.dennis.model.audio.AudioPlayer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -24,11 +25,16 @@ public class GameModel {
 
     private Player player = new Player();
 
+    //Audio Stuff
+    private boolean musikOn = true;
+    private AudioPlayer aa = new AudioPlayer();
+
     public void userInput(KeyCode k) {
 
         if (k == Custom.UP || k == Custom.UP_ALT) {
             player.changeSkin(Direction.Up);
             setResetTimer();
+            aa.pause(); //just for debugging
             return;
         } else if (k == Custom.LEFT || k == Custom.LEFT_ALT) {
             player.changeSkin(Direction.Left);
@@ -37,6 +43,7 @@ public class GameModel {
         } else if (k == Custom.DOWN || k == Custom.DOWN_ALT) {
             player.changeSkin(Direction.Down);
             setResetTimer();
+            aa.resume(); //just for debugging
             return;
         } else if (k == Custom.RIGHT || k == Custom.RIGHT_ALT) {
             player.changeSkin(Direction.Right);
@@ -68,6 +75,13 @@ public class GameModel {
     }
 
     public void render() {
+        if (musikOn) {
+            musikOn = false;
+            aa.loadFile(this.getClass().getResource("audio/jingle.mp3").getPath());
+            aa.play();
+
+
+        }
         clearCanvas();
         restetSkin();
         gc.drawImage(player.getSkin_current(), player.getPosX(), player.getPosY());
