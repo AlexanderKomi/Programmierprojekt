@@ -1,10 +1,8 @@
 package de.hsh.Julian;
 
-import common.config.WindowConfig;
-import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
+import common.engine.components.game.GameEntryPoint;
 import common.util.Logger;
-import common.util.Path;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -34,7 +32,7 @@ public class Leertastenklatsche extends GameEntryPoint {
     private ArrayList<Sprite> moneybagList = new ArrayList<Sprite>();
 
     public Leertastenklatsche( Observer o ) {
-        super( o, WindowConfig.julian_title);
+        super( o, "Leertastenklatsche" );
         /*
         this.setGameContentPane( this.initGameContentWindow( o ) );
         this.getGameContentPane().setOnKeyPressed(
@@ -45,12 +43,12 @@ public class Leertastenklatsche extends GameEntryPoint {
                     }
                     Logger.log( "Key pressed : " + code );
                 } );
-        */
+         */
     }
 
     public Pane initGameContentWindow( Observer observer ) {
 
-        Logger.log("Dir : " + getExecutionLocation(), Path.getAllFileNames(getExecutionLocation()));
+     //   Logger.log( "Dir : " + getExecutionLocation(),  Path.getAllFileNames(getExecutionLocation()) );
         addKeyListener();
         root.getChildren().add( canvas );
         initializeGraphicsContext();
@@ -58,7 +56,7 @@ public class Leertastenklatsche extends GameEntryPoint {
         briefcase.setImage( location + "/briefcase.png" );
         briefcase.setPosition(200, 0);
         collisionDetection();
-        createMoneyBags();
+        createEnemies();
         parseInput( input );
         render();
         return root;
@@ -107,7 +105,7 @@ public class Leertastenklatsche extends GameEntryPoint {
         }
     }
 
-    private void createMoneyBags() {
+    private void createEnemies() {
         for ( int i = 0 ; i < 15 ; i++ ) {
             Sprite moneybag = new Sprite();
             moneybag.setImage( location + "/moneybag.png" );
@@ -119,7 +117,7 @@ public class Leertastenklatsche extends GameEntryPoint {
     }
 
     private void parseInput( ArrayList<String> input ) {
-        int v = 5;
+        int v = 1;
         briefcase.setVelocity( 0, 0 );
         if ( input.contains( "LEFT" ) ) {
             briefcase.addVelocity( -v, 0 );
@@ -136,7 +134,6 @@ public class Leertastenklatsche extends GameEntryPoint {
     }
 
     public void render() {
-        /*
         parseInput( input );
         gc.clearRect( 0, 0, 512, 512 );
 
@@ -148,7 +145,6 @@ public class Leertastenklatsche extends GameEntryPoint {
 
         briefcase.update( 10 );
         briefcase.render( gc );
-        */
     }
 
     @Override
