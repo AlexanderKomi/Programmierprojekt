@@ -4,6 +4,7 @@ import common.actor.Direction;
 import common.util.Logger;
 import common.util.Path;
 import de.hsh.alexander.actor.PacMan;
+import de.hsh.alexander.actor.TestWall;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -16,13 +17,14 @@ import java.util.*;
 
 public class PacManGame extends Observable implements Observer, Initializable {
 
-    private static final String  actorLocation = Path.getExecutionLocation() + "de/hsh/alexander/actor/";
-    public static final  String  fxml          = "PacManGame.fxml";
+    private static final String   actorLocation = Path.getExecutionLocation() + "de/hsh/alexander/actor/";
+    public static final  String   fxml          = "PacManGame.fxml";
     @FXML
-    public               Canvas  gameCanvas;
-    private static       boolean initialized   = false;
-    private              PacMan  pacMan1;
-    private              PacMan  pacMan2;
+    public               Canvas   gameCanvas;
+    private static       boolean  initialized   = false;
+    private              PacMan   pacMan1;
+    private              PacMan   pacMan2;
+    private              TestWall wall;
 
     private void movePacMan( KeyEvent keyEvent ) {
         pacMan1.move( keyEvent );
@@ -41,6 +43,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
             try {
                 pacMan1 = initPacMan1();
                 pacMan2 = initPacMan2();
+                wall = initTestWall();
             }
             catch ( FileNotFoundException e ) {
                 e.printStackTrace();
@@ -48,6 +51,10 @@ public class PacManGame extends Observable implements Observer, Initializable {
             initialized = true;
             Logger.log( this.getClass() + ": init executed" );
         }
+    }
+
+    private TestWall initTestWall() throws FileNotFoundException {
+        return new TestWall(actorLocation + "p1_front.png", 300, 400);
     }
 
     private PacMan initPacMan1() throws FileNotFoundException {
@@ -93,6 +100,8 @@ public class PacManGame extends Observable implements Observer, Initializable {
         }
         clearCanvas();
         this.gameCanvas.getGraphicsContext2D().clearRect( 0, 0, 1200, 800 );
+        this.wall.draw( this.gameCanvas );
+        pacMan1.drawAndApplyCollision( this.gameCanvas, this.wall );
         pacMan1.drawAndApplyCollision( this.gameCanvas, pacMan2 );
         pacMan2.drawAndApplyCollision( this.gameCanvas, pacMan1 );
     }

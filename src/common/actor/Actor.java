@@ -27,7 +27,7 @@ public class Actor {
         this( pictureFileName, 0, 0 );
     }
 
-    Actor( String pictureFileName, double x, double y ) throws FileNotFoundException {
+    protected Actor( String pictureFileName, double x, double y ) throws FileNotFoundException {
         this.currentImage = loadPicture( pictureFileName );
         this.setHeight( this.getCurrentImage().getHeight() );
         this.setWidth( this.getCurrentImage().getWidth() );
@@ -62,11 +62,22 @@ public class Actor {
         return new Image( new FileInputStream( fileName ) );
     }
 
+    public void draw( Canvas canvas ){
+        draw( canvas, this.x, this.y );
+    }
 
     void draw( Canvas canvas, double new_x, double new_y ) {
         setPos( canvas, new_x, new_y );
         switchImages();
         canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
+    }
+
+    public void drawAndApplyCollision( Canvas canvas, double new_x, double new_y, Actor other ) {
+        double[] backup = this.getPos();
+        this.draw( canvas, new_x, new_y);
+        if ( this.doesCollide( other ) ) {
+            this.setPos( backup );
+        }
     }
 
     /**
