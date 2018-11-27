@@ -26,6 +26,9 @@ public class PacManFxmlChanger extends FxmlChanger {
             case UpdateCodes.PacMan.startGame:
                 this.changeScene( PacManGame.fxml, o );
                 break;
+            case UpdateCodes.PacMan.showEndScreen:
+                this.changeScene( PacManEndScreen.fxml, o );
+                break;
             default:
                 Logger.log( this.getClass() + ": changeFxml in PacManFxmlCanger: default" );
         }

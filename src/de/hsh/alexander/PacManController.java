@@ -44,6 +44,9 @@ public class PacManController extends GameEntryPoint {
                     exitToMainGUI();
                     this.notifyObservers( message );
                     break;
+                case UpdateCodes.PacMan.showEndScreen:
+                    changer.changeFxml( new PacManEndScreen(), UpdateCodes.PacMan.showEndScreen );
+                    break;
                 default:
                     logParsingError( o, arg );
                     break;

@@ -13,9 +13,11 @@ public class UpdateCodes {
     }
 
     public class PacMan {
-        public static final String gameName  = WindowConfig.alexander_title;
-        public static final String startGame = "Start GameEntryPoint";
-        public static final String mainMenu  = "Mainmenu";
+        public static final String gameName      = WindowConfig.alexander_title;
+        public static final String startGame     = gameName + ": Start GameEntryPoint";
+        public static final String mainMenu      = gameName + ": Mainmenu";
+        public static final String showEndScreen = gameName + ":  Show Endscreen";
+        public static final String repeatGame    = gameName + ": RepeatGame";
     }
 
     public class Dennis {
