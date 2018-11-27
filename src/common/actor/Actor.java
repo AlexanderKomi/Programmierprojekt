@@ -36,7 +36,7 @@ public class Actor {
         this.setY( y );
     }
 
-    Actor( List<String> pictureFilePaths, double x, double y )
+    Actor( List<String> pictureFilePaths, double x, double y, int delay )
             throws FileNotFoundException {
         this( x, y );
         boolean heightIsSet = false;
@@ -50,7 +50,7 @@ public class Actor {
                 heightIsSet = true;
             }
         }
-        this.switchingDelay = 25;
+        this.switchingDelay = delay;
     }
 
     private Actor( double x, double y ) {

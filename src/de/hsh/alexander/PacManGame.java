@@ -53,8 +53,10 @@ public class PacManGame extends Observable implements Observer, Initializable {
         pacMan1KeyMap.put( "Right", Direction.Right );
         try {
             ArrayList<String> images = new ArrayList<>();
-            images.add( actorLocation + "p1_stand.png" );
-            images.add( actorLocation + "p1_front.png" );
+            images.add( actorLocation + "sprite_pacman1_1.png" );
+            images.add( actorLocation + "sprite_pacman1_2.png" );
+            images.add( actorLocation + "sprite_pacman1_3.png" );
+            images.add( actorLocation + "sprite_pacman1_4.png" );
 
             pacMan1 = new PacMan( images, pacMan1KeyMap );
         }

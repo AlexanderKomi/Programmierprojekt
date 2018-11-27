@@ -10,9 +10,10 @@ import java.util.List;
 public class PacMan extends ControlableActor {
 
 
-    private static final double start_x       = 100;
-    private static final double start_y       = 100;
-    private static final int    default_speed = 10;
+    private static final double start_x              = 100;
+    private static final double start_y              = 100;
+    private static final int    default_speed        = 10;
+    private static final int    change_picture_delay = 15;
 
 
     public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
@@ -25,7 +26,7 @@ public class PacMan extends ControlableActor {
     }
 
     public PacMan( List<String> pictureFileName, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
-        super( pictureFileName, start_x, start_y, keyMap );
+        super( pictureFileName, start_x, start_y, keyMap, change_picture_delay );
         this.setSpeed( default_speed );
     }
 

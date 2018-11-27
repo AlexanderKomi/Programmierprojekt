@@ -22,9 +22,9 @@ public class ControlableActor extends Actor {
         this.movement.setKeyMap( keymap );
     }
 
-    protected ControlableActor( List<String> pictureFileName, double x, double y, HashMap<String, Direction> keymap )
+    protected ControlableActor( List<String> pictureFileName, double x, double y, HashMap<String, Direction> keymap, int delay )
             throws FileNotFoundException {
-        super( pictureFileName, x, y );
+        super( pictureFileName, x, y, delay );
         this.movement.setKeyMap( keymap );
     }
 
