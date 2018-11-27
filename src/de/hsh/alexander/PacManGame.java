@@ -101,7 +101,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
         clearCanvas();
         this.gameCanvas.getGraphicsContext2D().clearRect( 0, 0, 1200, 800 );
         this.wall.draw( this.gameCanvas );
-        pacMan1.drawAndApplyCollision( this.gameCanvas, this.wall );
+        pacMan1.drawAndApplyCollision( this.gameCanvas, this.wall ); // TODO : Fix collision bug
         pacMan1.drawAndApplyCollision( this.gameCanvas, pacMan2 );
         pacMan2.drawAndApplyCollision( this.gameCanvas, pacMan1 );
     }
