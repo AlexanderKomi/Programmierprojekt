@@ -1,6 +1,5 @@
 package common.actor;
 
-import common.util.Path;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
@@ -11,7 +10,6 @@ import java.util.List;
 
 public class Actor {
 
-    private static final String actorLocation = Path.getExecutionLocation() + "de/hsh/alexander/actor/";
 
     private double x;
     private double y;
@@ -38,7 +36,7 @@ public class Actor {
         this.setY( y );
     }
 
-    protected Actor( List<String> pictureFilePaths, double x, double y )
+    Actor( List<String> pictureFilePaths, double x, double y )
             throws FileNotFoundException {
         this( x, y );
         boolean heightIsSet = false;
@@ -62,8 +60,7 @@ public class Actor {
 
     private Image loadPicture( String fileName ) throws FileNotFoundException {
         this.name = fileName;
-        String location = actorLocation + fileName;
-        return new Image( new FileInputStream( location ) );
+        return new Image( new FileInputStream( fileName ) );
     }
 
     private Image getCurrentImage() {
