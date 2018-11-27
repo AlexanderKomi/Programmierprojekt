@@ -35,6 +35,27 @@ public class Actor {
         this.setY( y );
     }
 
+    protected Actor( ArrayList<String> pictureFilePaths, double x, double y )
+            throws FileNotFoundException {
+        this( x, y );
+        boolean heightIsSet = false;
+
+        for ( String filePath : pictureFilePaths ) {
+            this.images.add( loadPicture( filePath ) );
+            if ( !heightIsSet ) {
+                this.setWidth( this.images.get( 0 ).getWidth() );
+                this.setHeight( this.images.get( 0 ).getHeight() );
+                heightIsSet = true;
+            }
+        }
+
+    }
+
+    private Actor( double x, double y ) {
+        this.x = x;
+        this.y = y;
+    }
+
     private Image loadPicture( String fileName ) throws FileNotFoundException {
         this.name = fileName;
         String location = actorLocation + fileName;
@@ -49,32 +70,30 @@ public class Actor {
         this.currentImage = currentImage;
     }
 
-    protected Actor( ArrayList<String> pictureFilePaths, double x, double y, double height, double width )
-            throws FileNotFoundException {
-        this( x, y, height, width );
-        for ( String filePath : pictureFilePaths ) {
-            this.images.add( loadPicture( filePath ) );
-        }
-    }
-
-    private double[] checkBounds( Canvas canvas, double new_x, double new_y ) {
-        double[] temp = new double[] {
-                new_x, new_y
-        };
-
-        if ( (this.x + new_x) < 0 ||
-             (this.x + new_x + this.width) > canvas.getWidth() ) {
-            temp[ 0 ] = (-new_x);
-        }
-        if ( (this.y + new_y < 0) ||
-             (this.y + new_y + this.height) > canvas.getHeight() ) {
-            temp[ 1 ] = (-new_y);
-        }
-        return temp;
+    void draw( Canvas canvas, double new_x, double new_y ) {
+        double[] temp = checkBounds( canvas, new_x, new_y );
+        setPos( temp[ 0 ], temp[ 1 ] );
+        canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
 
     public boolean doesCollide( Actor other ) {
         return BoundsChecks.doesCollide( this, other ) || BoundsChecks.doesCollide( other, this );
+    }
+
+    private double[] checkBounds( Canvas canvas, double new_x, double new_y ) {
+        double[] temp = new double[] {
+                this.x, this.y
+        };
+
+        if ( (this.x + new_x) >= 0 &&
+             (this.x + new_x + this.width) <= canvas.getWidth() ) {
+            temp[ 0 ] += (new_x);
+        }
+        if ( (this.y + new_y >= 0) &&
+             (this.y + new_y + this.height) <= canvas.getHeight() ) {
+            temp[ 1 ] += (new_y);
+        }
+        return temp;
     }
 
     @Override
@@ -126,18 +145,7 @@ public class Actor {
         this.width = width;
     }
 
-    private Actor( double x, double y, double height, double width ) {
-        this.setHeight( height );
-        this.setWidth( width );
-        this.setX( x );
-        this.setY( y );
-    }
 
-    void draw( Canvas canvas, double new_x, double new_y ) {
-        double[] temp = checkBounds( canvas, new_x, new_y );
-        movePos( temp[ 0 ], temp[ 1 ] );
-        canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
-    }
 
 
 }
