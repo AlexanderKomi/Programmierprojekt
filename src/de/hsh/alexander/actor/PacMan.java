@@ -1,8 +1,11 @@
 package de.hsh.alexander.actor;
 
+import common.actor.ControlableActor;
+import common.actor.Direction;
+
 import java.util.HashMap;
 
-public class PacMan extends Player {
+public class PacMan extends ControlableActor {
 
 
     private static final double start_x       = 100;
@@ -11,13 +14,40 @@ public class PacMan extends Player {
 
 
     public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) {
-        super( pictureFileName, start_x, start_y );
-        this.setKeyMap( keyMap );
+        super( pictureFileName, start_x, start_y, keyMap );
         this.setSpeed( default_speed );
     }
 
-    public PacMan( String pictureFileName, double x, double y ) {
-        super( pictureFileName, x, y );
+    public PacMan( String pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) {
+        super( pictureFileName, x, y, keyMap );
+    }
+
+    @Override
+    protected double[] movePos() {
+        double[] xyTuple  = new double[ 2 ];
+        double   velocity = getSpeed();
+
+        getMovement().getDirections().forEach( direction -> {
+            if ( getMovement().isHoldDown( direction ) ) {
+                if ( direction == Direction.Down ) {
+                    xyTuple[ 0 ] = 0;
+                    xyTuple[ 1 ] = velocity;
+                }
+                else if ( direction == Direction.Up ) {
+                    xyTuple[ 0 ] = 0;
+                    xyTuple[ 1 ] = -velocity;
+                }
+                else if ( direction == Direction.Left ) {
+                    xyTuple[ 0 ] = -velocity;
+                    xyTuple[ 1 ] = 0;
+                }
+                else if ( direction == Direction.Right ) {
+                    xyTuple[ 0 ] = velocity;
+                    xyTuple[ 1 ] = 0;
+                }
+            }
+        } );
+        return xyTuple;
     }
 
 }

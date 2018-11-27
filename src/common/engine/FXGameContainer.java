@@ -3,7 +3,7 @@ package common.engine;
 import common.MainMenu;
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
-import common.engine.components.game.Games;
+import common.engine.components.game.GameEntryPoints;
 import common.events.KeyEventManager;
 import common.events.MouseEventManager;
 import common.util.Logger;
@@ -16,7 +16,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * FXGameContainer is a container for a game engine, a main menu and all games.
+ * FXGameContainer is a container for a game engine, a main menu and all gameEntryPoints.
  *
  * @author Alexander Komischke
  */
@@ -25,7 +25,7 @@ public abstract class FXGameContainer extends Container implements Observer {
     private static KeyEventManager   keyEventManager;
     private static MouseEventManager mouseEventManager;
     private        Stage             stage;
-    private        Games             games = new Games(); // Tracks all the games
+    private        GameEntryPoints   gameEntryPoints = new GameEntryPoints(); // Tracks all the gameEntryPoints
     //Engine properties
 
     private common.MainMenu menu;
@@ -46,9 +46,9 @@ public abstract class FXGameContainer extends Container implements Observer {
         keyEventManager = new KeyEventManager();
         mouseEventManager = new MouseEventManager();
 
-        this.setGames(createGames(this));
+        this.setGameEntryPoints( createGames( this ) );
 
-        this.setMenu(configMainMenu(getGames().getNames()));
+        this.setMenu( configMainMenu( getGameEntryPoints().getNames() ) );
         this.getMenu().addObserver( this );
         this.getMenu().initGameNames();
 
@@ -56,8 +56,8 @@ public abstract class FXGameContainer extends Container implements Observer {
         //keyEventManager.addKeyEvents( this.getMenu().getScene() );
         //mouseEventManager.addKeyEvents( this.getMenu().getScene() );
 
-        this.games.addKeyEventManager( keyEventManager );
-        this.games.addMouseEventManager( mouseEventManager );
+        this.gameEntryPoints.addKeyEventManager( keyEventManager );
+        this.gameEntryPoints.addMouseEventManager( mouseEventManager );
         this.stage.setScene(this.getMenu().getScene());
         this.startEngine();
         this.showWindow();
@@ -70,15 +70,11 @@ public abstract class FXGameContainer extends Container implements Observer {
         this.stage.setOnCloseRequest(close -> this.stopContainer());
     }
 
-    protected void setGames(Games games) {
-        if (games == null) {
-            throw new IllegalArgumentException("Games are null");
-        } else {
-            this.games = games;
-        }
-    }
+    public abstract GameEntryPoints createGames( Observer o );
 
-    public abstract Games createGames(Observer o);
+    public GameEntryPoints getGameEntryPoints() {
+        return gameEntryPoints;
+    }
 
 
     private void showWindow() {
@@ -123,28 +119,33 @@ public abstract class FXGameContainer extends Container implements Observer {
 
     protected abstract common.MainMenu configMainMenu(ArrayList<String> games);
 
-    public boolean containsGame( GameEntryPoint gameEntryPoint ) {
-        return this.getGames().contains( gameEntryPoint );
+    protected void setGameEntryPoints( GameEntryPoints gameEntryPoints ) {
+        if ( gameEntryPoints == null ) {
+            throw new IllegalArgumentException( "GameEntryPoints are null" );
+        }
+        else {
+            this.gameEntryPoints = gameEntryPoints;
+        }
     }
 
-    public boolean containsGame( String gameName ) {
-        return this.getGames().contains( gameName );
+    public boolean containsGame( GameEntryPoint gameEntryPoint ) {
+        return this.getGameEntryPoints().contains( gameEntryPoint );
     }
 
     public static KeyEventManager getKeyEventManager() {
         return keyEventManager;
     }
 
-    protected void setGameShown( int index ) {
-        this.setGameShown( this.getGames().get( index ) );
+    public boolean containsGame( String gameName ) {
+        return this.getGameEntryPoints().contains( gameName );
     }
 
-    public Games getGames() {
-        return games;
+    protected void setGameShown( int index ) {
+        this.setGameShown( this.getGameEntryPoints().get( index ) );
     }
 
     public void setGameShown(String gameName) {
-        GameEntryPoint g = this.getGames().get( gameName );
+        GameEntryPoint g = this.getGameEntryPoints().get( gameName );
         if (g == null) {
             throw new IllegalArgumentException( "GameEntryPoint not found" );
         }

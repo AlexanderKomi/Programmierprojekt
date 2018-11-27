@@ -2,8 +2,6 @@ package de.hsh.amir;
 
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
-import common.events.KeyEventManager;
-import common.events.MouseEventManager;
 import de.hsh.amir.controller.MainMenu_controller;
 
 import java.util.Observable;
@@ -25,16 +23,6 @@ public class AmirsGame extends GameEntryPoint {
     @Override
     public void update(Observable o, Object arg ) {
         changer.changeFxml(o, (String) arg);
-    }
-
-    @Override
-    public void update( KeyEventManager keyEventManager, Object arg ) {
-
-    }
-
-    @Override
-    public void update( MouseEventManager mouseEventManagerManager, Object arg ) {
-
     }
 
     @Override

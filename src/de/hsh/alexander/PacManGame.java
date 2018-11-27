@@ -1,51 +1,48 @@
 package de.hsh.alexander;
 
+import common.actor.Direction;
 import common.util.Logger;
-import de.hsh.alexander.actor.Direction;
 import de.hsh.alexander.actor.PacMan;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class PacManGame extends Observable implements Initializable {
+public class PacManGame extends Observable implements Observer, Initializable {
 
-    public static final String fxml = "PacManGame.fxml";
-
+    public static final String  fxml        = "PacManGame.fxml";
     @FXML
-    public AnchorPane gamePane;
+    public              Canvas  gameCanvas;
+    private static      boolean initialized = false;
+    private             PacMan  pacMan1;
+    private             PacMan  pacMan2;
 
-    @FXML
-    private Canvas gameCanvas;
-    private PacMan pacMan1;
-    private PacMan pacMan2;
-
-    public boolean initialized = false;
-
-    @Override
-    public void initialize( URL location, ResourceBundle resources ) {
-        init();
-        bindKeys();
-    }
-
-    private void init() {
-        if ( !initialized ) {
-            initPacMan1();
-            initPacMan2();
-            initialized = true;
+    private void movePacMan( KeyEvent keyEvent ) {
+        pacMan1.move( keyEvent );
+        pacMan2.move( keyEvent );
+        if ( pacMan1.doesCollide( pacMan2 ) ) {
+            //Logger.log( "Pacman1 collides with pacman2" );
         }
     }
 
-    private void bindKeys() {
-        //gameCanvas.setOnKeyPressed( this::movePacMan );
-        //gameCanvas.setOnKeyReleased( this::movePacMan );
+    @Override
+    public void initialize( URL location, ResourceBundle resources ) {
+        if ( !initialized ) {
+            this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
+            this.gameCanvas.setOnKeyPressed( this::movePacMan ); // Only fires, when traversable
+            this.gameCanvas.setOnKeyReleased( this::movePacMan ); // Only fires, when traversable
+            initPacMan1();
+            initPacMan2();
+            initialized = true;
+            Logger.log( this.getClass() + ": init executed" );
+        }
     }
 
     private void initPacMan1() {
@@ -54,7 +51,7 @@ public class PacManGame extends Observable implements Initializable {
         pacMan1KeyMap.put( "Down", Direction.Down );
         pacMan1KeyMap.put( "Left", Direction.Left );
         pacMan1KeyMap.put( "Right", Direction.Right );
-        pacMan1 = new PacMan( "Bug.png", pacMan1KeyMap );
+        pacMan1 = new PacMan( "p1_stand.png", pacMan1KeyMap );
     }
 
     private void initPacMan2() {
@@ -63,44 +60,25 @@ public class PacManGame extends Observable implements Initializable {
         pacMan2KeyMap.put( "S", Direction.Down );
         pacMan2KeyMap.put( "A", Direction.Left );
         pacMan2KeyMap.put( "D", Direction.Right );
-        pacMan2 = new PacMan( "Bug.png", pacMan2KeyMap );
+        pacMan2 = new PacMan( "snailWalk2.png", pacMan2KeyMap );
     }
 
-    public void test() {
-        Logger.log( "Test: Key Released" );
+    private void clearCanvas() {
+        this.gameCanvas.getGraphicsContext2D().setFill( Color.WHITE );
+        this.gameCanvas.getGraphicsContext2D().fillRect( 0, 0, 1200, 800 );
     }
 
-    public void movePacMan( KeyEvent keyEvent ) {
-        Logger.log( "Key pressed : " + keyEvent );
-        pacMan1.move( keyEvent );
-        pacMan2.move( keyEvent );
-        String keyName = keyEvent.getCode().getName();
-        switch ( keyName ) {
-            case "Up":
-                pacMan1.movePos( -5, 0 );
-                break;
-            case "Down":
-                pacMan1.movePos( 5, 0 );
-                break;
-            case "Left":
-                pacMan1.movePos( 0, -5 );
-                break;
-            case "Right":
-                pacMan1.movePos( 0, 5 );
-                break;
-        }
+    @Override
+    public void update( Observable o, Object arg ) {
+        Logger.log( this.getClass() + ": " + o + ", " + arg );
     }
 
     void render() {
-            if ( !initialized ) {
-                return;
-            }
-        this.gameCanvas.getGraphicsContext2D().setFill( Color.WHITE );
-        this.gameCanvas.getGraphicsContext2D().fillRect( 0, 0, 1200, 800 );
-        pacMan1.draw( this.gameCanvas.getGraphicsContext2D() );
-        pacMan2.draw( this.gameCanvas.getGraphicsContext2D() );
-            pacMan1.movePos();
-            pacMan2.movePos();
-
+        if ( !initialized ) {
+            return;
+        }
+        clearCanvas();
+        pacMan1.draw( this.gameCanvas );
+        pacMan2.draw( this.gameCanvas );
     }
 }

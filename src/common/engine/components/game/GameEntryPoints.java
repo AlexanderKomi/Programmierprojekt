@@ -7,20 +7,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class Games extends ArrayList<GameEntryPoint> {
+public class GameEntryPoints extends ArrayList<GameEntryPoint> {
 
-    public Games() {
+    public GameEntryPoints() {
     }
 
-    public Games( GameEntryPoint gameEntryPoint ) {
+    public GameEntryPoints( GameEntryPoint gameEntryPoint ) {
         this.add( gameEntryPoint );
     }
 
-    public Games( Collection<GameEntryPoint> collection ) {
+    public GameEntryPoints( Collection<GameEntryPoint> collection ) {
         this.addAll(collection);
     }
 
-    public Games( GameEntryPoint... gameEntryPoints ) {
+    public GameEntryPoints( GameEntryPoint... gameEntryPoints ) {
         this.addAll( gameEntryPoints );
     }
 
@@ -63,8 +63,12 @@ public class Games extends ArrayList<GameEntryPoint> {
         return false;
     }
 
-    public Games[] toArray() {
-        return (Games[]) super.toArray();
+    public void render() {
+        this.forEach( GameEntryPoint::render );
+    }
+
+    public GameEntryPoints[] toArray() {
+        return (GameEntryPoints[]) super.toArray();
     }
 
     public void addKeyEventManager(KeyEventManager keyEventManager) {

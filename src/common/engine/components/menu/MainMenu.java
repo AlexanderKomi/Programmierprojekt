@@ -1,7 +1,7 @@
 package common.engine.components.menu;
 
 import common.engine.components.game.GameEntryPoint;
-import common.engine.components.game.Games;
+import common.engine.components.game.GameEntryPoints;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -39,7 +39,8 @@ public abstract class MainMenu extends Menu {
         this.gameNames = gameNames;
     }
 
-    public void setGameNames(Games games) {
-        this.gameNames = games.stream().map( GameEntryPoint::getName ).collect( Collectors.toCollection( ArrayList::new ) );
+    public void setGameNames( GameEntryPoints gameEntryPoints ) {
+        this.gameNames =
+                gameEntryPoints.stream().map( GameEntryPoint::getName ).collect( Collectors.toCollection( ArrayList::new ) );
     }
 }

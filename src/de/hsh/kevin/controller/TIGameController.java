@@ -2,8 +2,6 @@ package de.hsh.kevin.controller;
 
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
-import common.events.KeyEventManager;
-import common.events.MouseEventManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,7 +13,7 @@ import java.util.Observer;
 
 public class TIGameController extends GameEntryPoint {
 
-    public static final String fxml = "../res/TIGame.fxml";
+    public static final String fxml = "res/TIGame.fxml";
     
     public static VBox gameBox;
     
@@ -30,21 +28,10 @@ public class TIGameController extends GameEntryPoint {
     
     public TIGameController( Observer o ) {
         super( o, WindowConfig.kevin_title );
-
     }
 
     @Override
     public void update( Observable o, Object arg ) {
-
-    }
-
-    @Override
-    public void update( KeyEventManager keyEventManager, Object arg ) {
-
-    }
-
-    @Override
-    public void update( MouseEventManager mouseEventManagerManager, Object arg ) {
 
     }
 

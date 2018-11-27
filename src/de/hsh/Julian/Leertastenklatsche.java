@@ -3,7 +3,6 @@ package de.hsh.Julian;
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
-import common.events.MouseEventManager;
 import common.util.Logger;
 import common.util.Path;
 import javafx.scene.canvas.Canvas;
@@ -134,16 +133,6 @@ public class Leertastenklatsche extends GameEntryPoint {
         if ( input.contains( "DOWN" ) ) {
             briefcase.addVelocity( 0, v );
         }
-    }
-
-    @Override
-    public void update( KeyEventManager keyEventManager, Object arg ) {
-
-    }
-
-    @Override
-    public void update( MouseEventManager mouseEventManagerManager, Object arg ) {
-
     }
 
     public void render() {
