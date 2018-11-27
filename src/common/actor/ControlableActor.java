@@ -3,31 +3,31 @@ package common.actor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 
 public class ControlableActor extends Actor {
 
     private Movement movement = new Movement();
 
-    protected ControlableActor( String pictureFileName, HashMap<String, Direction> keymap ) {
+    protected ControlableActor( String pictureFileName, HashMap<String, Direction> keymap ) throws FileNotFoundException {
         super( pictureFileName );
         this.movement.setKeyMap( keymap );
     }
 
-    protected ControlableActor( String pictureFileName, double x, double y, HashMap<String, Direction> keymap ) {
+    protected ControlableActor( String pictureFileName, double x, double y, HashMap<String, Direction> keymap )
+            throws FileNotFoundException {
         super( pictureFileName, x, y );
         this.movement.setKeyMap( keymap );
     }
 
-    protected ControlableActor( String pictureFileName,
-                                double x,
-                                double y,
-                                double height,
-                                double width,
-                                HashMap<String, Direction> keymap ) {
-        super( pictureFileName, x, y, height, width );
+    protected ControlableActor( List<String> pictureFileName, double x, double y, HashMap<String, Direction> keymap )
+            throws FileNotFoundException {
+        super( pictureFileName, x, y );
         this.movement.setKeyMap( keymap );
     }
+
 
     public void move( KeyEvent keyEvent ) {
         String keyName   = keyEvent.getCode().getName();
