@@ -38,16 +38,18 @@ public class PacManController extends GameEntryPoint {
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
                     changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
-                    this.notifyObservers( message );
                     break;
                 case UpdateCodes.PacMan.mainMenu:
                     exitToMainGUI();
-                    this.notifyObservers( message );
+                    break;
+                case UpdateCodes.PacMan.showEndScreen:
+                    changer.changeFxml( new PacManEndScreen(), UpdateCodes.PacMan.showEndScreen );
                     break;
                 default:
                     logParsingError( o, arg );
                     break;
             }
+            this.notifyObservers( message );
         }
         else {
             logParsingError( o, arg );
