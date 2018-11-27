@@ -11,10 +11,7 @@ import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PacManGame extends Observable implements Observer, Initializable {
 
@@ -53,7 +50,11 @@ public class PacManGame extends Observable implements Observer, Initializable {
         pacMan1KeyMap.put( "Left", Direction.Left );
         pacMan1KeyMap.put( "Right", Direction.Right );
         try {
-            pacMan1 = new PacMan( "p1_stand.png", pacMan1KeyMap );
+            ArrayList<String> images = new ArrayList<>();
+            images.add( "p1_stand.png" );
+            images.add( "p1_front.png" );
+
+            pacMan1 = new PacMan( images, pacMan1KeyMap );
         }
         catch ( FileNotFoundException e ) {
             e.printStackTrace();

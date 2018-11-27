@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Actor {
 
@@ -20,8 +21,10 @@ public class Actor {
 
     private String name;
 
+    private int              switchingBuffer = 0;
+    private int              switchingDelay  = 0;
     private Image            currentImage;
-    private ArrayList<Image> images = new ArrayList<>();
+    private ArrayList<Image> images          = new ArrayList<>();
 
     protected Actor( String pictureFileName ) throws FileNotFoundException {
         this( pictureFileName, 0, 0 );
@@ -35,7 +38,7 @@ public class Actor {
         this.setY( y );
     }
 
-    protected Actor( ArrayList<String> pictureFilePaths, double x, double y )
+    protected Actor( List<String> pictureFilePaths, double x, double y )
             throws FileNotFoundException {
         this( x, y );
         boolean heightIsSet = false;
@@ -43,11 +46,13 @@ public class Actor {
         for ( String filePath : pictureFilePaths ) {
             this.images.add( loadPicture( filePath ) );
             if ( !heightIsSet ) {
-                this.setWidth( this.images.get( 0 ).getWidth() );
-                this.setHeight( this.images.get( 0 ).getHeight() );
+                this.currentImage = this.images.get( 0 );
+                this.setWidth( this.currentImage.getWidth() );
+                this.setHeight( this.currentImage.getHeight() );
                 heightIsSet = true;
             }
         }
+        this.switchingDelay = 25;
 
     }
 
@@ -73,7 +78,29 @@ public class Actor {
     void draw( Canvas canvas, double new_x, double new_y ) {
         double[] temp = checkBounds( canvas, new_x, new_y );
         setPos( temp[ 0 ], temp[ 1 ] );
+        switchImages();
         canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
+    }
+
+    private void switchImages() {
+        if ( this.images.isEmpty() ) {
+            return;
+        }
+        if ( this.switchingBuffer < this.switchingDelay ) {
+            this.switchingBuffer++;
+            return;
+        }
+        else {
+            this.switchingBuffer = 0;
+        }
+
+        int index = this.images.indexOf( this.currentImage );
+        if ( index < this.images.size() - 1 ) {
+            this.currentImage = this.images.get( index + 1 );
+        }
+        else {
+            this.currentImage = this.images.get( 0 );
+        }
     }
 
     public boolean doesCollide( Actor other ) {

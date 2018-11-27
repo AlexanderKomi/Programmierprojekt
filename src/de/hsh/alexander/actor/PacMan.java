@@ -5,6 +5,7 @@ import common.actor.Direction;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 
 public class PacMan extends ControlableActor {
 
@@ -21,6 +22,11 @@ public class PacMan extends ControlableActor {
 
     public PacMan( String pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
         super( pictureFileName, x, y, keyMap );
+    }
+
+    public PacMan( List<String> pictureFileName, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
+        super( pictureFileName, start_x, start_y, keyMap );
+        this.setSpeed( default_speed );
     }
 
     @Override

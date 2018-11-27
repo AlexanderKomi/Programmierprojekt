@@ -5,6 +5,7 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 
 public class ControlableActor extends Actor {
 
@@ -20,6 +21,13 @@ public class ControlableActor extends Actor {
         super( pictureFileName, x, y );
         this.movement.setKeyMap( keymap );
     }
+
+    protected ControlableActor( List<String> pictureFileName, double x, double y, HashMap<String, Direction> keymap )
+            throws FileNotFoundException {
+        super( pictureFileName, x, y );
+        this.movement.setKeyMap( keymap );
+    }
+
 
     public void move( KeyEvent keyEvent ) {
         String keyName   = keyEvent.getCode().getName();
