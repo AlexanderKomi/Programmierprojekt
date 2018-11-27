@@ -3,6 +3,7 @@ package de.hsh.alexander.actor;
 import common.actor.ControlableActor;
 import common.actor.Direction;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 public class PacMan extends ControlableActor {
@@ -13,12 +14,12 @@ public class PacMan extends ControlableActor {
     private static final int    default_speed = 10;
 
 
-    public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) {
+    public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
         super( pictureFileName, start_x, start_y, keyMap );
         this.setSpeed( default_speed );
     }
 
-    public PacMan( String pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) {
+    public PacMan( String pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
         super( pictureFileName, x, y, keyMap );
     }
 

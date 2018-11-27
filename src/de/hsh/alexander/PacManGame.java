@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Observable;
@@ -51,7 +52,12 @@ public class PacManGame extends Observable implements Observer, Initializable {
         pacMan1KeyMap.put( "Down", Direction.Down );
         pacMan1KeyMap.put( "Left", Direction.Left );
         pacMan1KeyMap.put( "Right", Direction.Right );
-        pacMan1 = new PacMan( "p1_stand.png", pacMan1KeyMap );
+        try {
+            pacMan1 = new PacMan( "p1_stand.png", pacMan1KeyMap );
+        }
+        catch ( FileNotFoundException e ) {
+            e.printStackTrace();
+        }
     }
 
     private void initPacMan2() {
@@ -60,7 +66,12 @@ public class PacManGame extends Observable implements Observer, Initializable {
         pacMan2KeyMap.put( "S", Direction.Down );
         pacMan2KeyMap.put( "A", Direction.Left );
         pacMan2KeyMap.put( "D", Direction.Right );
-        pacMan2 = new PacMan( "snailWalk2.png", pacMan2KeyMap );
+        try {
+            pacMan2 = new PacMan( "snailWalk2.png", pacMan2KeyMap );
+        }
+        catch ( FileNotFoundException e ) {
+            e.printStackTrace();
+        }
     }
 
     private void clearCanvas() {

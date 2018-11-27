@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class Actor {
 
@@ -19,43 +20,41 @@ public class Actor {
 
     private String name;
 
-    private Image picture;
+    private Image            currentImage;
+    private ArrayList<Image> images = new ArrayList<>();
 
-    protected Actor(String pictureFileName) {
+    protected Actor( String pictureFileName ) throws FileNotFoundException {
         this( pictureFileName, 0, 0 );
     }
 
-    protected Actor(String pictureFileName, double x, double y) {
-        loadPicture( pictureFileName );
-        this.setHeight( this.getPicture().getHeight() );
-        this.setWidth( this.getPicture().getWidth() );
+    Actor( String pictureFileName, double x, double y ) throws FileNotFoundException {
+        this.currentImage = loadPicture( pictureFileName );
+        this.setHeight( this.getCurrentImage().getHeight() );
+        this.setWidth( this.getCurrentImage().getWidth() );
         this.setX( x );
         this.setY( y );
     }
 
-    protected Actor(String pictureFileName, double x, double y, double height, double width) {
-        loadPicture( pictureFileName );
-        this.setHeight( height );
-        this.setWidth( width );
-        this.setX( x );
-        this.setY( y );
+    private Image loadPicture( String fileName ) throws FileNotFoundException {
+        this.name = fileName;
+        String location = actorLocation + fileName;
+        return new Image( new FileInputStream( location ) );
     }
 
-    private void loadPicture( String fileName ) {
-        try {
-            this.name = fileName;
-            String location = actorLocation + fileName;
-            picture = new Image( new FileInputStream( location ) );
-        }
-        catch ( FileNotFoundException e ) {
-            e.printStackTrace();
-        }
+    private Image getCurrentImage() {
+        return currentImage;
     }
 
-    void draw( Canvas canvas, double new_x, double new_y ) {
-        double[] temp = checkBounds( canvas, new_x, new_y );
-        movePos( temp[ 0 ], temp[ 1 ] );
-        canvas.getGraphicsContext2D().drawImage( this.picture, this.x, this.y, this.width, this.height );
+    public void setCurrentImage( Image currentImage ) {
+        this.currentImage = currentImage;
+    }
+
+    protected Actor( ArrayList<String> pictureFilePaths, double x, double y, double height, double width )
+            throws FileNotFoundException {
+        this( x, y, height, width );
+        for ( String filePath : pictureFilePaths ) {
+            this.images.add( loadPicture( filePath ) );
+        }
     }
 
     private double[] checkBounds( Canvas canvas, double new_x, double new_y ) {
@@ -127,12 +126,17 @@ public class Actor {
         this.width = width;
     }
 
-    private Image getPicture() {
-        return picture;
+    private Actor( double x, double y, double height, double width ) {
+        this.setHeight( height );
+        this.setWidth( width );
+        this.setX( x );
+        this.setY( y );
     }
 
-    public void setPicture( Image picture ) {
-        this.picture = picture;
+    void draw( Canvas canvas, double new_x, double new_y ) {
+        double[] temp = checkBounds( canvas, new_x, new_y );
+        movePos( temp[ 0 ], temp[ 1 ] );
+        canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
 
 
