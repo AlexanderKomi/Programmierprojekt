@@ -33,8 +33,10 @@ public class Leertastenklatsche extends GameEntryPoint {
 
     public Leertastenklatsche( Observer o ) {
         super( o, "Leertastenklatsche" );
-        /*
+
         this.setGameContentPane( this.initGameContentWindow( o ) );
+        /*
+
         this.getGameContentPane().setOnKeyPressed(
                 e -> {
                     String code = e.getCode().toString();
@@ -45,6 +47,9 @@ public class Leertastenklatsche extends GameEntryPoint {
                 } );
          */
     }
+
+    private void setGameContentPane(Pane initGameContentWindow) {
+        this.root=initGameContentWindow;    }
 
     public Pane initGameContentWindow( Observer observer ) {
 
