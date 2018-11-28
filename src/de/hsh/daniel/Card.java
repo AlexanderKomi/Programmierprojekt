@@ -1,13 +1,14 @@
 package de.hsh.daniel;
 
-import javax.swing.JButton;
+import javafx.scene.image.ImageView;
+
+import javax.swing.*;
 
 
-
-@SuppressWarnings("serial")
-public class Card extends JButton{
+public class Card extends JButton {
     private int id;
     private boolean matched = false;
+
 
 
     public void setId(int id){

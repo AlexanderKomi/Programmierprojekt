@@ -20,7 +20,9 @@ public class RAMFxmlChanger extends FxmlChanger {
 
     @Override
     public void changeFxml(Observable o, String msg) {
-        if(msg.equals(UpdateCodes.RAM.startGame)){}
+        if(msg.equals(UpdateCodes.RAM.startGame)){
+            Memory.main();
+        }
         else if(msg.equals(UpdateCodes.RAM.mainMenu)){
             this.changeScene( RAM_MainMenu_controller.fxml, o );
         } else {

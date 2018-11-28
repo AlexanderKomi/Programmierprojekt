@@ -15,16 +15,25 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
 public class CardFlip extends Application {
-    final Image CARD_IMAGE = new Image(
-            "http://fc05.deviantart.net/fs70/i/2010/345/7/7/vitam_et_mortem_by_obviouschild-d34oni2.png"
+
+    private ArrayList images = new ArrayList();
+
+    private Image CARD_IMAGE = new Image(
+            "de/hsh/daniel/images/1.png"
             // sourced from: http://obviouschild.deviantart.com/art/Vitam-et-Mortem-189267194
     );
+
     final int W = (int) (CARD_IMAGE.getWidth() / 2);
-    final int H = (int) CARD_IMAGE.getHeight();
+    final int H = (int) CARD_IMAGE.getHeight() ;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         Node card = createCard();
 
         stage.setScene(createScene(card));
@@ -46,7 +55,7 @@ public class CardFlip extends Application {
     }
 
     private RotateTransition createRotator(Node card) {
-        RotateTransition rotator = new RotateTransition(Duration.millis(1000), card);
+        RotateTransition rotator = new RotateTransition(Duration.millis(700), card);
         rotator.setAxis(Rotate.Y_AXIS);
         rotator.setFromAngle(0);
         rotator.setToAngle(180);
