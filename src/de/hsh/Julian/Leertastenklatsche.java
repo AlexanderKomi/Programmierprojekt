@@ -29,10 +29,10 @@ public class Leertastenklatsche extends GameEntryPoint {
     private Pane              root         = new Pane();
     private Canvas            canvas       = new Canvas( WindowConfig.window_width, WindowConfig.window_height );
     private int               score        = 0;
-    private Sprite            thedude = new Sprite();
+    private Sprite            thedude      = new Sprite();
     private String            location     = getLocation();
     private ArrayList<String> input        = new ArrayList<String>();
-    private ArrayList<Sprite> enemyList = new ArrayList<Sprite>();
+    private ArrayList<Sprite> enemyList    = new ArrayList<Sprite>();
 
     public Leertastenklatsche( Observer o ) {
         super( o, "Leertastenklatsche" );
@@ -107,14 +107,20 @@ public class Leertastenklatsche extends GameEntryPoint {
             }
         }
     }
-
+    // Gegner erstellen und zufällig links oder rechts starten lassen
     private void createEnemies() {
         for ( int i = 0 ; i < 15 ; i++ ) {
             Sprite enemyvirus = new Sprite();
             enemyvirus.setImage( location + "/enemyvirus.png" );
-            double px = 350 * Math.random() + 50;
-            double py = 350 * Math.random() + 50;
-            enemyvirus.setPosition( px, py );
+            /*double px = 350 * Math.random() + 50;
+            double py = 350 * Math.random() + 50;*/
+            double px=WindowConfig.window_width-enemyvirus.getWidth();
+            double rng=Math.random();
+            if(rng<0.5)
+                px=0;
+            Logger.log(rng);
+            enemyvirus.setPosition( px, WindowConfig.window_height*0.6 );
+
             enemyList.add( enemyvirus );
         }
     }
