@@ -29,10 +29,10 @@ public class Leertastenklatsche extends GameEntryPoint {
     private Pane              root         = new Pane();
     private Canvas            canvas       = new Canvas( WindowConfig.window_width, WindowConfig.window_height );
     private int               score        = 0;
-    private Sprite            briefcase    = new Sprite();
+    private Sprite            thedude = new Sprite();
     private String            location     = getLocation();
     private ArrayList<String> input        = new ArrayList<String>();
-    private ArrayList<Sprite> moneybagList = new ArrayList<Sprite>();
+    private ArrayList<Sprite> enemyList = new ArrayList<Sprite>();
 
     public Leertastenklatsche( Observer o ) {
         super( o, "Leertastenklatsche" );
@@ -44,7 +44,7 @@ public class Leertastenklatsche extends GameEntryPoint {
                     if ( !input.contains( code ) ) {
                         input.add( code );
                     }
-                    Logger.log( "Key pressed : " + code );
+
                 } );
         this.getScene().setRoot( (Parent) this.getGameContentPane() );
     }
@@ -63,8 +63,8 @@ public class Leertastenklatsche extends GameEntryPoint {
         root.getChildren().add( canvas );
         initializeGraphicsContext();
 
-        briefcase.setImage( location + "/briefcase.png" );
-        briefcase.setPosition(200, 0);
+        thedude.setImage( location + "/thedude.png" );
+        thedude.setPosition(WindowConfig.window_width/2, WindowConfig.window_height*0.6);
         collisionDetection();
         createEnemies();
         parseInput( input );
@@ -79,30 +79,30 @@ public class Leertastenklatsche extends GameEntryPoint {
                     if ( !input.contains( code ) ) {
                         input.add( code );
                     }
-                    Logger.log(this.getClass()+ "Key pressed : " + code );
+                    Logger.log(this.getClass()+ " Key pressed : " + code );
                 } );
 
         root.setOnKeyReleased(
                 e -> {
                     String code = e.getCode().toString();
                     input.remove( code );
-                    Logger.log(this.getClass()+ "Key pressed : " + code );
+                    Logger.log(this.getClass()+ " Key pressed : " + code );
                 } );
 
     }
 
     private void initializeGraphicsContext() {
-        Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 24 );
+        Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 36 );
         gc = canvas.getGraphicsContext2D();
         gc.setFont( theFont );
-        gc.setFill( Color.GREEN );
+        gc.setFill( Color.BLACK );
         gc.setStroke( Color.BLACK );
         gc.setLineWidth( 1 );
     }
 
     private void collisionDetection() {
-        for ( Sprite moneybag : moneybagList ) {
-            if ( briefcase.intersects( moneybag ) ) {
+        for ( Sprite enemy : enemyList ) {
+            if ( thedude.intersects( enemy ) ) {
                 score++;
             }
         }
@@ -110,44 +110,45 @@ public class Leertastenklatsche extends GameEntryPoint {
 
     private void createEnemies() {
         for ( int i = 0 ; i < 15 ; i++ ) {
-            Sprite moneybag = new Sprite();
-            moneybag.setImage( location + "/moneybag.png" );
+            Sprite enemyvirus = new Sprite();
+            enemyvirus.setImage( location + "/enemyvirus.png" );
             double px = 350 * Math.random() + 50;
             double py = 350 * Math.random() + 50;
-            moneybag.setPosition( px, py );
-            moneybagList.add( moneybag );
+            enemyvirus.setPosition( px, py );
+            enemyList.add( enemyvirus );
         }
     }
 
     private void parseInput( ArrayList<String> input ) {
-        int v = 1;
-        briefcase.setVelocity( 0, 0 );
+        double v = 0.5;
+        thedude.setVelocity( 0, 0 );
         if ( input.contains( "LEFT" ) ) {
-            briefcase.addVelocity( -v, 0 );
+            thedude.addVelocity( -v, 0 );
         }
         if ( input.contains( "RIGHT" ) ) {
-            briefcase.addVelocity( v, 0 );
+            thedude.addVelocity( v, 0 );
         }
-        if ( input.contains( "UP" ) ) {
-            briefcase.addVelocity( 0, -v );
+        /*if ( input.contains( "UP" ) ) {
+            thedude.addVelocity( 0, -v );
         }
         if ( input.contains( "DOWN" ) ) {
-            briefcase.addVelocity( 0, v );
-        }
+            thedude.addVelocity( 0, v );
+        }*/
     }
 
     public void render() {
         parseInput( input );
         gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
 
-        for ( Sprite moneybag : moneybagList ) { moneybag.render( gc ); }
+        for ( Sprite enemy : enemyList ) { enemy.render( gc ); }
 
-        String pointsText = "Cash: $" + (100 * score);
+        String pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (100 * score);
+        Logger.log(getClass()+" Score: "+score);
         gc.fillText( pointsText, 360, 36 );
         gc.strokeText( pointsText, 360, 36 );
 
-        briefcase.update( 10 );
-        briefcase.render( gc );
+        thedude.update( 10 );
+        thedude.render( gc );
     }
 
     @Override
