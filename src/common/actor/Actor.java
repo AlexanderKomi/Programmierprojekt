@@ -35,7 +35,7 @@ public class Actor {
         this.setY( y );
     }
 
-    Actor( List<String> pictureFilePaths, double x, double y, int delay )
+    protected Actor( List<String> pictureFilePaths, double x, double y, int delay )
             throws FileNotFoundException {
         this( x, y );
         boolean heightIsSet = false;
@@ -193,6 +193,14 @@ public class Actor {
 
     public void setWidth( double width ) {
         this.width = width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
     }
 
 }
