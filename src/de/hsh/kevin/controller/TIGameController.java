@@ -13,7 +13,7 @@ import java.util.Observer;
 
 public class TIGameController extends GameEntryPoint {
 
-    public static final String fxml = "../res/TIGame.fxml";
+    public static final String fxml = "res/TIGame.fxml";
     
     public static VBox gameBox;
     
@@ -28,7 +28,6 @@ public class TIGameController extends GameEntryPoint {
     
     public TIGameController( Observer o ) {
         super( o, WindowConfig.kevin_title );
-
     }
 
     @Override

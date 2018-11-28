@@ -19,14 +19,14 @@
 								<Image url="@background.jpg" />
 							</image>
 						</ImageView>
-						<Button id="btn_score" layoutX="1116.0" layoutY="737.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#scorePressed" prefHeight="49.0" prefWidth="150.0" text="Zum Score" textAlignment="CENTER" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="1116.0">
+						<Button fx:id="btn_score" layoutX="1116.0" layoutY="737.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#scorePressed" prefHeight="49.0" prefWidth="150.0" text="Zum Score" textAlignment="CENTER" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="1116.0">
 							<font>
 								<Font name="Arial" size="26.0" />
 							</font>
 						</Button>
                   <Pane prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: grey;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <Label id="lbl_leben" alignment="CENTER" layoutX="9.0" layoutY="5.0" text="Leben: ">
+                        <Label fx:id="lbl_leben" alignment="CENTER" layoutX="9.0" layoutY="5.0" text="Leben: ">
                            <font>
                               <Font name="Arial Bold" size="32.0" />
                            </font>
@@ -35,7 +35,7 @@
                   </Pane>
                   <Pane layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: grey;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <Label id="lbl_score" alignment="CENTER" layoutX="9.0" layoutY="5.0" text="Score:">
+                        <Label fx:id="lbl_score" alignment="CENTER" layoutX="9.0" layoutY="5.0" text="Score:">
                            <font>
                               <Font name="Arial Bold" size="32.0" />
                            </font>
