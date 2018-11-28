@@ -33,6 +33,7 @@ public class Leertastenklatsche extends GameEntryPoint {
     private String            location     = getLocation();
     private ArrayList<String> input        = new ArrayList<String>();
     private ArrayList<Sprite> enemyList    = new ArrayList<Sprite>();
+    //private Sprite            enem = new Sprite();
 
     public Leertastenklatsche( Observer o ) {
         super( o, "Leertastenklatsche" );
@@ -71,7 +72,7 @@ public class Leertastenklatsche extends GameEntryPoint {
         render();
         return root;
     }
-
+    //Getting the input and realizing when stopping input
     private void addKeyListener() {
         canvas.setOnKeyPressed(
                 e -> {
@@ -146,10 +147,15 @@ public class Leertastenklatsche extends GameEntryPoint {
         parseInput( input );
         gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
 
-        for ( Sprite enemy : enemyList ) { enemy.render( gc ); }
+        for ( Sprite enemy : enemyList ){
+
+            enemy.render( gc );
+
+        }
 
         String pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (100 * score);
         Logger.log(getClass()+" Score: "+score);
+
         gc.fillText( pointsText, 360, 36 );
         gc.strokeText( pointsText, 360, 36 );
 
