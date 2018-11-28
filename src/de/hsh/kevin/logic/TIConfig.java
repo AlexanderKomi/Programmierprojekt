@@ -1,9 +1,12 @@
 package de.hsh.kevin.logic;
 
+import de.hsh.kevin.logic.difficulty.enmDifficultyOptions;
+
 public class TIConfig {
 
     private static enmSoundOptions soundConfig = enmSoundOptions.off;
     private static enmDifficultyOptions diffConfig = enmDifficultyOptions.easy;
+    public static int maxLife = 5;
 
     public static void switchSound() {
 	if (soundConfig == enmSoundOptions.off) {
