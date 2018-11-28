@@ -37,4 +37,10 @@ public class UpdateCodes {
         public static final String startGame = "Start GameEntryPoint";
     }
 
+    public class RAM {
+        public static final String startGame = "Start Game";
+        public static final String mainMenu  = "Mainmenu";
+        public static final String fieldSize = "Field size changed";
+    }
+
 }
