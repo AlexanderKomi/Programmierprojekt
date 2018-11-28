@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 
 public class Actor {
 
-    private static final String actorLocation = Path.getExecutionLocation() + "de/hsh/alexander/actor/";
+    private static String actorLocation = Path.getExecutionLocation();
 
     private double x;
     private double y;
@@ -21,11 +21,13 @@ public class Actor {
 
     private Image picture;
 
-    protected Actor(String pictureFileName) {
-        this( pictureFileName, 0, 0 );
+    protected Actor(String pictureFileName, String dir) {
+
+        this(pictureFileName, dir, 0, 0);
     }
 
-    protected Actor(String pictureFileName, double x, double y) {
+    protected Actor(String pictureFileName, String dir, double x, double y) {
+        actorLocation = Path.getExecutionLocation() + dir;
         loadPicture( pictureFileName );
         this.setHeight( this.getPicture().getHeight() );
         this.setWidth( this.getPicture().getWidth() );
@@ -33,7 +35,8 @@ public class Actor {
         this.setY( y );
     }
 
-    protected Actor(String pictureFileName, double x, double y, double height, double width) {
+    protected Actor(String pictureFileName, String dir, double x, double y, double height, double width) {
+        actorLocation = Path.getExecutionLocation() + dir;
         loadPicture( pictureFileName );
         this.setHeight( height );
         this.setWidth( width );
@@ -127,7 +130,7 @@ public class Actor {
         this.width = width;
     }
 
-    private Image getPicture() {
+    public Image getPicture() {
         return picture;
     }
 

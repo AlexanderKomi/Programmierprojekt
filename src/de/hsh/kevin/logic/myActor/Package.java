@@ -5,7 +5,7 @@ import common.actor.Actor;
 public class Package extends Actor {
 
     protected Package(String pictureFileName) {
-	super(pictureFileName);
+        super(pictureFileName, "");
     }
 
 }

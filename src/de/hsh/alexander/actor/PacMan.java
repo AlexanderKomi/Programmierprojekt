@@ -14,12 +14,12 @@ public class PacMan extends ControlableActor {
 
 
     public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) {
-        super( pictureFileName, start_x, start_y, keyMap );
+        super(pictureFileName, "de/hsh/alexander/actor/", start_x, start_y, keyMap);
         this.setSpeed( default_speed );
     }
 
     public PacMan( String pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) {
-        super( pictureFileName, x, y, keyMap );
+        super(pictureFileName, "de/hsh/alexander/actor/", x, y, keyMap);
     }
 
     @Override

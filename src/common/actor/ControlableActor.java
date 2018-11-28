@@ -9,23 +9,24 @@ public class ControlableActor extends Actor {
 
     private Movement movement = new Movement();
 
-    protected ControlableActor( String pictureFileName, HashMap<String, Direction> keymap ) {
-        super( pictureFileName );
+    protected ControlableActor(String pictureFileName, String dir, HashMap<String, Direction> keymap) {
+        super(pictureFileName, dir);
         this.movement.setKeyMap( keymap );
     }
 
-    protected ControlableActor( String pictureFileName, double x, double y, HashMap<String, Direction> keymap ) {
-        super( pictureFileName, x, y );
+    protected ControlableActor(String pictureFileName, String dir, double x, double y, HashMap<String, Direction> keymap) {
+        super(pictureFileName, dir, x, y);
         this.movement.setKeyMap( keymap );
     }
 
-    protected ControlableActor( String pictureFileName,
-                                double x,
-                                double y,
-                                double height,
-                                double width,
-                                HashMap<String, Direction> keymap ) {
-        super( pictureFileName, x, y, height, width );
+    protected ControlableActor(String pictureFileName,
+                               String dir,
+                               double x,
+                               double y,
+                               double height,
+                               double width,
+                               HashMap<String, Direction> keymap ) {
+        super(pictureFileName, dir, x, y, height, width);
         this.movement.setKeyMap( keymap );
     }
 
