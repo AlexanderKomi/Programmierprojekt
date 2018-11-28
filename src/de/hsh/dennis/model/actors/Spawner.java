@@ -15,7 +15,9 @@ public class Spawner {
     }
 
     public void addNpc(Npc npc) {
-        getNpcs().add(npc);
+        if (npcs.size() <= 100) {  //TODO: Durch Zeitliche Begrenzung ablösen! oder TODO2! (sinnvoller)
+            getNpcs().add(npc);
+        }
     }
 
     public void removeNpc(Npc npc) {
@@ -38,7 +40,7 @@ public class Spawner {
             }
         }
         for (Npc npc : npcsToRemove) {
-            removeNpc(npc);
+            removeNpc(npc);                 //TODO: TODO2: Der Render Thread und das Iterieren dieser Methode können sich in die Quere kommen: "Exception in thread "Java 2D Engine" java.util.ConcurrentModificationException"
         }
         npcsToRemove.clear();
     }
