@@ -1,21 +1,24 @@
 package de.hsh.kevin.controller;
 
-import common.config.WindowConfig;
-import common.engine.components.game.GameEntryPoint;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 
+import java.net.URL;
 import java.util.Observable;
-import java.util.Observer;
+import java.util.ResourceBundle;
 
-public class TIGameController extends GameEntryPoint {
+import common.updates.UpdateCodes;
+
+public class TIGameController extends Observable implements Initializable {
 
     public static final String fxml = "res/TIGame.fxml";
     
-    public static VBox gameBox;
+    @FXML
+    public Canvas gameCanvas;
     
     @FXML
     public Button btn_score;
@@ -26,18 +29,14 @@ public class TIGameController extends GameEntryPoint {
     @FXML
     public Label lbl_score;
     
-    public TIGameController( Observer o ) {
-        super( o, WindowConfig.kevin_title );
+    private double factor = 1;
+    
+    public TIGameController(){
+	gameCanvas.setWidth(factor * gameCanvas.getWidth());
     }
-
-    @Override
-    public void update( Observable o, Object arg ) {
-
-    }
-
-    @Override
+    
     public void render() {
-
+		
     }
 
     @FXML
@@ -48,6 +47,12 @@ public class TIGameController extends GameEntryPoint {
     // Vorläufiger Button zum Testen der Funktionalität
     @FXML
     void scorePressed(ActionEvent event) {
+	this.setChanged();
+	this.notifyObservers(UpdateCodes.TunnelInvader.gameOver);
+    }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+	gameCanvas.setFocusTraversable(true);
     }
 }
