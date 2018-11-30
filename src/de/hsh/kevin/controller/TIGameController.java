@@ -73,7 +73,7 @@ public class TIGameController extends Observable implements Initializable {
 	gc.fillRect(0, 0, this.canvas.getWidth(), canvas.getHeight());
     }
 
-    public void render() {
+    public void render(int fps) {
 	if (!initialized) {
 	    return;
 	}
