@@ -1,7 +1,7 @@
 package de.hsh.kevin.controller;
 
 import common.updates.UpdateCodes;
-import de.hsh.kevin.logic.TIConfig;
+import de.hsh.kevin.logic.Config;
 import de.hsh.kevin.logic.enmDifficultyOptions;
 import de.hsh.kevin.logic.enmSoundOptions;
 import javafx.event.ActionEvent;
@@ -28,12 +28,12 @@ public class TIMenuController extends Observable{
 
     @FXML
     void difficultyPressed(ActionEvent event) {
-	TIConfig.switchDifficulty();
+	Config.switchDifficulty();
 	String option = "";
 
-	if (TIConfig.getDifficultyOption() == enmDifficultyOptions.easy) {
+	if (Config.getDifficultyOption() == enmDifficultyOptions.easy) {
 	    option = "einfach";
-	} else if (TIConfig.getDifficultyOption() == enmDifficultyOptions.normal) {
+	} else if (Config.getDifficultyOption() == enmDifficultyOptions.normal) {
 	    option = "normal";
 	} else {
 	    option = "schwer";
@@ -54,9 +54,9 @@ public class TIMenuController extends Observable{
 
     @FXML
     void soundPressed(ActionEvent event) {
-	TIConfig.switchSound();
+	Config.switchSound();
 	String option = "";
-	if (TIConfig.getSoundOption() == enmSoundOptions.on) {
+	if (Config.getSoundOption() == enmSoundOptions.on) {
 	    option = "on";
 	} else {
 	    option = "off";

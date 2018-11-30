@@ -2,12 +2,13 @@ package de.hsh.kevin.logic;
 
 import common.util.Path;
 
-public class TIConfig {
+public class Config {
 
     public static final String resLocation = Path.getExecutionLocation() + "de/hsh/kevin/res/";
+    public static final int spawnDelay = 100;
     private static enmSoundOptions soundConfig = enmSoundOptions.off;
     private static enmDifficultyOptions diffConfig = enmDifficultyOptions.easy;
-    public static int maxLife = 5;
+    public static int maxLife = 4;
 
     public static void switchSound() {
 	if (soundConfig == enmSoundOptions.off) {
@@ -36,7 +37,7 @@ public class TIConfig {
     public static enmDifficultyOptions getDifficultyOption() {
 	return diffConfig;
     }
-    
+
     public static double getDifficultyFactor() {
 	switch (diffConfig) {
 	case easy:
@@ -48,7 +49,53 @@ public class TIConfig {
 	default:
 	    return 1;
 	}
+    }
 
+    public static double getLifeFactor() {
+	switch (diffConfig) {
+	case easy:
+	    return 1;
+	case normal:
+	    return 0.75;
+	case hard:
+	    return 0.5;
+	default:
+	    return 1;
+	}
+    }
+
+    public static double getLife() {
+	return getLifeFactor() * maxLife;
+    }
+
+    public static double getSpawnFactor() {
+	switch (diffConfig) {
+	case easy:
+	    return 1;
+	case normal:
+	    return 0.75;
+	case hard:
+	    return 0.5;
+	default:
+	    return 1;
+	}
+    }
+
+    public static double getSpawnDelay() {
+	return getSpawnFactor() * spawnDelay;
+    }
+
+    public static int getMaxSpawnCount() {
+	switch (diffConfig) {
+	case easy:
+	    return 2;
+	case normal:
+	    return 3;
+	case hard:
+	    return 4;
+	default:
+	    return 2;
+	}
     }
 
 }

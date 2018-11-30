@@ -3,7 +3,7 @@ package de.hsh.kevin.logic.myActor;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import de.hsh.kevin.logic.TIConfig;
+import de.hsh.kevin.logic.Config;
 
 public class PaketFactory {
     private static ArrayList<String> badPaketImages;
@@ -12,17 +12,17 @@ public class PaketFactory {
     static {
 	if (badPaketImages == null) {
 	    badPaketImages = new ArrayList<>();
-	    badPaketImages.add(TIConfig.resLocation + "ordner_red/ordner1.png");
-	    badPaketImages.add(TIConfig.resLocation + "ordner_red/ordner2.png");
-	    badPaketImages.add(TIConfig.resLocation + "ordner_red/ordner3.png");
-	    badPaketImages.add(TIConfig.resLocation + "ordner_red/ordner4.png");
+	    badPaketImages.add(Config.resLocation + "ordner_red/ordner1.png");
+	    badPaketImages.add(Config.resLocation + "ordner_red/ordner2.png");
+	    badPaketImages.add(Config.resLocation + "ordner_red/ordner3.png");
+	    badPaketImages.add(Config.resLocation + "ordner_red/ordner4.png");
 	}
 	if (goodPaketImages == null) {
 	    goodPaketImages = new ArrayList<>();
-	    goodPaketImages.add(TIConfig.resLocation + "ordner_black/ordner1.png");
-	    goodPaketImages.add(TIConfig.resLocation + "ordner_black/ordner2.png");
-	    goodPaketImages.add(TIConfig.resLocation + "ordner_black/ordner3.png");
-	    goodPaketImages.add(TIConfig.resLocation + "ordner_black/ordner4.png");
+	    goodPaketImages.add(Config.resLocation + "ordner_black/ordner1.png");
+	    goodPaketImages.add(Config.resLocation + "ordner_black/ordner2.png");
+	    goodPaketImages.add(Config.resLocation + "ordner_black/ordner3.png");
+	    goodPaketImages.add(Config.resLocation + "ordner_black/ordner4.png");
 
 	}
     }

@@ -1,5 +1,6 @@
 package de.hsh.kevin.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,7 +16,7 @@ import java.util.ResourceBundle;
 
 import common.updates.UpdateCodes;
 import de.hsh.kevin.logic.GameField;
-import de.hsh.kevin.logic.TIConfig;
+import de.hsh.kevin.logic.Config;
 
 public class TIGameController extends Observable implements Initializable {
 
@@ -54,7 +55,7 @@ public class TIGameController extends Observable implements Initializable {
 	}
 	this.gameCanvas.setFocusTraversable(true);
 
-	double widthFactor = TIConfig.getDifficultyFactor();
+	double widthFactor = Config.getDifficultyFactor();
 	this.gameCanvas.setWidth(gameCanvas.getWidth() * widthFactor);
 
 	clearCanvas();
@@ -79,10 +80,19 @@ public class TIGameController extends Observable implements Initializable {
 	clearCanvas();
 
 	this.gameField.getPlayer().draw(this.gameCanvas);
-	if (gameField.getPakete().size() == 0) {
-	    this.gameField.addPaket();
-	    this.gameField.addPaket();
-	}
+	this.gameField.spawnPakete();
 	this.gameField.draw(this.gameCanvas);
+
+	updateLbl_leben();
+	updateLbl_score();
+    }
+
+    private void updateLbl_leben() {
+	Platform.runLater(() -> lbl_leben.setText("Leben: " + gameField.getLeben()));
+
+    }
+
+    private void updateLbl_score() {
+	Platform.runLater(() -> lbl_score.setText("Score: " + gameField.getScore()));
     }
 }

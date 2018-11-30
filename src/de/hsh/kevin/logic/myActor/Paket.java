@@ -11,7 +11,7 @@ public class Paket extends Actor {
     private static final double startX = 100;
     private static final double startY = 10;
     private static final int changePictureDelay = 15;
-    private double speed = 5;
+    private double speed = 3;
     private enmPaketTyp paketTyp;
 
     public Paket(String pictureFileName, enmPaketTyp paketTyp) throws FileNotFoundException {
@@ -38,6 +38,10 @@ public class Paket extends Actor {
 
     public void move() {
 	setPos(this.getX(), this.getY() + speed);
+    }
+    
+    public String toString() {
+	return super.toString();
     }
     
 }

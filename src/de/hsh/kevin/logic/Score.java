@@ -1,9 +1,9 @@
 package de.hsh.kevin.logic;
 
-public class TIScore {
+public class Score {
     int score = 0;
 
-    public TIScore() {
+    public Score() {
 
     }
 

@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import common.actor.Direction;
 import de.hsh.kevin.logic.myActor.Paket;
@@ -14,20 +15,25 @@ import javafx.scene.input.KeyEvent;
 public class GameField {
     private double width;
     private double height;
-    private TIScore score;
+    private Score score;
     private PaketManager paketManager;
     private Player player;
+    private Leben leben;
+    private int spawnDelay;
+    private int spawnDelayBuffer = 0;
 
     public GameField(Canvas canvas) {
-	this(TIConfig.getDifficultyOption(), canvas);
+	this(Config.getDifficultyOption(), canvas);
     }
 
     public GameField(enmDifficultyOptions difficulty, Canvas canvas) {
 	width = canvas.getWidth();
 	height = canvas.getHeight();
+	spawnDelay = (int) (Config.getSpawnDelay());
 
-	score = new TIScore();
-	paketManager = new PaketManager(width);
+	score = new Score();
+	leben = new Leben();
+	paketManager = new PaketManager(width, height);
 
 	initPlayer(canvas);
     }
@@ -40,7 +46,11 @@ public class GameField {
 	return height;
     }
 
-    public TIScore getTIScore() {
+    public int getLeben() {
+        return leben.getLeben();
+    }
+
+    public Score getTIScore() {
 	return score;
     }
 
@@ -50,6 +60,7 @@ public class GameField {
 
     public void draw(Canvas canvas) {
 	paketManager.draw(canvas);
+	paketManager.move();
     }
 
     private void initPlayer(Canvas canvas) {
@@ -62,8 +73,8 @@ public class GameField {
 	playerKeyMap.put("Right", Direction.Left);
 
 	ArrayList<String> playerImages = new ArrayList<>();
-	playerImages.add(TIConfig.resLocation + "player/player1.png");
-	playerImages.add(TIConfig.resLocation + "player/player2.png");
+	playerImages.add(Config.resLocation + "player/player1.png");
+	playerImages.add(Config.resLocation + "player/player2.png");
 
 	Player p = null;
 	try {
@@ -97,5 +108,20 @@ public class GameField {
 
     public void addBadPaket() {
 	paketManager.createBadPaket();
+    }
+
+    public void spawnPakete() {
+	if (spawnDelayBuffer == 0) {
+	    spawnDelayBuffer = spawnDelay;
+	}
+
+	if (spawnDelayBuffer == spawnDelay) {
+	    Random rand = new Random();
+	    int number = rand.nextInt(Config.getMaxSpawnCount());
+	    for(int i = 0; i <= number; i++) {
+		addPaket();
+	    }
+	}
+	spawnDelayBuffer--;
     }
 }
