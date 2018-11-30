@@ -28,7 +28,6 @@ public class ControlableActor extends Actor {
         this.movement.setKeyMap( keymap );
     }
 
-
     /**
     * Checks Key Released and Pressed Events.
     * */
@@ -48,17 +47,10 @@ public class ControlableActor extends Actor {
         }
     }
 
+
     public void draw( Canvas canvas ) {
         double[] temp = this.calculateNewPosFromInput();
         super.draw( canvas, temp[ 0 ], temp[ 1 ] );
-    }
-
-    public void drawAndApplyCollision( Canvas canvas, Actor other ) {
-        double[] backup = this.getPos();
-        this.draw( canvas);
-        if ( this.doesCollide( other ) ) {
-            this.setPos( backup );
-        }
     }
 
     protected double[] calculateNewPosFromInput() {
@@ -92,7 +84,7 @@ public class ControlableActor extends Actor {
         return xyTuple;
     }
 
-
+    //--------------------- Getter and Setter ---------------------
 
     public void setKeyMap( HashMap<String, Direction> keyMap ) {
         this.movement.setKeyMap( keyMap );

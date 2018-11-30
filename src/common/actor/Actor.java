@@ -5,8 +5,7 @@ import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Actor {
 
@@ -22,12 +21,13 @@ public class Actor {
     private int              switchingDelay  = 0;
     private Image            currentImage;
     private ArrayList<Image> images          = new ArrayList<>();
+    private HashSet<Actor>   collisionActors = new HashSet<>();
 
     protected Actor( String pictureFileName ) throws FileNotFoundException {
         this( pictureFileName, 0, 0 );
     }
 
-    protected Actor( String pictureFileName, double x, double y ) throws FileNotFoundException {
+    public Actor( String pictureFileName, double x, double y ) throws FileNotFoundException {
         this.currentImage = loadPicture( pictureFileName );
         this.setHeight( this.getCurrentImage().getHeight() );
         this.setWidth( this.getCurrentImage().getWidth() );
@@ -67,18 +67,15 @@ public class Actor {
     }
 
     void draw( Canvas canvas, double new_x, double new_y ) {
-        setPos( canvas, new_x, new_y );
+        double[] new_pos = checkBounds( canvas, new_x, new_y );
+        if(!CollisionCheck.applyCollision( this )){
+            setPos( new_pos[ 0 ], new_pos[ 1 ] );
+        }
         switchImages();
         canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
 
-    public void drawAndApplyCollision( Canvas canvas, double new_x, double new_y, Actor other ) {
-        double[] backup = this.getPos();
-        this.draw( canvas, new_x, new_y);
-        if ( this.doesCollide( other ) ) {
-            this.setPos( backup );
-        }
-    }
+
 
     /**
      * Switch images based on buffer implementation.
@@ -105,7 +102,7 @@ public class Actor {
     }
 
     public boolean doesCollide( Actor other ) {
-        return BoundsChecks.doesCollide( this, other ) || BoundsChecks.doesCollide( other, this );
+        return CollisionCheck.doesCollide( this, other ) || CollisionCheck.doesCollide( other, this );
     }
 
     private double[] checkBounds( Canvas canvas, double new_x, double new_y ) {
@@ -150,11 +147,6 @@ public class Actor {
                 this.getX() + horizontal,
                 this.getY() + vertical
                    );
-    }
-
-    public void setPos( Canvas canvas, double new_x, double new_y ) {
-        double[] temp = checkBounds( canvas, new_x, new_y );
-        setPos( temp[ 0 ], temp[ 1 ] );
     }
 
     public void setPos( double x, double y ) {
@@ -203,4 +195,19 @@ public class Actor {
         return width;
     }
 
+    public HashSet<Actor> getCollisionActors() {
+        return collisionActors;
+    }
+
+    public void addCollidingActor(Actor other) {
+        this.collisionActors.add( other );
+    }
+
+    public void addCollidingActor(Actor... others){
+        this.collisionActors.addAll( Arrays.asList( others ) );
+    }
+
+    public void addCollidingActor( Collection<Actor> others ) {
+        this.collisionActors.addAll( others );
+    }
 }
