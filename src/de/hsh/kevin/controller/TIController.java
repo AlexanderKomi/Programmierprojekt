@@ -2,6 +2,7 @@ package de.hsh.kevin.controller;
 
 import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
+import common.util.Logger;
 import de.hsh.kevin.TIFxmlChanger;
 
 import java.util.Observable;

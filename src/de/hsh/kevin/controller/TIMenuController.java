@@ -2,16 +2,13 @@ package de.hsh.kevin.controller;
 
 import common.updates.UpdateCodes;
 import de.hsh.kevin.logic.TIConfig;
+import de.hsh.kevin.logic.enmDifficultyOptions;
 import de.hsh.kevin.logic.enmSoundOptions;
-import de.hsh.kevin.logic.difficulty.enmDifficultyOptions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
-import java.net.URL;
 import java.util.Observable;
-import java.util.ResourceBundle;
 
 public class TIMenuController extends Observable{
 
