@@ -28,7 +28,6 @@ public class ControlableActor extends Actor {
         this.movement.setKeyMap( keymap );
     }
 
-
     /**
     * Checks Key Released and Pressed Events.
     * */
@@ -85,7 +84,7 @@ public class ControlableActor extends Actor {
         return xyTuple;
     }
 
-
+    //--------------------- Getter and Setter ---------------------
 
     public void setKeyMap( HashMap<String, Direction> keyMap ) {
         this.movement.setKeyMap( keyMap );

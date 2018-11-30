@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class Actor {
@@ -68,43 +70,15 @@ public class Actor {
     }
 
     void draw( Canvas canvas, double new_x, double new_y ) {
-        double[] temp = this.getPos();
         double[] new_pos = checkBounds( canvas, new_x, new_y );
-        if(collides()){
-            new_pos = temp;
-        }
-        else{
+        if(!CollisionCheck.applyCollision( this )){
             setPos( new_pos[ 0 ], new_pos[ 1 ] );
         }
         switchImages();
         canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
 
-    private boolean collides(){
-        double speed = 10;
-        boolean collided = false;
-        for ( Actor collisionActor : this.collisionActors ) {
-            if(this.doesCollide( collisionActor)){
-                if(this.x + this.getWidth() > collisionActor.getX() + collisionActor.getWidth()){
-                    this.setX( this.getX() + speed );
-                }else if(this.x + this.getWidth() > collisionActor.getX()){
-                    this.setX( this.getX() - speed );
-                }
-                if(this.y < collisionActor.getY() + collisionActor.getHeight()){
-                    this.setY( this.getY() - speed );
-                }
-                else if(this.y + this.getHeight() > collisionActor.getY()){
-                    this.setY( this.getY() + speed );
-                }
-                collided= true;
-            }
-        }
-        return collided;
-    }
 
-    public void addCollidingActor(Actor other) {
-        this.collisionActors.add( other );
-    }
 
     /**
      * Switch images based on buffer implementation.
@@ -160,8 +134,6 @@ public class Actor {
         result += "height:" + this.height;
         return result + ")";
     }
-
-
 
     // ----------------------------------- GETTER AND SETTER -----------------------------------
 
@@ -226,4 +198,19 @@ public class Actor {
         return width;
     }
 
+    public ArrayList<Actor> getCollisionActors() {
+        return collisionActors;
+    }
+
+    public void addCollidingActor(Actor other) {
+        this.collisionActors.add( other );
+    }
+
+    public void addCollisionActors(Actor... others){
+        this.collisionActors.addAll( Arrays.asList( others ) );
+    }
+
+    public void addCollisionActors( Collection<Actor> others ) {
+        this.collisionActors.addAll( others );
+    }
 }
