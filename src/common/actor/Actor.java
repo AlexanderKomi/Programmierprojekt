@@ -27,7 +27,7 @@ public class Actor {
         this( pictureFileName, 0, 0 );
     }
 
-    protected Actor( String pictureFileName, double x, double y ) throws FileNotFoundException {
+    public Actor( String pictureFileName, double x, double y ) throws FileNotFoundException {
         this.currentImage = loadPicture( pictureFileName );
         this.setHeight( this.getCurrentImage().getHeight() );
         this.setWidth( this.getCurrentImage().getWidth() );
