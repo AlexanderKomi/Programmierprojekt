@@ -1,6 +1,7 @@
 package de.hsh.kevin.logic.myActor;
 
 import common.actor.Actor;
+import javafx.scene.canvas.Canvas;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -32,12 +33,11 @@ public class Paket extends Actor {
     }
 
     public enmPaketTyp getPaketTyp() {
-        return paketTyp;
+	return paketTyp;
     }
 
     public void move() {
-	double oldY = speed + this.getY();
-	setPos(this.getX(), oldY);
+	setPos(this.getX(), this.getY() + speed);
     }
-
+    
 }

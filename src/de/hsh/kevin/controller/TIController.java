@@ -2,6 +2,7 @@ package de.hsh.kevin.controller;
 
 import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
+import common.util.Logger;
 import de.hsh.kevin.TIFxmlChanger;
 
 import java.util.Observable;
@@ -35,7 +36,7 @@ public class TIController extends GameEntryPoint {
 	}
     }
 
-    public void render(int fps) {
+    public void render() {
 	if (game != null) {
 	    game.render();
 	}

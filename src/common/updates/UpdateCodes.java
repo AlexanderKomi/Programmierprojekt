@@ -27,10 +27,10 @@ public class UpdateCodes {
 
     public class TunnelInvader {
 	public static final String gameName = WindowConfig.kevin_title;
-	public static final String startGame = gameName + "Start GameEntryPoint";
-	public static final String playGame = gameName + "Start Game";
-	public static final String gameOver = gameName + "Game Over";
-	public static final String gameMenu = gameName + "Game Menu";
+	public static final String startGame = gameName + " Start GameEntryPoint";
+	public static final String playGame = gameName + " Start Game";
+	public static final String gameOver = gameName + " Game Over";
+	public static final String gameMenu = gameName + " Game Menu";
     }
 
     public class Amir {
