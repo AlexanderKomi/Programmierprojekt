@@ -1,27 +1,27 @@
-package de.hsh.kevin.logic;
+package de.hsh.kevin.logic.difficulty;
 
 public class TIDifficulty {
-    int diff = 0;
+    enmDifficultyOptions diff;
     double factor = 1;
 
     public TIDifficulty() {
 
     }
 
-    public TIDifficulty(int difficulty) {
+    public TIDifficulty(enmDifficultyOptions difficulty) {
 	diff = difficulty;
 	setFactor();
     }
 
     private void setFactor() {
 	switch (diff) {
-	case 0:
+	case easy:
 	    factor = 1;
 	    break;
-	case 1:
-	    factor = 1.2;
+	case normal:
+	    factor = 1.25;
 	    break;
-	case 2:
+	case hard:
 	    factor = 1.5;
 	    break;
 	default:
@@ -31,11 +31,11 @@ public class TIDifficulty {
 
     }
 
-    public int getDifficulty() {
+    public enmDifficultyOptions getDifficulty() {
 	return diff;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(enmDifficultyOptions difficulty) {
 	this.diff = difficulty;
     }
 

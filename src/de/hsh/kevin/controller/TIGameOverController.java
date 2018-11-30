@@ -47,12 +47,13 @@ public class TIGameOverController extends GameMenu {
     @FXML
     void nochamalPressed(ActionEvent event) {
 	this.setChanged();
-	this.notifyObservers(UpdateCodes.TunnelInvader.startGame);
+	this.notifyObservers(UpdateCodes.TunnelInvader.playGame);
     }
 
     @FXML
     void sammlungPressed(ActionEvent event) {
 	this.setChanged();
+	this.notifyObservers(UpdateCodes.TunnelInvader.gameMenu);
 	this.notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
     }
 

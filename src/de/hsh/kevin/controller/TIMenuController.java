@@ -2,15 +2,18 @@ package de.hsh.kevin.controller;
 
 import common.updates.UpdateCodes;
 import de.hsh.kevin.logic.TIConfig;
-import de.hsh.kevin.logic.enmDifficultyOptions;
 import de.hsh.kevin.logic.enmSoundOptions;
+import de.hsh.kevin.logic.difficulty.enmDifficultyOptions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
+import java.net.URL;
 import java.util.Observable;
+import java.util.ResourceBundle;
 
-public class TIMenuController extends Observable {
+public class TIMenuController extends Observable{
 
     public static final String fxml = "res/TIMenu.fxml";
 
@@ -25,9 +28,6 @@ public class TIMenuController extends Observable {
 
     @FXML
     public Button btn_sammlung;
-
-    @FXML
-    public Button btn_exit;
 
     @FXML
     void difficultyPressed(ActionEvent event) {
@@ -70,6 +70,7 @@ public class TIMenuController extends Observable {
     @FXML
     void startGamePressed(ActionEvent event) {
 	this.setChanged();
-	this.notifyObservers(UpdateCodes.TunnelInvader.startGame);
+	this.notifyObservers(UpdateCodes.TunnelInvader.playGame);
     }
+
 }

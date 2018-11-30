@@ -1,4 +1,4 @@
-package de.hsh.kevin.logic;
+package de.hsh.kevin.logic.difficulty;
 
 public enum enmDifficultyOptions {
     easy,
