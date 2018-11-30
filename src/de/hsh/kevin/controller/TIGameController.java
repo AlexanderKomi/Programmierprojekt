@@ -60,9 +60,9 @@ public class TIGameController extends Observable implements Initializable {
 
 	clearCanvas();
 
-	gameField = new GameField(this.canvas);
-	this.canvas.setOnKeyPressed(gameField::movePlayer);
-	this.canvas.setOnKeyReleased(gameField::movePlayer);
+//	gameField = new GameField(this.canvas);
+//	this.canvas.setOnKeyPressed(gameField::movePlayer);
+//	this.canvas.setOnKeyReleased(gameField::movePlayer);
 
 	initialized = true;
     }
