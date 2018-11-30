@@ -6,11 +6,14 @@ import common.events.MouseEventManager;
 import de.hsh.daniel.de.hsh.daniel.controller.RAM_MainMenu_controller;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+
+import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -32,7 +35,7 @@ public class RAM extends GameEntryPoint {
     }
 
     @Override
-    public void render(int fps) {
+    public void render() {
 
     }
 

@@ -50,7 +50,7 @@ public abstract class GameEntryPoint extends FxModul implements IGame {
         observable.addObserver(this);
     }
 
-    public abstract void render(int fps);
+    public abstract void render();
 
     // ----------------------------------- GETTER & SETTER  -----------------------------------
 

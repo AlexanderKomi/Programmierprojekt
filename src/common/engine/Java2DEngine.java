@@ -131,7 +131,7 @@ public class Java2DEngine extends Observable implements Runnable {
         if ( shouldRender ) {
 
             // START ------------------------ Render gameContainer ------------------------
-            this.gameContainer.render(this.fps);
+            this.gameContainer.render();
             // STOP  ------------------------ Render gameContainer ------------------------
             return 1;
         }

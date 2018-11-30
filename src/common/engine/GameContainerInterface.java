@@ -20,9 +20,8 @@ public interface GameContainerInterface {
     /**
      * Gets called every time a new frame is rendered.
      * Use this to update every frame.
-     * @param fps
      */
-    void render( int fps );
+    void render();
 
     void update( Observable o, Object arg );
 

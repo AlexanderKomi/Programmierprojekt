@@ -10,13 +10,13 @@ import java.util.Observer;
 
 public class PacManController extends GameEntryPoint {
 
-    private final PacManFxmlChanger changer;
-    private final PacManGame game;
+    private PacManFxmlChanger changer;
+    private PacManGame game;
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
-        game = new PacManGame();
-        changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
+        this.game = new PacManGame();
+        this.changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
     }
 
     @Override
@@ -56,14 +56,14 @@ public class PacManController extends GameEntryPoint {
         }
     }
 
-    private static void logParsingError( Observable o, Object arg ) {
+    private void logParsingError( Observable o, Object arg ) {
         Logger.log( "In PacMan Coop update : from observable : " + o + " Argument could not be parsed : " + arg );
     }
 
     @Override
-    public void render(int fps) {
+    public void render() {
         if ( game != null ) {
-            game.render(fps);
+            game.render();
         }
     }
 

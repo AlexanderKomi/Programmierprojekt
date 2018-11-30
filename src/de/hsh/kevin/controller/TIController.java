@@ -36,7 +36,7 @@ public class TIController extends GameEntryPoint {
 	}
     }
 
-    public void render(int fps) {
+    public void render() {
 	if (game != null) {
 	    game.render();
 	}

@@ -26,7 +26,7 @@ public class AmirsGame extends GameEntryPoint {
     }
 
     @Override
-    public void render(int fps) {
+    public void render() {
 
     }
 }
