@@ -45,8 +45,8 @@ public class PacManGame extends Observable implements Observer, Initializable {
                 pacMan1 = initPacMan1();
                 pacMan2 = initPacMan2();
                 wall = initTestWall();
-                pacMan1.addCollidingActor(this.wall);
-                pacMan2.addCollidingActor( this.wall );
+                pacMan1.addCollidingActor(this.wall, pacMan2);
+                pacMan2.addCollidingActor( this.wall, pacMan1 );
             }
             catch ( FileNotFoundException e ) {
                 e.printStackTrace();

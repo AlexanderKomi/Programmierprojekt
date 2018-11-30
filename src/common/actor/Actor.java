@@ -5,10 +5,7 @@ import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class Actor {
 
@@ -24,7 +21,7 @@ public class Actor {
     private int              switchingDelay  = 0;
     private Image            currentImage;
     private ArrayList<Image> images          = new ArrayList<>();
-    private ArrayList<Actor> collisionActors = new ArrayList<>();
+    private HashSet<Actor>   collisionActors = new HashSet<>();
 
     protected Actor( String pictureFileName ) throws FileNotFoundException {
         this( pictureFileName, 0, 0 );
@@ -198,7 +195,7 @@ public class Actor {
         return width;
     }
 
-    public ArrayList<Actor> getCollisionActors() {
+    public HashSet<Actor> getCollisionActors() {
         return collisionActors;
     }
 
@@ -206,11 +203,11 @@ public class Actor {
         this.collisionActors.add( other );
     }
 
-    public void addCollisionActors(Actor... others){
+    public void addCollidingActor(Actor... others){
         this.collisionActors.addAll( Arrays.asList( others ) );
     }
 
-    public void addCollisionActors( Collection<Actor> others ) {
+    public void addCollidingActor( Collection<Actor> others ) {
         this.collisionActors.addAll( others );
     }
 }
