@@ -1,5 +1,6 @@
 package de.hsh.alexander;
 
+import common.actor.Actor;
 import common.actor.Direction;
 import common.util.Logger;
 import common.util.Path;
@@ -44,6 +45,8 @@ public class PacManGame extends Observable implements Observer, Initializable {
                 pacMan1 = initPacMan1();
                 pacMan2 = initPacMan2();
                 wall = initTestWall();
+                pacMan1.addCollidingActor(this.wall);
+                pacMan2.addCollidingActor( this.wall );
             }
             catch ( FileNotFoundException e ) {
                 e.printStackTrace();
@@ -86,6 +89,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
 
     private void clearCanvas() {
         this.gameCanvas.getGraphicsContext2D().setFill( Color.WHITE );
+        this.gameCanvas.getGraphicsContext2D().clearRect( 0, 0, 1200, 800 );
         //this.gameCanvas.getGraphicsContext2D().fillRect(  );
     }
 
@@ -99,10 +103,13 @@ public class PacManGame extends Observable implements Observer, Initializable {
             return;
         }
         clearCanvas();
-        this.gameCanvas.getGraphicsContext2D().clearRect( 0, 0, 1200, 800 );
-        this.wall.draw( this.gameCanvas );
-        pacMan1.drawAndApplyCollision( this.gameCanvas, this.wall ); // TODO : Fix collision bug
-        pacMan1.drawAndApplyCollision( this.gameCanvas, pacMan2 );
-        pacMan2.drawAndApplyCollision( this.gameCanvas, pacMan1 );
+        draw( this.pacMan1, this.pacMan2, this.wall );
+    }
+
+    private void draw( Actor... actors ) {
+        for ( Actor a:
+               actors) {
+            a.draw( this.gameCanvas );
+        }
     }
 }

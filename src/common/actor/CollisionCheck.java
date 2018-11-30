@@ -6,7 +6,7 @@ package common.actor;
  * @author Kevin Jeske
  * @author Alexander Komischke
  */
-class BoundsChecks {
+class CollisionCheck {
 
     static boolean doesCollide( Actor a, Actor b ) {
         return checkUpperLeftCorner( a, b ) || checkUpperRightCorner( a, b ) || checkLowerRightCorner( a, b )
@@ -27,6 +27,7 @@ class BoundsChecks {
         }
         return false;
     }
+
 
     /**
      * Obere Rechte Ecke von b schneidet a

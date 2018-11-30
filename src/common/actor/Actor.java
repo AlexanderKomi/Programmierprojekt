@@ -22,6 +22,7 @@ public class Actor {
     private int              switchingDelay  = 0;
     private Image            currentImage;
     private ArrayList<Image> images          = new ArrayList<>();
+    private ArrayList<Actor> collisionActors = new ArrayList<>();
 
     protected Actor( String pictureFileName ) throws FileNotFoundException {
         this( pictureFileName, 0, 0 );
@@ -67,17 +68,42 @@ public class Actor {
     }
 
     void draw( Canvas canvas, double new_x, double new_y ) {
-        setPos( canvas, new_x, new_y );
+        double[] temp = this.getPos();
+        double[] new_pos = checkBounds( canvas, new_x, new_y );
+        if(collides()){
+            new_pos = temp;
+        }
+        else{
+            setPos( new_pos[ 0 ], new_pos[ 1 ] );
+        }
         switchImages();
         canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
 
-    public void drawAndApplyCollision( Canvas canvas, double new_x, double new_y, Actor other ) {
-        double[] backup = this.getPos();
-        this.draw( canvas, new_x, new_y);
-        if ( this.doesCollide( other ) ) {
-            this.setPos( backup );
+    private boolean collides(){
+        double speed = 10;
+        boolean collided = false;
+        for ( Actor collisionActor : this.collisionActors ) {
+            if(this.doesCollide( collisionActor)){
+                if(this.x + this.getWidth() > collisionActor.getX() + collisionActor.getWidth()){
+                    this.setX( this.getX() + speed );
+                }else if(this.x + this.getWidth() > collisionActor.getX()){
+                    this.setX( this.getX() - speed );
+                }
+                if(this.y < collisionActor.getY() + collisionActor.getHeight()){
+                    this.setY( this.getY() - speed );
+                }
+                else if(this.y + this.getHeight() > collisionActor.getY()){
+                    this.setY( this.getY() + speed );
+                }
+                collided= true;
+            }
         }
+        return collided;
+    }
+
+    public void addCollidingActor(Actor other) {
+        this.collisionActors.add( other );
     }
 
     /**
@@ -105,7 +131,7 @@ public class Actor {
     }
 
     public boolean doesCollide( Actor other ) {
-        return BoundsChecks.doesCollide( this, other ) || BoundsChecks.doesCollide( other, this );
+        return CollisionCheck.doesCollide( this, other ) || CollisionCheck.doesCollide( other, this );
     }
 
     private double[] checkBounds( Canvas canvas, double new_x, double new_y ) {
@@ -135,6 +161,8 @@ public class Actor {
         return result + ")";
     }
 
+
+
     // ----------------------------------- GETTER AND SETTER -----------------------------------
 
     private Image getCurrentImage() {
@@ -150,11 +178,6 @@ public class Actor {
                 this.getX() + horizontal,
                 this.getY() + vertical
                    );
-    }
-
-    public void setPos( Canvas canvas, double new_x, double new_y ) {
-        double[] temp = checkBounds( canvas, new_x, new_y );
-        setPos( temp[ 0 ], temp[ 1 ] );
     }
 
     public void setPos( double x, double y ) {

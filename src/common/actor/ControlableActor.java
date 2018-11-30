@@ -48,17 +48,10 @@ public class ControlableActor extends Actor {
         }
     }
 
+
     public void draw( Canvas canvas ) {
         double[] temp = this.calculateNewPosFromInput();
         super.draw( canvas, temp[ 0 ], temp[ 1 ] );
-    }
-
-    public void drawAndApplyCollision( Canvas canvas, Actor other ) {
-        double[] backup = this.getPos();
-        this.draw( canvas);
-        if ( this.doesCollide( other ) ) {
-            this.setPos( backup );
-        }
     }
 
     protected double[] calculateNewPosFromInput() {

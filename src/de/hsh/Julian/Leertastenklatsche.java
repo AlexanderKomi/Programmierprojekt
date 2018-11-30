@@ -119,7 +119,7 @@ public class Leertastenklatsche extends GameEntryPoint {
             double rng=Math.random();
             if(rng<0.5)
                 px=0;
-            Logger.log(rng);
+            //Logger.log(this.getClass() + ": rng=" + rng);
             enemyvirus.setPosition( px, WindowConfig.window_height*0.6 );
 
             enemyList.add( enemyvirus );
@@ -154,7 +154,7 @@ public class Leertastenklatsche extends GameEntryPoint {
         }
 
         String pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (100 * score);
-        Logger.log(getClass()+" Score: "+score);
+        //Logger.log(getClass()+" Score: "+score);
 
         gc.fillText( pointsText, 360, 36 );
         gc.strokeText( pointsText, 360, 36 );
