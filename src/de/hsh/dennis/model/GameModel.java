@@ -11,7 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class GameModel {
 
@@ -19,8 +19,8 @@ public class GameModel {
     private GraphicsContext gc;
 
     private Player player = new Player();
-    private Spawner spawner;
-    private ArrayList<Npc> npcList;
+    private static NpcHandler npcHandler;
+    private List<Npc> npcList;
 
     //private int Score = 0;
     //private int Health = 100;
@@ -31,7 +31,7 @@ public class GameModel {
     private boolean reset = false;
 
     //Audio Stuff
-    private boolean musicStart = true;
+    private boolean musicStart = false;
     private AudioPlayer aa = new AudioPlayer();
 
 
@@ -44,13 +44,13 @@ public class GameModel {
             actInit();
         }
 
-        spawner.move();
-        npcList = spawner.getNpcs();
+        npcHandler.move();
+        npcList = npcHandler.getNpcList();
     }
 
     private void actInit() {
-        if (spawner == null) {
-            spawner = new Spawner(canvas);
+        if (npcHandler == null) {
+            npcHandler = new NpcHandler(canvas);
         }
         if (musicStart) {
             musicStart = false;
@@ -111,15 +111,11 @@ public class GameModel {
         act();
         clearCanvas();
         restetSkin();
-        drawNpcs();
+        NpcHandler.drawNpcs();
         gc.drawImage(player.getSkin_current(), player.getPosX(), player.getPosY());
     }
 
-    private void drawNpcs() {
-        for (Npc npc : npcList) {
-            gc.drawImage(npc.getImage(), npc.getPosX(), npc.getPosY());
-        }
-    }
+
 
     private void clearCanvas() {
         gc.setFill(Color.WHITE);
@@ -128,8 +124,8 @@ public class GameModel {
 
     //debugging
     void spawnTest() {
-        spawner.addNpc(new Package(NPCEnums.Spawn.RIGHT));
-        spawner.addNpc(new Bot(NPCEnums.Spawn.LEFT));
-        spawner.addNpc(new Hacker(NPCEnums.Spawn.RIGHT));
+        npcHandler.addNpc(new Package(NPCEnums.Spawn.RIGHT));
+        npcHandler.addNpc(new Bot(NPCEnums.Spawn.LEFT));
+        npcHandler.addNpc(new Hacker(NPCEnums.Spawn.RIGHT));
     }
 }
