@@ -14,6 +14,7 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 
 import common.updates.UpdateCodes;
+import common.util.Logger;
 import de.hsh.kevin.logic.GameField;
 import de.hsh.kevin.logic.TIConfig;
 
@@ -25,7 +26,7 @@ public class TIGameController extends Observable implements Initializable {
     private GameField gameField;
 
     @FXML
-    public Canvas canvas;
+    public Canvas gameCanvas;
 
     @FXML
     public Button btn_score;
@@ -53,24 +54,29 @@ public class TIGameController extends Observable implements Initializable {
 	    return;
 	}
 
-	this.canvas.setFocusTraversable(true);
+	if(gameCanvas == null) {
+	    Logger.log(this.getClass() + ": Canvas is Null");
+	    return;
+	}
+	
+	this.gameCanvas.setFocusTraversable(true);
 
 	double widthFactor = TIConfig.getDifficultyFactor();
-	this.canvas.setWidth(canvas.getWidth() * widthFactor);
+	this.gameCanvas.setWidth(gameCanvas.getWidth() * widthFactor);
 
 	clearCanvas();
 
-//	gameField = new GameField(this.canvas);
-//	this.canvas.setOnKeyPressed(gameField::movePlayer);
-//	this.canvas.setOnKeyReleased(gameField::movePlayer);
+	gameField = new GameField(this.gameCanvas);
+	this.gameCanvas.setOnKeyPressed(gameField::movePlayer);
+	this.gameCanvas.setOnKeyReleased(gameField::movePlayer);
 
 	initialized = true;
     }
 
     private void clearCanvas() {
-	GraphicsContext gc = canvas.getGraphicsContext2D();
+	GraphicsContext gc = gameCanvas.getGraphicsContext2D();
 	gc.setFill(Color.rgb(100, 100, 100));
-	gc.fillRect(0, 0, this.canvas.getWidth(), canvas.getHeight());
+	gc.fillRect(0, 0, this.gameCanvas.getWidth(), gameCanvas.getHeight());
     }
 
     public void render(int fps) {
@@ -79,11 +85,11 @@ public class TIGameController extends Observable implements Initializable {
 	}
 	clearCanvas();
 
-	this.gameField.getPlayer().draw(this.canvas);
+	this.gameField.getPlayer().draw(this.gameCanvas);
 	if (gameField.getPakete().size() == 0) {
 	    this.gameField.addPaket();
 	    this.gameField.addPaket();
 	}
-	this.gameField.draw(this.canvas);
+	this.gameField.draw(this.gameCanvas);
     }
 }
