@@ -14,7 +14,6 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 
 import common.updates.UpdateCodes;
-import common.util.Logger;
 import de.hsh.kevin.logic.GameField;
 import de.hsh.kevin.logic.TIConfig;
 
@@ -53,12 +52,6 @@ public class TIGameController extends Observable implements Initializable {
 	if (initialized) {
 	    return;
 	}
-
-	if(gameCanvas == null) {
-	    Logger.log(this.getClass() + ": Canvas is Null");
-	    return;
-	}
-	
 	this.gameCanvas.setFocusTraversable(true);
 
 	double widthFactor = TIConfig.getDifficultyFactor();
