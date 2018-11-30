@@ -63,8 +63,8 @@ public class GameEntryPoints extends ArrayList<GameEntryPoint> {
         return false;
     }
 
-    public void render() {
-        this.forEach( GameEntryPoint::render );
+    public void render(int fps) {
+        this.forEach( game -> game.render( fps ) );
     }
 
     public GameEntryPoints[] toArray() {

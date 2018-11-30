@@ -69,7 +69,6 @@ public class Leertastenklatsche extends GameEntryPoint {
         collisionDetection();
         createEnemies();
         parseInput( input );
-        render();
         return root;
     }
     //Getting the input and realizing when stopping input
@@ -143,7 +142,7 @@ public class Leertastenklatsche extends GameEntryPoint {
         }*/
     }
 
-    public void render() {
+    public void render(int fps) {
         parseInput( input );
         gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
 
