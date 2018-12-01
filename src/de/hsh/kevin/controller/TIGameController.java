@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -15,6 +16,7 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 
 import common.updates.UpdateCodes;
+import common.util.Logger;
 import de.hsh.kevin.logic.GameField;
 import de.hsh.kevin.logic.Config;
 
@@ -61,9 +63,18 @@ public class TIGameController extends Observable implements Initializable {
 	clearCanvas();
 
 	gameField = new GameField(this.gameCanvas);
-	this.gameCanvas.setOnKeyPressed(gameField::movePlayer);
-	this.gameCanvas.setOnKeyReleased(gameField::movePlayer);
 
+	this.gameCanvas.setOnKeyPressed(keyEvent -> {
+	    if (keyEvent.getCode() == KeyCode.SPACE || keyEvent.getCode() == KeyCode.NUMPAD0) {
+		gameField.spawnProjectile();
+	    } else {
+		gameField.movePlayer(keyEvent);
+
+	    }
+	});
+	
+	this.gameCanvas.setOnKeyReleased(gameField::movePlayer);
+	
 	initialized = true;
     }
 
@@ -82,7 +93,6 @@ public class TIGameController extends Observable implements Initializable {
 	this.gameField.getPlayer().draw(this.gameCanvas);
 	this.gameField.spawnPakete();
 	this.gameField.draw(this.gameCanvas);
-	
 	this.gameField.moveAll();
 
 	updateLbl_leben();

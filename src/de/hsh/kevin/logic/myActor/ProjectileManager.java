@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.hsh.kevin.logic.Config;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyEvent;
 
 public class ProjectileManager {
 
@@ -20,14 +21,15 @@ public class ProjectileManager {
     }
 
     public void createProjectile(double[] playerPos, double offset) {
+
 	long curMillis = System.currentTimeMillis();
 	if (curMillis >= lastProjectileSpawn + Config.projectileSpawnDelay) {
 	    Projectile p = ProjectileFactory.getProjectile(playerPos[0] + offset, playerPos[1]);
 	    projectile.add(p);
 	    lastProjectileSpawn = curMillis;
 	}
-
     }
+
 
     public void move() {
 	for (int i = 0; i < projectile.size(); i++) {
