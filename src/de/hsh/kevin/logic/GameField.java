@@ -25,22 +25,28 @@ public class GameField {
     private Leben leben;
     private int spawnDelay;
     private int spawnDelayBuffer = 0;
-
-    public GameField(Canvas canvas) {
-	this(Config.getDifficultyOption(), canvas);
+    private boolean projectileSpawning;
+ 
+    public GameField(Canvas canvas, Score score) {
+	this(Config.getDifficultyOption(), canvas, score);
     }
 
-    public GameField(enmDifficultyOptions difficulty, Canvas canvas) {
+    public GameField(enmDifficultyOptions difficulty, Canvas canvas, Score score) {
 	width = canvas.getWidth();
 	height = canvas.getHeight();
 	spawnDelay = (int) (Config.getSpawnDelay());
 
-	score = new Score();
+	this.score = score;
 	leben = new Leben();
-	paketManager = new PaketManager(width, height);
+	paketManager = new PaketManager(width, height, score, leben);
 	projectileManager = new ProjectileManager();
+	projectileSpawning = false;
 
 	initPlayer(canvas);
+    }
+    
+    public void setScore(Score score) {
+	this.score = score;
     }
 
     public double getWidth() {
@@ -52,7 +58,7 @@ public class GameField {
     }
 
     public int getLeben() {
-        return leben.getLeben();
+	return leben.getLeben();
     }
 
     public int getScore() {
@@ -63,19 +69,19 @@ public class GameField {
 	paketManager.draw(canvas);
 	projectileManager.draw(canvas);
     }
-    
+
     public void movePlayer(KeyEvent keyEvent) {
 	this.player.move(keyEvent);
     }
-    
+
     public void movePakete() {
 	paketManager.move();
     }
-    
+
     public void moveProjectiles() {
 	projectileManager.move();
     }
-    
+
     public void moveAll() {
 	movePakete();
 	moveProjectiles();
@@ -103,7 +109,7 @@ public class GameField {
 	p.setPos(width / 2 - p.getWidth() / 2, height - 65);
 	player = p;
     }
-    
+
     public Player getPlayer() {
 	return player;
     }
@@ -116,14 +122,6 @@ public class GameField {
 	paketManager.createNewPaket(0.75);
     }
 
-    private void addGoodPaket() {
-	paketManager.createGoodPaket();
-    }
-
-    private void addBadPaket() {
-	paketManager.createBadPaket();
-    }
-
     public void spawnPakete() {
 	if (spawnDelayBuffer == 0) {
 	    spawnDelayBuffer = spawnDelay;
@@ -132,22 +130,36 @@ public class GameField {
 	if (spawnDelayBuffer == spawnDelay) {
 	    Random rand = new Random();
 	    int number = rand.nextInt(Config.getMaxSpawnCount());
-	    for(int i = 0; i <= number; i++) {
+	    for (int i = 0; i <= number; i++) {
 		addPaket();
 	    }
 	}
 	spawnDelayBuffer--;
     }
-    
+
     public List<Projectile> getProjectiles() {
 	return projectileManager.getProjectiles();
     }
-    
-    private void addProjectile() {
-	projectileManager.createProjectile(player.getPos(), player.getWidth() / 3);
+
+    public void activateProjectileSpawn() {
+	projectileSpawning = true;
+    }
+
+    public void deactivateProjectileSpawn() {
+	projectileSpawning = false;
+    }
+
+    public void spawnProjectile() {
+	if (projectileSpawning) {
+	    projectileManager.createProjectile(player.getPos(), player.getWidth() / 4);
+	}
     }
     
-    public void spawnProjectile() {
-	addProjectile();
+    public void setPlayerFiring() {
+	player.switchFiring();
+    }
+    
+    public void setPlayerIdle() {
+	player.switchIdle();
     }
 }

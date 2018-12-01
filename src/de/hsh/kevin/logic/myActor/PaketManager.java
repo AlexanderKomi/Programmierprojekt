@@ -3,7 +3,8 @@ package de.hsh.kevin.logic.myActor;
 import java.util.ArrayList;
 import java.util.List;
 
-import common.util.Logger;
+import de.hsh.kevin.logic.Leben;
+import de.hsh.kevin.logic.Score;
 import javafx.scene.canvas.Canvas;
 
 public class PaketManager {
@@ -11,11 +12,15 @@ public class PaketManager {
     private ArrayList<Paket> pakete;
     private double width;
     private double height;
+    private Score score;
+    private Leben leben;
 
-    public PaketManager(double width, double height) {
+    public PaketManager(double width, double height, Score score, Leben leben) {
 	pakete = new ArrayList<>();
 	this.width = width;
 	this.height = height;
+	this.score = score;
+	this.leben = leben;
     }
 
     public List<Paket> getPakete() {
@@ -63,6 +68,12 @@ public class PaketManager {
     public void move() {
 	for (int i = 0; i < pakete.size(); i++) {
 	    if (pakete.get(i).getPos()[1] > height) {
+		if(pakete.get(i).getPaketTyp() == enmPaketTyp.good) {
+		    score.increase();
+		} else {
+		    score.decrease();
+		    leben.decrease();
+		}
 		pakete.remove(i);
 	    } else {
 		pakete.get(i).move();

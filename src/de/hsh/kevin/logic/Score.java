@@ -11,25 +11,17 @@ public class Score {
 	return score;
     }
 
-    public void increaseScore() {
-	increaseScore(0);
+    public void increase() {
+	score++;
     }
-
-    /**
-     * 
-     * @param type 0 -> , 1 -> , 2 ->
-     */
-    public void increaseScore(int type) {
-	switch (type) {
-	case 0:
-	    break;
-	case 1:
-	    break;
-	case 2:
-	    break;
-	default:
-	    break;
+    
+    public void decrease() {
+	if(score >= 2) {
+	    score -= 2;
+	} else {
+	    score = 0;
 	}
+	
     }
     
     public void setScore(int score) {

@@ -3,6 +3,8 @@ package de.hsh.kevin.controller;
 
 import common.engine.components.menu.GameMenu;
 import common.updates.UpdateCodes;
+import de.hsh.kevin.logic.Score;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,12 +32,18 @@ public class TIGameOverController extends GameMenu {
     public Label lbl_score;
     
 
-    public TIGameOverController() {
+    public TIGameOverController(Score score) {
+	this.setScore(score);
     }
 
-    public TIGameOverController(Observer observer) {
+    public TIGameOverController(Observer observer, Score score) {
 	super(observer);
+	this.setScore(score);
 
+    }
+    
+    private void setScore(Score score) {
+	Platform.runLater(() -> lbl_score.setText("Score: " + score.getScore()));
     }
 
 

@@ -2,7 +2,9 @@ package de.hsh.kevin.logic.myActor;
 
 import common.actor.ControlableActor;
 import common.actor.Direction;
+import javafx.scene.image.Image;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +14,9 @@ public class Player extends ControlableActor {
     private static final double startX = 250;
     private static final double startY = 750;
     private static final int defaultSpeed = 10;
-    private static final int changePictureDelay = 15;
+    private static Image firingImage;
+    private static Image idleImage;
+    private static boolean isFiring;
 
     public Player(String pictureFileName, HashMap<String, Direction> keyMap) throws FileNotFoundException {
 	this(pictureFileName, startX, startY, keyMap);
@@ -24,15 +28,34 @@ public class Player extends ControlableActor {
 	this.setSpeed(defaultSpeed);
     }
 
-    
+    /**
+     * Setzt das zweite Bild der List<String> als feuerndes Bild und das erste Bild
+     * sonst
+     * 
+     * @param pictureFileName
+     * @param keyMap
+     * @throws FileNotFoundException
+     */
     public Player(List<String> pictureFileName, HashMap<String, Direction> keyMap) throws FileNotFoundException {
 	this(pictureFileName, startX, startY, keyMap);
     }
 
+    /**
+     * Setzt das zweite Bild der List<String> als feuerndes Bild und das erste Bild
+     * sonst
+     * 
+     * @param pictureFileName
+     * @param keyMap
+     * @throws FileNotFoundException
+     */
     public Player(List<String> pictureFileName, double x, double y, HashMap<String, Direction> keyMap)
 	    throws FileNotFoundException {
-	super(pictureFileName, x, y, keyMap, changePictureDelay);
+	super(pictureFileName.get(0), x, y, keyMap);
 	this.setSpeed(defaultSpeed);
+	if (pictureFileName.size() >= 2) {
+	    idleImage = new Image(new FileInputStream(pictureFileName.get(0)));
+	    firingImage = new Image(new FileInputStream(pictureFileName.get(1)));
+	}
     }
 
     @Override
@@ -53,5 +76,26 @@ public class Player extends ControlableActor {
 	});
 	return xyTuple;
     }
+    
+    public void switchFiring() {
+	if(firingImage == null) {
+	    return;
+	}
+	this.setCurrentImage(firingImage);
+	isFiring = true;
+    }
+    
+    public void switchIdle() {
+	if(idleImage == null) {
+	    return;
+	}
+	this.setCurrentImage(idleImage);
+	isFiring = false;
+    }
+    
+    public boolean isFiring() {
+	return isFiring;
+    }
+
 
 }

@@ -4,6 +4,7 @@ import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.kevin.TIFxmlChanger;
+import de.hsh.kevin.logic.Score;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -12,6 +13,7 @@ public class TIController extends GameEntryPoint {
 
     private TIFxmlChanger changer;
     private TIGameController game;
+    private Score score;
 
     public TIController(Observer o) {
 	super(o, UpdateCodes.TunnelInvader.gameName);
@@ -25,14 +27,18 @@ public class TIController extends GameEntryPoint {
 
 	    switch (msg) {
 	    case UpdateCodes.TunnelInvader.playGame:
-		game = new TIGameController();
+		score = new Score();
+		game = new TIGameController(score);
 		changer.changeGameFxml(o, game);
+		break;
+	    case UpdateCodes.TunnelInvader.gameOver:
+		TIGameOverController gameOver = new TIGameOverController(score);
+		changer.changeGameOverFxml(o, gameOver);
 		break;
 	    default:
 		changer.changeFxml(o, (String) arg);
 		break;
 	    }
-
 	}
     }
 
