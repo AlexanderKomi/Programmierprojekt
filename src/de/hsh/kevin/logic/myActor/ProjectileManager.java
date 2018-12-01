@@ -19,10 +19,10 @@ public class ProjectileManager {
 	return projectile;
     }
 
-    public void createProjectile(double[] playerPos) {
+    public void createProjectile(double[] playerPos, double offset) {
 	long curMillis = System.currentTimeMillis();
 	if (curMillis >= lastProjectileSpawn + Config.projectileSpawnDelay) {
-	    Projectile p = ProjectileFactory.getProjectile(playerPos[0], playerPos[1]);
+	    Projectile p = ProjectileFactory.getProjectile(playerPos[0] + offset, playerPos[1]);
 	    projectile.add(p);
 	    lastProjectileSpawn = curMillis;
 	}

@@ -10,6 +10,8 @@ import common.actor.Direction;
 import de.hsh.kevin.logic.myActor.Paket;
 import de.hsh.kevin.logic.myActor.PaketManager;
 import de.hsh.kevin.logic.myActor.Player;
+import de.hsh.kevin.logic.myActor.Projectile;
+import de.hsh.kevin.logic.myActor.ProjectileManager;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
@@ -18,6 +20,7 @@ public class GameField {
     private double height;
     private Score score;
     private PaketManager paketManager;
+    private ProjectileManager projectileManager;
     private Player player;
     private Leben leben;
     private int spawnDelay;
@@ -35,6 +38,7 @@ public class GameField {
 	score = new Score();
 	leben = new Leben();
 	paketManager = new PaketManager(width, height);
+	projectileManager = new ProjectileManager();
 
 	initPlayer(canvas);
     }
@@ -51,17 +55,30 @@ public class GameField {
         return leben.getLeben();
     }
 
-    public Score getTIScore() {
-	return score;
-    }
-
     public int getScore() {
 	return score.getScore();
     }
 
     public void draw(Canvas canvas) {
 	paketManager.draw(canvas);
+	projectileManager.draw(canvas);
+    }
+    
+    public void movePlayer(KeyEvent keyEvent) {
+	this.player.move(keyEvent);
+    }
+    
+    public void movePakete() {
 	paketManager.move();
+    }
+    
+    public void moveProjectiles() {
+	projectileManager.move();
+    }
+    
+    public void moveAll() {
+	movePakete();
+	moveProjectiles();
     }
 
     private void initPlayer(Canvas canvas) {
@@ -86,11 +103,7 @@ public class GameField {
 	p.setPos(width / 2 - p.getWidth() / 2, height - 65);
 	player = p;
     }
-
-    public void movePlayer(KeyEvent keyEvent) {
-	this.player.move(keyEvent);
-    }
-
+    
     public Player getPlayer() {
 	return player;
     }
@@ -99,15 +112,15 @@ public class GameField {
 	return paketManager.getPakete();
     }
 
-    public void addPaket() {
+    private void addPaket() {
 	paketManager.createNewPaket(0.75);
     }
 
-    public void addGoodPaket() {
+    private void addGoodPaket() {
 	paketManager.createGoodPaket();
     }
 
-    public void addBadPaket() {
+    private void addBadPaket() {
 	paketManager.createBadPaket();
     }
 
@@ -124,5 +137,17 @@ public class GameField {
 	    }
 	}
 	spawnDelayBuffer--;
+    }
+    
+    public List<Projectile> getProjectiles() {
+	return projectileManager.getProjectiles();
+    }
+    
+    private void addProjectile() {
+	projectileManager.createProjectile(player.getPos(), player.getWidth() / 3);
+    }
+    
+    public void spawnProjectile() {
+	addProjectile();
     }
 }

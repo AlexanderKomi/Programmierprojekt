@@ -82,6 +82,8 @@ public class TIGameController extends Observable implements Initializable {
 	this.gameField.getPlayer().draw(this.gameCanvas);
 	this.gameField.spawnPakete();
 	this.gameField.draw(this.gameCanvas);
+	
+	this.gameField.moveAll();
 
 	updateLbl_leben();
 	updateLbl_score();
