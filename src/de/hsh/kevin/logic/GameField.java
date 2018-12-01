@@ -8,6 +8,7 @@ import java.util.Random;
 
 import common.actor.Direction;
 import de.hsh.kevin.logic.myActor.Paket;
+import de.hsh.kevin.logic.myActor.PaketManager;
 import de.hsh.kevin.logic.myActor.Player;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;

@@ -5,11 +5,14 @@ import common.util.Path;
 public class Config {
 
     public static final String resLocation = Path.getExecutionLocation() + "de/hsh/kevin/res/";
-    public static final int spawnDelay = 100;
+    public static final int paketSpawnDelay = 100;
+    public static final int projectileSpawnDelay = 10;
+    public static final int maxLife = 4;
+
+    
     private static enmSoundOptions soundConfig = enmSoundOptions.off;
     private static enmDifficultyOptions diffConfig = enmDifficultyOptions.easy;
-    public static int maxLife = 4;
-
+    
     public static void switchSound() {
 	if (soundConfig == enmSoundOptions.off) {
 	    soundConfig = enmSoundOptions.on;
@@ -82,7 +85,7 @@ public class Config {
     }
 
     public static double getSpawnDelay() {
-	return getSpawnFactor() * spawnDelay;
+	return getSpawnFactor() * paketSpawnDelay;
     }
 
     public static int getMaxSpawnCount() {

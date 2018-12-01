@@ -1,7 +1,6 @@
 package de.hsh.kevin.logic.myActor;
 
 import common.actor.Actor;
-import javafx.scene.canvas.Canvas;
 
 import java.io.FileNotFoundException;
 import java.util.List;

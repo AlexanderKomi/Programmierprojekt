@@ -1,11 +1,9 @@
-package de.hsh.kevin.logic;
+package de.hsh.kevin.logic.myActor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import common.util.Logger;
-import de.hsh.kevin.logic.myActor.Paket;
-import de.hsh.kevin.logic.myActor.PaketFactory;
 import javafx.scene.canvas.Canvas;
 
 public class PaketManager {
