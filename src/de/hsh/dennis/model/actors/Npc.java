@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 
 public abstract class Npc extends Actor {
 
+    private double spawnTime;
     private double speed = Config.Level.speed;
     private NPCEnums.Spawn spawnType;
     private NPCEnums.NpcType npcType;
@@ -17,6 +18,32 @@ public abstract class Npc extends Actor {
         super(picturePath);
         setSpawnType(spawnType);
         setNpcType(type);
+
+        switch (type) {
+            case PACKAGE:
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Package.skin_standard.getWidth());
+                setPosY(Config.Player.posY);
+                break;
+            case BOT:
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Bot.skin_standard.getWidth());
+                setPosY(Config.Player.posY + (Config.Player.skin_standard.getHeight() * 0.2));
+                break;
+            case HACKER:
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Hacker.skin_standard.getWidth());
+                setPosY(Config.Player.posY + Config.Player.skin_standard.getHeight() - Config.Hacker.skin_standard.getHeight());
+                break;
+
+            default:
+                Logger.log(this.getClass() + "Switching Default!");
+        }
+
+    }
+
+    Npc(String picturePath, NPCEnums.Spawn spawnType, NPCEnums.NpcType type, double spawnTime) throws FileNotFoundException {
+        super(picturePath);
+        setSpawnType(spawnType);
+        setNpcType(type);
+        setSpawnTime(spawnTime);
 
         switch (type) {
             case PACKAGE:
@@ -88,5 +115,13 @@ public abstract class Npc extends Actor {
 
     public void setNpcType(NPCEnums.NpcType npcType) {
         this.npcType = npcType;
+    }
+
+    public double getSpawnTime() {
+        return spawnTime;
+    }
+
+    public void setSpawnTime(double spawnTime) {
+        this.spawnTime = spawnTime;
     }
 }

@@ -3,10 +3,12 @@ package de.hsh.dennis.model.actors;
 import common.config.WindowConfig;
 import javafx.scene.image.Image;
 
-class Config {
+public class Config {
 
-    static class Level {
+    public static class Level {
         static double speed = 1.0;
+
+        public enum Difficulty {EASY, MEDIUM, HARD, NIGHTMARE, CUSTOM}
     }
 
     static class Player {

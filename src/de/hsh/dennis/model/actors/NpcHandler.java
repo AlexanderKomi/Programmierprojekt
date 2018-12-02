@@ -26,7 +26,7 @@ public class NpcHandler {
         this.canvas = canvas;
     }
 
-    public void addNpc(Npc npc) {
+    public void spawn(Npc npc) {
         if (npcList.size() <= npcLimit) {
             getNpcList().add(npc);
         }
@@ -118,5 +118,9 @@ public class NpcHandler {
             }
             removeNpcs();
         }
+    }
+
+    public void setLevel(Config.Level.Difficulty dif) {
+
     }
 }

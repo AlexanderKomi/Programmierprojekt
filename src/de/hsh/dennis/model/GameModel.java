@@ -1,8 +1,10 @@
 package de.hsh.dennis.model;
 
+import com.google.gson.Gson;
 import common.actor.Direction;
 import common.updates.UpdateCodes;
 import common.util.Logger;
+import common.util.Path;
 import de.hsh.dennis.model.KeyLayout.Movement.Custom;
 import de.hsh.dennis.model.actors.*;
 import de.hsh.dennis.model.audio.AudioPlayer;
@@ -20,17 +22,24 @@ import java.util.Observable;
 
 public class GameModel extends Observable {
 
+    //Score & Health
     public static int health;
     public static StringProperty health_string = new SimpleStringProperty("100");
     public static int score;
     public static StringProperty score_string = new SimpleStringProperty("0");
-    private static NpcHandler npcHandler;
+
+    //GAME STATES
     public boolean gameLost = false;
     public boolean gameFinished = false;
+
+    //Objects
+    private NpcHandler npcHandler;
     private Canvas canvas;
     private GraphicsContext gc;
     private Player player;
     private List<Npc> npcList;
+    private JsonNpc[] spawnArray;
+
     //animation timing values
     private double animationDelay = 0.5; //animation delay in seconds
     private long skinResetTimer;
@@ -75,6 +84,7 @@ public class GameModel extends Observable {
     private void actInit() {
         if (npcHandler == null) {
             npcHandler = new NpcHandler(canvas);
+            loadLevel(Config.Level.Difficulty.EASY);
         }
         if (musicStart) {
             musicStart = false;
@@ -84,6 +94,32 @@ public class GameModel extends Observable {
         score = 0;
         health = 100;
         ai = true;
+    }
+
+    private void loadLevel(Config.Level.Difficulty dif) {
+//TODO: Loading Json files correctly
+        /*
+        Gson gson = new Gson();
+        spawnArray = new JsonNpc[] {new JsonNpc(0.10, 1.0, NPCEnums.Spawn.LEFT, NPCEnums.NpcType.BOT), new JsonNpc(0.10, 1.0, NPCEnums.Spawn.LEFT, NPCEnums.NpcType.BOT)};
+        try {
+            String json = gson.toJson(spawnArray);
+            FileWriter writer = new FileWriter("test3.json");
+            writer.write(json);
+            writer.close();
+            Logger.log("gson");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
+
+        try {
+            spawnArray = new Gson().fromJson(Path.getExecutionLocation() + "de/hsh/dennis/resources/levelFiles/easy.json", JsonNpc[].class);
+            Logger.log("gson");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     // --- /ACT -----------------------------------------------------------------------------------
@@ -197,9 +233,9 @@ public class GameModel extends Observable {
     //debugging
     void debugging() {
         try {
-            //npcHandler.addNpc(new Package(NPCEnums.Spawn.RIGHT));
-            npcHandler.addNpc(new Bot(NPCEnums.Spawn.RIGHT));
-            //npcHandler.addNpc(new Hacker(NPCEnums.Spawn.RIGHT));
+            //npcHandler.spawn(new Package(NPCEnums.Spawn.RIGHT));
+            npcHandler.spawn(new Bot(NPCEnums.Spawn.RIGHT));
+            //npcHandler.spawn(new Hacker(NPCEnums.Spawn.RIGHT));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

@@ -1,0 +1,14 @@
+[
+  {
+    "spawnTime": 0.1,
+    "speed": 1.0,
+    "spawnType": "LEFT",
+    "npcType": "BOT"
+  },
+  {
+    "spawnTime": 0.1,
+    "speed": 1.0,
+    "spawnType": "LEFT",
+    "npcType": "BOT"
+  }
+]

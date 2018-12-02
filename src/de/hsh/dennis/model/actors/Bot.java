@@ -2,7 +2,6 @@ package de.hsh.dennis.model.actors;
 
 
 import common.util.Path;
-import javafx.scene.image.Image;
 
 import java.io.FileNotFoundException;
 
@@ -15,11 +14,16 @@ public class Bot extends Npc {
     private double bounceSpeed = getSpeed() / 2.0;
     private boolean bounceInitialized = false;
 
-    private Image skin_current;
 
     public Bot(NPCEnums.Spawn spawnType) throws FileNotFoundException {
         super(pictureFileName, spawnType, NPCEnums.NpcType.BOT);
-        skin_current = Config.Bot.skin_standard;
+        setCurrentImage(Config.Bot.skin_standard);
+        bounceInit();
+    }
+
+    public Bot(NPCEnums.Spawn spawnType, double spawnTime) throws FileNotFoundException {
+        super(pictureFileName, spawnType, NPCEnums.NpcType.BOT, spawnTime);
+        setCurrentImage(Config.Bot.skin_standard);
 
         bounceInit();
     }
