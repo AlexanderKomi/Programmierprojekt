@@ -2,6 +2,7 @@ package de.hsh.dennis.controller;
 
 import common.updates.UpdateCodes;
 import common.util.Logger;
+import de.hsh.dennis.model.GameModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -52,6 +53,10 @@ public class Level_controller extends Observable implements Initializable {
             tf_score.setText("0");
             tf_health.setOnKeyPressed(this::key_pressed);
             tf_score.setOnKeyPressed(this::key_pressed);
+
+            tf_score.textProperty().bind(GameModel.score_string);
+            tf_health.textProperty().bind(GameModel.health_string);
+
             this.canvas.setFocusTraversable(true);  //!!!must have!!! for a working canvas
             Logger.log("initializing DONE");
         }

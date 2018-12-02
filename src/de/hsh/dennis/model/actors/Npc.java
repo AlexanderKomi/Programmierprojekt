@@ -11,11 +11,12 @@ public abstract class Npc extends Actor {
     private double positionX;
     private double positionY;
     private NPCEnums.Spawn spawnType;
+    private NPCEnums.NpcType npcType;
 
     Npc(String pictureFileName, String dir, NPCEnums.Spawn spawnType, NPCEnums.NpcType type) {
         super(pictureFileName, dir);
         setSpawnType(spawnType);
-
+        setNpcType(type);
 
         switch (type) {
             case PACKAGE:
@@ -79,5 +80,13 @@ public abstract class Npc extends Actor {
 
     double getSpeed() {
         return speed;
+    }
+
+    public NPCEnums.NpcType getNpcType() {
+        return npcType;
+    }
+
+    public void setNpcType(NPCEnums.NpcType npcType) {
+        this.npcType = npcType;
     }
 }

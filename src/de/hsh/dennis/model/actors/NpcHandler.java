@@ -1,5 +1,6 @@
 package de.hsh.dennis.model.actors;
 
+import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;
@@ -14,6 +15,11 @@ public class NpcHandler {
     private static final List<Npc> npcList = Collections.synchronizedList(new ArrayList());
     private final List<Npc> npcsToRemove = Collections.synchronizedList(new ArrayList());
 
+    private int scoreChange = 0;
+    private int healthChange = 0;
+
+    private int pointValue = 10;
+
 
     public NpcHandler(Canvas canvas) {
         this.canvas = canvas;
@@ -25,13 +31,45 @@ public class NpcHandler {
         }
     }
 
-    public void removeNpc(Npc npc) {
-        getNpcList().remove(npc);
+    private void removeNpcs() {
+        synchronized (npcList) {
+            for (Npc npc : npcsToRemove) {
+                switch (npc.getNpcType()) {
+                    case PACKAGE:
+                        scoreChange += pointValue;
+                        healthChange += pointValue;
+                        break;
+                    case BOT:
+                        healthChange -= pointValue;
+                        break;
+                    case HACKER:
+                        scoreChange += pointValue;
+                        break;
+                    default:
+                        Logger.log(this.getClass() + "Switching in removeNpcs : default.");
+                }
+                npcList.remove(npc);
+            }
+            npcsToRemove.clear();
+        }
+
     }
 
     public List<Npc> getNpcList() {
 
         return npcList;
+    }
+
+    public int getScoreChange() {
+        int temp = scoreChange;
+        scoreChange = 0;
+        return temp;
+    }
+
+    public int getHealthChange() {
+        int temp = healthChange;
+        healthChange = 0;
+        return temp;
     }
 
     public static void drawNpcs() {
@@ -51,10 +89,7 @@ public class NpcHandler {
                     npc.move();
                 }
             }
-            for (Npc npc : npcsToRemove) {
-                npcList.remove(npc);
-            }
-            npcsToRemove.clear();
+            removeNpcs();
         }
     }
 }

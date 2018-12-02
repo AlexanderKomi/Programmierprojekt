@@ -6,6 +6,8 @@ import de.hsh.dennis.model.KeyLayout.Movement.Custom;
 import de.hsh.dennis.model.actors.Package;
 import de.hsh.dennis.model.actors.*;
 import de.hsh.dennis.model.audio.AudioPlayer;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -22,8 +24,12 @@ public class GameModel {
     private static NpcHandler npcHandler;
     private List<Npc> npcList;
 
-    //private int Score = 0;
-    //private int Health = 100;
+
+    public static int health = 100;
+    public static StringProperty health_string = new SimpleStringProperty("100");
+    public static int score = 0;
+    public static StringProperty score_string = new SimpleStringProperty("0");
+
 
     //animation timing values
     private double animationDelay = 0.5; //animation delay in seconds
@@ -45,6 +51,8 @@ public class GameModel {
         }
 
         npcHandler.move();
+        updateHealth(npcHandler.getHealthChange());
+        updateScore(npcHandler.getScoreChange());
         npcList = npcHandler.getNpcList();
     }
 
@@ -68,7 +76,7 @@ public class GameModel {
         if (k == Custom.UP || k == Custom.UP_ALT) {
             player.changeSkin(Direction.Up);
             setResetTimer();
-            spawnTest();
+            debugging();
             return;
         } else if (k == Custom.LEFT || k == Custom.LEFT_ALT) {
             player.changeSkin(Direction.Left);
@@ -91,7 +99,7 @@ public class GameModel {
         reset = true;
     }
 
-    private void restetSkin() {
+    private void resetSkin() {
         if (reset) {
             double elapsedTime = System.currentTimeMillis() - skinResetTimer;
             double elapsedSeconds = elapsedTime / 1000;
@@ -110,7 +118,7 @@ public class GameModel {
     public void render() {
         act();
         clearCanvas();
-        restetSkin();
+        resetSkin();
         NpcHandler.drawNpcs();
         gc.drawImage(player.getSkin_current(), player.getPosX(), player.getPosY());
     }
@@ -122,8 +130,19 @@ public class GameModel {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
+    public void updateScore(int addToScore) {
+        score += addToScore;
+        score_string.set(Integer.toString(score));
+
+    }
+
+    public void updateHealth(int addToHealth) {
+        health += addToHealth;
+        health_string.set(Integer.toString(health));
+    }
+
     //debugging
-    void spawnTest() {
+    void debugging() {
         npcHandler.addNpc(new Package(NPCEnums.Spawn.RIGHT));
         npcHandler.addNpc(new Bot(NPCEnums.Spawn.LEFT));
         npcHandler.addNpc(new Hacker(NPCEnums.Spawn.RIGHT));
