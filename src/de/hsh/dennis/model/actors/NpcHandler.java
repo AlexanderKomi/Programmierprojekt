@@ -12,7 +12,7 @@ public class NpcHandler {
 
     private static Canvas canvas;
     private static final List<Npc> npcList = Collections.synchronizedList(new ArrayList());
-    private List<Npc> npcsToRemove = Collections.synchronizedList(new ArrayList());
+    private final List<Npc> npcsToRemove = Collections.synchronizedList(new ArrayList());
 
 
     public NpcHandler(Canvas canvas) {
