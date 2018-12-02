@@ -4,14 +4,11 @@ import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
-import common.updates.UpdateTunnelInvader;
-import de.hsh.dennis.controller.MainMenu_controller;
 import de.hsh.kevin.controller.TIGameController;
 import de.hsh.kevin.controller.TIGameOverController;
 import de.hsh.kevin.controller.TIMenuController;
 
 import java.util.Observable;
-import java.util.Observer;
 
 public class TIFxmlChanger extends FxmlChanger {
 
@@ -30,14 +27,15 @@ public class TIFxmlChanger extends FxmlChanger {
 	}
     }
 
+    public void changeGameFxml(Observable o, TIGameController game) {
+	changeScene(TIGameController.fxml, game);
+    }
+
     private void handle_TIMenuController(String msg) {
+
 	switch (msg) {
 	case UpdateCodes.DefaultCodes.exitToMainGUI:
 	    ((GameEntryPoint) getFxModul()).exitToMainGUI();
-	    break;
-	case UpdateCodes.TunnelInvader.startGame:
-	    // TODO
-	    // changeScene(TIGameController.fxml, new TIGameController();
 	    break;
 	}
     }
@@ -45,7 +43,6 @@ public class TIFxmlChanger extends FxmlChanger {
     private void handle_TIGameController(String msg) {
 	switch (msg) {
 	case UpdateCodes.TunnelInvader.gameOver:
-	    // TODO
 	    changeScene(TIGameOverController.fxml, new TIGameOverController());
 	    break;
 	}
@@ -55,10 +52,6 @@ public class TIFxmlChanger extends FxmlChanger {
 	switch (msg) {
 	case UpdateCodes.DefaultCodes.exitToMainGUI:
 	    ((GameEntryPoint) getFxModul()).exitToMainGUI();
-	    break;
-	case UpdateCodes.TunnelInvader.startGame:
-	    // TODO
-	    // changeScene(TIGameController.fxml, new TIGameController();
 	    break;
 	case UpdateCodes.TunnelInvader.gameMenu:
 	    changeScene(TIMenuController.fxml, new TIMenuController());

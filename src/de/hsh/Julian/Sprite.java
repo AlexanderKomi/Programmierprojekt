@@ -54,6 +54,10 @@ public class Sprite
             }
         }
 
+    public double getWidth() {
+        return width;
+    }
+
     public void setPosition(double x, double y)
     {
         positionX = x;
@@ -76,6 +80,30 @@ public class Sprite
     {
         positionX += velocityX * time;
         positionY += velocityY * time;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public double getPositionX() {
+        return positionX;
+    }
+
+    public double getPositionY() {
+        return positionY;
+    }
+
+    public double getVelocityX() {
+        return velocityX;
+    }
+
+    public double getVelocityY() {
+        return velocityY;
+    }
+
+    public double getHeight() {
+        return height;
     }
 
     public void render(GraphicsContext gc)

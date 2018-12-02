@@ -1,62 +1,101 @@
 package de.hsh.kevin.logic;
 
-import common.config.WindowConfig;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import common.actor.Direction;
+import de.hsh.kevin.logic.myActor.Paket;
+import de.hsh.kevin.logic.myActor.Player;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyEvent;
 
 public class GameField {
-    private int width;
-    private int height;
-    private TIDifficulty diff;
-    
-    private int x = 0;
-    private int y = 0;
-    
-    public GameField() {
-	diff = new TIDifficulty();
-	width = (int)(WindowConfig.window_width / 2 * diff.getFactor());
-	height = WindowConfig.window_height;
-	x = WindowConfig.window_width / 2;
-	y = 0;
-    }
-    
-    public GameField(TIDifficulty difficulty) {
-	diff = difficulty;
-	
+    private double width;
+    private double height;
+    private TIScore score;
+    private PaketManager paketManager;
+    private Player player;
+
+    public GameField(Canvas canvas) {
+	this(TIConfig.getDifficultyOption(), canvas);
     }
 
-    public int getWidth() {
-        return width;
+    public GameField(enmDifficultyOptions difficulty, Canvas canvas) {
+	width = canvas.getWidth();
+	height = canvas.getHeight();
+
+	score = new TIScore();
+	paketManager = new PaketManager(width);
+
+	initPlayer(canvas);
     }
 
-    public void setWidth(int width) {
-        this.width = width;
+    public double getWidth() {
+	return width;
     }
 
-    public int getHeight() {
-        return height;
+    public double getHeight() {
+	return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public TIScore getTIScore() {
+	return score;
     }
 
-    public int getX() {
-        return x;
+    public int getScore() {
+	return score.getScore();
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void draw(Canvas canvas) {
+	paketManager.draw(canvas);
     }
 
-    public int getY() {
-        return y;
+    private void initPlayer(Canvas canvas) {
+	HashMap<String, Direction> playerKeyMap = new HashMap<>();
+	playerKeyMap.put("A", Direction.Left);
+	playerKeyMap.put("D", Direction.Right);
+
+	// TODO Movement nach links (Taste rechts) ist dauerhaft (Easteregg)
+	playerKeyMap.put("Left", Direction.Right);
+	playerKeyMap.put("Right", Direction.Left);
+
+	ArrayList<String> playerImages = new ArrayList<>();
+	playerImages.add(TIConfig.resLocation + "player/player1.png");
+	playerImages.add(TIConfig.resLocation + "player/player2.png");
+
+	Player p = null;
+	try {
+	    p = new Player(playerImages, playerKeyMap);
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	}
+	p.setPos(width / 2 - p.getWidth() / 2, height - 65);
+	player = p;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void movePlayer(KeyEvent keyEvent) {
+	this.player.move(keyEvent);
     }
-    
-    
-    
-    
 
+    public Player getPlayer() {
+	return player;
+    }
+
+    public List<Paket> getPakete() {
+	return paketManager.getPakete();
+    }
+
+    public void addPaket() {
+	paketManager.createNewPaket(0.75);
+    }
+
+    public void addGoodPaket() {
+	paketManager.createGoodPaket();
+    }
+
+    public void addBadPaket() {
+	paketManager.createBadPaket();
+    }
 }

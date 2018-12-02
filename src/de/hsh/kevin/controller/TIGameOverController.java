@@ -2,6 +2,7 @@ package de.hsh.kevin.controller;
 
 
 import common.engine.components.menu.GameMenu;
+import common.updates.UpdateCodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -40,17 +41,20 @@ public class TIGameOverController extends GameMenu {
 
     @FXML
     void menuPressed(ActionEvent event) {
-
-    }
+	this.setChanged();
+	this.notifyObservers(UpdateCodes.TunnelInvader.gameMenu);    }
 
     @FXML
     void nochamalPressed(ActionEvent event) {
-
+	this.setChanged();
+	this.notifyObservers(UpdateCodes.TunnelInvader.playGame);
     }
 
     @FXML
     void sammlungPressed(ActionEvent event) {
-
+	this.setChanged();
+	this.notifyObservers(UpdateCodes.TunnelInvader.gameMenu);
+	this.notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
     }
 
 }

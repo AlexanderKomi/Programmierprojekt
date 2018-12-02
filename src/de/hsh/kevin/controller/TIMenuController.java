@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 
 import java.util.Observable;
 
-public class TIMenuController extends Observable {
+public class TIMenuController extends Observable{
 
     public static final String fxml = "res/TIMenu.fxml";
 
@@ -25,9 +25,6 @@ public class TIMenuController extends Observable {
 
     @FXML
     public Button btn_sammlung;
-
-    @FXML
-    public Button btn_exit;
 
     @FXML
     void difficultyPressed(ActionEvent event) {
@@ -70,6 +67,7 @@ public class TIMenuController extends Observable {
     @FXML
     void startGamePressed(ActionEvent event) {
 	this.setChanged();
-	this.notifyObservers(UpdateCodes.TunnelInvader.startGame);
+	this.notifyObservers(UpdateCodes.TunnelInvader.playGame);
     }
+
 }
