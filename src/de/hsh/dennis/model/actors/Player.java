@@ -2,93 +2,73 @@ package de.hsh.dennis.model.actors;
 
 import common.actor.Actor;
 import common.actor.Direction;
+import common.util.Path;
 import javafx.scene.image.Image;
+
+import java.io.FileNotFoundException;
 
 public class Player extends Actor {
 
-    //GameLogic
-    private int health = 100;
-    private int score = 0;
-
     //Visuals
-    private Image skin_current;
-    private final double posX = Config.Player.posX;
-    private final double posY = Config.Player.posY;
+    private static final String pictureFileName = Path.getExecutionLocation() + "de/hsh/dennis/resources/actors/Player/player_standard.png";
+    private Direction currentDirection = Direction.Non;
 
-
-    public Player() {
-        super("player_standard.png", "de/hsh/dennis/resources/actors/Player/");
+    public Player() throws FileNotFoundException {
+        super(pictureFileName, Config.Player.posX, Config.Player.posY);
         setSkinToDefault();
     }
 
     public void changeSkin(Direction dir) {
         switch (dir) {
             case Left:
-                skin_current = Config.Player.skin_left;
+                setSkin(Config.Player.skin_left);
+                setDirection(Direction.Left);
                 break;
             case Right:
-                skin_current = Config.Player.skin_right;
+                setSkin(Config.Player.skin_right);
+                setDirection(Direction.Right);
                 break;
             case Up:
-                skin_current = Config.Player.skin_up;
+                setSkin(Config.Player.skin_up);
+                setDirection(Direction.Up);
                 break;
             case Down:
-                skin_current = Config.Player.skin_down;
+                setSkin(Config.Player.skin_down);
+                setDirection(Direction.Down);
                 break;
 
         }
     }
-
-    // --- Utils ----------------------------------------------------------------------------------
-
-    public void damage(int d) {
-        if ((getHealth() - d) <= 0) {
-            setHealth(0);
-        } else {
-            setHealth(getHealth() - d);
-        }
-    }
-
-    public void heal(int h) {
-        if ((getHealth() + h) >= 100) {
-            setHealth(100);
-        } else {
-            setHealth(getHealth() + h);
-        }
-    }
-
 
     // --- Getter & Setter ------------------------------------------------------------------------
 
-    public void setSkinToDefault() {
-        skin_current = Config.Player.skin_standard;
+    public void setDirection(Direction dir) {
+        this.currentDirection = dir;
     }
 
-    public Image getSkin_current() {
-        return skin_current;
+    public Direction getDirection() {
+        return this.currentDirection;
+    }
+
+    public void setSkinToDefault() {
+        setCurrentImage(Config.Player.skin_standard);
+        setDirection(Direction.Non);
+    }
+
+    public void setSkin(Image img) {
+        setCurrentImage(img);
+    }
+
+    public Image getSkin() {
+        return this.getCurrentImage();
     }
 
     public double getPosX() {
-        return posX;
+        return this.getX();
     }
 
     public double getPosY() {
-        return posY;
+        return this.getY();
     }
 
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
 }

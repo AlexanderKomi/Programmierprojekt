@@ -14,6 +14,7 @@ public class NpcHandler {
     private static Canvas canvas;
     private static final List<Npc> npcList = Collections.synchronizedList(new ArrayList());
     private final List<Npc> npcsToRemove = Collections.synchronizedList(new ArrayList());
+    private final List<Npc> npcsToHit = Collections.synchronizedList(new ArrayList());
 
     private int scoreChange = 0;
     private int healthChange = 0;
@@ -31,16 +32,17 @@ public class NpcHandler {
         }
     }
 
+    //TODO: implement all game behaviors
     private void removeNpcs() {
         synchronized (npcList) {
-            for (Npc npc : npcsToRemove) {
+            for (Npc npc : npcsToHit) {
                 switch (npc.getNpcType()) {
                     case PACKAGE:
                         scoreChange += pointValue;
                         healthChange += pointValue;
                         break;
                     case BOT:
-                        healthChange -= pointValue;
+                        healthChange += pointValue;
                         break;
                     case HACKER:
                         scoreChange += pointValue;
@@ -49,10 +51,35 @@ public class NpcHandler {
                         Logger.log(this.getClass() + "Switching in removeNpcs : default.");
                 }
                 npcList.remove(npc);
+
             }
+            npcsToHit.clear();
+            for (Npc npc : npcsToRemove) {
+                switch (npc.getNpcType()) {
+                    case PACKAGE:
+                        scoreChange -= pointValue;
+                        break;
+                    case BOT:
+                        scoreChange -= pointValue;
+                        healthChange -= pointValue;
+                        break;
+                    case HACKER:
+                        scoreChange -= pointValue;
+                        break;
+                    default:
+                        Logger.log(this.getClass() + "Switching in removeNpcs : default.");
+                }
+                npcList.remove(npc);
+            }
+
+
             npcsToRemove.clear();
         }
 
+    }
+
+    public void hitNpc(Npc npc) {
+        npcsToHit.add(npc);
     }
 
     public List<Npc> getNpcList() {

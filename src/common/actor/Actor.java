@@ -134,7 +134,7 @@ public class Actor {
 
     // ----------------------------------- GETTER AND SETTER -----------------------------------
 
-    private Image getCurrentImage() {
+    public Image getCurrentImage() {
         return currentImage;
     }
 
@@ -163,19 +163,19 @@ public class Actor {
         return new double[] { this.getX(), this.getY() };
     }
 
-    protected double getX() {
+    public double getX() {
         return x;
     }
 
-    protected double getY() {
+    public double getY() {
         return y;
     }
 
-    void setY( double y ) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    void setX( double x ) {
+    public void setX(double x) {
         this.x = x;
     }
 

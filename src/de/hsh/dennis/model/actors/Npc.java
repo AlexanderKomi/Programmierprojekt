@@ -5,31 +5,31 @@ import common.config.WindowConfig;
 import common.util.Logger;
 import javafx.scene.image.Image;
 
+import java.io.FileNotFoundException;
+
 public abstract class Npc extends Actor {
 
     private double speed = Config.Level.speed;
-    private double positionX;
-    private double positionY;
     private NPCEnums.Spawn spawnType;
     private NPCEnums.NpcType npcType;
 
-    Npc(String pictureFileName, String dir, NPCEnums.Spawn spawnType, NPCEnums.NpcType type) {
-        super(pictureFileName, dir);
+    Npc(String picturePath, NPCEnums.Spawn spawnType, NPCEnums.NpcType type) throws FileNotFoundException {
+        super(picturePath);
         setSpawnType(spawnType);
         setNpcType(type);
 
         switch (type) {
             case PACKAGE:
-                setPositionX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Package.skin_standard.getWidth());
-                setPositionY(Config.Player.posY);
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Package.skin_standard.getWidth());
+                setPosY(Config.Player.posY);
                 break;
             case BOT:
-                setPositionX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Bot.skin_standard.getWidth());
-                setPositionY(Config.Player.posY + (Config.Player.skin_standard.getHeight() * 0.2));
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Bot.skin_standard.getWidth());
+                setPosY(Config.Player.posY + (Config.Player.skin_standard.getHeight() * 0.2));
                 break;
             case HACKER:
-                setPositionX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Hacker.skin_standard.getWidth());
-                setPositionY(Config.Player.posY + Config.Player.skin_standard.getHeight() - Config.Hacker.skin_standard.getHeight());
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Hacker.skin_standard.getWidth());
+                setPosY(Config.Player.posY + Config.Player.skin_standard.getHeight() - Config.Hacker.skin_standard.getHeight());
                 break;
 
             default:
@@ -39,7 +39,7 @@ public abstract class Npc extends Actor {
     }
 
     void move() {
-        setPositionX((spawnType == NPCEnums.Spawn.RIGHT) ? (getPosX() - getSpeed()) : (getPosX() + getSpeed()));
+        setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? (getPosX() - getSpeed()) : (getPosX() + getSpeed()));
 
     }
 
@@ -47,26 +47,26 @@ public abstract class Npc extends Actor {
     // --- Getter & Setter ------------------------------------------------------------------------
 
     public Image getImage() {
-        return this.getPicture();
+        return this.getCurrentImage();
     }
 
     public double getPosX() {
-        return positionX;
+        return this.getX();
     }
 
-    void setPositionX(double positionX) {
-        this.positionX = positionX;
+    void setPosX(double positionX) {
+        this.setX(positionX);
     }
 
     public double getPosY() {
-        return positionY;
+        return this.getY();
     }
 
-    void setPositionY(double positionY) {
-        this.positionY = positionY;
+    void setPosY(double positionY) {
+        this.setY(positionY);
     }
 
-    NPCEnums.Spawn getSpawnType() {
+    public NPCEnums.Spawn getSpawnType() {
         return spawnType;
     }
 

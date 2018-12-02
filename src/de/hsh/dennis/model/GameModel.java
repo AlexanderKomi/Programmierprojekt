@@ -1,9 +1,9 @@
 package de.hsh.dennis.model;
 
 import common.actor.Direction;
+import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.dennis.model.KeyLayout.Movement.Custom;
-import de.hsh.dennis.model.actors.Package;
 import de.hsh.dennis.model.actors.*;
 import de.hsh.dennis.model.audio.AudioPlayer;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,24 +13,24 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+import java.util.Observable;
 
-public class GameModel {
+public class GameModel extends Observable {
 
+    public static int health;
+    public static StringProperty health_string = new SimpleStringProperty("100");
+    public static int score;
+    public static StringProperty score_string = new SimpleStringProperty("0");
+    private static NpcHandler npcHandler;
+    public boolean gameLost = false;
+    public boolean gameFinished = false;
     private Canvas canvas;
     private GraphicsContext gc;
-
-    private Player player = new Player();
-    private static NpcHandler npcHandler;
+    private Player player;
     private List<Npc> npcList;
-
-
-    public static int health = 100;
-    public static StringProperty health_string = new SimpleStringProperty("100");
-    public static int score = 0;
-    public static StringProperty score_string = new SimpleStringProperty("0");
-
-
     //animation timing values
     private double animationDelay = 0.5; //animation delay in seconds
     private long skinResetTimer;
@@ -39,21 +39,37 @@ public class GameModel {
     //Audio Stuff
     private boolean musicStart = false;
     private AudioPlayer aa = new AudioPlayer();
-
-
     // --- ACT ------------------------------------------------------------------------------------
     private boolean ai = false;
 
 
-    private void act() {
-        if (!ai) {
-            actInit();
+    public GameModel() {
+        try {
+            player = new Player();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
+    }
 
-        npcHandler.move();
-        updateHealth(npcHandler.getHealthChange());
-        updateScore(npcHandler.getScoreChange());
-        npcList = npcHandler.getNpcList();
+    public void act() {
+        if (!checkEnd()) {
+            if (!ai) {
+                actInit();
+            }
+
+            npcHandler.move();
+            updateHealth(npcHandler.getHealthChange());
+            updateScore(npcHandler.getScoreChange());
+            npcList = npcHandler.getNpcList();
+            collideCheck();
+
+            clearCanvas();
+            resetSkin();
+            NpcHandler.drawNpcs();
+            gc.drawImage(player.getSkin(), player.getPosX(), player.getPosY());
+        } else {
+            clearCanvas();
+        }
     }
 
     private void actInit() {
@@ -65,7 +81,8 @@ public class GameModel {
             aa.loadFile(this.getClass().getResource("audio/jingle.mp3").getPath());
             aa.play();
         }
-
+        score = 0;
+        health = 100;
         ai = true;
     }
 
@@ -94,6 +111,23 @@ public class GameModel {
         Logger.log("unbidden Key Input \'" + k + "\'");
     }
 
+    private void collideCheck() {
+        Npc temp = getNextNpc();
+        if (temp != null) {
+            if (temp.getSpawnType() == NPCEnums.Spawn.RIGHT && player.getDirection() == Direction.Right) {
+                if (player.doesCollide(temp)) {
+                    Logger.log("hit right");
+                    npcHandler.hitNpc(temp);
+                }
+            } else if (temp.getSpawnType() == NPCEnums.Spawn.LEFT && player.getDirection() == Direction.Left) {
+                if (player.doesCollide(temp)) {
+                    Logger.log("hit left");
+                    npcHandler.hitNpc(temp);
+                }
+            }
+        }
+    }
+
     private void setResetTimer() {
         skinResetTimer = System.currentTimeMillis();
         reset = true;
@@ -115,15 +149,18 @@ public class GameModel {
         gc = this.canvas.getGraphicsContext2D();
     }
 
-    public void render() {
-        act();
-        clearCanvas();
-        resetSkin();
-        NpcHandler.drawNpcs();
-        gc.drawImage(player.getSkin_current(), player.getPosX(), player.getPosY());
+    private boolean checkEnd() {
+        if (gameLost) {
+            setChanged();
+            notifyObservers(UpdateCodes.Dennis.gameLost);
+            return true;
+        } else if (gameFinished) {
+            setChanged();
+            notifyObservers(UpdateCodes.Dennis.gameWon);
+            return true;
+        }
+        return false;
     }
-
-
 
     private void clearCanvas() {
         gc.setFill(Color.WHITE);
@@ -131,20 +168,41 @@ public class GameModel {
     }
 
     public void updateScore(int addToScore) {
-        score += addToScore;
+        if (score + addToScore <= 0) {
+            score = 0;
+        } else {
+            score += addToScore;
+        }
         score_string.set(Integer.toString(score));
 
     }
 
     public void updateHealth(int addToHealth) {
-        health += addToHealth;
+        if (health + addToHealth <= 0) {
+            health = 0;
+            gameLost = true;
+        } else {
+            health += addToHealth;
+        }
         health_string.set(Integer.toString(health));
+    }
+
+    private Npc getNextNpc() {
+        if (npcList.size() > 0) {
+            return npcList.get(0);
+        }
+        return null;
     }
 
     //debugging
     void debugging() {
-        npcHandler.addNpc(new Package(NPCEnums.Spawn.RIGHT));
-        npcHandler.addNpc(new Bot(NPCEnums.Spawn.LEFT));
-        npcHandler.addNpc(new Hacker(NPCEnums.Spawn.RIGHT));
+        try {
+            //npcHandler.addNpc(new Package(NPCEnums.Spawn.RIGHT));
+            npcHandler.addNpc(new Bot(NPCEnums.Spawn.RIGHT));
+            //npcHandler.addNpc(new Hacker(NPCEnums.Spawn.RIGHT));
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
     }
 }

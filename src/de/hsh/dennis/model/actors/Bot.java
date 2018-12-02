@@ -1,12 +1,14 @@
 package de.hsh.dennis.model.actors;
 
 
+import common.util.Path;
 import javafx.scene.image.Image;
+
+import java.io.FileNotFoundException;
 
 public class Bot extends Npc {
 
-    private static final String pictureFileName = "bot_standard.png";
-    private static final String dir = "de/hsh/dennis/resources/actors/Bot/";
+    private static final String pictureFileName = Path.getExecutionLocation() + "de/hsh/dennis/resources/actors/Bot/bot_standard.png";
 
     private double bounceMax = 5.0;
     private double bouncePos = getBounceMax() * -1.0;
@@ -15,8 +17,8 @@ public class Bot extends Npc {
 
     private Image skin_current;
 
-    public Bot(NPCEnums.Spawn spawnType) {
-        super(pictureFileName, dir, spawnType, NPCEnums.NpcType.BOT);
+    public Bot(NPCEnums.Spawn spawnType) throws FileNotFoundException {
+        super(pictureFileName, spawnType, NPCEnums.NpcType.BOT);
         skin_current = Config.Bot.skin_standard;
 
         bounceInit();
@@ -24,14 +26,14 @@ public class Bot extends Npc {
 
     @Override
     public void move() {
-        setPositionX((getSpawnType() == NPCEnums.Spawn.RIGHT) ? (getPosX() - getSpeed()) : (getPosX() + getSpeed()));
+        setPosX((getSpawnType() == NPCEnums.Spawn.RIGHT) ? (getPosX() - getSpeed()) : (getPosX() + getSpeed()));
         bounce();
 
     }
 
     private void bounceInit() {
         if (!bounceInitialized) {
-            setPositionY(getPosY() - getBounceMax());
+            setPosY(getPosY() - getBounceMax());
             bounceInitialized = !bounceInitialized;
         }
     }
@@ -60,7 +62,7 @@ public class Bot extends Npc {
                 setBounceMax(getBounceMax() * -1.0);
             }
         }
-        setPositionY(getPosY() + bouncePos);
+        setPosY(getPosY() + bouncePos);
     }
 
     public double getBounceMax() {
