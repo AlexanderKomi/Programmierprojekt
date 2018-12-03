@@ -56,6 +56,10 @@ public class Actor {
         this.switchingDelay = delay;
     }
 
+    protected Actor( double x, double y, int delay, String... pictureFilePaths ) throws FileNotFoundException {
+        this( Arrays.asList( pictureFilePaths ), x, y, delay );
+    }
+
     private Actor( double x, double y ) {
         this.x = x;
         this.y = y;

@@ -1,13 +1,18 @@
-package de.hsh.alexander.actor;
+package de.hsh.alexander.src.actor;
 
 import common.actor.ControlableActor;
 import common.actor.Direction;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class PacMan extends ControlableActor {
+
+
+    private static final String pacMan1Folder = ActorCreator.actorLocation + "pacman1/";
+    private static final String pacMan2Folder = ActorCreator.actorLocation + "pacman2/";
 
 
     private static final double start_x              = 100;
@@ -63,4 +68,30 @@ public class PacMan extends ControlableActor {
         return xyTuple;
     }
 
+    public static PacMan initPacMan1() throws FileNotFoundException {
+        HashMap<String, Direction> pacMan1KeyMap = new HashMap<>();
+        pacMan1KeyMap.put( "Up", Direction.Up );
+        pacMan1KeyMap.put( "Down", Direction.Down );
+        pacMan1KeyMap.put( "Left", Direction.Left );
+        pacMan1KeyMap.put( "Right", Direction.Right );
+
+        ArrayList<String> images = new ArrayList<>();
+        images.add( pacMan1Folder + "sprite_pacman1_1.png" );
+        images.add( pacMan1Folder + "sprite_pacman1_2.png" );
+        images.add( pacMan1Folder + "sprite_pacman1_3.png" );
+        images.add( pacMan1Folder + "sprite_pacman1_4.png" );
+
+        return new PacMan( images, pacMan1KeyMap );
+
+    }
+
+    public static PacMan initPacMan2() throws FileNotFoundException {
+        HashMap<String, Direction> pacMan2KeyMap = new HashMap<>();
+        pacMan2KeyMap.put( "W", Direction.Up );
+        pacMan2KeyMap.put( "S", Direction.Down );
+        pacMan2KeyMap.put( "A", Direction.Left );
+        pacMan2KeyMap.put( "D", Direction.Right );
+
+        return new PacMan( pacMan2Folder + "snailWalk2.png", 500, 500, pacMan2KeyMap );
+    }
 }

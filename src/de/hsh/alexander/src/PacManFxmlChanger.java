@@ -1,4 +1,4 @@
-package de.hsh.alexander;
+package de.hsh.alexander.src;
 
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
