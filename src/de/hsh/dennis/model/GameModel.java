@@ -1,10 +1,8 @@
 package de.hsh.dennis.model;
 
-import com.google.gson.Gson;
 import common.actor.Direction;
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import common.util.Path;
 import de.hsh.dennis.model.KeyLayout.Movement.Custom;
 import de.hsh.dennis.model.actors.*;
 import de.hsh.dennis.model.audio.AudioPlayer;
@@ -15,7 +13,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-import java.io.*;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Observable;
 
@@ -33,6 +31,7 @@ public class GameModel extends Observable {
 
     //Objects
     private NpcHandler npcHandler;
+    private NpcIO npcIO = new NpcIO();
     private Canvas canvas;
     private GraphicsContext gc;
     private Player player;
@@ -83,10 +82,8 @@ public class GameModel extends Observable {
     private void actInit() {
         if (npcHandler == null) {
             npcHandler = new NpcHandler(canvas);
-            loadLevel(Config.Level.Difficulty.EASY);
-            for (JsonNpc n : spawnArray) {
-                Logger.log(n.toString());
-            }
+            spawnArray = npcIO.loadLevel(Config.Level.Difficulty.EASY);
+
         }
         if (musicStart) {
             musicStart = false;
@@ -98,40 +95,6 @@ public class GameModel extends Observable {
         ai = true;
     }
 
-    private void loadLevel(Config.Level.Difficulty dif) {
-//TODO: Loading Json files correctly
-
-        JsonNpc[] tempArray = new JsonNpc[]{new JsonNpc(1.0d, 1.0d, NPCEnums.Spawn.RIGHT, NPCEnums.NpcType.PACKAGE), new JsonNpc(1.0d, 1.0d, NPCEnums.Spawn.RIGHT, NPCEnums.NpcType.PACKAGE)};
-
-        gsonWrite(tempArray);
-        spawnArray = gsonRead();
-
-    }
-
-    private void gsonWrite(JsonNpc[] array) {
-        Gson gson = new Gson();
-        String json = gson.toJson(array);
-        try {
-            FileWriter writer = new FileWriter(Path.getExecutionLocation() + "de/hsh/dennis/resources/levelFiles/temp.json");
-            writer.write(json);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private JsonNpc[] gsonRead() {
-        Gson gson = new Gson();
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(Path.getExecutionLocation() + "de/hsh/dennis/resources/levelFiles/temp.json"));
-            JsonNpc[] jArray = gson.fromJson(bufferedReader, JsonNpc[].class);
-            return jArray;
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return new JsonNpc[]{};
-    }
 
     // --- /ACT -----------------------------------------------------------------------------------
 
@@ -243,6 +206,11 @@ public class GameModel extends Observable {
 
     //debugging
     void debugging() {
+        for (JsonNpc n : spawnArray) {
+            Logger.log(n.toString());
+        }
+
+        /*
         try {
             //npcHandler.spawn(new Package(NPCEnums.Spawn.RIGHT));
             npcHandler.spawn(new Bot(NPCEnums.Spawn.RIGHT));
@@ -250,6 +218,6 @@ public class GameModel extends Observable {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
+        */
     }
 }
