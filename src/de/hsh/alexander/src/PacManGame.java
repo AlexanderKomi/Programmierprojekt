@@ -30,7 +30,6 @@ public class PacManGame extends Observable implements Observer, Initializable {
             this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
             try {
                 currentLevel = new Level1();
-                currentLevel.createLevel();
             }
             catch ( FileNotFoundException e ) {
                 e.printStackTrace();

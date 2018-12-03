@@ -1,10 +1,10 @@
 package de.hsh.alexander.src.actor;
 
-import common.actor.Actor;
+import common.actor.Collectable;
 
 import java.io.FileNotFoundException;
 
-public class DataCoin extends Actor {
+public class DataCoin extends Collectable {
 
     public static final  String data_coin_dir = ActorCreator.actorLocation + "data_coin/";
     private static final int    default_delay = 10;

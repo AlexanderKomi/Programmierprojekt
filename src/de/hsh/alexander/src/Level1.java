@@ -1,32 +1,53 @@
 package de.hsh.alexander.src;
 
+import common.actor.Collectable;
 import common.actor.Level;
+import common.util.Logger;
 import de.hsh.alexander.src.actor.ActorCreator;
+import de.hsh.alexander.src.actor.DataCoin;
 import de.hsh.alexander.src.actor.PacMan;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
 import java.io.FileNotFoundException;
+import java.util.Observable;
 
 public class Level1 extends Level {
 
+    public Level1() throws FileNotFoundException {
+    }
+
     @Override
     public void createLevel() throws FileNotFoundException {
-        players.add( PacMan.initPacMan1() );
-        players.add( PacMan.initPacMan2() );
+        addPlayer( PacMan.initPacMan1() );
+        addPlayer( PacMan.initPacMan2() );
 
-        levelElements.add( ActorCreator.initTestWall() );
-        levelElements.forEach( levelElement -> players.forEach( pacMan -> pacMan.addCollidingActor( levelElement ) ) );
+        addCollectable( new DataCoin( 50, 50 ) );
+
+        addLevelElement( ActorCreator.initTestWall() );
+
     }
 
     @Override
     public void keyboardInput( KeyEvent keyEvent ) {
-        players.forEach( pacMan -> pacMan.move( keyEvent ) );
+        getPlayers().forEach( pacMan -> pacMan.move( keyEvent ) );
     }
 
     @Override
-    public void render( Canvas canvas, int fps ) {
-        levelElements.forEach( levelElement -> levelElement.draw( canvas ) );
-        players.forEach( pacMan -> pacMan.draw( canvas ) );
+    public void update( Observable o, Object arg ) {
+        if ( o instanceof Collectable ) {
+            Collectable c = (Collectable) o;
+            if ( arg instanceof String ) {
+                if ( arg.equals( Collectable.collected ) ) {
+                    Logger.log( "Collected : " + c );
+                    boolean success = this.collected( c );
+                    if ( !success ) {
+                        Logger.log( this.getClass() + ": FATAL ERROR : CAN NOT REMOVE : " + c );
+                    }
+                }
+            }
+        }
+        else {
+            Logger.log( this.getClass() + ": unknown observable=" + o + " , arg=" + arg );
+        }
     }
 }
