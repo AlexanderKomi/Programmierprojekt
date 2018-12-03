@@ -22,4 +22,36 @@ public class JsonNpc {
                 "npcType:\t" + npcType.toString() + "\n"
                 ;
     }
+
+    public Double getSpawnTime() {
+        return spawnTime;
+    }
+
+    public void setSpawnTime(Double spawnTime) {
+        this.spawnTime = spawnTime;
+    }
+
+    public Double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Double speed) {
+        this.speed = speed;
+    }
+
+    public NPCEnums.Spawn getSpawnType() {
+        return spawnType;
+    }
+
+    public void setSpawnType(NPCEnums.Spawn spawnType) {
+        this.spawnType = spawnType;
+    }
+
+    public NPCEnums.NpcType getNpcType() {
+        return npcType;
+    }
+
+    public void setNpcType(NPCEnums.NpcType npcType) {
+        this.npcType = npcType;
+    }
 }

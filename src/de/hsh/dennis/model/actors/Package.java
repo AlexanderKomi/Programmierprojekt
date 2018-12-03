@@ -13,8 +13,8 @@ public class Package extends Npc {
         setCurrentImage(Config.Package.skin_standard);
     }
 
-    public Package(NPCEnums.Spawn spawnType, double spawnTime) throws FileNotFoundException {
-        super(pictureFileName, spawnType, NPCEnums.NpcType.PACKAGE, spawnTime);
+    public Package(NPCEnums.Spawn spawnType, double spawnTime, double speed) throws FileNotFoundException {
+        super(pictureFileName, spawnType, NPCEnums.NpcType.PACKAGE, spawnTime, speed);
         setCurrentImage(Config.Package.skin_standard);
     }
 }

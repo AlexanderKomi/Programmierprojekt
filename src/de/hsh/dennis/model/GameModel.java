@@ -36,7 +36,7 @@ public class GameModel extends Observable {
     private GraphicsContext gc;
     private Player player;
     private List<Npc> npcList;
-    private JsonNpc[] spawnArray;
+    private Npc[] spawnArray;
 
     //animation timing values
     private double animationDelay = 0.5; //animation delay in seconds
@@ -206,8 +206,12 @@ public class GameModel extends Observable {
 
     //debugging
     void debugging() {
-        for (JsonNpc n : spawnArray) {
-            Logger.log(n.toString());
+        for (Npc n : spawnArray) {
+            if (n != null) {
+                Logger.log(n.toString());
+            } else {
+                Logger.log("\n\n!!! JSON beschädigt !!!\n");
+            }
         }
 
         /*

@@ -21,8 +21,8 @@ public class Bot extends Npc {
         bounceInit();
     }
 
-    public Bot(NPCEnums.Spawn spawnType, double spawnTime) throws FileNotFoundException {
-        super(pictureFileName, spawnType, NPCEnums.NpcType.BOT, spawnTime);
+    public Bot(NPCEnums.Spawn spawnType, double spawnTime, double speed) throws FileNotFoundException {
+        super(pictureFileName, spawnType, NPCEnums.NpcType.BOT, spawnTime, speed);
         setCurrentImage(Config.Bot.skin_standard);
 
         bounceInit();

@@ -14,8 +14,8 @@ public class Hacker extends Npc {
         setCurrentImage(Config.Hacker.skin_standard);
     }
 
-    public Hacker(NPCEnums.Spawn spawnType, double spawnTime) throws FileNotFoundException {
-        super(pictureFileName, spawnType, NPCEnums.NpcType.HACKER, spawnTime);
+    public Hacker(NPCEnums.Spawn spawnType, double spawnTime, double speed) throws FileNotFoundException {
+        super(pictureFileName, spawnType, NPCEnums.NpcType.HACKER, spawnTime, speed);
         setCurrentImage(Config.Hacker.skin_standard);
     }
 }

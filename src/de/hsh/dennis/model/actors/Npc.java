@@ -39,11 +39,12 @@ public abstract class Npc extends Actor {
 
     }
 
-    Npc(String picturePath, NPCEnums.Spawn spawnType, NPCEnums.NpcType type, double spawnTime) throws FileNotFoundException {
+    Npc(String picturePath, NPCEnums.Spawn spawnType, NPCEnums.NpcType type, double spawnTime, double speed) throws FileNotFoundException {
         super(picturePath);
         setSpawnType(spawnType);
         setNpcType(type);
         setSpawnTime(spawnTime);
+        setSpeed(speed);
 
         switch (type) {
             case PACKAGE:
@@ -70,6 +71,15 @@ public abstract class Npc extends Actor {
 
     }
 
+    @Override
+    public String toString() {
+        return "\nClassName:\t" + this.getClass().getName() + "\n" +
+                "spawnTime:\t" + spawnTime + "\n" +
+                "speed:\t\t" + speed + "\n" +
+                "spawnType:\t" + spawnType.toString() + "\n" +
+                "npcType:\t" + npcType.toString() + "\n"
+                ;
+    }
 
     // --- Getter & Setter ------------------------------------------------------------------------
 
