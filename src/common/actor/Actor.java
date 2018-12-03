@@ -63,11 +63,11 @@ public class Actor {
     }
 
     public void draw( Canvas canvas ){
-        draw( canvas, this.x, this.y );
+        draw( canvas, 0, 0 );
     }
 
-    void draw( Canvas canvas, double new_x, double new_y ) {
-        double[] new_pos = checkBounds( canvas, new_x, new_y );
+    void draw( Canvas canvas, double offset_to_new_x, double offset_to_new_y ) {
+        double[] new_pos = checkBounds( canvas, offset_to_new_x, offset_to_new_y );
         if(!CollisionCheck.applyCollision( this )){
             setPos( new_pos[ 0 ], new_pos[ 1 ] );
         }

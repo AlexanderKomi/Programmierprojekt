@@ -30,7 +30,7 @@ class CollisionCheck {
     private static double collideX(Actor a, Actor collisionActor){
         double speed = 10;
         double new_x = a.getX();
-        if(new_x + a.getWidth() > collisionActor.getX() + collisionActor.getWidth()){
+        if(new_x + a.getWidth() >= collisionActor.getX() + collisionActor.getWidth()){
             new_x = ( new_x + speed );
         }
         else if(new_x + a.getWidth() >= collisionActor.getX()){
@@ -42,7 +42,7 @@ class CollisionCheck {
     private static double collideY(Actor a, Actor collisionActor){
         double speed = 10;
         double new_y = a.getY();
-        if(new_y < collisionActor.getY() + collisionActor.getHeight()){
+        if(new_y <= collisionActor.getY() + collisionActor.getHeight()){
             new_y = ( new_y - speed );
         }
         else if(new_y + a.getHeight() >= collisionActor.getY()){
