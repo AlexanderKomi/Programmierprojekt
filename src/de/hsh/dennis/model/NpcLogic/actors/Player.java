@@ -1,8 +1,9 @@
-package de.hsh.dennis.model.actors;
+package de.hsh.dennis.model.NpcLogic.actors;
 
 import common.actor.Actor;
 import common.actor.Direction;
 import common.util.Path;
+import de.hsh.dennis.model.NpcLogic.Config;
 import javafx.scene.image.Image;
 
 import java.io.FileNotFoundException;

@@ -1,6 +1,7 @@
-package de.hsh.dennis.model.actors;
+package de.hsh.dennis.model.NpcLogic;
 
 import common.util.Logger;
+import de.hsh.dennis.model.NpcLogic.actors.Npc;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;

@@ -1,8 +1,10 @@
-package de.hsh.dennis.model.actors;
+package de.hsh.dennis.model.NpcLogic.actors;
 
 import common.actor.Actor;
 import common.config.WindowConfig;
 import common.util.Logger;
+import de.hsh.dennis.model.NpcLogic.Config;
+import de.hsh.dennis.model.NpcLogic.NPCEnums;
 import javafx.scene.image.Image;
 
 import java.io.FileNotFoundException;
@@ -66,7 +68,7 @@ public abstract class Npc extends Actor {
 
     }
 
-    void move() {
+    public void move() {
         setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? (getPosX() - getSpeed()) : (getPosX() + getSpeed()));
 
     }

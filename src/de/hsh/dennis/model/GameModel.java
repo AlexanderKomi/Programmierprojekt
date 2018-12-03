@@ -4,7 +4,13 @@ import common.actor.Direction;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.dennis.model.KeyLayout.Movement.Custom;
-import de.hsh.dennis.model.actors.*;
+import de.hsh.dennis.model.NpcLogic.Config;
+import de.hsh.dennis.model.NpcLogic.NPCEnums;
+import de.hsh.dennis.model.NpcLogic.NpcHandler;
+import de.hsh.dennis.model.NpcLogic.NpcIO;
+import de.hsh.dennis.model.NpcLogic.actors.Bot;
+import de.hsh.dennis.model.NpcLogic.actors.Npc;
+import de.hsh.dennis.model.NpcLogic.actors.Player;
 import de.hsh.dennis.model.audio.AudioPlayer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -14,6 +20,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
 
@@ -82,7 +89,7 @@ public class GameModel extends Observable {
     private void actInit() {
         if (npcHandler == null) {
             npcHandler = new NpcHandler(canvas);
-            spawnArray = npcIO.loadLevel(Config.Level.Difficulty.EASY);
+            spawnArray = npcIO.loadLevel(Config.Level.Difficulty.CUSTOM);
 
         }
         if (musicStart) {
@@ -214,7 +221,7 @@ public class GameModel extends Observable {
             }
         }
 
-        /*
+
         try {
             //npcHandler.spawn(new Package(NPCEnums.Spawn.RIGHT));
             npcHandler.spawn(new Bot(NPCEnums.Spawn.RIGHT));
@@ -222,6 +229,6 @@ public class GameModel extends Observable {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-        */
+
     }
 }

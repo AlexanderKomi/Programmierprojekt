@@ -1,7 +1,9 @@
-package de.hsh.dennis.model.actors;
+package de.hsh.dennis.model.NpcLogic.actors;
 
 
 import common.util.Path;
+import de.hsh.dennis.model.NpcLogic.Config;
+import de.hsh.dennis.model.NpcLogic.NPCEnums;
 
 import java.io.FileNotFoundException;
 

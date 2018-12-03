@@ -1,4 +1,4 @@
-package de.hsh.dennis.model.actors;
+package de.hsh.dennis.model.NpcLogic;
 
 public class JsonNpc {
     private Double spawnTime;
