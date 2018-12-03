@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -45,7 +46,6 @@ public class TIGameController extends Observable implements Initializable {
 	this.score = score;
     }
 
-    // Vorläufiger Button zum Testen der Funktionalität
     @FXML
     void scorePressed(ActionEvent event) {
 	this.setChanged();
@@ -57,6 +57,7 @@ public class TIGameController extends Observable implements Initializable {
 	if (initialized) {
 	    return;
 	}
+	this.btn_score.setVisible(false);
 	this.gameCanvas.setFocusTraversable(true);
 
 	double widthFactor = Config.getDifficultyFactor();

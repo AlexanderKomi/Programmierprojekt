@@ -2,7 +2,6 @@ package de.hsh.kevin.controller;
 
 import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
-import common.util.Logger;
 import de.hsh.kevin.TIFxmlChanger;
 import de.hsh.kevin.logic.Score;
 
@@ -34,6 +33,7 @@ public class TIController extends GameEntryPoint {
 	    case UpdateCodes.TunnelInvader.gameOver:
 		TIGameOverController gameOver = new TIGameOverController(score);
 		changer.changeGameOverFxml(o, gameOver);
+		gameOver.setScore();
 		break;
 	    default:
 		changer.changeFxml(o, (String) arg);

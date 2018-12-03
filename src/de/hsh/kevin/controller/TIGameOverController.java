@@ -9,15 +9,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-
-import java.util.Observer;
-
 public class TIGameOverController extends GameMenu {
 
     public static AnchorPane gameOverPane;
-    private Score score;
 
     public static final String fxml = "res/TIGameOver.fxml";
+    private Score score;
 
     @FXML
     public Button btn_start;
@@ -33,17 +30,9 @@ public class TIGameOverController extends GameMenu {
 
     public TIGameOverController(Score score) {
 	this.score = score;
-	this.setScore();
     }
 
-    public TIGameOverController(Observer observer, Score score) {
-	super(observer);
-	this.score = score;
-	this.setScore();
-
-    }
-
-    private void setScore() {
+    public void setScore() {
 	Platform.runLater(() -> lbl_score.setText("Score: " + score.getScore()));
     }
 
