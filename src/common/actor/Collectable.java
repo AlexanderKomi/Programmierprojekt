@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Collectable extends Actor {
 
-    public static final String  collected   = "I am collected, remove me :)";
-    private             boolean isCollected = false;
+    public static final String collected = "I am collected, remove me :)";
+    private             Actor  collector = null;
 
     protected Collectable( String pictureFileName ) throws FileNotFoundException {
         super( pictureFileName );
@@ -24,10 +24,13 @@ public class Collectable extends Actor {
         super( x, y, delay, pictureFilePaths );
     }
 
-    public synchronized void wasCollected() {
-        this.isCollected = true;
+    public void wasCollected( Actor collector ) {
+        this.collector = collector;
         this.setChanged();
         this.notifyObservers( collected );
     }
 
+    public Actor getCollector() {
+        return collector;
+    }
 }

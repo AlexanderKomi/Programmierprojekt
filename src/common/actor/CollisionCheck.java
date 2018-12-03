@@ -23,11 +23,11 @@ class CollisionCheck {
         };
 
         if ( (a.getX() + new_x) >= 0 &&
-             (a.getX() + new_x + a.width) <= canvas.getWidth() ) {
+             (a.getX() + new_x + a.getWidth()) <= canvas.getWidth() ) {
             temp[ 0 ] = true;
         }
         if ( (a.getY() + new_y >= 0) &&
-             (a.getY() + new_y + a.height) <= canvas.getHeight() ) {
+             (a.getY() + new_y + a.getHeight()) <= canvas.getHeight() ) {
             temp[ 1 ] = true;
         }
         return temp;
@@ -48,8 +48,8 @@ class CollisionCheck {
      * @return
      */
     private static boolean checkUpperLeftCorner( Drawable a, Drawable b ) {
-        if ( a.getX() <= b.getX() && a.getX() + a.width >= b.getX() ) {
-            return a.getY() <= b.getY() && a.getY() + a.height >= b.getY();
+        if ( a.getX() <= b.getX() && a.getX() + a.getWidth() >= b.getX() ) {
+            return a.getY() <= b.getY() && a.getY() + a.getHeight() >= b.getY();
         }
         return false;
     }
@@ -64,8 +64,8 @@ class CollisionCheck {
      * @return
      */
     private static boolean checkUpperRightCorner( Drawable a, Drawable b ) {
-        if ( a.getX() <= b.getX() + b.width && a.getX() + a.width >= b.getX() + b.width ) {
-            return a.getY() <= b.getY() && a.getY() + a.height >= b.getY();
+        if ( a.getX() <= b.getX() + b.getWidth() && a.getX() + a.getWidth() >= b.getX() + b.getWidth() ) {
+            return a.getY() <= b.getY() && a.getY() + a.getHeight() >= b.getY();
         }
         return false;
     }
@@ -79,8 +79,8 @@ class CollisionCheck {
      * @return
      */
     private static boolean checkLowerRightCorner( Drawable a, Drawable b ) {
-        if ( a.getX() <= b.getX() + b.width && a.getX() + a.width >= b.getX() + b.width ) {
-            return a.getY() <= b.getY() + b.height && a.getY() + a.height >= b.getY() + b.height;
+        if ( a.getX() <= b.getX() + b.getWidth() && a.getX() + a.getWidth() >= b.getX() + b.getWidth() ) {
+            return a.getY() <= b.getY() + b.getHeight() && a.getY() + a.getHeight() >= b.getY() + b.getHeight();
         }
         return false;
     }
@@ -94,8 +94,8 @@ class CollisionCheck {
      * @return
      */
     private static boolean checkLowerLeftCorner( Drawable a, Drawable b ) {
-        if ( a.getX() <= b.getX() && a.getX() + a.width >= b.getX() ) {
-            return a.getY() <= b.getY() + b.height && a.getY() + a.height >= b.getY() + b.height;
+        if ( a.getX() <= b.getX() && a.getX() + a.getWidth() >= b.getX() ) {
+            return a.getY() <= b.getY() + b.getHeight() && a.getY() + a.getHeight() >= b.getY() + b.getHeight();
         }
         return false;
     }

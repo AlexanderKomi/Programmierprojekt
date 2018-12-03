@@ -53,7 +53,7 @@ public class Actor extends Drawable {
         if ( b ) {
             if ( other instanceof Collectable ) {
                 Collectable c = (Collectable) other;
-                c.wasCollected();
+                c.wasCollected( this );
             }
         }
         return b ||
@@ -66,17 +66,6 @@ public class Actor extends Drawable {
                    .stream()
                    .filter( this::doesCollide )
                    .collect( Collectors.toList() );
-    }
-
-    @Override
-    public String toString() {
-        String result = "Actor(";
-        result += "name:" + this.getName() + ", ";
-        result += "x:" + this.getX() + ", ";
-        result += "y:" + this.getY() + ", ";
-        result += "width:" + this.getWidth() + ", ";
-        result += "height:" + this.getHeight();
-        return result + ")";
     }
 
     // ----------------------------------- GETTER AND SETTER -----------------------------------

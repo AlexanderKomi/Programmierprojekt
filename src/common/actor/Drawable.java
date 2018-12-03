@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
@@ -14,8 +15,8 @@ public class Drawable extends Observable {
     private double x;
     private double y;
 
-    double height;
-    double width;
+    private double height;
+    private double width;
 
     private String name;
 
@@ -121,6 +122,36 @@ public class Drawable extends Observable {
             temp[ 1 ] += (new_y);
         }
         return temp;
+    }
+
+    @Override
+    public boolean equals( Object obj ) {
+        if ( obj instanceof Drawable ) {
+            Drawable d = (Drawable) obj;
+            return Arrays.equals( this.getPos(), d.getPos() ) &&
+                   this.getHeight() == d.getHeight() &&
+                   this.getWidth() == d.getWidth() &&
+                   this.getName().equals( d.getName() ) &&
+                   this.currentImage.equals( d.currentImage )
+                    ;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        String result = this.getClass() + "(";
+        result += prepareToString();
+        return result + ")";
+    }
+
+    public String prepareToString() {
+        String result = "name:" + this.getName() + ", ";
+        result += "x:" + this.getX() + ", ";
+        result += "y:" + this.getY() + ", ";
+        result += "width:" + this.getWidth() + ", ";
+        result += "height:" + this.getHeight();
+        return result;
     }
 
     /**

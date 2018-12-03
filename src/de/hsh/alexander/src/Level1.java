@@ -38,11 +38,9 @@ public class Level1 extends Level {
             Collectable c = (Collectable) o;
             if ( arg instanceof String ) {
                 if ( arg.equals( Collectable.collected ) ) {
-                    Logger.log( "Collected : " + c );
-                    boolean success = this.collected( c );
-                    if ( !success ) {
-                        Logger.log( this.getClass() + ": FATAL ERROR : CAN NOT REMOVE : " + c );
-                    }
+                    Logger.log( "Collected : " + c + "\n" +
+                                "By : " + c.getCollector() );
+                    this.collected( c );
                 }
             }
         }
