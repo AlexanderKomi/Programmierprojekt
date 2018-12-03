@@ -1,15 +1,15 @@
 package de.hsh.kevin.logic;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import common.actor.Direction;
 import de.hsh.kevin.logic.myActor.Paket;
 import de.hsh.kevin.logic.myActor.Player;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class GameField {
     private double width;
