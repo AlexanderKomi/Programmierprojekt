@@ -10,6 +10,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 class CollisionCheck {
 
+    static final double speed = 10;
+
     static boolean doesCollide( Actor a, Actor b ) {
         return checkUpperLeftCorner( a, b ) || checkUpperRightCorner( a, b ) || checkLowerRightCorner( a, b )
                || checkLowerLeftCorner( a, b );
@@ -28,7 +30,6 @@ class CollisionCheck {
     }
 
     private static double collideX(Actor a, Actor collisionActor){
-        double speed = 10;
         double new_x = a.getX();
         if(new_x + a.getWidth() >= collisionActor.getX() + collisionActor.getWidth()){
             new_x = ( new_x + speed );
@@ -40,7 +41,6 @@ class CollisionCheck {
     }
 
     private static double collideY(Actor a, Actor collisionActor){
-        double speed = 10;
         double new_y = a.getY();
         if(new_y <= collisionActor.getY() + collisionActor.getHeight()){
             new_y = ( new_y - speed );

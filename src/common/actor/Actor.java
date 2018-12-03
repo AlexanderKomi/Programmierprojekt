@@ -67,9 +67,10 @@ public class Actor {
     }
 
     void draw( Canvas canvas, double offset_to_new_x, double offset_to_new_y ) {
-        double[] new_pos = checkBounds( canvas, offset_to_new_x, offset_to_new_y );
+        double[] old_pos = this.getPos();
+        double[] in_bounds_pos = checkBounds( canvas, offset_to_new_x, offset_to_new_y );
         if(!CollisionCheck.applyCollision( this )){
-            setPos( new_pos[ 0 ], new_pos[ 1 ] );
+            setPos( in_bounds_pos[ 0 ], in_bounds_pos[ 1 ] );
         }
         switchImages();
         canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
