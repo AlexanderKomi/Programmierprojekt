@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Actor {
 
@@ -72,7 +73,9 @@ public class Actor {
 
         setPos( in_bounds_pos[ 0 ], in_bounds_pos[ 1 ] );
 
-        if(CollisionCheck.applyCollision( this )){
+        //ArrayList<Actor> temp = (ArrayList<Actor>) CollisionCheck.getCollidingActors( this );
+
+        if(this.doesCollide( )){
             setPos( old_pos );
         }
         switchImages();
@@ -107,6 +110,22 @@ public class Actor {
 
     public boolean doesCollide( Actor other ) {
         return CollisionCheck.doesCollide( this, other ) || CollisionCheck.doesCollide( other, this );
+    }
+
+    public boolean doesCollide(Collection<Actor> list){
+        return list.stream().anyMatch( actor -> this.doesCollide( actor ) || actor.doesCollide( this ) );
+    }
+
+    public boolean doesCollide(){
+        return this.doesCollide( this.collisionActors );
+    }
+
+    public List<Actor> getCollidingActors( ){
+        return this.getCollisionActors()
+                .stream()
+                .parallel()
+                .filter( this::doesCollide )
+                .collect( Collectors.toList() );
     }
 
     private double[] checkBounds( Canvas canvas, double new_x, double new_y ) {
