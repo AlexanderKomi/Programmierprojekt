@@ -15,8 +15,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.Observable;
 
@@ -85,6 +84,9 @@ public class GameModel extends Observable {
         if (npcHandler == null) {
             npcHandler = new NpcHandler(canvas);
             loadLevel(Config.Level.Difficulty.EASY);
+            for (JsonNpc n : spawnArray) {
+                Logger.log(n.toString());
+            }
         }
         if (musicStart) {
             musicStart = false;
@@ -98,28 +100,37 @@ public class GameModel extends Observable {
 
     private void loadLevel(Config.Level.Difficulty dif) {
 //TODO: Loading Json files correctly
-        /*
+
+        JsonNpc[] tempArray = new JsonNpc[]{new JsonNpc(1.0d, 1.0d, NPCEnums.Spawn.RIGHT, NPCEnums.NpcType.PACKAGE), new JsonNpc(1.0d, 1.0d, NPCEnums.Spawn.RIGHT, NPCEnums.NpcType.PACKAGE)};
+
+        gsonWrite(tempArray);
+        spawnArray = gsonRead();
+
+    }
+
+    private void gsonWrite(JsonNpc[] array) {
         Gson gson = new Gson();
-        spawnArray = new JsonNpc[] {new JsonNpc(0.10, 1.0, NPCEnums.Spawn.LEFT, NPCEnums.NpcType.BOT), new JsonNpc(0.10, 1.0, NPCEnums.Spawn.LEFT, NPCEnums.NpcType.BOT)};
+        String json = gson.toJson(array);
         try {
-            String json = gson.toJson(spawnArray);
-            FileWriter writer = new FileWriter("test3.json");
+            FileWriter writer = new FileWriter(Path.getExecutionLocation() + "de/hsh/dennis/resources/levelFiles/temp.json");
             writer.write(json);
             writer.close();
-            Logger.log("gson");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
+    }
 
+    private JsonNpc[] gsonRead() {
+        Gson gson = new Gson();
         try {
-            spawnArray = new Gson().fromJson(Path.getExecutionLocation() + "de/hsh/dennis/resources/levelFiles/easy.json", JsonNpc[].class);
-            Logger.log("gson");
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(Path.getExecutionLocation() + "de/hsh/dennis/resources/levelFiles/temp.json"));
+            JsonNpc[] jArray = gson.fromJson(bufferedReader, JsonNpc[].class);
+            return jArray;
 
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        return new JsonNpc[]{};
     }
 
     // --- /ACT -----------------------------------------------------------------------------------
