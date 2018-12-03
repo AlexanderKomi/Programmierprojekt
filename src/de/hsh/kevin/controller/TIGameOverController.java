@@ -1,6 +1,5 @@
 package de.hsh.kevin.controller;
 
-
 import common.engine.components.menu.GameMenu;
 import common.updates.UpdateCodes;
 import de.hsh.kevin.logic.Score;
@@ -16,41 +15,43 @@ import java.util.Observer;
 public class TIGameOverController extends GameMenu {
 
     public static AnchorPane gameOverPane;
+    private Score score;
 
-     public static final String fxml = "res/TIGameOver.fxml";
-    
+    public static final String fxml = "res/TIGameOver.fxml";
+
     @FXML
     public Button btn_start;
-    
+
     @FXML
     public Button btn_menu;
-    
+
     @FXML
     public Button btn_sammlung;
-    
+
     @FXML
     public Label lbl_score;
-    
 
     public TIGameOverController(Score score) {
-	this.setScore(score);
+	this.score = score;
+	this.setScore();
     }
 
     public TIGameOverController(Observer observer, Score score) {
 	super(observer);
-	this.setScore(score);
+	this.score = score;
+	this.setScore();
 
     }
-    
-    private void setScore(Score score) {
+
+    private void setScore() {
 	Platform.runLater(() -> lbl_score.setText("Score: " + score.getScore()));
     }
-
 
     @FXML
     void menuPressed(ActionEvent event) {
 	this.setChanged();
-	this.notifyObservers(UpdateCodes.TunnelInvader.gameMenu);    }
+	this.notifyObservers(UpdateCodes.TunnelInvader.gameMenu);
+    }
 
     @FXML
     void nochamalPressed(ActionEvent event) {
