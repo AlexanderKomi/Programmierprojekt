@@ -1,78 +1,25 @@
 package de.hsh.amir.logik;
 
-import java.util.Observable;
+import common.actor.Collectable;
 
-public class Gegner extends Observable {
+import java.io.FileNotFoundException;
+import java.util.List;
 
-    private int x;
-    private int y;
-    private int modelType;
+public class Gegner extends Collectable {
 
-    private boolean isTouched = false;
-
-
-    public Gegner() {
-        isTouched = false;
+    protected Gegner(String pictureFileName) throws FileNotFoundException {
+        super(pictureFileName);
     }
 
-    public Gegner(int x, int y, int modelType) {
-        this.x = x;
-        this.y = y;
-        this.modelType = modelType; // um Gegnertypen später zu definieren und ihr Verhalten zu steuern
+    public Gegner(String pictureFileName, double x, double y) throws FileNotFoundException {
+        super(pictureFileName, x, y);
     }
 
-    public void move(final char direction_Char) {
-        switch (direction_Char) {
-            case 'D': // nach unten bewegen
-                y = Math.min(Level.LEVELMODEL_HEIGHT - 100, y + 5);
-                setChanged();
-                break;
-            case 'U': // nach oben bewegen
-                y = Math.max(0, y - 5);
-                setChanged();
-                break;
-        }
-        notifyObservers();
+    protected Gegner(List<String> pictureFilePaths, double x, double y, int delay) throws FileNotFoundException {
+        super(pictureFilePaths, x, y, delay);
     }
 
-
-    public boolean getIsTouched() {
-        return isTouched;
-    }
-
-    public void setIsTouched(boolean isTouched) {
-        if (isTouched != this.isTouched) {
-            this.isTouched = isTouched;
-            setChanged();
-        }
-    }
-
-    public void touch() {
-        this.isTouched = true;
-    }
-
-
-    //    Getter und Setter
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        if (x != this.x) {
-            this.x = x;
-            setChanged();
-        }
-    }
-
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        if (y != this.y) {
-            this.y = y;
-            setChanged();
-        }
+    protected Gegner(double x, double y, int delay, String... pictureFilePaths) throws FileNotFoundException {
+        super(x, y, delay, pictureFilePaths);
     }
 }
