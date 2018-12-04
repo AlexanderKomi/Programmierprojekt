@@ -14,7 +14,7 @@ public class NpcHandler {
     private int npcLimit = 100;
 
     private static Canvas canvas;
-    private spawnTimer time = new spawnTimer();
+    private SpawnTimer time = new SpawnTimer();
     private NpcIO npcIO = new NpcIO();
 
     private Npc[] spawnArray;

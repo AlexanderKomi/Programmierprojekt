@@ -1,7 +1,8 @@
 package de.hsh.dennis.model.NpcLogic;
 
-public class spawnTimer {
+public class SpawnTimer {
 
+    //Uhr
     private double start = -1;
 
     public void start() {
@@ -17,5 +18,17 @@ public class spawnTimer {
 
     public double getCurrentSec() {
         return System.currentTimeMillis() / 1000d;
+    }
+
+    //Rundenzähler
+    private double resetTime = -1;
+
+    public double elabsedTime(){
+        if(resetTime == -1){resetTimer();}
+        return (System.currentTimeMillis() / 1000d) - resetTime;
+    }
+
+    public void resetTimer(){
+        resetTime = System.currentTimeMillis() / 1000d;
     }
 }
