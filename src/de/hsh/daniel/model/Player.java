@@ -1,4 +1,4 @@
-package de.hsh.daniel;
+package de.hsh.daniel.model;
 
 public class Player {
 
