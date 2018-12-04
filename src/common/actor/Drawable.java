@@ -1,6 +1,7 @@
 package common.actor;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
@@ -74,6 +75,14 @@ public class Drawable extends Observable {
         this( Arrays.asList( pictureFilePaths ), x, y, delay );
     }
 
+    public Drawable( Drawable d ) {
+        this.currentImage = d.getCurrentImage();
+        this.name = d.getName();
+        this.setPos( d.getPos() );
+        this.height = d.getHeight();
+        this.width = d.getWidth();
+    }
+
     private Image loadPicture( String fileName ) throws FileNotFoundException {
         this.name = fileName;
         return new Image( new FileInputStream( fileName ) );
@@ -120,6 +129,10 @@ public class Drawable extends Observable {
         this.setPos( beforeDrawing( old_pos, in_bounds_pos ) ); // Maybe reset ? :)
         switchImages();
         canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
+    }
+
+    public void draw( GraphicsContext gc ) {
+
     }
 
     protected double[] beforeDrawing( double[] current_pos, double[] new_pos ) {
@@ -272,6 +285,10 @@ public class Drawable extends Observable {
 
     public void setCurrentImage( Image currentImage ) {
         this.currentImage = currentImage;
+    }
+
+    public void setCurrentImage( String filePath ) throws FileNotFoundException {
+        this.currentImage = loadPicture( filePath );
     }
 
     public ArrayList<Image> getImages() {

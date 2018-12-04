@@ -10,7 +10,6 @@ import java.util.List;
 
 public class ControlableActor extends Actor {
 
-    private Movement movement = new Movement();
 
     protected ControlableActor( String pictureFileName, HashMap<String, Direction> keymap ) throws FileNotFoundException {
         super( pictureFileName );
@@ -90,13 +89,7 @@ public class ControlableActor extends Actor {
         this.movement.setKeyMap( keyMap );
     }
 
-    public void setSpeed( double speed ) {
-        this.movement.setVelocity( speed );
-    }
 
-    public double getSpeed() {
-        return this.movement.getVelocity();
-    }
 
     public Movement getMovement() {
         return movement;

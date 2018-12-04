@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 public class Actor extends Drawable {
 
 
-    private HashSet<Actor>   collisionActors = new HashSet<>();
+    protected Movement       movement        = new Movement();
+    private   HashSet<Actor> collisionActors = new HashSet<>();
 
     public Actor( String pictureFileName ) throws FileNotFoundException {
         this( pictureFileName, 0, 0 );
@@ -117,6 +118,13 @@ public class Actor extends Drawable {
     }
 
     // ----------------------------------- GETTER AND SETTER -----------------------------------
+    public void setSpeed( double speed ) {
+        this.movement.setVelocity( speed );
+    }
+
+    public double getSpeed() {
+        return this.movement.getVelocity();
+    }
 
     public HashSet<Actor> getCollisionActors() {
         return collisionActors;
