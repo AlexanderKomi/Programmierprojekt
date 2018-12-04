@@ -1,11 +1,10 @@
 package de.hsh.kevin.logic.myActor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.hsh.kevin.logic.Config;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.KeyEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectileManager {
 
@@ -43,7 +42,7 @@ public class ProjectileManager {
 
     public void draw(Canvas canvas) {
 	for (Projectile p : projectile) {
-	    p.draw(canvas, 0, 0);
+		p.draw( canvas );
 	}
     }
 

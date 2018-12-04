@@ -96,7 +96,7 @@ public class Drawable extends Observable {
         draw( canvas, offset_pos[ 0 ], offset_pos[ 1 ] );
     }
 
-    void draw( Canvas canvas, double offset_to_new_x, double offset_to_new_y ) {
+    public void draw( Canvas canvas, double offset_to_new_x, double offset_to_new_y ) {
         boolean[] isInBounds    = isInBounds( canvas, offset_to_new_x, offset_to_new_y );
         double[]  in_bounds_pos = calcPosAfterBounds( isInBounds, offset_to_new_x, offset_to_new_y );
         double[]  old_pos       = this.getPos();

@@ -68,8 +68,6 @@ public class Player extends ControlableActor {
 			xyTuple[ 0 ] = movement_speed;
 			xyTuple[ 1 ] = 0;
 		}
-	    }
-	});
 	return xyTuple;
     }
 
@@ -92,8 +90,4 @@ public class Player extends ControlableActor {
     public boolean isFiring() {
 	return isFiring;
     }
-
-
-		return xyTuple;
-	}
 }
