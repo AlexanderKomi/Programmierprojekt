@@ -1,11 +1,11 @@
 package de.hsh.kevin.logic.myActor;
 
-import common.actor.Actor;
+import common.actor.Collectable;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class Projectile extends Actor{
+public class Projectile extends Collectable{
     
     private static final double startX = 100;
     private static final double startY = 10;

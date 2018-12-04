@@ -3,7 +3,6 @@ package de.hsh.kevin.logic;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import common.actor.Direction;
@@ -12,13 +11,9 @@ import de.hsh.kevin.logic.myActor.PaketManager;
 import de.hsh.kevin.logic.myActor.Player;
 import de.hsh.kevin.logic.myActor.Projectile;
 import de.hsh.kevin.logic.myActor.ProjectileManager;
+import de.hsh.kevin.logic.myActor.enmPaketTyp;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class GameField {
     private double width;
@@ -56,35 +51,12 @@ public class GameField {
         this.score = score;
     }
 
-    public double getWidth() {
-        return width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
     public int getLeben() {
         return leben.getLeben();
     }
 
     public int getScore() {
         return score.getScore();
-    }
-
-    public void draw(Canvas canvas) {
-        paketManager.draw(canvas);
-        projectileManager.draw(canvas);
-    }
-
-    public void movePlayer(KeyEvent keyEvent) {
-        this.player.move(keyEvent);
-    }
-
-    public void moveAll() {
-        paketManager.move();
-        projectileManager.move();
-
     }
 
     private void initPlayer(Canvas canvas) {
@@ -114,14 +86,6 @@ public class GameField {
         return player;
     }
 
-    public List<Paket> getPakete() {
-        return paketManager.getPakete();
-    }
-
-    private void addPaket() {
-        paketManager.createNewPaket(0.75);
-    }
-
     public void spawnPakete() {
         if (spawnDelayBuffer == 0) {
             spawnDelayBuffer = spawnDelay;
@@ -131,7 +95,7 @@ public class GameField {
             Random rand = new Random();
             int number = rand.nextInt(Config.getMaxSpawnCount());
             for (int i = 0; i <= number; i++) {
-                addPaket();
+                paketManager.createNewPaket(Config.spawnChanceGtoB);
             }
         }
         spawnDelayBuffer--;
@@ -157,5 +121,78 @@ public class GameField {
 
     public void setPlayerIdle() {
         player.switchIdle();
+    }
+
+    public void movePlayer(KeyEvent keyEvent) {
+        this.player.move(keyEvent);
+    }
+
+    public void moveAll() {
+        paketManager.move();
+        projectileManager.move();
+
+    }
+
+    public void draw(Canvas canvas) {
+        player.draw(canvas);
+        paketManager.draw(canvas);
+        projectileManager.draw(canvas);
+    }
+
+    public void game(Canvas canvas) {
+        collision();
+        moveAll();
+        spawnPakete();
+        spawnProjectile();
+        draw(canvas);
+    }
+
+    private void collision() {
+        collisionProjectilePaket();
+        collisionPlayerPaket();
+    }
+
+    private void collisionPlayerPaket() {
+        ArrayList<Paket> toRemove = new ArrayList<>();
+
+        paketManager.getPakete().stream().parallel().forEach(p -> {
+            if (player.doesCollide(p)) {
+                leben.decrease();
+                toRemove.add(p);
+            }
+        });
+
+        for (int i = 0; i < toRemove.size(); i++) {
+            paketManager.remove(toRemove.get(i));
+        }
+    }
+
+    private void collisionProjectilePaket() {
+        ArrayList<Paket> toRemovePakete = new ArrayList<>();
+        ArrayList<Projectile> toRemoveProjectiles = new ArrayList<>();
+
+        paketManager.getPakete().stream().parallel().forEach(paket -> {
+            projectileManager.getProjectiles().stream().parallel().forEach(proj -> {
+                if (paket.doesCollide(proj)) {
+                    if (!toRemovePakete.contains(paket)) {
+                        toRemovePakete.add(paket);
+                    }
+                    if (!toRemoveProjectiles.contains(proj)) {
+                        toRemoveProjectiles.add(proj);
+                    }
+                    if (paket.getPaketTyp() == enmPaketTyp.good) {
+                        leben.decrease();
+                    }
+                }
+            });
+        });
+
+        for (int i = 0; i < toRemovePakete.size(); i++) {
+            paketManager.remove(toRemovePakete.get(i));
+        }
+
+        for (int i = 0; i < toRemoveProjectiles.size(); i++) {
+            projectileManager.remove(toRemoveProjectiles.get(i));
+        }
     }
 }

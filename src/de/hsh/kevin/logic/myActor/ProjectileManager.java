@@ -12,38 +12,51 @@ public class ProjectileManager {
     private long lastProjectileSpawn;
 
     public ProjectileManager() {
-	projectile = new ArrayList<>();
+        projectile = new ArrayList<>();
     }
 
     public List<Projectile> getProjectiles() {
-	return projectile;
+        return projectile;
     }
 
     public void createProjectile(double[] playerPos, double offset) {
 
-	long curMillis = System.currentTimeMillis();
-	if (curMillis >= lastProjectileSpawn + Config.projectileSpawnDelay) {
-	    Projectile p = ProjectileFactory.getProjectile(playerPos[0] + offset, playerPos[1]);
-	    projectile.add(p);
-	    lastProjectileSpawn = curMillis;
-	}
+        long curMillis = System.currentTimeMillis();
+        if (curMillis >= lastProjectileSpawn + Config.projectileSpawnDelay) {
+            Projectile p = ProjectileFactory.getProjectile(playerPos[0] + offset, playerPos[1]);
+            projectile.add(p);
+            lastProjectileSpawn = curMillis;
+        }
     }
 
-
     public void move() {
-	for (int i = 0; i < projectile.size(); i++) {
-	    if (projectile.get(i).getPos()[1] < 0) {
-		projectile.remove(i);
-	    } else {
-		projectile.get(i).move();
-	    }
-	}
+        ArrayList<Projectile> toRemove = new ArrayList<>();
+
+        projectile.stream().parallel().forEach(proj -> {
+            if (proj.getPos()[1] < 0) {
+                toRemove.add(proj);
+            } else {
+                proj.move();
+            }
+        });
+
+        for (int i = 0; i < toRemove.size(); i++) {
+            projectile.remove(toRemove.get(i));
+        }
+
+        for (int i = 0; i < projectile.size(); i++) {
+
+        }
     }
 
     public void draw(Canvas canvas) {
-	for (Projectile p : projectile) {
-		p.draw( canvas );
-	}
+        for (Projectile p : projectile) {
+            p.draw(canvas);
+        }
+    }
+
+    public void remove(Projectile p) {
+        projectile.remove(p);
     }
 
 }

@@ -8,6 +8,7 @@ public class Config {
     public static final int paketSpawnDelay = 100;
     public static final int projectileSpawnDelay = 400;
     public static final int maxLife = 4;
+    public static final double spawnChanceGtoB = 0.75;
 
     
     private static enmSoundOptions soundConfig = enmSoundOptions.off;
