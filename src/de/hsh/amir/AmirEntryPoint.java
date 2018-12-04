@@ -41,6 +41,9 @@ public class AmirEntryPoint extends GameEntryPoint {
                 case UpdateCodes.Amir.showEndScreen:
                     changer.changeFxml( new PacManEndScreen(), UpdateCodes.Amir.showEndScreen );
                     break;
+                case UpdateCodes.DefaultCodes.exitToMainGUI:
+                    changer.changeFxml(o, message);
+                    break;
                 default:
                     logParsingError( o, arg );
                     break;
