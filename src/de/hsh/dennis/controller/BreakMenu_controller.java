@@ -1,11 +1,13 @@
 package de.hsh.dennis.controller;
 
 import common.util.Logger;
+import de.hsh.dennis.model.KeyLayout;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -23,13 +25,21 @@ public class BreakMenu_controller extends Observable {
     private TextField tf_score;
 
     @FXML
-    private Button b_play;
+    private Button b_replay;
 
     @FXML
-    private Button b_tutorial;
+    private Button b_main_menu;
 
     @FXML
-    private Button b_exit;
+    private Button b_continue;
+
+    @FXML
+    void keyInputHandler(KeyEvent event) {
+        if (event.getCode() == KeyLayout.Control.ESC) {
+            setChanged();
+            notifyObservers("b_continue");
+        }
+    }
 
     @FXML
     void button_clicked(ActionEvent event) {

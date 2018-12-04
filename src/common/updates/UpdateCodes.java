@@ -20,9 +20,11 @@ public final class UpdateCodes {
         public static final String repeatGame = gameName + ": RepeatGame";
     }
 
-    public static final class Dennis {
-        public static final String gameName = WindowConfig.dennis_title;
-        public static final String startGame = "Start GameEntryPoint";
+    public class Dennis {
+	public static final String gameName = WindowConfig.dennis_title;
+        public static final String gameReady = "Start Game";
+        public static final String gameLost = "Game lost";
+        public static final String gameWon = "Game Won";
     }
 
     public static final class TunnelInvader {

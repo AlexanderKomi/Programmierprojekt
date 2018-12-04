@@ -1,15 +1,26 @@
 package de.hsh.dennis;
 
+import common.config.WindowConfig;
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.engine.components.game.GameEntryPoint;
 import common.util.Logger;
 import de.hsh.dennis.controller.*;
+import de.hsh.dennis.model.KeyLayout;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Observable;
 
 public class DennisFxmlChanger extends FxmlChanger {
 
+    Stage breakStage;
+    private static final int BREAKMENU_HEIGHT = WindowConfig.window_height;
+    private static final int BREAKMENU_WIDTH = WindowConfig.window_width;
 
     public DennisFxmlChanger(FxModul fxModul, String fxmlPath, Observable fxController) {
         super(fxModul, fxmlPath, fxController);
@@ -37,26 +48,30 @@ public class DennisFxmlChanger extends FxmlChanger {
     }
 
     private void handle_LevelMenu_controller(String code) {
-
+        Level_controller levelController = new Level_controller();
         switch (code) {
             case "b_easy":
                 Logger.log("handle_LevelMenu_controller: b_easy erreicht");
-                //starte einfaches Level
+                changeScene("view/level.fxml", levelController);
+                levelController.passCanvas();
                 break;
 
             case "b_medium":
                 Logger.log("handle_LevelMenu_controller: b_medium erreicht");
-                //starte mittel schweres Level
+                changeScene("view/level.fxml", levelController);
+                levelController.passCanvas();
                 break;
 
             case "b_hard":
                 Logger.log("handle_LevelMenu_controller: b_hard erreicht");
-                //starte schweres Level
+                changeScene("view/level.fxml", levelController);
+                levelController.passCanvas();
                 break;
 
             case "b_nightmare":
                 Logger.log("handle_LevelMenu_controller: b_nightmare erreicht");
-                //starte viel zu schweres Level
+                changeScene("view/level.fxml", levelController);
+                levelController.passCanvas();
                 break;
 
             case "b_back":
@@ -73,17 +88,20 @@ public class DennisFxmlChanger extends FxmlChanger {
         switch (code) {
             case "b_replay":
                 Logger.log("handle_BreakMenu_controller: b_replay erreicht");
-                //starte das Level von neuem
+                breakStage.close();
+                //TODO: implement restarting current level
                 break;
 
             case "b_main_menu":
                 Logger.log("handle_BreakMenu_controller: b_main_menu erreicht");
+                breakStage.close();
                 changeScene("view/mainMenu.fxml", new MainMenu_controller());
                 break;
 
             case "b_continue":
                 Logger.log("handle_BreakMenu_controller: b_continue erreicht");
-                //setze das Level fort
+                breakStage.close();
+                //TODO: implement continuing current level
                 break;
 
             default:
@@ -92,7 +110,9 @@ public class DennisFxmlChanger extends FxmlChanger {
     }
 
     private void handle_Level_controller(String code) {
-        //TODO: implement later
+        if (code.equals(KeyLayout.Control.ESC.toString())) {
+            openBreakMenu();
+        }
     }
 
     private void handle_MainMenu_controller(String code) {
@@ -139,5 +159,22 @@ public class DennisFxmlChanger extends FxmlChanger {
         }
     }
 
+    private void openBreakMenu() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/breakMenu.fxml"));
+            BreakMenu_controller controller = new BreakMenu_controller();
+            controller.addObserver(getFxModul());
+            fxmlLoader.setController(controller);
+            Parent parent = fxmlLoader.load();
+            breakStage = new Stage();
+            breakStage.setTitle(" - PAUSING - ");
+            Scene scene = new Scene(parent, BREAKMENU_WIDTH, BREAKMENU_HEIGHT);
+            breakStage.initModality(Modality.APPLICATION_MODAL);
+            breakStage.setScene(scene);
+            breakStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

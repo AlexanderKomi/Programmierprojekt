@@ -7,7 +7,7 @@ import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.src.PacManController;
 import de.hsh.amir.AmirEntryPoint;
 import de.hsh.daniel.RAM;
-import de.hsh.dennis.DennisGame;
+import de.hsh.dennis.DennisGameEntryPoint;
 import de.hsh.kevin.controller.TIController;
 import javafx.fxml.FXMLLoader;
 
@@ -33,7 +33,7 @@ public class GameContainer extends FXGameContainer {
                 new RAM( container ),
                 new TIController( container ),
                 new Leertastenklatsche( container ),
-                new DennisGame(container)
+                new DennisGameEntryPoint(container)
         );
     }
 

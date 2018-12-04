@@ -1,5 +1,5 @@
 #pic_header {
-    -fx-image: url("header.jpg");
+    -fx-image: url("../../resources/header.jpg");
 }
 
 #b_play {
