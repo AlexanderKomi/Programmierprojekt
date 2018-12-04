@@ -127,17 +127,24 @@ public class GameModel extends Observable {
     private void collideCheck() {
         for (Npc npc : npcList) {
             if (npc != null) {
-                if (npc.getSpawnType() == NPCEnums.Spawn.RIGHT && player.getDirection() == Direction.Right) {
-                    if (player.doesCollide(npc)) {
-                        Logger.log("hit right");
-                        npcHandler.hitNpc(npc);
+
+                //BOT?
+                if (npc.getNpcType() == NPCEnums.NpcType.BOT) {
+                    if (npc.getSpawnType() == NPCEnums.Spawn.RIGHT && player.getDirection() == Direction.Right) {
+                        if (player.doesCollide(npc)) {
+                            npcHandler.hitNpc(npc);
+                        }
                     }
-                } else if (npc.getSpawnType() == NPCEnums.Spawn.LEFT && player.getDirection() == Direction.Left) {
+                }
+
+                //BOT left hit?
+                else if (npc.getSpawnType() == NPCEnums.Spawn.LEFT && player.getDirection() == Direction.Left && npc.getNpcType() == NPCEnums.NpcType.BOT) {
                     if (player.doesCollide(npc)) {
-                        Logger.log("hit left");
                         npcHandler.hitNpc(npc);
                     }
                 }
+                //
+                //else if(){}
             }
         }
     }
