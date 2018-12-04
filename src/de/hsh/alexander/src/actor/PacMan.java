@@ -41,30 +41,24 @@ public class PacMan extends ControlableActor {
     }
 
     @Override
-    protected double[] calculateNewPosFromInput() {
-        double[] xyTuple  = new double[ 2 ];
-        double   velocity = getSpeed();
-
-        getMovement().getDirections().forEach( direction -> {
-            if ( getMovement().isHoldDown( direction ) ) {
-                if ( direction == Direction.Down ) {
-                    xyTuple[ 0 ] = 0;
-                    xyTuple[ 1 ] = velocity;
-                }
-                else if ( direction == Direction.Up ) {
-                    xyTuple[ 0 ] = 0;
-                    xyTuple[ 1 ] = -velocity;
-                }
-                else if ( direction == Direction.Left ) {
-                    xyTuple[ 0 ] = -velocity;
-                    xyTuple[ 1 ] = 0;
-                }
-                else if ( direction == Direction.Right ) {
-                    xyTuple[ 0 ] = velocity;
-                    xyTuple[ 1 ] = 0;
-                }
-            }
-        } );
+    protected double[] calculateDirectedSpeed( Direction direction, double movement_speed ) {
+        double[] xyTuple = new double[ 2 ];
+        if ( direction == Direction.Down ) {
+            xyTuple[ 0 ] = 0;
+            xyTuple[ 1 ] = movement_speed;
+        }
+        else if ( direction == Direction.Up ) {
+            xyTuple[ 0 ] = 0;
+            xyTuple[ 1 ] = -movement_speed;
+        }
+        else if ( direction == Direction.Left ) {
+            xyTuple[ 0 ] = -movement_speed;
+            xyTuple[ 1 ] = 0;
+        }
+        else if ( direction == Direction.Right ) {
+            xyTuple[ 0 ] = movement_speed;
+            xyTuple[ 1 ] = 0;
+        }
         return xyTuple;
     }
 
