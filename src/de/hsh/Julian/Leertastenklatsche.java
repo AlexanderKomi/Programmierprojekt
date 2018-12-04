@@ -15,11 +15,12 @@ public class Leertastenklatsche {
     private String            location     = getLocation();
     private ArrayList<String> input        = new ArrayList<>();
     private ArrayList<Sprite> enemyList    = new ArrayList<>();
+    private boolean        actorturnedleft = true;
 
     public Leertastenklatsche(){
 
         thedude.setImage( location + "/thedude.png" );
-        thedude.setPosition(WindowConfig.window_width/2, WindowConfig.window_height*0.6);
+        thedude.setPosition(WindowConfig.window_width/2-thedude.getWidth()/2, WindowConfig.window_height*0.4);
         collisionDetection();
         createEnemies();
         parseInput( input );
@@ -47,7 +48,7 @@ public class Leertastenklatsche {
             if(rng<0.5)
                 px=0;
             //Logger.log(this.getClass() + ": rng=" + rng);
-            enemyvirus.setPosition( px, WindowConfig.window_height*0.6 );
+            enemyvirus.setPosition( px, WindowConfig.window_height*0.4 );
 
             enemyList.add( enemyvirus );
         }
@@ -57,8 +58,10 @@ public class Leertastenklatsche {
         parseInput( getInput() );
 
         for ( Sprite enemy : enemyList ){
-
-            //enemy.getPositionX();
+            if(enemy.getPositionX()>WindowConfig.window_width/2)
+            enemy.setPosition(enemy.getPositionX()-1, enemy.getPositionY());
+            else
+                enemy.setPosition(enemy.getPositionX()+1, enemy.getPositionY());
 
             enemy.render( gc );
 
@@ -78,12 +81,20 @@ public class Leertastenklatsche {
         double v = 0.5;
         thedude.setVelocity( 0, 0 );
         if ( input.contains( "LEFT" ) ) {
-            thedude.setImage( location + "/thedude.png" );
-            thedude.addVelocity( -v, 0 );
+            if(!actorturnedleft) {
+                thedude.setImage(location + "/thedude.png");
+                actorturnedleft=true;
+
+            }
+            //thedude.addVelocity( -v, 0 );
         }
         if ( input.contains( "RIGHT" ) ) {
-            thedude.setImage( location + "/thedude_turned.png" );
-            thedude.addVelocity( v, 0 );
+            if(actorturnedleft) {
+                thedude.setImage(location + "/thedude_turned.png");
+                actorturnedleft=false;
+
+            }
+            //thedude.addVelocity( v, 0 );
         }
         /*if ( input.contains( "UP" ) ) {
             thedude.addVelocity( 0, -v );
