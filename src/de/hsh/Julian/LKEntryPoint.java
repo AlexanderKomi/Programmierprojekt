@@ -4,9 +4,7 @@ import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
 import common.events.KeyEventManager;
 import common.util.Logger;
-import de.hsh.alexander.src.PacManFxmlChanger;
-import de.hsh.alexander.src.PacManGame;
-import de.hsh.alexander.src.PacManMenu;
+import de.hsh.Julian.controller.LKStart;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
@@ -17,11 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-
-import static common.util.Path.getExecutionLocation;
 
 //
 //
@@ -29,30 +24,17 @@ import static common.util.Path.getExecutionLocation;
 public class LKEntryPoint extends GameEntryPoint {
 
     private final LKFxmlChanger changer;
-    //private final PacManGame game;
-    private GraphicsContext   gc;
-    private Pane              root         = new Pane();
-    private Canvas            canvas       = new Canvas( WindowConfig.window_width, WindowConfig.window_height );
-    private Leertastenklatsche lk          = new Leertastenklatsche();
+    private boolean renderable = false;
+    private GraphicsContext gc;
+    private Pane root = new Pane();
+    private Canvas canvas;
+    private Leertastenklatsche lk = new Leertastenklatsche();
     //private Sprite            enem = new Sprite();
 
-    public LKEntryPoint(Observer o ) {
-        super( o, "LKEntryPoint" );
-        this.canvas.setFocusTraversable( true );// DO NOT DELETE!!!! -> Otherwise does not fire events!
-        this.setGameContentPane( this.initGameContentWindow( o ) );
-        this.getGameContentPane().setOnKeyPressed(
-                e -> {
-                    String code = e.getCode().toString();
-                    if ( !lk.getInput().contains( code ) ) {
-                        lk.getInput().add( code );
-                    }
+    public LKEntryPoint(Observer o) {
+        super(o, "LKEntryPoint");
 
-                } );
-        this.getScene().setRoot( (Parent) this.getGameContentPane() );
-
-
-        //game = new PacManGame();
-        changer = new LKFxmlChanger( this, LKStart.fxml, new LKStart() );
+        changer = new LKFxmlChanger(this, LKStart.fxml, new LKStart());
     }
 
     private Node getGameContentPane() {
@@ -60,59 +42,66 @@ public class LKEntryPoint extends GameEntryPoint {
     }
 
     private void setGameContentPane(Pane initGameContentWindow) {
-        this.root=initGameContentWindow;    }
+        this.root = initGameContentWindow;
+    }
 
-    public Pane initGameContentWindow( Observer observer ) {
+    public Pane initGameContentWindow(Observer observer) {
 
-     //   Logger.log( "Dir : " + getExecutionLocation(),  Path.getAllFileNames(getExecutionLocation()) );
+        //   Logger.log( "Dir : " + getExecutionLocation(),  Path.getAllFileNames(getExecutionLocation()) );
         addKeyListener();
-        root.getChildren().add( canvas );
+        root.getChildren().add(canvas);
         initializeGraphicsContext();
 
 
         return root;
     }
+
     //Getting the input and realizing when stopping input
     private void addKeyListener() {
         canvas.setOnKeyPressed(
                 e -> {
                     String code = e.getCode().toString();
-                    if ( !lk.getInput().contains( code ) ) {
-                        lk.getInput().add( code );
+                    if (!lk.getInput().contains(code)) {
+                        lk.getInput().add(code);
                     }
-                    Logger.log(this.getClass()+ " Key pressed : " + code );
-                } );
+                    Logger.log(this.getClass() + " Key pressed : " + code);
+                });
 
-        root.setOnKeyReleased(
+        canvas.setOnKeyReleased(
                 e -> {
                     String code = e.getCode().toString();
-                    lk.getInput().remove( code );
-                    Logger.log(this.getClass()+ " Key pressed : " + code );
-                } );
+                    lk.getInput().remove(code);
+                    Logger.log(this.getClass() + " Key pressed : " + code);
+                });
 
     }
 
     private void initializeGraphicsContext() {
-        Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 36 );
+        Font theFont = Font.font("Helvetica", FontWeight.BOLD, 36);
         gc = canvas.getGraphicsContext2D();
-        gc.setFont( theFont );
-        gc.setFill( Color.BLACK );
-        gc.setStroke( Color.BLACK );
-        gc.setLineWidth( 1 );
+        gc.setFont(theFont);
+        gc.setFill(Color.BLACK);
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(1);
     }
-
-
-
-
 
 
     public void render(int fps) {
-        gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
-        lk.render(this.gc);
+        if(renderable) {
+            gc.clearRect(0, 0, WindowConfig.window_width, WindowConfig.window_height);
+            lk.render(this.gc);
+        }
     }
 
     @Override
-    public void update( Observable o, Object arg ) {
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Canvas) {
+            this.canvas = (Canvas) arg;
+            initAfterCanvasPass();
+        } else {
+            changer.changeFxml(o, (String) arg);
+        }
+
         if ( o instanceof KeyEventManager ) {
             if ( arg instanceof KeyEvent ) {
                 KeyEvent keyEvent = (KeyEvent) arg;
@@ -129,6 +118,25 @@ public class LKEntryPoint extends GameEntryPoint {
                 }
             }
         }
+
+    }
+
+    private void initAfterCanvasPass() {
+        initializeGraphicsContext();
+        addKeyListener();
+        /*
+        this.setGameContentPane(this.initGameContentWindow(o));
+        this.getGameContentPane().setOnKeyPressed(
+                e -> {
+                    String code = e.getCode().toString();
+                    if (!lk.getInput().contains(code)) {
+                        lk.getInput().add(code);
+                    }
+
+                });
+        this.getScene().setRoot((Parent) this.getGameContentPane());
+*/
+        renderable = true;
     }
 
 

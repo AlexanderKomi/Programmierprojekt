@@ -58,6 +58,8 @@ public class Leertastenklatsche {
 
         for ( Sprite enemy : enemyList ){
 
+            //enemy.getPositionX();
+
             enemy.render( gc );
 
         }

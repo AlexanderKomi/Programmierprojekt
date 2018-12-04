@@ -2,8 +2,12 @@ package de.hsh.Julian;
 
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
+import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import common.util.Logger;
+import de.hsh.Julian.controller.LKEnd;
+import de.hsh.Julian.controller.LKStart;
+import de.hsh.Julian.controller.SpielBildschirm_controller;
 
 import java.util.Observable;
 
@@ -22,15 +26,19 @@ public class LKFxmlChanger extends FxmlChanger {
 
     @Override
     public void changeFxml( Observable o, String msg ) {
-        switch (msg) {
-            case UpdateCodes.LK.gameMenu:
-                this.changeScene( LKStart.fxml, o );
-                break;
-            case UpdateCodes.LK.gameOver:
-                this.changeScene( LKEnd.fxml, o );
-                break;
-            default:
-                Logger.log( this.getClass() + ": changeFxml in PacManFxmlCanger: default" );
+        if(o instanceof LKStart){
+            switch (msg){
+                case "b_backtomenu":
+                    ((GameEntryPoint) getFxModul()).exitToMainGUI();
+                    break;
+                case "b_start":
+                    SpielBildschirm_controller c = new SpielBildschirm_controller();
+                    changeScene(SpielBildschirm_controller.fxml, c );
+                    c.passCanvas();
+                    break;
+                    default:
+                        Logger.log(this.getClass().getName() + " default SwitchCase.");
+            }
         }
     }
 }
