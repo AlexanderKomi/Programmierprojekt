@@ -26,29 +26,16 @@ public class LKEntryPoint extends GameEntryPoint {
 
     public LKEntryPoint(Observer o) {
         super( o, WindowConfig.julian_title );
-        this.lk = new Leertastenklatsche();
         changer = new LKFxmlChanger(this, LKStart.fxml, new LKStart());
     }
 
     //Getting the input and realizing when stopping input
     private void addKeyListener() {
-
         canvas.setOnKeyPressed(
-                e -> {
-                    String code = e.getCode().toString();
-                    if (!lk.getInput().contains(code)) {
-                        lk.getInput().add(code);
-                    }
-                    Logger.log( this.getClass() + " Key pressed : " + code );
-                });
+                e -> lk.parseInput( e.getCode().toString() ) );
 
         canvas.setOnKeyReleased(
-                e -> {
-                    String code = e.getCode().toString();
-                    lk.getInput().remove(code);
-                    Logger.log(this.getClass() + " Key pressed : " + code);
-                });
-
+                e -> lk.parseInput( e.getCode().toString() ) );
     }
 
     private void initializeGraphicsContext() {
@@ -72,6 +59,7 @@ public class LKEntryPoint extends GameEntryPoint {
     public void update(Observable o, Object arg) {
         if (arg instanceof Canvas) {
             this.canvas = (Canvas) arg;
+            Logger.log( this.getClass() + ": init after canvas pass" );
             initAfterCanvasPass();
         } else {
             changer.changeFxml(o, (String) arg);
@@ -79,6 +67,7 @@ public class LKEntryPoint extends GameEntryPoint {
     }
 
     private void initAfterCanvasPass() {
+        this.lk = new Leertastenklatsche();
         initializeGraphicsContext();
         addKeyListener();
         renderable = true;

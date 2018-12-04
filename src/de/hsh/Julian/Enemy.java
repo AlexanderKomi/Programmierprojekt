@@ -1,11 +1,11 @@
 package de.hsh.Julian;
 
-import common.actor.Actor;
+import common.actor.Collectable;
 import common.config.WindowConfig;
 
 import java.io.FileNotFoundException;
 
-public class Enemy extends Actor {
+public class Enemy extends Collectable {
 
     public static final String imageLocation = Leertastenklatsche.location + "enemyvirus.png";
 

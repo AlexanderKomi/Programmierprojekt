@@ -4,7 +4,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +11,9 @@ import java.util.List;
 import java.util.Observable;
 
 public class Drawable extends Observable {
+
+    private static int id_counter = 0;
+    public         int id;
 
     private double x;
     private double y;
@@ -30,32 +32,33 @@ public class Drawable extends Observable {
     private ArrayList<Image> images = new ArrayList<>();
 
 
-    public Drawable( String pictureFileName ) throws FileNotFoundException {
+    public Drawable( String pictureFileName ) {
         this( pictureFileName, 0, 0 );
     }
 
-    public Drawable( String pictureFileName, double x, double y ) throws FileNotFoundException {
+    public Drawable( String pictureFileName, double x, double y ) {
         this.currentImage = loadPicture( pictureFileName );
         this.setHeight( this.getCurrentImage().getHeight() );
         this.setWidth( this.getCurrentImage().getWidth() );
         this.setX( x );
         this.setY( y );
+        this.id = id_counter;
+        id_counter++;
     }
 
-    public Drawable( String... pictureFilePaths ) throws FileNotFoundException {
+    public Drawable( String... pictureFilePaths ) {
         this( Arrays.asList( pictureFilePaths ), 0, 0, 0 );
     }
 
-    public Drawable( List<String> pictureFilePaths ) throws FileNotFoundException {
+    public Drawable( List<String> pictureFilePaths ) {
         this( pictureFilePaths, 0, 0, 0 );
     }
 
-    public Drawable( List<String> pictureFilePaths, double x, double y ) throws FileNotFoundException {
+    public Drawable( List<String> pictureFilePaths, double x, double y ) {
         this( pictureFilePaths, x, y, 0 );
     }
 
-    public Drawable( List<String> pictureFilePaths, double x, double y, int delay )
-            throws FileNotFoundException {
+    public Drawable( List<String> pictureFilePaths, double x, double y, int delay ) {
         this.setPos( x, y );
         boolean heightIsSet = false;
 
@@ -69,9 +72,11 @@ public class Drawable extends Observable {
             }
         }
         this.switchingDelay = delay;
+        this.id = id_counter;
+        id_counter++;
     }
 
-    public Drawable( double x, double y, int delay, String... pictureFilePaths ) throws FileNotFoundException {
+    public Drawable( double x, double y, int delay, String... pictureFilePaths ) {
         this( Arrays.asList( pictureFilePaths ), x, y, delay );
     }
 
@@ -81,11 +86,20 @@ public class Drawable extends Observable {
         this.setPos( d.getPos() );
         this.height = d.getHeight();
         this.width = d.getWidth();
+        this.id = d.id;
     }
 
-    private Image loadPicture( String fileName ) throws FileNotFoundException {
+    private Image loadPicture( String fileName ) {
         this.name = fileName;
-        return new Image( new FileInputStream( fileName ) );
+        if ( !TextureBuffer.contains( fileName ) ) {
+            try {
+                TextureBuffer.addFile( fileName );
+            }
+            catch ( FileNotFoundException e ) {
+                e.printStackTrace();
+            }
+        }
+        return TextureBuffer.getImage( fileName );
     }
 
     /**
@@ -132,7 +146,7 @@ public class Drawable extends Observable {
     }
 
     public void draw( GraphicsContext gc ) {
-
+        gc.drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
 
     protected double[] beforeDrawing( double[] current_pos, double[] new_pos ) {
@@ -287,7 +301,7 @@ public class Drawable extends Observable {
         this.currentImage = currentImage;
     }
 
-    public void setCurrentImage( String filePath ) throws FileNotFoundException {
+    public void setCurrentImage( String filePath ) {
         this.currentImage = loadPicture( filePath );
     }
 

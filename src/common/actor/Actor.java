@@ -1,6 +1,5 @@
 package common.actor;
 
-import java.io.FileNotFoundException;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.List;
@@ -12,40 +11,39 @@ public class Actor extends Drawable {
     protected Movement       movement        = new Movement();
     private   HashSet<Actor> collisionActors = new HashSet<>();
 
-    public Actor( String pictureFileName ) throws FileNotFoundException {
+    public Actor( String pictureFileName ) {
         this( pictureFileName, 0, 0 );
     }
 
-    public Actor( String pictureFileName, double x, double y ) throws FileNotFoundException {
+    public Actor( String pictureFileName, double x, double y ) {
         super( pictureFileName, x, y );
     }
 
-    public Actor( String pictureFileName, HashSet<Actor> collisionActors ) throws FileNotFoundException {
+    public Actor( String pictureFileName, HashSet<Actor> collisionActors ) {
         super( pictureFileName );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( String pictureFileName, double x, double y, HashSet<Actor> collisionActors ) throws FileNotFoundException {
+    public Actor( String pictureFileName, double x, double y, HashSet<Actor> collisionActors ) {
         super( pictureFileName, x, y );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( String... pictureFilePaths ) throws FileNotFoundException {
+    public Actor( String... pictureFilePaths ) {
         super( pictureFilePaths );
     }
 
-    public Actor( HashSet<Actor> collisionActors, String... pictureFilePaths ) throws FileNotFoundException {
-        super( pictureFilePaths );
-        this.collisionActors = collisionActors;
-    }
-
-    public Actor( List<String> pictureFilePaths, HashSet<Actor> collisionActors ) throws FileNotFoundException {
+    public Actor( HashSet<Actor> collisionActors, String... pictureFilePaths ) {
         super( pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths, double x, double y, HashSet<Actor> collisionActors )
-            throws FileNotFoundException {
+    public Actor( List<String> pictureFilePaths, HashSet<Actor> collisionActors ) {
+        super( pictureFilePaths );
+        this.collisionActors = collisionActors;
+    }
+
+    public Actor( List<String> pictureFilePaths, double x, double y, HashSet<Actor> collisionActors ) {
         super( pictureFilePaths, x, y );
         this.collisionActors = collisionActors;
     }
@@ -54,27 +52,25 @@ public class Actor extends Drawable {
                   double x,
                   double y,
                   int delay,
-                  HashSet<Actor> collisionActors ) throws FileNotFoundException {
+                  HashSet<Actor> collisionActors ) {
         super( pictureFilePaths, x, y, delay );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( double x, double y, int delay, HashSet<Actor> collisionActors, String... pictureFilePaths )
-            throws FileNotFoundException {
+    public Actor( double x, double y, int delay, HashSet<Actor> collisionActors, String... pictureFilePaths ) {
         super( x, y, delay, pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths ) throws FileNotFoundException {
+    public Actor( List<String> pictureFilePaths ) {
         this( pictureFilePaths, 0, 0, 0 );
     }
 
-    public Actor( List<String> pictureFilePaths, double x, double y, int delay )
-            throws FileNotFoundException {
+    public Actor( List<String> pictureFilePaths, double x, double y, int delay ) {
         super( pictureFilePaths, x, y, delay );
     }
 
-    public Actor( double x, double y, int delay, String... pictureFilePaths ) throws FileNotFoundException {
+    public Actor( double x, double y, int delay, String... pictureFilePaths ) {
         super( x, y, delay, pictureFilePaths );
     }
 
@@ -130,7 +126,7 @@ public class Actor extends Drawable {
         return collisionActors;
     }
 
-    boolean addCollidingActor( Actor a ) {
+    public boolean addCollidingActor( Actor a ) {
         return this.collisionActors.add( a );
     }
 

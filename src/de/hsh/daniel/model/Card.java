@@ -25,19 +25,11 @@ public class Card {
 
 
     public boolean isMatched() {
-        if(cardMatched == true) {
-            return true;
-        } else {
-            return false;
-        }
+        return cardMatched == true;
     }
 
     public boolean isCardSelected() {
-        if(cardSelected == true) {
-            return true;
-        } else {
-            return false;
-        }
+        return cardSelected == true;
     }
 
     /* -------------------------------- GETTERS & SETTERS -------------------------------- */

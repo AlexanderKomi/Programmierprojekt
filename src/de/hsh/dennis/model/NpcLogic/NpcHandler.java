@@ -30,7 +30,7 @@ public class NpcHandler {
 
 
     public NpcHandler(Canvas canvas) {
-        this.canvas = canvas;
+        NpcHandler.canvas = canvas;
     }
 
     public void spawning() {
