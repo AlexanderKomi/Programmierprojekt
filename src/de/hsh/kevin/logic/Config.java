@@ -5,7 +5,7 @@ import common.util.Path;
 public class Config {
 
     public static final String resLocation = Path.getExecutionLocation() + "de/hsh/kevin/res/";
-    public static final int paketSpawnDelay = 100;
+    public static final int paketSpawnDelay = 50;
     public static final int projectileSpawnDelay = 400;
     public static final int maxLife = 4;
     public static final double spawnChanceGtoB = 0.75;
@@ -22,6 +22,10 @@ public class Config {
 
     }
 
+    public static void setDifficulyPreset() {
+        diffConfig = enmDifficultyOptions.easy;
+    }
+    
     public static enmSoundOptions getSoundOption() {
         return soundConfig;
     }
@@ -71,7 +75,6 @@ public class Config {
         return getLifeFactor() * maxLife;
     }
 
-
     public static int getMaxSpawnCount() {
         switch (diffConfig) {
         case easy:
@@ -80,6 +83,19 @@ public class Config {
             return 3;
         case hard:
             return 4;
+        default:
+            return 2;
+        }
+    }
+
+    public static int getPaketSpawnDelay() {
+        switch (diffConfig) {
+        case easy:
+            return paketSpawnDelay;
+        case normal:
+            return (int)(paketSpawnDelay * 1.25);
+        case hard:
+            return (int)(paketSpawnDelay * 1.25);
         default:
             return 2;
         }

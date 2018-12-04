@@ -26,6 +26,12 @@ public class TIMenuController extends Observable{
     @FXML
     public Button btn_sammlung;
 
+    
+    public TIMenuController() {
+       Config.setDifficulyPreset();
+    }
+    
+    
     @FXML
     void difficultyPressed(ActionEvent event) {
 	Config.switchDifficulty();

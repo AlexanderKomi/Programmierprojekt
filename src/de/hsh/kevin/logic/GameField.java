@@ -36,7 +36,7 @@ public class GameField {
     public GameField(enmDifficultyOptions difficulty, Canvas canvas, Score score) {
         width = canvas.getWidth();
         height = canvas.getHeight();
-        spawnDelay = (int) (Config.paketSpawnDelay);
+        spawnDelay = (int) (Config.getPaketSpawnDelay());
 
         this.score = score;
         leben = new Leben();
@@ -126,8 +126,27 @@ public class GameField {
     }
 
     public void moveAll() {
-        paketManager.move();
-        projectileManager.move();
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                paketManager.move();
+            }
+        });
+        t1.start();
+
+        Thread t2 = new Thread(new Runnable() {
+            public void run() {
+                projectileManager.move();
+            }
+        });
+
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 

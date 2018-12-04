@@ -7,6 +7,7 @@ import common.updates.UpdateCodes;
 import de.hsh.kevin.controller.TIGameController;
 import de.hsh.kevin.controller.TIGameOverController;
 import de.hsh.kevin.controller.TIMenuController;
+import de.hsh.kevin.logic.Config;
 
 import java.util.Observable;
 
