@@ -2,7 +2,7 @@ package de.hsh.amir.logik;
 
 import java.util.Observable;
 
-public class Gegner_Model extends Observable {
+public class Gegner extends Observable {
 
     private int x;
     private int y;
@@ -11,11 +11,11 @@ public class Gegner_Model extends Observable {
     private boolean isTouched = false;
 
 
-    public Gegner_Model() {
+    public Gegner() {
         isTouched = false;
     }
 
-    public Gegner_Model(int x, int y, int modelType) {
+    public Gegner(int x, int y, int modelType) {
         this.x = x;
         this.y = y;
         this.modelType = modelType; // um Gegnertypen später zu definieren und ihr Verhalten zu steuern
@@ -24,7 +24,7 @@ public class Gegner_Model extends Observable {
     public void move(final char direction_Char) {
         switch (direction_Char) {
             case 'D': // nach unten bewegen
-                y = Math.min(Level_Model.LEVELMODEL_HEIGHT - 100, y + 5);
+                y = Math.min(Level.LEVELMODEL_HEIGHT - 100, y + 5);
                 setChanged();
                 break;
             case 'U': // nach oben bewegen

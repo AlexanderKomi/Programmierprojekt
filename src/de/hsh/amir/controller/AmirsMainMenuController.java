@@ -9,7 +9,7 @@ import javafx.event.ActionEvent;
 
 import java.util.Observable;
 
-public class MainMenu_controller extends Observable{
+public class AmirsMainMenuController extends Observable{
 
     @FXML
     private HBox hbox_1;

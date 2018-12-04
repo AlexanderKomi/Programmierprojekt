@@ -4,7 +4,7 @@ import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
-import de.hsh.amir.controller.MainMenu_controller;
+import de.hsh.amir.controller.AmirsMainMenuController;
 
 import java.util.Observable;
 
@@ -19,7 +19,7 @@ public class AmirFxmlChanger extends FxmlChanger {
 
     @Override
     public void changeFxml(Observable o, String msg) {
-            if (o instanceof MainMenu_controller){handle_MainMenu(msg);}
+            if (o instanceof AmirsMainMenuController){handle_MainMenu(msg);}
             else if(false){}
     }
 

@@ -2,7 +2,7 @@ package de.hsh.amir.logik;
 
 import java.util.Observable;
 
-public class Spielfigur_Model extends Observable {
+public class Spielfigur extends Observable {
 
     private int x;
     private int y; //Muss später final gesetzt werden, da sich Spielfigur nur nach links unr rechts bewegen kann.
@@ -12,7 +12,7 @@ public class Spielfigur_Model extends Observable {
     public void move(final char direction_Char) {
         switch (direction_Char) {
             case 'R': // nach rechts bewegen
-                x = Math.min(Level_Model.LEVELMODEL_WIDTH - 100, x + 5);
+                x = Math.min(Level.LEVELMODEL_WIDTH - 100, x + 5);
                 setChanged();
                 break;
             case 'L': // nach links bewegen

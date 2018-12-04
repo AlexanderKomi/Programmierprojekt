@@ -2,7 +2,7 @@ package de.hsh.amir;
 
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
-import de.hsh.amir.controller.MainMenu_controller;
+import de.hsh.amir.controller.AmirsMainMenuController;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -16,7 +16,7 @@ public class AmirsGame extends GameEntryPoint {
 
     public AmirsGame( Observer o ) {
         super(o, WindowConfig.amir_title);
-        changer = new AmirFxmlChanger(this, "view/AmirsMenu.fxml", new MainMenu_controller());
+        changer = new AmirFxmlChanger(this, "view/AmirsMenu.fxml", new AmirsMainMenuController());
     }
 
 
