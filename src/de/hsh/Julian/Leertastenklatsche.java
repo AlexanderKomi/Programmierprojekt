@@ -78,9 +78,11 @@ public class Leertastenklatsche {
         double v = 0.5;
         thedude.setVelocity( 0, 0 );
         if ( input.contains( "LEFT" ) ) {
+            thedude.setImage( location + "/thedude.png" );
             thedude.addVelocity( -v, 0 );
         }
         if ( input.contains( "RIGHT" ) ) {
+            thedude.setImage( location + "/thedude_turned.png" );
             thedude.addVelocity( v, 0 );
         }
         /*if ( input.contains( "UP" ) ) {
