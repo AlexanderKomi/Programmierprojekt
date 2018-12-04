@@ -31,7 +31,7 @@ public class Player extends ControlableActor {
     /**
      * Setzt das zweite Bild der List<String> als feuerndes Bild und das erste Bild
      * sonst
-     * 
+     *
      * @param pictureFileName
      * @param keyMap
      * @throws FileNotFoundException
@@ -43,7 +43,7 @@ public class Player extends ControlableActor {
     /**
      * Setzt das zweite Bild der List<String> als feuerndes Bild und das erste Bild
      * sonst
-     * 
+     *
      * @param pictureFileName
      * @param keyMap
      * @throws FileNotFoundException
@@ -58,25 +58,21 @@ public class Player extends ControlableActor {
 	}
     }
 
-    @Override
-    protected double[] calculateNewPosFromInput() {
-	double[] xyTuple = new double[2];
-	double velocity = getSpeed();
-
-	getMovement().getDirections().forEach(direction -> {
-	    if (getMovement().isHoldDown(direction)) {
+	@Override
+	protected double[] calculateDirectedSpeed( Direction direction, double movement_speed ) {
+		double[] xyTuple = new double[ 2 ];
 		if (direction == Direction.Left) {
-		    xyTuple[0] = -velocity;
-		    xyTuple[1] = 0;
+			xyTuple[ 0 ] = -movement_speed;
+			xyTuple[ 1 ] = 0;
 		} else if (direction == Direction.Right) {
-		    xyTuple[0] = velocity;
-		    xyTuple[1] = 0;
+			xyTuple[ 0 ] = movement_speed;
+			xyTuple[ 1 ] = 0;
 		}
 	    }
 	});
 	return xyTuple;
     }
-    
+
     public void switchFiring() {
 	if(firingImage == null) {
 	    return;
@@ -84,7 +80,7 @@ public class Player extends ControlableActor {
 	this.setCurrentImage(firingImage);
 	isFiring = true;
     }
-    
+
     public void switchIdle() {
 	if(idleImage == null) {
 	    return;
@@ -92,10 +88,12 @@ public class Player extends ControlableActor {
 	this.setCurrentImage(idleImage);
 	isFiring = false;
     }
-    
+
     public boolean isFiring() {
 	return isFiring;
     }
 
 
+		return xyTuple;
+	}
 }

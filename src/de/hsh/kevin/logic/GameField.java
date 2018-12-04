@@ -15,6 +15,11 @@ import de.hsh.kevin.logic.myActor.ProjectileManager;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class GameField {
     private double width;
     private double height;
@@ -26,7 +31,7 @@ public class GameField {
     private int spawnDelay;
     private int spawnDelayBuffer = 0;
     private boolean projectileSpawning;
- 
+
     public GameField(Canvas canvas, Score score) {
 	this(Config.getDifficultyOption(), canvas, score);
     }
@@ -44,7 +49,7 @@ public class GameField {
 
 	initPlayer(canvas);
     }
-    
+
     public void setScore(Score score) {
 	this.score = score;
     }
@@ -154,11 +159,11 @@ public class GameField {
 	    projectileManager.createProjectile(player.getPos(), player.getWidth() / 4);
 	}
     }
-    
+
     public void setPlayerFiring() {
 	player.switchFiring();
     }
-    
+
     public void setPlayerIdle() {
 	player.switchIdle();
     }

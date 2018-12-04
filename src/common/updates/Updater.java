@@ -5,7 +5,7 @@ import common.MainMenu;
 import common.engine.components.game.GameEntryPoint;
 import common.util.Logger;
 import de.hsh.Julian.Leertastenklatsche;
-import de.hsh.alexander.PacManController;
+import de.hsh.alexander.src.PacManController;
 import de.hsh.amir.AmirsGame;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;

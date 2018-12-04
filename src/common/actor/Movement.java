@@ -1,5 +1,7 @@
 package common.actor;
 
+import javafx.scene.input.KeyEvent;
+
 import java.util.HashMap;
 import java.util.Set;
 
@@ -38,6 +40,22 @@ public class Movement {
         Direction d = this.keymap.get( keyName );
         if ( d != null ) {
             this.holdDown.put( d, b );
+        }
+    }
+
+    static void move( ControlableActor a, KeyEvent keyEvent ) {
+        String keyName   = keyEvent.getCode().getName();
+        String eventName = keyEvent.getEventType().getName();
+        if ( eventName.equals( "KEY_PRESSED" ) ) {
+            if ( !a.getMovement().isHoldDown( keyName ) ) {
+                if ( a.getMovement().contains( keyName ) ) {
+                    a.getMovement().setKeyHoldDownIfPresent( keyName, true );
+                    //movement.addDirection(movement.getKeymap().get( keyName ));
+                }
+            }
+        }
+        else if ( eventName.equals( "KEY_RELEASED" ) ) {
+            a.getMovement().setKeyHoldDownIfPresent( keyName, false );
         }
     }
 

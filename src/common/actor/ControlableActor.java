@@ -32,55 +32,46 @@ public class ControlableActor extends Actor {
     * Checks Key Released and Pressed Events.
     * */
     public void move( KeyEvent keyEvent ) {
-        String keyName   = keyEvent.getCode().getName();
-        String eventName = keyEvent.getEventType().getName();
-        if ( eventName.equals( "KEY_PRESSED" ) ) {
-            if ( !movement.isHoldDown( keyName ) ) {
-                if ( movement.contains( keyName ) ) {
-                    movement.setKeyHoldDownIfPresent( keyName, true );
-                    //movement.addDirection(movement.getKeymap().get( keyName ));
-                }
-            }
-        }
-        else if ( eventName.equals( "KEY_RELEASED" ) ) {
-            movement.setKeyHoldDownIfPresent( keyName, false );
-        }
+        Movement.move( this, keyEvent );
     }
-
 
     public void draw( Canvas canvas ) {
         double[] temp = this.calculateNewPosFromInput();
         super.draw( canvas, temp[ 0 ], temp[ 1 ] );
     }
 
-    protected double[] calculateNewPosFromInput() {
+    private double[] calculateNewPosFromInput() {
         double[] xyTuple  = new double[ 2 ];
         double   velocity = getMovement().getVelocity();
 
         getMovement().getDirections().forEach( direction -> {
             if ( getMovement().isHoldDown( direction ) ) {
-                if ( direction == Direction.Down ) {
-                    xyTuple[ 0 ] += 0;
-                    xyTuple[ 1 ] += velocity;
-                    //super.calculateNewPosFromInput( velocity, 0 );
-                }
-                if ( direction == Direction.Up ) {
-                    xyTuple[ 0 ] += 0;
-                    xyTuple[ 1 ] += -velocity;
-                    //super.calculateNewPosFromInput( -velocity, 0 );
-                }
-                if ( direction == Direction.Left ) {
-                    xyTuple[ 0 ] += -velocity;
-                    xyTuple[ 1 ] += 0;
-                    //super.calculateNewPosFromInput( 0, -velocity );
-                }
-                if ( direction == Direction.Right ) {
-                    xyTuple[ 0 ] += velocity;
-                    xyTuple[ 1 ] += 0;
-                    //super.calculateNewPosFromInput( 0, velocity );
-                }
+                double[] temp = calculateDirectedSpeed( direction, velocity );
+                xyTuple[ 0 ] = temp[ 0 ];
+                xyTuple[ 1 ] = temp[ 1 ];
             }
         } );
+        return xyTuple;
+    }
+
+    protected double[] calculateDirectedSpeed( Direction direction, double movement_speed ) {
+        double[] xyTuple = new double[ 2 ];
+        if ( direction == Direction.Down ) {
+            xyTuple[ 0 ] += 0;
+            xyTuple[ 1 ] += movement_speed;
+        }
+        if ( direction == Direction.Up ) {
+            xyTuple[ 0 ] += 0;
+            xyTuple[ 1 ] += -movement_speed;
+        }
+        if ( direction == Direction.Left ) {
+            xyTuple[ 0 ] += -movement_speed;
+            xyTuple[ 1 ] += 0;
+        }
+        if ( direction == Direction.Right ) {
+            xyTuple[ 0 ] += movement_speed;
+            xyTuple[ 1 ] += 0;
+        }
         return xyTuple;
     }
 
