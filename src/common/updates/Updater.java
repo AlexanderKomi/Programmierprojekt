@@ -6,7 +6,7 @@ import common.engine.components.game.GameEntryPoint;
 import common.util.Logger;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.src.PacManController;
-import de.hsh.amir.AmirsGame;
+import de.hsh.amir.AmirEntryPoint;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.controller.TIController;
@@ -34,8 +34,8 @@ public class Updater {
             if ( gameEntryPoint instanceof PacManController ) {
                 UpdatePacman.update( (PacManController) gameEntryPoint, arg, gameContainer );
             }
-            else if ( gameEntryPoint instanceof AmirsGame ) {
-                UpdateAmirsGame.update( (AmirsGame) gameEntryPoint, arg, gameContainer );
+            else if ( gameEntryPoint instanceof AmirEntryPoint) {
+                UpdateAmirsGame.update( (AmirEntryPoint) gameEntryPoint, arg, gameContainer );
             }
             else if ( gameEntryPoint instanceof RAM ) {
                 update( (RAM) gameEntryPoint, arg, gameContainer );
@@ -61,7 +61,7 @@ public class Updater {
         }
     }
 
-    public static void update( AmirsGame game, Object arg, GameContainer gameContainer ) {
+    public static void update( AmirEntryPoint game, Object arg, GameContainer gameContainer ) {
         Logger.log( game, arg );
     }
 

@@ -5,7 +5,7 @@ import common.engine.components.game.GameEntryPoints;
 import common.updates.Updater;
 import de.hsh.Julian.Leertastenklatsche;
 import de.hsh.alexander.src.PacManController;
-import de.hsh.amir.AmirsGame;
+import de.hsh.amir.AmirEntryPoint;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGame;
 import de.hsh.kevin.controller.TIController;
@@ -29,7 +29,7 @@ public class GameContainer extends FXGameContainer {
         // TODO : Make gameEntryPoints only create on request from main menu
         return new GameEntryPoints(
                 new PacManController( container ),
-                new AmirsGame( container ),
+                new AmirEntryPoint( container ),
                 new RAM( container ),
                 new TIController( container ),
                 new Leertastenklatsche( container ),

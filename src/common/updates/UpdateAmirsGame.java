@@ -2,7 +2,7 @@ package common.updates;
 
 import common.GameContainer;
 import common.util.Logger;
-import de.hsh.amir.AmirsGame;
+import de.hsh.amir.AmirEntryPoint;
 import de.hsh.dennis.DennisGame;
 
 /**
@@ -10,7 +10,7 @@ import de.hsh.dennis.DennisGame;
  */
 public class UpdateAmirsGame {
 
-    public static void update(AmirsGame amirGame, Object arg, GameContainer gameContainer) {
+    public static void update(AmirEntryPoint amirGame, Object arg, GameContainer gameContainer) {
         if (arg instanceof String) {
             String message = (String) arg;
             switch (message) {
