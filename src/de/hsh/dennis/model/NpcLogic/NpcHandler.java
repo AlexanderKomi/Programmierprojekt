@@ -13,7 +13,12 @@ public class NpcHandler {
     private int npcLimit = 100;
 
     private static Canvas canvas;
-    private static final List<Npc> npcList = Collections.synchronizedList(new ArrayList());
+    private spawnTimer time = new spawnTimer();
+    private NpcIO npcIO = new NpcIO();
+
+    private Npc[] spawnArray;
+    private int spawnIterator = 0;
+    private static final List<Npc> npcList = Collections.synchronizedList(new ArrayList()); //TODO: muss nach position sortiert werden, falls alle Geschwindigkeiten nicht den gleichen Wert haben!
     private final List<Npc> npcsToRemove = Collections.synchronizedList(new ArrayList());
     private final List<Npc> npcsToHit = Collections.synchronizedList(new ArrayList());
 
@@ -27,10 +32,31 @@ public class NpcHandler {
         this.canvas = canvas;
     }
 
-    public void spawn(Npc npc) {
-        if (npcList.size() <= npcLimit) {
-            getNpcList().add(npc);
+    public void spawning() {
+        if (spawnArray != null) {
+            //time.start();
+            if (spawnIterator < spawnArray.length && time.getCurrentTimeStamp() >= spawnArray[spawnIterator].getSpawnTime()) {
+                synchronized (npcList) {
+                    spawnNpc(spawnArray[spawnIterator]);
+                }
+                spawnIterator++;
+            }
+        } else {
+            Logger.log("No enemys loaded!");
         }
+    }
+
+    public void spawnNpc(Npc npc) {
+        synchronized (npcList) {
+            if (npcList.size() <= npcLimit) {
+                getNpcList().add(npc);
+            }
+            Logger.log("Npc: " + npc.getNpcType() + " spawned after " + time.getCurrentSec() + " seconds.");
+        }
+    }
+
+    public void loadNpcs(Config.Level.Difficulty dif) {
+        spawnArray = npcIO.loadLevel(dif);
     }
 
     //TODO: implement all game behaviors
@@ -80,7 +106,9 @@ public class NpcHandler {
     }
 
     public void hitNpc(Npc npc) {
-        npcsToHit.add(npc);
+        synchronized (npcsToHit) {
+            npcsToHit.add(npc);
+        }
     }
 
     public List<Npc> getNpcList() {
@@ -121,7 +149,4 @@ public class NpcHandler {
         }
     }
 
-    public void setLevel(Config.Level.Difficulty dif) {
-
-    }
 }

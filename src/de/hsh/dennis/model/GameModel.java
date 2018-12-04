@@ -7,7 +7,6 @@ import de.hsh.dennis.model.KeyLayout.Movement.Custom;
 import de.hsh.dennis.model.NpcLogic.Config;
 import de.hsh.dennis.model.NpcLogic.NPCEnums;
 import de.hsh.dennis.model.NpcLogic.NpcHandler;
-import de.hsh.dennis.model.NpcLogic.NpcIO;
 import de.hsh.dennis.model.NpcLogic.actors.Bot;
 import de.hsh.dennis.model.NpcLogic.actors.Npc;
 import de.hsh.dennis.model.NpcLogic.actors.Player;
@@ -38,12 +37,10 @@ public class GameModel extends Observable {
 
     //Objects
     private NpcHandler npcHandler;
-    private NpcIO npcIO = new NpcIO();
     private Canvas canvas;
     private GraphicsContext gc;
     private Player player;
     private List<Npc> npcList;
-    private Npc[] spawnArray;
 
     //animation timing values
     private double animationDelay = 0.5; //animation delay in seconds
@@ -70,10 +67,12 @@ public class GameModel extends Observable {
             if (!ai) {
                 actInit();
             }
-
+            npcHandler.spawning();
             npcHandler.move();
             updateHealth(npcHandler.getHealthChange());
             updateScore(npcHandler.getScoreChange());
+
+            //TODO: repair!
             npcList = npcHandler.getNpcList();
             collideCheck();
 
@@ -89,8 +88,7 @@ public class GameModel extends Observable {
     private void actInit() {
         if (npcHandler == null) {
             npcHandler = new NpcHandler(canvas);
-            spawnArray = npcIO.loadLevel(Config.Level.Difficulty.CUSTOM);
-
+            npcHandler.loadNpcs(Config.Level.Difficulty.EASY);
         }
         if (musicStart) {
             musicStart = false;
@@ -213,6 +211,7 @@ public class GameModel extends Observable {
 
     //debugging
     void debugging() {
+        /*
         for (Npc n : spawnArray) {
             if (n != null) {
                 Logger.log(n.toString());
@@ -220,12 +219,12 @@ public class GameModel extends Observable {
                 Logger.log("\n\n!!! JSON beschädigt !!!\n");
             }
         }
-
+*/
 
         try {
-            //npcHandler.spawn(new Package(NPCEnums.Spawn.RIGHT));
-            npcHandler.spawn(new Bot(NPCEnums.Spawn.RIGHT));
-            //npcHandler.spawn(new Hacker(NPCEnums.Spawn.RIGHT));
+            //npcHandler.spawnNpc(new Package(NPCEnums.Spawn.RIGHT));
+            npcHandler.spawnNpc(new Bot(NPCEnums.Spawn.RIGHT));
+            //npcHandler.spawnNpc(new Hacker(NPCEnums.Spawn.RIGHT));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
