@@ -3,7 +3,7 @@ package common;
 import common.engine.FXGameContainer;
 import common.engine.components.game.GameEntryPoints;
 import common.updates.Updater;
-import de.hsh.Julian.Leertastenklatsche;
+import de.hsh.Julian.LKEntryPoint;
 import de.hsh.alexander.src.PacManController;
 import de.hsh.amir.AmirEntryPoint;
 import de.hsh.daniel.RAM;
@@ -32,8 +32,8 @@ public class GameContainer extends FXGameContainer {
                 new AmirEntryPoint( container ),
                 new RAM( container ),
                 new TIController( container ),
-                new Leertastenklatsche( container ),
-                new DennisGameEntryPoint(container)
+                new DennisGameEntryPoint(container),
+                new LKEntryPoint( container )
         );
     }
 
