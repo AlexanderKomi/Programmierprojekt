@@ -1,6 +1,9 @@
 package de.hsh.Julian;
 
+import common.actor.Actor;
 import common.config.WindowConfig;
+import common.util.Logger;
+import de.hsh.dennis.model.NpcLogic.SpawnTimer;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ public class Leertastenklatsche {
     private ArrayList<String> input        = new ArrayList<>();
     private ArrayList<Sprite> enemyList    = new ArrayList<>();
     private boolean        actorturnedleft = true;
+    private SpawnTimer timer = new SpawnTimer();
 
     public Leertastenklatsche(){
 
@@ -38,7 +42,7 @@ public class Leertastenklatsche {
 
     // Gegner erstellen und zufällig links oder rechts starten lassen
     private void createEnemies() {
-        for ( int i = 0 ; i < 15 ; i++ ) {
+
             Sprite enemyvirus = new Sprite();
             enemyvirus.setImage( location + "/enemyvirus.png" );
             /*double px = 350 * Math.random() + 50;
@@ -48,15 +52,19 @@ public class Leertastenklatsche {
             if(rng<0.5)
                 px=0;
             //Logger.log(this.getClass() + ": rng=" + rng);
-            enemyvirus.setPosition( px, WindowConfig.window_height*0.4 );
+            enemyvirus.setPosition( px, WindowConfig.window_height*0.5 );
 
             enemyList.add( enemyvirus );
-        }
+
     }
 
     void render(GraphicsContext gc){
         parseInput( getInput() );
 
+        if(timer.elabsedTime() > 2.0d){
+            timer.resetTimer();
+            createEnemies();
+        }
         for ( Sprite enemy : enemyList ){
             if(enemy.getPositionX()>WindowConfig.window_width/2)
             enemy.setPosition(enemy.getPositionX()-1, enemy.getPositionY());
