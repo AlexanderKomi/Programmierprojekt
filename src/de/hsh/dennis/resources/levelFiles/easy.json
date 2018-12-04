@@ -1,13 +1,19 @@
 [
   {
-    "spawnTime": 1.0,
+    "spawnTime": 10.0,
     "speed": 1.0,
     "spawnType": "RIGHT",
     "npcType": "HACKER"
   },
   {
-    "spawnTime": 3.0,
+    "spawnTime": 1.0,
     "speed": 1.0,
+    "spawnType": "LEFT",
+    "npcType": "BOT"
+  },
+  {
+    "spawnTime": 4.0,
+    "speed": 2.0,
     "spawnType": "LEFT",
     "npcType": "BOT"
   },
@@ -18,7 +24,7 @@
     "npcType": "BOT"
   },
   {
-    "spawnTime": 10.0,
+    "spawnTime": 8.0,
     "speed": 1.0,
     "spawnType": "RIGHT",
     "npcType": "PACKAGE"

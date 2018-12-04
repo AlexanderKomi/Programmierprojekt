@@ -55,6 +55,8 @@ public class DennisGameEntryPoint extends GameEntryPoint {
 
         } else if (arg instanceof Canvas) {
             gm.setCanvas((Canvas) arg);
+
+
         } else if (arg instanceof KeyCode) {
             if (arg == KeyLayout.Control.ESC) {
                 changer.changeFxml(o, KeyLayout.Control.ESC.toString());

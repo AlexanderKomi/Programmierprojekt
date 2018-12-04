@@ -7,7 +7,6 @@ import de.hsh.dennis.model.KeyLayout.Movement.Custom;
 import de.hsh.dennis.model.NpcLogic.Config;
 import de.hsh.dennis.model.NpcLogic.NPCEnums;
 import de.hsh.dennis.model.NpcLogic.NpcHandler;
-import de.hsh.dennis.model.NpcLogic.actors.Bot;
 import de.hsh.dennis.model.NpcLogic.actors.Npc;
 import de.hsh.dennis.model.NpcLogic.actors.Player;
 import de.hsh.dennis.model.audio.AudioPlayer;
@@ -19,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
 
@@ -48,7 +46,7 @@ public class GameModel extends Observable {
     private boolean reset = false;
 
     //Audio Stuff
-    private boolean musicStart = false;
+    private boolean musicStart = true;
     private AudioPlayer aa = new AudioPlayer();
     // --- ACT ------------------------------------------------------------------------------------
     private boolean ai = false;
@@ -127,17 +125,18 @@ public class GameModel extends Observable {
     }
 
     private void collideCheck() {
-        Npc temp = getNextNpc();
-        if (temp != null) {
-            if (temp.getSpawnType() == NPCEnums.Spawn.RIGHT && player.getDirection() == Direction.Right) {
-                if (player.doesCollide(temp)) {
-                    Logger.log("hit right");
-                    npcHandler.hitNpc(temp);
-                }
-            } else if (temp.getSpawnType() == NPCEnums.Spawn.LEFT && player.getDirection() == Direction.Left) {
-                if (player.doesCollide(temp)) {
-                    Logger.log("hit left");
-                    npcHandler.hitNpc(temp);
+        for (Npc npc : npcList) {
+            if (npc != null) {
+                if (npc.getSpawnType() == NPCEnums.Spawn.RIGHT && player.getDirection() == Direction.Right) {
+                    if (player.doesCollide(npc)) {
+                        Logger.log("hit right");
+                        npcHandler.hitNpc(npc);
+                    }
+                } else if (npc.getSpawnType() == NPCEnums.Spawn.LEFT && player.getDirection() == Direction.Left) {
+                    if (player.doesCollide(npc)) {
+                        Logger.log("hit left");
+                        npcHandler.hitNpc(npc);
+                    }
                 }
             }
         }
@@ -212,6 +211,8 @@ public class GameModel extends Observable {
     //debugging
     void debugging() {
         /*
+
+
         for (Npc n : spawnArray) {
             if (n != null) {
                 Logger.log(n.toString());
@@ -219,7 +220,7 @@ public class GameModel extends Observable {
                 Logger.log("\n\n!!! JSON beschädigt !!!\n");
             }
         }
-*/
+
 
         try {
             //npcHandler.spawnNpc(new Package(NPCEnums.Spawn.RIGHT));
@@ -228,6 +229,6 @@ public class GameModel extends Observable {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
+        */
     }
 }

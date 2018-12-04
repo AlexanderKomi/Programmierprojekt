@@ -5,6 +5,7 @@ import de.hsh.dennis.model.NpcLogic.actors.Npc;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class NpcHandler {
 
     private Npc[] spawnArray;
     private int spawnIterator = 0;
-    private static final List<Npc> npcList = Collections.synchronizedList(new ArrayList()); //TODO: muss nach position sortiert werden, falls alle Geschwindigkeiten nicht den gleichen Wert haben!
+    private static final List<Npc> npcList = Collections.synchronizedList(new ArrayList());
     private final List<Npc> npcsToRemove = Collections.synchronizedList(new ArrayList());
     private final List<Npc> npcsToHit = Collections.synchronizedList(new ArrayList());
 
@@ -56,7 +57,11 @@ public class NpcHandler {
     }
 
     public void loadNpcs(Config.Level.Difficulty dif) {
-        spawnArray = npcIO.loadLevel(dif);
+        Npc[] temp = npcIO.loadLevel(dif);
+
+        Arrays.sort(temp);
+
+        spawnArray = temp;
     }
 
     //TODO: implement all game behaviors

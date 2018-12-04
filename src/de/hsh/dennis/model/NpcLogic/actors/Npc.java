@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 
 import java.io.FileNotFoundException;
 
-public abstract class Npc extends Actor {
+public abstract class Npc extends Actor implements Comparable {
 
     private double spawnTime;
     private double speed = Config.Level.speed;
@@ -81,6 +81,18 @@ public abstract class Npc extends Actor {
                 "spawnType:\t" + spawnType.toString() + "\n" +
                 "npcType:\t" + npcType.toString() + "\n"
                 ;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Npc other = (Npc) o;
+
+        if (this.getSpawnTime() < other.getSpawnTime()) {
+            return -1;
+        } else if (this.getSpawnTime() > other.getSpawnTime()) {
+            return 1;
+        }
+        return 0;
     }
 
     // --- Getter & Setter ------------------------------------------------------------------------
