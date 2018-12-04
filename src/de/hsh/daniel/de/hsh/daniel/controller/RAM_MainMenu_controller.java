@@ -1,7 +1,6 @@
 package de.hsh.daniel.de.hsh.daniel.controller;
 
 import common.util.Logger;
-import de.hsh.daniel.Memory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -26,10 +25,10 @@ public class RAM_MainMenu_controller extends Observable {
     @FXML
     public void button_click(ActionEvent event) {
         String id = getId(event);
+        Logger.log(this.getClass()+": button clicked: " + event);
         switch (id){
             case "b_play":
                 setChanged();
-                Memory.main();
                 notifyObservers(id);
                 break;
 
