@@ -10,7 +10,6 @@ import javafx.scene.canvas.Canvas;
 public class PaketManager {
 
     private ArrayList<Paket> pakete;
-    private ArrayList<Paket> latestPakete;
     private double width;
     private double height;
     private Score score;
@@ -18,7 +17,6 @@ public class PaketManager {
 
     public PaketManager(double width, double height, Score score, Leben leben) {
         pakete = new ArrayList<>();
-        latestPakete = new ArrayList<>();
         this.width = width;
         this.height = height;
         this.score = score;
@@ -43,24 +41,42 @@ public class PaketManager {
      * @param chance
      */
     public void createNewPaket(double chance) {
-        double rand = Math.random();
-        Paket p = null;
-        if (rand < chance) {
-            p = createGoodPaket();
-        } else {
-            p = createBadPaket();
+        createNewPaket(chance, 1);
+    }
+
+    public void createNewPaket(double chance, int anzahl) {
+        ArrayList<Paket> newPakete = new ArrayList<>();
+        double[][] pos = new double[anzahl][2];
+
+        double rand = 0;
+        for (int i = 0; i < anzahl; i++) {
+            rand = Math.random();
+            if (rand < chance) {
+                newPakete.add(createGoodPaket());
+            } else {
+                newPakete.add(createBadPaket());
+            }
+            
+            setOnFreeLocation(newPakete.get(i));
+            pakete.add(newPakete.get(i));
+
+//            // Position setzen
+//            do {
+//                rand = Math.random() * width;
+//            } while (rand + newPakete.get(i).getWidth() > width);
+//
+//            newPakete.get(i).setPos(rand, -(newPakete.get(i).getHeight() + 1));
+
         }
-        setOnFreeLocation(p);
-        pakete.add(p);
-        latestPakete.add(p);
+
     }
 
     public Paket createBadPaket() {
-        return PaketFactory.getBadPaket(1, 1);
+        return PaketFactory.getBadPaket(0, 0);
     }
 
     public Paket createGoodPaket() {
-        return PaketFactory.getGoodPaket(1, 1);
+        return PaketFactory.getGoodPaket(0, 0);
     }
 
     public void move() {
@@ -121,9 +137,5 @@ public class PaketManager {
 
     public void remove(Paket p) {
         pakete.remove(p);
-    }
-
-    public void resetLatestPakete() {
-        latestPakete.clear();
     }
 }

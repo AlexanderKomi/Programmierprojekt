@@ -10,41 +10,53 @@ public class PaketFactory {
     private static ArrayList<String> goodPaketImages;
 
     static {
-	if (badPaketImages == null) {
-	    badPaketImages = new ArrayList<>();
-	    badPaketImages.add(Config.resLocation + "ordner_red/ordner1.png");
-	    badPaketImages.add(Config.resLocation + "ordner_red/ordner2.png");
-	    badPaketImages.add(Config.resLocation + "ordner_red/ordner3.png");
-	    badPaketImages.add(Config.resLocation + "ordner_red/ordner4.png");
-	}
-	if (goodPaketImages == null) {
-	    goodPaketImages = new ArrayList<>();
-	    goodPaketImages.add(Config.resLocation + "ordner_black/ordner1.png");
-	    goodPaketImages.add(Config.resLocation + "ordner_black/ordner2.png");
-	    goodPaketImages.add(Config.resLocation + "ordner_black/ordner3.png");
-	    goodPaketImages.add(Config.resLocation + "ordner_black/ordner4.png");
+        if (badPaketImages == null) {
+            badPaketImages = new ArrayList<>();
+            badPaketImages.add(Config.resLocation + "ordner_red/ordner1.png");
+            badPaketImages.add(Config.resLocation + "ordner_red/ordner2.png");
+            badPaketImages.add(Config.resLocation + "ordner_red/ordner3.png");
+            badPaketImages.add(Config.resLocation + "ordner_red/ordner4.png");
+        }
+        if (goodPaketImages == null) {
+            goodPaketImages = new ArrayList<>();
+            goodPaketImages.add(Config.resLocation + "ordner_black/ordner1.png");
+            goodPaketImages.add(Config.resLocation + "ordner_black/ordner2.png");
+            goodPaketImages.add(Config.resLocation + "ordner_black/ordner3.png");
+            goodPaketImages.add(Config.resLocation + "ordner_black/ordner4.png");
 
-	}
+        }
     }
 
     public static Paket getBadPaket(double x, double y) {
-	return createPaket(x, y, enmPaketTyp.bad, badPaketImages);
+        return createPaket(x, y, enmPaketTyp.bad, badPaketImages);
     }
 
     public static Paket getGoodPaket(double x, double y) {
-	return createPaket(x, y, enmPaketTyp.good, goodPaketImages);
+        return createPaket(x, y, enmPaketTyp.good, goodPaketImages);
     }
 
     private static Paket createPaket(double x, double y, enmPaketTyp typ, ArrayList<String> images) {
-	Paket p = null;
-	try {
-	    p = new Paket(images, typ);
-	    p.setPos(x, y);
-	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
-	}
+        Paket p = null;
+        try {
+            p = new Paket(images, typ);
+            p.setPos(x, y);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-	return p;
+        return p;
+    }
+
+    public static Paket getBadPaket() {
+        return createPaket(enmPaketTyp.bad, badPaketImages);
+    }
+
+    public static Paket getGoodPaket() {
+        return createPaket(enmPaketTyp.good, goodPaketImages);
+    }
+
+    private static Paket createPaket(enmPaketTyp typ, ArrayList<String> images) {
+        return createPaket(0, 0, typ, images);
     }
 
 }
