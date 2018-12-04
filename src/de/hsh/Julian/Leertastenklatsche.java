@@ -99,12 +99,21 @@ public class Leertastenklatsche implements Observer {
         if ( o instanceof Enemy ) {
             Enemy e = (Enemy) o;
             for ( Enemy enemy : this.enemyList ) {
-                Logger.log( "Searched id : " + e.id + " Enemy id : " + enemy.id );
+                Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
                 if ( enemy.id == e.id ) {
                     this.thedude.getCollisionActors().remove( enemy );
                     enemyList.remove( enemy );
                     Logger.log( this.getClass() + ": Found enemy with same id" );
-                    score++;
+                    if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
+                        if ( thedude.turnedleft ) {
+                            score++;
+                        }
+                    }
+                    else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
+                        if ( !thedude.turnedleft ) {
+                            score++;
+                        }
+                    }
                     return;
                 }
             }
