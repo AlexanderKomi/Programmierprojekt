@@ -49,4 +49,12 @@ public final class UpdateCodes {
         public static final String fieldSize = "Field size changed";
     }
 
+    public static final class LK {
+        public static final String gameName = WindowConfig.julian_title;
+        public static final String startGame = gameName + " Start GameEntryPoint";
+        public static final String playGame = gameName + " Start Game";
+        public static final String gameOver = gameName + " Game Over";
+        public static final String gameMenu = gameName + " Game Menu";
+    }
+
 }
