@@ -10,96 +10,79 @@ public class Config {
     public static final int maxLife = 4;
     public static final double spawnChanceGtoB = 0.75;
 
-    
     private static enmSoundOptions soundConfig = enmSoundOptions.off;
     private static enmDifficultyOptions diffConfig = enmDifficultyOptions.easy;
-    
+
     public static void switchSound() {
-	if (soundConfig == enmSoundOptions.off) {
-	    soundConfig = enmSoundOptions.on;
-	} else {
-	    soundConfig = enmSoundOptions.off;
-	}
+        if (soundConfig == enmSoundOptions.off) {
+            soundConfig = enmSoundOptions.on;
+        } else {
+            soundConfig = enmSoundOptions.off;
+        }
 
     }
 
     public static enmSoundOptions getSoundOption() {
-	return soundConfig;
+        return soundConfig;
     }
 
     public static void switchDifficulty() {
-	if (diffConfig == enmDifficultyOptions.easy) {
-	    diffConfig = enmDifficultyOptions.normal;
-	} else if (diffConfig == enmDifficultyOptions.normal) {
-	    diffConfig = enmDifficultyOptions.hard;
-	} else {
-	    diffConfig = enmDifficultyOptions.easy;
-	}
+        if (diffConfig == enmDifficultyOptions.easy) {
+            diffConfig = enmDifficultyOptions.normal;
+        } else if (diffConfig == enmDifficultyOptions.normal) {
+            diffConfig = enmDifficultyOptions.hard;
+        } else {
+            diffConfig = enmDifficultyOptions.easy;
+        }
 
     }
 
     public static enmDifficultyOptions getDifficultyOption() {
-	return diffConfig;
+        return diffConfig;
     }
 
     public static double getDifficultyFactor() {
-	switch (diffConfig) {
-	case easy:
-	    return 1;
-	case normal:
-	    return 1.25;
-	case hard:
-	    return 1.5;
-	default:
-	    return 1;
-	}
+        switch (diffConfig) {
+        case easy:
+            return 1;
+        case normal:
+            return 1.25;
+        case hard:
+            return 1.5;
+        default:
+            return 1;
+        }
     }
 
     public static double getLifeFactor() {
-	switch (diffConfig) {
-	case easy:
-	    return 1;
-	case normal:
-	    return 0.75;
-	case hard:
-	    return 0.5;
-	default:
-	    return 1;
-	}
+        switch (diffConfig) {
+        case easy:
+            return 1;
+        case normal:
+            return 0.75;
+        case hard:
+            return 0.5;
+        default:
+            return 1;
+        }
     }
 
     public static double getLife() {
-	return getLifeFactor() * maxLife;
+        return getLifeFactor() * maxLife;
     }
 
-    public static double getSpawnFactor() {
-	switch (diffConfig) {
-	case easy:
-	    return 1;
-	case normal:
-	    return 0.75;
-	case hard:
-	    return 0.5;
-	default:
-	    return 1;
-	}
-    }
-
-    public static double getSpawnDelay() {
-	return getSpawnFactor() * paketSpawnDelay;
-    }
 
     public static int getMaxSpawnCount() {
-	switch (diffConfig) {
-	case easy:
-	    return 2;
-	case normal:
-	    return 3;
-	case hard:
-	    return 4;
-	default:
-	    return 2;
-	}
+        switch (diffConfig) {
+        case easy:
+            return 2;
+        case normal:
+            return 3;
+        case hard:
+            return 4;
+        default:
+            return 2;
+        }
     }
 
 }

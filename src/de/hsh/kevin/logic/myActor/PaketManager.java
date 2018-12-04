@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 public class PaketManager {
 
     private ArrayList<Paket> pakete;
+    private ArrayList<Paket> latestPakete;
     private double width;
     private double height;
     private Score score;
@@ -17,6 +18,7 @@ public class PaketManager {
 
     public PaketManager(double width, double height, Score score, Leben leben) {
         pakete = new ArrayList<>();
+        latestPakete = new ArrayList<>();
         this.width = width;
         this.height = height;
         this.score = score;
@@ -42,28 +44,28 @@ public class PaketManager {
      */
     public void createNewPaket(double chance) {
         double rand = Math.random();
+        Paket p = null;
         if (rand < chance) {
-            createGoodPaket();
+            p = createGoodPaket();
         } else {
-            createBadPaket();
+            p = createBadPaket();
         }
-    }
-
-    public void createBadPaket() {
-        Paket p = PaketFactory.getBadPaket(1, 1);
         setOnFreeLocation(p);
         pakete.add(p);
+        latestPakete.add(p);
     }
 
-    public void createGoodPaket() {
-        Paket p = PaketFactory.getGoodPaket(1, 1);
-        setOnFreeLocation(p);
-        pakete.add(p);
+    public Paket createBadPaket() {
+        return PaketFactory.getBadPaket(1, 1);
+    }
+
+    public Paket createGoodPaket() {
+        return PaketFactory.getGoodPaket(1, 1);
     }
 
     public void move() {
         ArrayList<Paket> toRemove = new ArrayList<>();
-        
+
         pakete.stream().parallel().forEach(paket -> {
             if (paket.getPos()[1] > height) {
                 if (paket.getPaketTyp() == enmPaketTyp.good) {
@@ -76,8 +78,8 @@ public class PaketManager {
                 paket.move();
             }
         });
-        
-        for(int i = 0; i < toRemove.size(); i++) {
+
+        for (int i = 0; i < toRemove.size(); i++) {
             pakete.remove(toRemove.get(i));
         }
     }
@@ -88,7 +90,6 @@ public class PaketManager {
         }
     }
 
-    //TODO verursacht flackern
     private void setOnFreeLocation(Paket paket) {
         double randX = -1;
         boolean free = false;
@@ -100,7 +101,7 @@ public class PaketManager {
                 randX = Math.random() * width;
             } while (randX + paket.getWidth() > width);
 
-            paket.setPos(randX, 1);
+            paket.setPos(randX, -(paket.getHeight() + 1));
 
             // check ob Platz belegt ist
             isCollided = false;
@@ -120,5 +121,9 @@ public class PaketManager {
 
     public void remove(Paket p) {
         pakete.remove(p);
+    }
+
+    public void resetLatestPakete() {
+        latestPakete.clear();
     }
 }

@@ -36,7 +36,7 @@ public class GameField {
     public GameField(enmDifficultyOptions difficulty, Canvas canvas, Score score) {
         width = canvas.getWidth();
         height = canvas.getHeight();
-        spawnDelay = (int) (Config.getSpawnDelay());
+        spawnDelay = (int) (Config.paketSpawnDelay);
 
         this.score = score;
         leben = new Leben();
@@ -94,9 +94,10 @@ public class GameField {
         if (spawnDelayBuffer == spawnDelay) {
             Random rand = new Random();
             int number = rand.nextInt(Config.getMaxSpawnCount());
-            for (int i = 0; i <= number; i++) {
+            for (int i = 0; i < number; i++) {
                 paketManager.createNewPaket(Config.spawnChanceGtoB);
             }
+            paketManager.resetLatestPakete();
         }
         spawnDelayBuffer--;
     }
