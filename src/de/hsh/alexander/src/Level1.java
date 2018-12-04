@@ -3,9 +3,9 @@ package de.hsh.alexander.src;
 import common.actor.Collectable;
 import common.actor.Level;
 import common.util.Logger;
-import de.hsh.alexander.src.actor.ActorCreator;
 import de.hsh.alexander.src.actor.DataCoin;
-import de.hsh.alexander.src.actor.PacMan;
+import de.hsh.alexander.src.actor.level_elements.Wall;
+import de.hsh.alexander.src.actor.player.PacMan;
 import javafx.scene.input.KeyEvent;
 
 import java.io.FileNotFoundException;
@@ -23,7 +23,7 @@ public class Level1 extends Level {
 
         addCollectable( new DataCoin( 50, 50 ) );
 
-        addLevelElement( ActorCreator.initTestWall() );
+        addLevelElement( Wall.initTestWall() );
 
     }
 

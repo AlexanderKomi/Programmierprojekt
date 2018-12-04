@@ -35,23 +35,16 @@ public class Player extends ControlableActor {
 	this.setSpeed(defaultSpeed);
     }
 
-    @Override
-    protected double[] calculateNewPosFromInput() {
-	double[] xyTuple = new double[2];
-	double velocity = getSpeed();
-
-	getMovement().getDirections().forEach(direction -> {
-	    if (getMovement().isHoldDown(direction)) {
+	@Override
+	protected double[] calculateDirectedSpeed( Direction direction, double movement_speed ) {
+		double[] xyTuple = new double[ 2 ];
 		if (direction == Direction.Left) {
-		    xyTuple[0] = -velocity;
-		    xyTuple[1] = 0;
+			xyTuple[ 0 ] = -movement_speed;
+			xyTuple[ 1 ] = 0;
 		} else if (direction == Direction.Right) {
-		    xyTuple[0] = velocity;
-		    xyTuple[1] = 0;
+			xyTuple[ 0 ] = movement_speed;
+			xyTuple[ 1 ] = 0;
 		}
-	    }
-	});
-	return xyTuple;
-    }
-
+		return xyTuple;
+	}
 }

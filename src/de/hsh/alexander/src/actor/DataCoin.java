@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 public class DataCoin extends Collectable {
 
-    public static final  String data_coin_dir = ActorCreator.actorLocation + "data_coin/";
+    public static final  String data_coin_dir = ResourcePaths.Actor.Collectables.DataCoin.directory;
     private static final int    default_delay = 10;
 
     private static final String[] pictureFilePaths = new String[] {
