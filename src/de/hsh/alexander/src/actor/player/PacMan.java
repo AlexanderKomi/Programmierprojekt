@@ -82,6 +82,13 @@ public class PacMan extends ControlableActor {
         pacMan2KeyMap.put( "A", Direction.Left );
         pacMan2KeyMap.put( "D", Direction.Right );
 
-        return new PacMan( ResourcePaths.Actor.Player.PacMan.pacman2Directory + "snailWalk2.png", 500, 500, pacMan2KeyMap );
+        ArrayList<String> images = new ArrayList<>();
+        images.add( ResourcePaths.Actor.Player.PacMan.pacman2Directory + "pacman2_0.png" );
+        images.add( ResourcePaths.Actor.Player.PacMan.pacman2Directory + "pacman2_1.png" );
+        images.add( ResourcePaths.Actor.Player.PacMan.pacman2Directory + "pacman2_2.png" );
+        images.add( ResourcePaths.Actor.Player.PacMan.pacman2Directory + "pacman2_3.png" );
+
+
+        return new PacMan( images, 500, 500, pacMan2KeyMap );
     }
 }
