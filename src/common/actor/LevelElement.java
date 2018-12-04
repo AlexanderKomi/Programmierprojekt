@@ -13,11 +13,23 @@ public class LevelElement extends Actor {
         super( pictureFileName, x, y );
     }
 
-    protected LevelElement( List<String> pictureFilePaths, double x, double y, int delay ) throws FileNotFoundException {
+    public LevelElement( String... pictureFilePaths ) throws FileNotFoundException {
+        super( pictureFilePaths );
+    }
+
+    public LevelElement( List<String> pictureFilePaths ) throws FileNotFoundException {
+        super( pictureFilePaths );
+    }
+
+    public LevelElement( List<String> pictureFilePaths, double x, double y, int delay ) throws FileNotFoundException {
         super( pictureFilePaths, x, y, delay );
     }
 
-    LevelElement( double x, double y, int delay, String... pictureFilePaths ) throws FileNotFoundException {
+    public LevelElement( double x, double y, String... pictureFilePaths ) throws FileNotFoundException {
+        super( x, y, 0, pictureFilePaths );
+    }
+
+    public LevelElement( double x, double y, int delay, String... pictureFilePaths ) throws FileNotFoundException {
         super( x, y, delay, pictureFilePaths );
     }
 }

@@ -29,7 +29,7 @@ public class Drawable extends Observable {
     private ArrayList<Image> images = new ArrayList<>();
 
 
-    protected Drawable( String pictureFileName ) throws FileNotFoundException {
+    public Drawable( String pictureFileName ) throws FileNotFoundException {
         this( pictureFileName, 0, 0 );
     }
 
@@ -41,7 +41,19 @@ public class Drawable extends Observable {
         this.setY( y );
     }
 
-    protected Drawable( List<String> pictureFilePaths, double x, double y, int delay )
+    public Drawable( String... pictureFilePaths ) throws FileNotFoundException {
+        this( Arrays.asList( pictureFilePaths ), 0, 0, 0 );
+    }
+
+    public Drawable( List<String> pictureFilePaths ) throws FileNotFoundException {
+        this( pictureFilePaths, 0, 0, 0 );
+    }
+
+    public Drawable( List<String> pictureFilePaths, double x, double y ) throws FileNotFoundException {
+        this( pictureFilePaths, x, y, 0 );
+    }
+
+    public Drawable( List<String> pictureFilePaths, double x, double y, int delay )
             throws FileNotFoundException {
         this.setPos( x, y );
         boolean heightIsSet = false;
@@ -56,6 +68,10 @@ public class Drawable extends Observable {
             }
         }
         this.switchingDelay = delay;
+    }
+
+    public Drawable( double x, double y, int delay, String... pictureFilePaths ) throws FileNotFoundException {
+        this( Arrays.asList( pictureFilePaths ), x, y, delay );
     }
 
     private Image loadPicture( String fileName ) throws FileNotFoundException {
