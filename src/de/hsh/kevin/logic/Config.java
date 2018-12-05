@@ -1,13 +1,11 @@
 package de.hsh.kevin.logic;
 
-import common.util.Path;
-
 public class Config {
 
-    public static final String resLocation = Path.getExecutionLocation() + "de/hsh/kevin/res/";
-    public static final int paketSpawnDelay = 100;
-    public static final int projectileSpawnDelay = 400;
-    public static final int maxLife = 4;
+    public static final String resLocation          = "/de/hsh/kevin/res/";
+    public static final int    paketSpawnDelay      = 100;
+    public static final int    projectileSpawnDelay = 400;
+    public static final int    maxLife              = 4;
 
     
     private static enmSoundOptions soundConfig = enmSoundOptions.off;

@@ -1,10 +1,8 @@
 package de.hsh.alexander.src.actor;
 
-import common.util.Path;
-
 public final class ResourcePaths {
 
-    public static final String resourceFolderPath = Path.getExecutionLocation() + "de/hsh/alexander/res/";
+    public static final String resourceFolderPath = "/de/hsh/alexander/res/";
 
     public static final class Actor {
 

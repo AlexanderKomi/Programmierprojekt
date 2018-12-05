@@ -1,12 +1,10 @@
 package common.actor;
 
-import common.util.Path;
-
 import java.util.List;
 
 public class BackgroundImage extends Drawable {
 
-    public static final String fallbackPath = Path.getExecutionLocation() + "common/gui/xp_background_1280x800.jpg";
+    public static final String fallbackPath = "/common/gui/xp_background_1280x800.jpg";
 
     public BackgroundImage() {
         super( fallbackPath );

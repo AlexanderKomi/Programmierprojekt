@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
@@ -192,14 +193,20 @@ abstract public class Drawable extends Observable {
     }
 
     public void rotate( double rotate ) {
-        Platform.runLater( () -> {
-            this.imageView.setRotate( this.imageView.getRotate() + rotate );
-            SnapshotParameters params = new SnapshotParameters();
-            params.setFill( Color.TRANSPARENT );
-            Image temp = this.imageView.snapshot( params, null );
-            this.setCurrentImage( temp );
-        } );
 
+        try {
+            Platform.runLater( () -> {
+                this.imageView.setRotate( rotate );
+                SnapshotParameters params = new SnapshotParameters();
+                params.setFill( Color.TRANSPARENT );
+                Image temp = this.imageView.snapshot( params, (WritableImage) this.imageView.getImage() );
+                this.setCurrentImage( temp );
+            } );
+        }
+        catch ( IllegalArgumentException | IllegalStateException iae ) {
+            iae.printStackTrace();
+            System.exit( 1 );
+        }
     }
 
     @Override
