@@ -125,14 +125,6 @@ public abstract class Npc extends Actor implements Comparable {
         this.spawnType = spawnType;
     }
 
-    private void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
-    double getSpeed() {
-        return speed;
-    }
-
     public NPCEnums.NpcType getNpcType() {
         return npcType;
     }

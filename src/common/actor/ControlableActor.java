@@ -4,12 +4,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class ControlableActor extends Actor {
 
-    private Movement movement = new Movement();
 
     protected ControlableActor( String pictureFileName, HashMap<String, Direction> keymap ) throws FileNotFoundException {
         super( pictureFileName );
@@ -27,6 +27,14 @@ public class ControlableActor extends Actor {
         super( pictureFileName, x, y, delay );
         this.movement.setKeyMap( keymap );
     }
+
+    protected ControlableActor( double x, double y, HashMap<String, Direction> keymap, int delay, String... pictureFileNames )
+            throws FileNotFoundException {
+        super( Arrays.asList( pictureFileNames ), x, y, delay );
+        this.movement.setKeyMap( keymap );
+    }
+
+
 
     /**
     * Checks Key Released and Pressed Events.
@@ -81,13 +89,7 @@ public class ControlableActor extends Actor {
         this.movement.setKeyMap( keyMap );
     }
 
-    public void setSpeed( double speed ) {
-        this.movement.setVelocity( speed );
-    }
 
-    public double getSpeed() {
-        return this.movement.getVelocity();
-    }
 
     public Movement getMovement() {
         return movement;
