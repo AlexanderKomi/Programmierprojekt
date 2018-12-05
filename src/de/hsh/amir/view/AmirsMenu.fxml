@@ -30,7 +30,7 @@
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </VBox.margin></Button>
              <Button fx:id="exitButton" mnemonicParsing="false" onAction="#button_clicked" prefHeight="50.0"
-                     prefWidth="300.0" text="exit">
+                     prefWidth="300.0" text="Exit">
                <VBox.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </VBox.margin></Button>
