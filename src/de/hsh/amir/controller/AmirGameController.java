@@ -11,17 +11,17 @@ import java.util.ResourceBundle;
 
 public class AmirGameController extends Observable implements Initializable {
 
-    public static final String   fxml = "view/AmirGame.fxml";
-    private             AmirGame game = new AmirGame();
+    public static final String fxml = "view/AmirGame.fxml";
+    private AmirGame game = new AmirGame();
     @FXML
-    private             Canvas   gameCanvas;
+    private Canvas gameCanvas;
 
-    public void render( int fps ) {
-        game.render( gameCanvas, fps );
+    public void render(int fps) {
+        game.render(gameCanvas, fps);
     }
 
     @Override
-    public void initialize( URL location, ResourceBundle resources ) {
-        gameCanvas.setFocusTraversable( true );
+    public void initialize(URL location, ResourceBundle resources) {
+        gameCanvas.setFocusTraversable(true);
     }
 }
