@@ -2,7 +2,7 @@ package common.actor;
 
 import java.util.List;
 
-public class LevelElement extends Actor {
+abstract public class LevelElement extends Actor {
 
     protected LevelElement( String pictureFileName ) {
         super( pictureFileName );

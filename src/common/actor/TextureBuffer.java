@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 
-public final class TextureBuffer {
+final class TextureBuffer {
 
     private static final HashMap<String, Image> fileToImage = new HashMap<>();
 
@@ -18,7 +18,7 @@ public final class TextureBuffer {
         return fileToImage.get( filepath );
     }
 
-    public static boolean contains( String fileName ) {
+    static boolean contains( String fileName ) {
         return fileToImage.containsKey( fileName );
     }
 }

@@ -3,7 +3,7 @@ package common.actor;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class Collectable extends Actor {
+abstract public class Collectable extends Actor {
 
     public static final String collected = "I am collected, remove me :)";
     private             Actor  collector = null;

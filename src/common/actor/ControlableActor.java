@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class ControlableActor extends Actor {
+abstract public class ControlableActor extends Actor {
 
 
     protected ControlableActor( String pictureFileName, HashMap<String, Direction> keymap ) {

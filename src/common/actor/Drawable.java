@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class Drawable extends Observable {
+abstract public class Drawable extends Observable {
 
     private static int id_counter = 0;
     public         int id;
