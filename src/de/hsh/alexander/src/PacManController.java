@@ -16,23 +16,15 @@ public class PacManController extends GameEntryPoint {
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
         game = new PacManGame();
+        game.addObserver( this );
         changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
-    }
-
-    @Override
-    public void update( Observable o, Object arg ) {
-        if ( o instanceof PacManMenu ) {
-            update( (PacManMenu) o, arg );
-        }
-        else {
-            logParsingError( o, arg );
-        }
     }
 
     /**
      * PacManMenu sends a notification to change the fxml.
      */
-    private void update( PacManMenu o, Object arg ) {
+    @Override
+    public void update( Observable o, Object arg ) {
         if ( arg instanceof String ) {
             String message = (String) arg;
             switch ( message ) {
@@ -57,7 +49,7 @@ public class PacManController extends GameEntryPoint {
     }
 
     private static void logParsingError( Observable o, Object arg ) {
-        Logger.log( "In PacMan Coop update : from observable : " + o + " Argument could not be parsed : " + arg );
+        Logger.log( "In PacManController: update : from observable : " + o + " Argument could not be parsed : " + arg );
     }
 
     @Override

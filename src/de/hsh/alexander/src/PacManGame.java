@@ -2,7 +2,10 @@ package de.hsh.alexander.src;
 
 import common.actor.Level;
 import common.config.WindowConfig;
+import common.updates.UpdateCodes;
 import common.util.Logger;
+import de.hsh.alexander.src.level.Level1;
+import de.hsh.alexander.src.level.PacManLevel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -34,6 +37,8 @@ public class PacManGame extends Observable implements Observer, Initializable {
             catch ( FileNotFoundException e ) {
                 e.printStackTrace();
             }
+
+            currentLevel.addObserver( this );
             this.gameCanvas.setOnKeyPressed( currentLevel::keyboardInput ); // Only fires, when traversable
             this.gameCanvas.setOnKeyReleased( currentLevel::keyboardInput ); // Only fires, when traversable
             initialized = true;
@@ -43,7 +48,20 @@ public class PacManGame extends Observable implements Observer, Initializable {
 
     @Override
     public void update( Observable o, Object arg ) {
-        Logger.log( this.getClass() + ": " + o + ", " + arg );
+        if ( arg instanceof String ) {
+            String message = (String) arg;
+            if ( message.equals( PacManLevel.gameFinishedMessage ) ) {
+                Logger.log( this.getClass() + ": " + PacManLevel.gameFinishedMessage );
+                this.setChanged();
+                this.notifyObservers( UpdateCodes.PacMan.showEndScreen );
+            }
+            else {
+                Logger.log( this.getClass() + ": unknown update : " + o + ", " + arg );
+            }
+        }
+        else {
+            Logger.log( this.getClass() + ": unknown update : " + o + ", " + arg );
+        }
     }
 
     void render(int fps) {
