@@ -30,6 +30,8 @@ public class Drawable extends Observable {
     private int     switchingBuffer          = 0;
     private int     switchingDelay           = 0;
     private boolean switchImageAutomatically = true;
+    private double  scaleX                   = 1.0;
+    private double  scaleY                   = 1.0;
 
     private ImageView        imageView = new ImageView();
     private Image            currentImage;
@@ -131,6 +133,24 @@ public class Drawable extends Observable {
         }
     }
 
+    public void scaleImageWidth( double factor ) {
+        this.scaleX *= factor;
+        this.width *= factor;
+        this.imageView.setFitWidth( scaleX );
+        this.imageView.setScaleX( scaleX );
+    }
+
+    public void scaleImageHeight( double factor ) {
+        this.scaleY *= factor;
+        this.height *= factor;
+        this.imageView.setFitHeight( scaleY );
+        this.imageView.setScaleY( scaleY );
+    }
+
+    public void scaleImage( double factor ) {
+        scaleImageHeight( factor );
+        scaleImageWidth( factor );
+    }
     public void draw( Canvas canvas ) {
         draw( canvas, 0, 0 );
     }
@@ -157,7 +177,7 @@ public class Drawable extends Observable {
         return new_pos;
     }
 
-    double[] calcPosAfterBounds( boolean[] isInBounds, double new_x, double new_y ) {
+    private double[] calcPosAfterBounds( boolean[] isInBounds, double new_x, double new_y ) {
         double[] temp = new double[] {
                 this.x, this.y
         };
@@ -203,7 +223,7 @@ public class Drawable extends Observable {
         return result + ")";
     }
 
-    public String prepareToString() {
+    private String prepareToString() {
         String result = "name:" + this.getName() + ", ";
         result += "x:" + this.getX() + ", ";
         result += "y:" + this.getY() + ", ";
@@ -243,6 +263,15 @@ public class Drawable extends Observable {
     public void setPos( double[] pos ) {
         this.setX( pos[ 0 ] );
         this.setY( pos[ 1 ] );
+    }
+
+    public double[] getBounds() {
+        return new double[] {
+                this.getX(),
+                this.getY(),
+                this.getX() + this.getWidth(),
+                this.getY() + this.getHeight()
+        };
     }
 
     public double[] getPos() {
@@ -318,6 +347,7 @@ public class Drawable extends Observable {
     }
 
     public void setCurrentImage( Image currentImage ) {
+        this.imageView.setSmooth( false );
         this.currentImage = currentImage;
         this.imageView.setImage( this.currentImage );
     }
