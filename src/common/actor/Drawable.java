@@ -1,8 +1,12 @@
 package common.actor;
 
+import javafx.application.Platform;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -27,9 +31,9 @@ public class Drawable extends Observable {
     private int     switchingDelay           = 0;
     private boolean switchImageAutomatically = true;
 
-
+    private ImageView        imageView = new ImageView();
     private Image            currentImage;
-    private ArrayList<Image> images = new ArrayList<>();
+    private ArrayList<Image> images    = new ArrayList<>();
 
 
     public Drawable( String pictureFileName ) {
@@ -37,7 +41,7 @@ public class Drawable extends Observable {
     }
 
     public Drawable( String pictureFileName, double x, double y ) {
-        this.currentImage = loadPicture( pictureFileName );
+        this.setCurrentImage( loadPicture( pictureFileName ) );
         this.setHeight( this.getCurrentImage().getHeight() );
         this.setWidth( this.getCurrentImage().getWidth() );
         this.setX( x );
@@ -65,7 +69,7 @@ public class Drawable extends Observable {
         for ( String filePath : pictureFilePaths ) {
             this.images.add( loadPicture( filePath ) );
             if ( !heightIsSet ) {
-                this.currentImage = this.images.get( 0 );
+                this.setCurrentImage( this.images.get( 0 ) );
                 this.setWidth( this.currentImage.getWidth() );
                 this.setHeight( this.currentImage.getHeight() );
                 heightIsSet = true;
@@ -81,7 +85,7 @@ public class Drawable extends Observable {
     }
 
     public Drawable( Drawable d ) {
-        this.currentImage = d.getCurrentImage();
+        this.setCurrentImage( d.getCurrentImage() );
         this.name = d.getName();
         this.setPos( d.getPos() );
         this.height = d.getHeight();
@@ -120,10 +124,10 @@ public class Drawable extends Observable {
         this.switchingBuffer = 0;
         int index = this.images.indexOf( this.currentImage );
         if ( index < this.images.size() - 1 ) {
-            this.currentImage = this.images.get( index + 1 );
+            this.setCurrentImage( this.images.get( index + 1 ) );
         }
         else {
-            this.currentImage = this.images.get( 0 );
+            this.setCurrentImage( this.images.get( 0 ) );
         }
     }
 
@@ -167,6 +171,17 @@ public class Drawable extends Observable {
         return temp;
     }
 
+    public void rotate( double rotate ) {
+        Platform.runLater( () -> {
+            this.imageView.setRotate( this.imageView.getRotate() + rotate );
+            SnapshotParameters params = new SnapshotParameters();
+            params.setFill( Color.TRANSPARENT );
+            Image temp = this.imageView.snapshot( params, null );
+            this.setCurrentImage( temp );
+        } );
+
+    }
+
     @Override
     public boolean equals( Object obj ) {
         if ( obj instanceof Drawable ) {
@@ -195,6 +210,11 @@ public class Drawable extends Observable {
         result += "width:" + this.getWidth() + ", ";
         result += "height:" + this.getHeight();
         return result;
+    }
+
+    public void onClick() {
+        this.setChanged();
+        this.notifyObservers( this.getClass() + ": clicked" );
     }
 
     /**
@@ -299,6 +319,7 @@ public class Drawable extends Observable {
 
     public void setCurrentImage( Image currentImage ) {
         this.currentImage = currentImage;
+        this.imageView.setImage( this.currentImage );
     }
 
     public void setCurrentImage( String filePath ) {

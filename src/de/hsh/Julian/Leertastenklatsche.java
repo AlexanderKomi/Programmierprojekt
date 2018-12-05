@@ -43,8 +43,10 @@ public class Leertastenklatsche implements Observer {
 
     void render( Canvas gc ) {
         createNewEnemies();
+        enemyList.forEach( enemy -> {
+            enemy.draw( gc );
+        } );
         updateEnemies();
-        enemyList.forEach( enemy -> enemy.draw( gc ) );
         thedude.draw( gc );
         renderScore( gc );
     }
@@ -66,7 +68,10 @@ public class Leertastenklatsche implements Observer {
 
     private void updateEnemies() {
         for ( Enemy enemy : enemyList ) {
-            if ( enemy.getX() > WindowConfig.window_width / 2 ) { enemy.setPos( enemy.getX() - 1.0-score/10.0, enemy.getY() ); }
+            if ( enemy.getX() > WindowConfig.window_width / 2 ) {
+                enemy.setPos( enemy.getX() - 1.0 - score / 10.0, enemy.getY() );
+                enemy.rotate( 90 );
+            }
             else { enemy.setPos( enemy.getX() + 1+score/10.0, enemy.getY() ); }
         }
     }
