@@ -1,5 +1,6 @@
 package de.hsh.daniel.de.hsh.daniel.controller;
 
+import common.updates.UpdateCodes;
 import common.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +12,7 @@ import java.util.Observable;
 
 public class RAM_MainMenu_controller extends Observable {
 
-    public static String fxml = "ram_Menu.fxml";
+    public static String fxml = "view/ram_Menu.fxml";
 
     @FXML
     private Button b_play;
@@ -29,7 +30,7 @@ public class RAM_MainMenu_controller extends Observable {
         switch (id){
             case "b_play":
                 setChanged();
-                notifyObservers(id);
+                notifyObservers( UpdateCodes.RAM.startGame );
                 break;
 
             case "mb_level":
