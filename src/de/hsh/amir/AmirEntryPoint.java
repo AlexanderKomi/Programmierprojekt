@@ -4,10 +4,8 @@ import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import de.hsh.alexander.src.PacManEndScreen;
-import de.hsh.alexander.src.PacManMenu;
+import de.hsh.amir.controller.AmirGameController;
 import de.hsh.amir.controller.AmirsMainMenuController;
-import de.hsh.amir.logik.AmirGame;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -17,13 +15,14 @@ import java.util.Observer;
  */
 public class AmirEntryPoint extends GameEntryPoint {
 
-    private AmirFxmlChanger changer;
-    private AmirGame amirGame;
+    private AmirFxmlChanger    changer;
+    private AmirGameController amirGame;
+    boolean initialized = false;
 
     public AmirEntryPoint(Observer o ) {
         super(o, WindowConfig.amir_title);
-        this.amirGame = new AmirGame();
-        changer = new AmirFxmlChanger(this, "view/AmirsMenu.fxml", new AmirsMainMenuController());
+        this.amirGame = new AmirGameController();
+        changer = new AmirFxmlChanger( this, AmirsMainMenuController.fxml, new AmirsMainMenuController() );
     }
 
 
@@ -36,16 +35,17 @@ public class AmirEntryPoint extends GameEntryPoint {
                     changer.changeFxml( this.amirGame, UpdateCodes.Amir.startGame );
                     break;
                 case UpdateCodes.Amir.mainMenu:
-                    exitToMainGUI();
+                    changer.changeFxml( new AmirsMainMenuController(), AmirsMainMenuController.fxml );
                     break;
-                case UpdateCodes.Amir.showEndScreen:
-                    changer.changeFxml( new PacManEndScreen(), UpdateCodes.Amir.showEndScreen );
+                case UpdateCodes.DefaultCodes.exitToMainGUI:
+                    exitToMainGUI();
                     break;
                 default:
                     logParsingError( o, arg );
                     break;
             }
-            this.notifyObservers( message );
+            initialized = true;
+            //this.notifyObservers( message );
         }
         else {
             logParsingError( o, arg );
@@ -54,7 +54,9 @@ public class AmirEntryPoint extends GameEntryPoint {
 
     @Override
     public void render(int fps) {
-
+        if ( initialized ) {
+            amirGame.render( fps );
+        }
     }
 
     private static void logParsingError(Observable o, Object arg ) {

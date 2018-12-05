@@ -1,21 +1,12 @@
 package de.hsh.amir.logik;
 
-import javafx.fxml.Initializable;
+import common.util.Logger;
+import javafx.scene.canvas.Canvas;
 
-import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
+public class AmirGame {
 
-public class AmirGame extends Observable implements Observer, Initializable {
-
-    @Override
-    public void update(Observable o, Object arg) {
-
+    public void render( Canvas canvas, int fps ) {
+        Logger.log( "render" );
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
 }

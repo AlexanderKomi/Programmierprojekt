@@ -2,14 +2,17 @@ package de.hsh.amir.controller;
 
 import common.updates.UpdateCodes;
 import javafx.event.ActionEvent;
-        import javafx.fxml.FXML;
-        import javafx.scene.control.Button;
-        import javafx.scene.layout.HBox;
-        import javafx.scene.layout.VBox;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.Observable;
 
 public class AmirsMainMenuController extends Observable{
+
+    public static final String fxml = "view/AmirsMenu.fxml";
 
     @FXML
     private HBox hbox_1;
@@ -18,29 +21,36 @@ public class AmirsMainMenuController extends Observable{
     private VBox vbox_1;
 
     @FXML
-    private Button b_1;
+    private Button startButton;
 
     @FXML
-    private Button b_2;
+    private Button level1Button;
 
     @FXML
-    private Button b_3;
+    private Button level2Button;
 
     @FXML
-    private Button b_4;
+    private Button level3Button;
 
     @FXML
-    private Button b_5;
+    private Button exitButton;
 
     @FXML
     void button_clicked(ActionEvent event) {
-
+        String id = getId( event );
+        this.setChanged();
+        if ( id.equals( "startGameButton" ) ) {
+            this.notifyObservers( UpdateCodes.Amir.startGame );
+        }
+        else if ( id.equals( "exitButton" ) ) {
+            this.notifyObservers( UpdateCodes.Amir.mainMenu );
+        }
+        else {
+            this.notifyObservers( id );
+        }
     }
 
-    @FXML
-    void exit(ActionEvent event) {
-        setChanged();
-        notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
+    private String getId( ActionEvent event ) {
+        return ((Node) event.getSource()).getId();
     }
-
 }
