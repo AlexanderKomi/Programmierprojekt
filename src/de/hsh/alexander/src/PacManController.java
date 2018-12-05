@@ -29,16 +29,20 @@ public class PacManController extends GameEntryPoint {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
+                    this.game = new PacManGame();
+                    game.addObserver( this );
                     changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     break;
                 case UpdateCodes.PacMan.mainMenu:
+                    this.game = new PacManGame();
+                    game.addObserver( this );
+                    changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     exitToMainGUI();
                     break;
                 case UpdateCodes.PacMan.showEndScreen:
                     changer.changeFxml( new PacManEndScreen(), UpdateCodes.PacMan.showEndScreen );
                     break;
                 case UpdateCodes.PacMan.repeatGame:
-                    this.game = null;
                     this.game = new PacManGame();
                     changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     break;
