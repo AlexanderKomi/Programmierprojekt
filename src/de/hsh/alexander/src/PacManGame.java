@@ -18,10 +18,14 @@ import java.util.ResourceBundle;
 
 public class PacManGame extends Observable implements Observer, Initializable {
 
-    public static final  String   fxml          = "PacManGame.fxml";
-    private static       boolean  initialized   = false;
+    public static final String fxml = "PacManGame.fxml";
+    boolean initialized = false;
 
     private Level currentLevel;
+
+    public PacManGame() {
+        reset();
+    }
 
     @FXML
     private Canvas gameCanvas;
@@ -31,9 +35,8 @@ public class PacManGame extends Observable implements Observer, Initializable {
         if ( initialized ) {
             return;
         }
-
-        reset();
         initialized = true;
+        reset();
         Logger.log( this.getClass() + ": init executed" );
 
     }
@@ -56,15 +59,19 @@ public class PacManGame extends Observable implements Observer, Initializable {
         }
     }
 
-    void render(int fps) {
+    void render( int fps ) {
         if ( !initialized ) {
             return;
         }
         clearCanvas();
-        currentLevel.render( this.gameCanvas, fps );
+        this.currentLevel.render( this.gameCanvas, fps );
     }
 
     void reset() {
+        if ( !initialized ) {
+            this.gameCanvas = new Canvas();
+        }
+
         this.currentLevel = new Level1();
         this.currentLevel.reset();
         this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
@@ -73,6 +80,8 @@ public class PacManGame extends Observable implements Observer, Initializable {
             Logger.log( "Key pressed" );
         } ); // Only fires, when traversable
         this.gameCanvas.setOnKeyReleased( this.currentLevel::keyboardInput ); // Only fires, when traversable
+
+
         this.currentLevel.addObserver( this );
         Logger.log( this.getClass() + ": Resetted game" );
     }

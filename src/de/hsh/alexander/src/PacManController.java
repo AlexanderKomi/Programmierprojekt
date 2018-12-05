@@ -15,7 +15,7 @@ public class PacManController extends GameEntryPoint {
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
-        game = new PacManGame();
+        this.game = new PacManGame();
         game.addObserver( this );
         changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
     }
@@ -38,7 +38,8 @@ public class PacManController extends GameEntryPoint {
                     changer.changeFxml( new PacManEndScreen(), UpdateCodes.PacMan.showEndScreen );
                     break;
                 case UpdateCodes.PacMan.repeatGame:
-                    this.game.reset();
+                    this.game = null;
+                    this.game = new PacManGame();
                     changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     break;
                 default:
@@ -59,7 +60,9 @@ public class PacManController extends GameEntryPoint {
     @Override
     public void render(int fps) {
         if ( game != null ) {
-            game.render(fps);
+            if ( game.initialized ) {
+                game.render( fps );
+            }
         }
     }
 
