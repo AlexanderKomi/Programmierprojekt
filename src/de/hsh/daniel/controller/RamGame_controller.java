@@ -1,4 +1,4 @@
-package de.hsh.daniel.de.hsh.daniel.controller;
+package de.hsh.daniel.controller;
 
 import common.util.Logger;
 import javafx.fxml.FXML;

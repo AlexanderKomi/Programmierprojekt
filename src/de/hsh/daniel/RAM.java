@@ -5,8 +5,8 @@ import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import common.util.Path;
-import de.hsh.daniel.de.hsh.daniel.controller.RAM_MainMenu_controller;
-import de.hsh.daniel.de.hsh.daniel.controller.RamGame_controller;
+import de.hsh.daniel.controller.RAM_MainMenu_controller;
+import de.hsh.daniel.controller.RamGame_controller;
 
 import java.util.Observable;
 import java.util.Observer;
