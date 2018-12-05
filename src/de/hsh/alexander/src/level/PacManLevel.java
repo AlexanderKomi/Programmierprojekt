@@ -1,31 +1,15 @@
-package de.hsh.alexander.src;
+package de.hsh.alexander.src.level;
 
 import common.actor.Collectable;
 import common.actor.Level;
 import common.util.Logger;
-import de.hsh.alexander.src.actor.DataCoin;
-import de.hsh.alexander.src.actor.level_elements.Wall;
-import de.hsh.alexander.src.actor.player.PacMan;
 import javafx.scene.input.KeyEvent;
 
-import java.io.FileNotFoundException;
 import java.util.Observable;
 
-public class Level1 extends Level {
+abstract public class PacManLevel extends Level {
 
-    public Level1() throws FileNotFoundException {
-    }
-
-    @Override
-    public void createLevel() throws FileNotFoundException {
-        addPlayer( PacMan.initPacMan1() );
-        addPlayer( PacMan.initPacMan2() );
-
-        addCollectable( new DataCoin( 50, 50 ) );
-
-        addLevelElement( Wall.initTestWall() );
-
-    }
+    public static final String gameFinishedMessage = "PacMan : Game finished";
 
     @Override
     public void keyboardInput( KeyEvent keyEvent ) {
@@ -41,6 +25,14 @@ public class Level1 extends Level {
                     Logger.log( "Collected : " + c + "\n" +
                                 "By : " + c.getCollector() );
                     this.collected( c );
+                    if ( this.getCollectables().isEmpty() ) {
+                        Logger.log( this.getClass() + ": Collect every collectable, so game finished screen should be shown" );
+                        this.setChanged();
+                        this.notifyObservers( gameFinishedMessage );
+                    }
+                    else {
+                        Logger.log( this.getClass() + ": Still " + this.getCollectables().size() + " to collect." );
+                    }
                 }
             }
         }

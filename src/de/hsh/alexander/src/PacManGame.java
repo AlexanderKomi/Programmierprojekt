@@ -2,13 +2,15 @@ package de.hsh.alexander.src;
 
 import common.actor.Level;
 import common.config.WindowConfig;
+import common.updates.UpdateCodes;
 import common.util.Logger;
+import de.hsh.alexander.src.level.Level1;
+import de.hsh.alexander.src.level.PacManLevel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
@@ -26,24 +28,32 @@ public class PacManGame extends Observable implements Observer, Initializable {
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
-        if ( !initialized ) {
-            this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
-            try {
-                currentLevel = new Level1();
-            }
-            catch ( FileNotFoundException e ) {
-                e.printStackTrace();
-            }
-            this.gameCanvas.setOnKeyPressed( currentLevel::keyboardInput ); // Only fires, when traversable
-            this.gameCanvas.setOnKeyReleased( currentLevel::keyboardInput ); // Only fires, when traversable
-            initialized = true;
-            Logger.log( this.getClass() + ": init executed" );
+        if ( initialized ) {
+            return;
         }
+
+        reset();
+        initialized = true;
+        Logger.log( this.getClass() + ": init executed" );
+
     }
 
     @Override
     public void update( Observable o, Object arg ) {
-        Logger.log( this.getClass() + ": " + o + ", " + arg );
+        if ( arg instanceof String ) {
+            String message = (String) arg;
+            if ( message.equals( PacManLevel.gameFinishedMessage ) ) {
+                Logger.log( this.getClass() + ": " + PacManLevel.gameFinishedMessage );
+                this.setChanged();
+                this.notifyObservers( UpdateCodes.PacMan.showEndScreen );
+            }
+            else {
+                Logger.log( this.getClass() + ": unknown update : " + o + ", " + arg );
+            }
+        }
+        else {
+            Logger.log( this.getClass() + ": unknown update : " + o + ", " + arg );
+        }
     }
 
     void render(int fps) {
@@ -52,6 +62,19 @@ public class PacManGame extends Observable implements Observer, Initializable {
         }
         clearCanvas();
         currentLevel.render( this.gameCanvas, fps );
+    }
+
+    void reset() {
+        this.currentLevel = new Level1();
+        this.currentLevel.reset();
+        this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
+        this.gameCanvas.setOnKeyPressed( e -> {
+            this.currentLevel.keyboardInput( e );
+            Logger.log( "Key pressed" );
+        } ); // Only fires, when traversable
+        this.gameCanvas.setOnKeyReleased( this.currentLevel::keyboardInput ); // Only fires, when traversable
+        this.currentLevel.addObserver( this );
+        Logger.log( this.getClass() + ": Resetted game" );
     }
 
     private void clearCanvas() {

@@ -3,9 +3,7 @@ package de.hsh.Julian;
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.engine.components.game.GameEntryPoint;
-import common.updates.UpdateCodes;
 import common.util.Logger;
-import de.hsh.Julian.controller.LKEnd;
 import de.hsh.Julian.controller.LKStart;
 import de.hsh.Julian.controller.SpielBildschirm_controller;
 
@@ -36,8 +34,9 @@ public class LKFxmlChanger extends FxmlChanger {
                     changeScene(SpielBildschirm_controller.fxml, c );
                     c.passCanvas();
                     break;
-                    default:
-                        Logger.log(this.getClass().getName() + " default SwitchCase.");
+                default:
+                    Logger.log( this.getClass().getName() + " default SwitchCase." );
+                    break;
             }
         }
     }

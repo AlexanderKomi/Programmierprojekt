@@ -1,146 +1,140 @@
 package de.hsh.Julian;
 
 import common.config.WindowConfig;
+import common.util.Logger;
+import de.hsh.dennis.model.NpcLogic.SpawnTimer;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import static common.util.Path.getExecutionLocation;
 
-public class Leertastenklatsche {
+public class Leertastenklatsche implements Observer {
 
 
-    private int               score        = 0;
-    private Sprite            thedude      = new Sprite();
-    private String            location     = getLocation();
-    private ArrayList<String> input        = new ArrayList<>();
-    private ArrayList<Sprite> enemyList    = new ArrayList<>();
-    private boolean        actorturnedleft = true;
+    static final String     location = getExecutionLocation() + "de/hsh/Julian/";
+    private      SpawnTimer timer    = new SpawnTimer();
 
-    public Leertastenklatsche(){
+    private int score = 0;
+    private int leben=3;
 
-        thedude.setImage( location + "/thedude.png" );
-        thedude.setPosition(WindowConfig.window_width/2-thedude.getWidth()/2, WindowConfig.window_height*0.4);
-        collisionDetection();
-        createEnemies();
-        parseInput( input );
+    private      TheDude           thedude;
+    private      ArrayList<Enemy>  enemyList       = new ArrayList<>();
+
+    public Leertastenklatsche() {
+        try {
+            initGame();
+        }
+        catch ( FileNotFoundException e ) {
+            e.printStackTrace();
+        }
     }
 
+    private void initGame() throws FileNotFoundException {
+        thedude = new TheDude( WindowConfig.window_width / 2 -75,
+                               WindowConfig.window_height * 0.4
+        );
+        thedude.setSpeed( 0 );
+    }
 
+    void render( Canvas gc ) {
+        createNewEnemies();
+        enemyList.forEach( enemy -> {
+            enemy.draw( gc );
+        } );
+        updateEnemies();
+        thedude.draw( gc );
+        renderScore( gc );
+    }
 
-    private void collisionDetection() {
-        for ( Sprite enemy : enemyList ) {
-            if ( thedude.intersects( enemy ) ) {
-                score++;
+    private void createNewEnemies() {
+        if ( timer.elabsedTime() > 2.0d-score/75.0 ) {
+            timer.resetTimer();
+            try {
+                Enemy e = Enemy.createEnemy();
+                e.addObserver( this );
+                thedude.addCollidingActor( e );
+                enemyList.add( e );
+            }
+            catch ( FileNotFoundException e ) {
+                e.printStackTrace();
             }
         }
     }
 
-    // Gegner erstellen und zufällig links oder rechts starten lassen
-    private void createEnemies() {
-        for ( int i = 0 ; i < 15 ; i++ ) {
-            Sprite enemyvirus = new Sprite();
-            enemyvirus.setImage( location + "/enemyvirus.png" );
-            /*double px = 350 * Math.random() + 50;
-            double py = 350 * Math.random() + 50;*/
-            double px=WindowConfig.window_width-enemyvirus.getWidth();
-            double rng=Math.random();
-            if(rng<0.5)
-                px=0;
-            //Logger.log(this.getClass() + ": rng=" + rng);
-            enemyvirus.setPosition( px, WindowConfig.window_height*0.4 );
-
-            enemyList.add( enemyvirus );
+    private void updateEnemies() {
+        for ( Enemy enemy : enemyList ) {
+            if ( enemy.getX() > WindowConfig.window_width / 2 ) {
+                enemy.setPos( enemy.getX() - 1.0 - score / 10.0, enemy.getY() );
+                enemy.rotate( 90 );
+            }
+            else { enemy.setPos( enemy.getX() + 1+score/10.0, enemy.getY() ); }
         }
     }
 
-    void render(GraphicsContext gc){
-        parseInput( getInput() );
-
-        for ( Sprite enemy : enemyList ){
-            if(enemy.getPositionX()>WindowConfig.window_width/2)
-            enemy.setPosition(enemy.getPositionX()-1, enemy.getPositionY());
-            else
-                enemy.setPosition(enemy.getPositionX()+1, enemy.getPositionY());
-
-            enemy.render( gc );
-
-        }
-
-        String pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (100 * score);
+    private void renderScore( Canvas canvas ) {
+        GraphicsContext gc         = canvas.getGraphicsContext2D();
+        String          pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (score)+"\nVerbleibende Leben: "+ (leben);
         //Logger.log(getClass()+" Score: "+score);
 
         gc.fillText( pointsText, 360, 36 );
         gc.strokeText( pointsText, 360, 36 );
-
-        thedude.update( 10 );
-        thedude.render( gc );
     }
 
-    void parseInput( ArrayList<String> input ) {
-        double v = 0.5;
-        thedude.setVelocity( 0, 0 );
-        if ( input.contains( "LEFT" ) ) {
-            if(!actorturnedleft) {
-                thedude.setImage(location + "/thedude.png");
-                actorturnedleft=true;
-
+    void parseInput( String code ) {
+        if ( code.equals( "LEFT" ) ) {
+            if ( !thedude.turnedleft ) {
+                thedude.swapImage();
+                thedude.turnedleft = true;
             }
-            //thedude.addVelocity( -v, 0 );
         }
-        if ( input.contains( "RIGHT" ) ) {
-            if(actorturnedleft) {
-                thedude.setImage(location + "/thedude_turned.png");
-                actorturnedleft=false;
-
+        else if ( code.equals( "RIGHT" ) ) {
+            if ( thedude.turnedleft ) {
+                thedude.swapImage();
+                thedude.turnedleft = false;
             }
-            //thedude.addVelocity( v, 0 );
         }
-        /*if ( input.contains( "UP" ) ) {
-            thedude.addVelocity( 0, -v );
+    }
+
+    @Override
+    public void update( Observable o, Object arg ) {
+        if ( o instanceof Enemy ) {
+            Enemy e = (Enemy) o;
+            for ( Enemy enemy : this.enemyList ) {
+                Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
+                if ( enemy.id == e.id ) {
+                    this.thedude.getCollisionActors().remove( enemy );
+                    enemyList.remove( enemy );
+                    Logger.log( this.getClass() + ": Found enemy with same id" );
+                    if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
+                        if ( thedude.turnedleft ) {
+                            score++;
+                        }
+                        else
+                            leben--;
+                    }
+                    else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
+                        if ( !thedude.turnedleft ) {
+                            score++;
+                        }
+                        else
+                            leben--;
+                    }
+                    return;
+                }
+            }
         }
-        if ( input.contains( "DOWN" ) ) {
-            thedude.addVelocity( 0, v );
-        }*/
     }
 
     public int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore( int score ) {
         this.score = score;
-    }
-
-    public Sprite getThedude() {
-        return thedude;
-    }
-
-    public void setThedude(Sprite thedude) {
-        this.thedude = thedude;
-    }
-
-    private String getLocation() {
-        return getExecutionLocation() + "de/hsh/Julian";
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public ArrayList<String> getInput() {
-        return input;
-    }
-
-    public void setInput(ArrayList<String> input) {
-        this.input = input;
-    }
-
-    public ArrayList<Sprite> getEnemyList() {
-        return enemyList;
-    }
-
-    public void setEnemyList(ArrayList<Sprite> enemyList) {
-        this.enemyList = enemyList;
     }
 }

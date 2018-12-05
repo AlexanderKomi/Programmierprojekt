@@ -1,9 +1,13 @@
 package common.actor;
 
+import javafx.application.Platform;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +15,9 @@ import java.util.List;
 import java.util.Observable;
 
 public class Drawable extends Observable {
+
+    private static int id_counter = 0;
+    public         int id;
 
     private double x;
     private double y;
@@ -24,43 +31,79 @@ public class Drawable extends Observable {
     private int     switchingDelay           = 0;
     private boolean switchImageAutomatically = true;
 
-
+    private ImageView        imageView = new ImageView();
     private Image            currentImage;
-    private ArrayList<Image> images = new ArrayList<>();
+    private ArrayList<Image> images    = new ArrayList<>();
 
 
-    protected Drawable( String pictureFileName ) throws FileNotFoundException {
+    public Drawable( String pictureFileName ) {
         this( pictureFileName, 0, 0 );
     }
 
-    public Drawable( String pictureFileName, double x, double y ) throws FileNotFoundException {
-        this.currentImage = loadPicture( pictureFileName );
+    public Drawable( String pictureFileName, double x, double y ) {
+        this.setCurrentImage( loadPicture( pictureFileName ) );
         this.setHeight( this.getCurrentImage().getHeight() );
         this.setWidth( this.getCurrentImage().getWidth() );
         this.setX( x );
         this.setY( y );
+        this.id = id_counter;
+        id_counter++;
     }
 
-    protected Drawable( List<String> pictureFilePaths, double x, double y, int delay )
-            throws FileNotFoundException {
+    public Drawable( String... pictureFilePaths ) {
+        this( Arrays.asList( pictureFilePaths ), 0, 0, 0 );
+    }
+
+    public Drawable( List<String> pictureFilePaths ) {
+        this( pictureFilePaths, 0, 0, 0 );
+    }
+
+    public Drawable( List<String> pictureFilePaths, double x, double y ) {
+        this( pictureFilePaths, x, y, 0 );
+    }
+
+    public Drawable( List<String> pictureFilePaths, double x, double y, int delay ) {
         this.setPos( x, y );
         boolean heightIsSet = false;
 
         for ( String filePath : pictureFilePaths ) {
             this.images.add( loadPicture( filePath ) );
             if ( !heightIsSet ) {
-                this.currentImage = this.images.get( 0 );
+                this.setCurrentImage( this.images.get( 0 ) );
                 this.setWidth( this.currentImage.getWidth() );
                 this.setHeight( this.currentImage.getHeight() );
                 heightIsSet = true;
             }
         }
         this.switchingDelay = delay;
+        this.id = id_counter;
+        id_counter++;
     }
 
-    private Image loadPicture( String fileName ) throws FileNotFoundException {
+    public Drawable( double x, double y, int delay, String... pictureFilePaths ) {
+        this( Arrays.asList( pictureFilePaths ), x, y, delay );
+    }
+
+    public Drawable( Drawable d ) {
+        this.setCurrentImage( d.getCurrentImage() );
+        this.name = d.getName();
+        this.setPos( d.getPos() );
+        this.height = d.getHeight();
+        this.width = d.getWidth();
+        this.id = d.id;
+    }
+
+    private Image loadPicture( String fileName ) {
         this.name = fileName;
-        return new Image( new FileInputStream( fileName ) );
+        if ( !TextureBuffer.contains( fileName ) ) {
+            try {
+                TextureBuffer.addFile( fileName );
+            }
+            catch ( FileNotFoundException e ) {
+                e.printStackTrace();
+            }
+        }
+        return TextureBuffer.getImage( fileName );
     }
 
     /**
@@ -81,10 +124,10 @@ public class Drawable extends Observable {
         this.switchingBuffer = 0;
         int index = this.images.indexOf( this.currentImage );
         if ( index < this.images.size() - 1 ) {
-            this.currentImage = this.images.get( index + 1 );
+            this.setCurrentImage( this.images.get( index + 1 ) );
         }
         else {
-            this.currentImage = this.images.get( 0 );
+            this.setCurrentImage( this.images.get( 0 ) );
         }
     }
 
@@ -106,6 +149,10 @@ public class Drawable extends Observable {
         canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
 
+    public void draw( GraphicsContext gc ) {
+        gc.drawImage( this.currentImage, this.x, this.y, this.width, this.height );
+    }
+
     protected double[] beforeDrawing( double[] current_pos, double[] new_pos ) {
         return new_pos;
     }
@@ -122,6 +169,17 @@ public class Drawable extends Observable {
             temp[ 1 ] += (new_y);
         }
         return temp;
+    }
+
+    public void rotate( double rotate ) {
+        Platform.runLater( () -> {
+            this.imageView.setRotate( this.imageView.getRotate() + rotate );
+            SnapshotParameters params = new SnapshotParameters();
+            params.setFill( Color.TRANSPARENT );
+            Image temp = this.imageView.snapshot( params, null );
+            this.setCurrentImage( temp );
+        } );
+
     }
 
     @Override
@@ -152,6 +210,11 @@ public class Drawable extends Observable {
         result += "width:" + this.getWidth() + ", ";
         result += "height:" + this.getHeight();
         return result;
+    }
+
+    public void onClick() {
+        this.setChanged();
+        this.notifyObservers( this.getClass() + ": clicked" );
     }
 
     /**
@@ -256,6 +319,11 @@ public class Drawable extends Observable {
 
     public void setCurrentImage( Image currentImage ) {
         this.currentImage = currentImage;
+        this.imageView.setImage( this.currentImage );
+    }
+
+    public void setCurrentImage( String filePath ) {
+        this.currentImage = loadPicture( filePath );
     }
 
     public ArrayList<Image> getImages() {
