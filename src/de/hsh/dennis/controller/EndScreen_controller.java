@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class BreakMenu_controller extends Observable implements Initializable {
+public class EndScreen_controller extends Observable implements Initializable {
 
     private static boolean initialized = false;
 
@@ -40,16 +40,6 @@ public class BreakMenu_controller extends Observable implements Initializable {
     @FXML
     private Button b_main_menu;
 
-    @FXML
-    private Button b_continue;
-
-    @FXML
-    void keyInputHandler(KeyEvent event) {
-        if (event.getCode() == KeyLayout.Control.ESC) {
-            setChanged();
-            notifyObservers("b_continue");
-        }
-    }
 
     @FXML
     void button_clicked(ActionEvent event) {
@@ -65,17 +55,15 @@ public class BreakMenu_controller extends Observable implements Initializable {
                 notifyObservers(id);
                 break;
 
-            case "b_continue":
-                setChanged();
-                notifyObservers(id);
-                break;
-
             default:
                 Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
 
         }
     }
 
+    public void changeToEndScreen(String endTitle){
+        t_banner.setText(endTitle);
+    }
 
     private String getId(ActionEvent event){
         return ((Node) event.getSource()).getId();

@@ -33,6 +33,12 @@ public class NpcHandler {
         this.canvas = canvas;
     }
 
+    public boolean isEndReached(){
+        synchronized (npcList){
+        if(spawnIterator == spawnArray.length && npcList.isEmpty()){return true;}}
+        return false;
+    }
+
     public void spawning() {
         if (spawnArray != null) {
             //time.start();
@@ -64,9 +70,10 @@ public class NpcHandler {
         spawnArray = temp;
     }
 
-    //TODO: implement all game behaviors
     private void removeNpcs() {
         synchronized (npcList) {
+
+            //removing hided enemys
             for (Npc npc : npcsToHit) {
                 switch (npc.getNpcType()) {
                     case PACKAGE:
@@ -74,7 +81,7 @@ public class NpcHandler {
                         healthChange += pointValue;
                         break;
                     case BOT:
-                        healthChange += pointValue;
+                        scoreChange += pointValue;
                         break;
                     case HACKER:
                         scoreChange += pointValue;
@@ -83,9 +90,10 @@ public class NpcHandler {
                         Logger.log(this.getClass() + "Switching in removeNpcs : default.");
                 }
                 npcList.remove(npc);
-
             }
             npcsToHit.clear();
+
+            //removing missed enemys
             for (Npc npc : npcsToRemove) {
                 switch (npc.getNpcType()) {
                     case PACKAGE:
@@ -97,6 +105,7 @@ public class NpcHandler {
                         break;
                     case HACKER:
                         scoreChange -= pointValue;
+                        healthChange -= pointValue;
                         break;
                     default:
                         Logger.log(this.getClass() + "Switching in removeNpcs : default.");
