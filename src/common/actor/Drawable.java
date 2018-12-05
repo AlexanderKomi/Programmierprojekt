@@ -9,10 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Observable;
+import java.util.*;
 
 public class Drawable extends Observable {
 
@@ -33,9 +30,9 @@ public class Drawable extends Observable {
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
 
-    private ImageView        imageView = new ImageView();
+    private ImageView        imageView       = new ImageView();
     private Image            currentImage;
-    private ArrayList<Image> images    = new ArrayList<>();
+    private ArrayList<Image> switchingImages = new ArrayList<>();
 
 
     public Drawable( String pictureFileName ) {
@@ -52,12 +49,25 @@ public class Drawable extends Observable {
         id_counter++;
     }
 
-    public Drawable( String... pictureFilePaths ) {
-        this( Arrays.asList( pictureFilePaths ), 0, 0, 0 );
+    public Drawable( String pictureFile, String... pictureFilePaths ) {
+        this( 0, 0, 0 );
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add( pictureFile );
+        temp.addAll( Arrays.asList( pictureFilePaths ) );
+        this.setSwitchingImages( temp );
+    }
+
+    public Drawable( String[] pictureFilePaths ) {
+        this( 0, 0, 0 );
+        this.setSwitchingImages( Arrays.asList( pictureFilePaths ) );
     }
 
     public Drawable( List<String> pictureFilePaths ) {
         this( pictureFilePaths, 0, 0, 0 );
+    }
+
+    public Drawable( List<String> pictureFilePaths, int delay ) {
+        this( pictureFilePaths, 0, 0, delay );
     }
 
     public Drawable( List<String> pictureFilePaths, double x, double y ) {
@@ -66,17 +76,7 @@ public class Drawable extends Observable {
 
     public Drawable( List<String> pictureFilePaths, double x, double y, int delay ) {
         this.setPos( x, y );
-        boolean heightIsSet = false;
-
-        for ( String filePath : pictureFilePaths ) {
-            this.images.add( loadPicture( filePath ) );
-            if ( !heightIsSet ) {
-                this.setCurrentImage( this.images.get( 0 ) );
-                this.setWidth( this.currentImage.getWidth() );
-                this.setHeight( this.currentImage.getHeight() );
-                heightIsSet = true;
-            }
-        }
+        this.setSwitchingImages( pictureFilePaths );
         this.switchingDelay = delay;
         this.id = id_counter;
         id_counter++;
@@ -109,10 +109,10 @@ public class Drawable extends Observable {
     }
 
     /**
-     * Switch images based on buffer implementation.
+     * Switch switchingImages based on buffer implementation.
      */
     protected void switchImages() {
-        if ( this.images.isEmpty() || !this.switchImageAutomatically ) {
+        if ( this.switchingImages.isEmpty() || !this.switchImageAutomatically ) {
             return;
         }
         if ( this.switchingBuffer < this.switchingDelay ) {
@@ -124,12 +124,12 @@ public class Drawable extends Observable {
 
     public void switchToNextImage() {
         this.switchingBuffer = 0;
-        int index = this.images.indexOf( this.currentImage );
-        if ( index < this.images.size() - 1 ) {
-            this.setCurrentImage( this.images.get( index + 1 ) );
+        int index = this.switchingImages.indexOf( this.currentImage );
+        if ( index < this.switchingImages.size() - 1 ) {
+            this.setCurrentImage( this.switchingImages.get( index + 1 ) );
         }
         else {
-            this.setCurrentImage( this.images.get( 0 ) );
+            this.setCurrentImage( this.switchingImages.get( 0 ) );
         }
     }
 
@@ -356,11 +356,25 @@ public class Drawable extends Observable {
         this.currentImage = loadPicture( filePath );
     }
 
-    public ArrayList<Image> getImages() {
-        return images;
+    public ArrayList<Image> getSwitchingImages() {
+        return switchingImages;
     }
 
-    public void setImages( ArrayList<Image> images ) {
-        this.images = images;
+    public void setSwitchingImages( LinkedList<Image> switchingImages ) {
+        this.switchingImages.addAll( switchingImages );
+    }
+
+    public void setSwitchingImages( List<String> imagePaths ) {
+        boolean heightIsSet = false;
+
+        for ( String filePath : imagePaths ) {
+            this.switchingImages.add( loadPicture( filePath ) );
+            if ( !heightIsSet ) {
+                this.setCurrentImage( this.switchingImages.get( 0 ) );
+                this.setWidth( this.currentImage.getWidth() );
+                this.setHeight( this.currentImage.getHeight() );
+                heightIsSet = true;
+            }
+        }
     }
 }

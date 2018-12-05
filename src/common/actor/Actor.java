@@ -29,12 +29,16 @@ public class Actor extends Drawable {
         this.collisionActors = collisionActors;
     }
 
-    public Actor( String... pictureFilePaths ) {
+    public Actor( String mustHavePicture, String... pictureFilePaths ) {
+        super( mustHavePicture, pictureFilePaths );
+    }
+
+    public Actor( String[] pictureFilePaths ) {
         super( pictureFilePaths );
     }
 
-    public Actor( HashSet<Actor> collisionActors, String... pictureFilePaths ) {
-        super( pictureFilePaths );
+    public Actor( HashSet<Actor> collisionActors, String mustHavePicture, String... pictureFilePaths ) {
+        super( mustHavePicture, pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 

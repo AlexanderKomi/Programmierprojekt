@@ -44,8 +44,12 @@ public final class ResourcePaths {
                         SMD.directory + "smd_0.png",
                         SMD.directory + "smd_1.png",
                         SMD.directory + "smd_2.png"
-
                 };
+            }
+
+            public static final class Backgrounds {
+                public static final String directory     = LevelElements.directory + "backgrounds/";
+                public static final String leeresFenster = Backgrounds.directory + "leeresFenster.png";
             }
 
         }

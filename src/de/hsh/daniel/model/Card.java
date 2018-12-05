@@ -1,10 +1,9 @@
 package de.hsh.daniel.model;
 
-import common.actor.Actor;
 import javafx.scene.image.Image;
 
 
-public class Card extends Actor {
+public class Card {
 
     private int                 id;
     private Image               image;
@@ -12,7 +11,6 @@ public class Card extends Actor {
     private boolean             cardSelected;
 
     public Card(int id) {
-        super();
         cardSelected = false;
         cardMatched = false;
         setId(id);
