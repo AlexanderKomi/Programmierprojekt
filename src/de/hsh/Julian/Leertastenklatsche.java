@@ -20,6 +20,7 @@ public class Leertastenklatsche implements Observer {
     private      SpawnTimer timer    = new SpawnTimer();
 
     private int score = 0;
+    private int leben=3;
 
     private      TheDude           thedude;
     private      ArrayList<Enemy>  enemyList       = new ArrayList<>();
@@ -49,7 +50,7 @@ public class Leertastenklatsche implements Observer {
     }
 
     private void createNewEnemies() {
-        if ( timer.elabsedTime() > 2.0d ) {
+        if ( timer.elabsedTime() > 2.0d-score/100.0 ) {
             timer.resetTimer();
             try {
                 Enemy e = Enemy.createEnemy();
@@ -65,14 +66,14 @@ public class Leertastenklatsche implements Observer {
 
     private void updateEnemies() {
         for ( Enemy enemy : enemyList ) {
-            if ( enemy.getX() > WindowConfig.window_width / 2 ) { enemy.setPos( enemy.getX() - 1, enemy.getY() ); }
-            else { enemy.setPos( enemy.getX() + 1, enemy.getY() ); }
+            if ( enemy.getX() > WindowConfig.window_width / 2 ) { enemy.setPos( enemy.getX() - 1.0-score/10.0, enemy.getY() ); }
+            else { enemy.setPos( enemy.getX() + 1+score/10.0, enemy.getY() ); }
         }
     }
 
     private void renderScore( Canvas canvas ) {
         GraphicsContext gc         = canvas.getGraphicsContext2D();
-        String          pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (100 * score);
+        String          pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (score)+"\nVerbleibende Leben: "+ (leben);
         //Logger.log(getClass()+" Score: "+score);
 
         gc.fillText( pointsText, 360, 36 );
@@ -108,11 +109,15 @@ public class Leertastenklatsche implements Observer {
                         if ( thedude.turnedleft ) {
                             score++;
                         }
+                        else
+                            leben--;
                     }
                     else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
                         if ( !thedude.turnedleft ) {
                             score++;
                         }
+                        else
+                            leben--;
                     }
                     return;
                 }
