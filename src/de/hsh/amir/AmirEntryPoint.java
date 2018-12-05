@@ -40,9 +40,6 @@ public class AmirEntryPoint extends GameEntryPoint {
                 case UpdateCodes.DefaultCodes.exitToMainGUI:
                     exitToMainGUI();
                     break;
-                case UpdateCodes.DefaultCodes.exitToMainGUI:
-                    changer.changeFxml(o, message);
-                    break;
                 default:
                     logParsingError( o, arg );
                     break;
