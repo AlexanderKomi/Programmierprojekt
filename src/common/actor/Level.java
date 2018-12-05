@@ -21,13 +21,17 @@ abstract public class Level extends Observable implements Observer, ILevel {
     private ArrayList<Collectable>    collectables  = new ArrayList<>();
 
 
-    public Level() throws FileNotFoundException {
-        createLevel();
+    public Level() {
+        reset();
+    }
 
+    private void addCollision() {
         levelElements.forEach(
                 levelElement -> players.forEach(
                         pacMan -> pacMan.addCollidingActor( levelElement ) ) );
+    }
 
+    private void addCollectables() {
         collectables.forEach(
                 collectable -> players.forEach(
                         player -> player.addCollidingActor( collectable ) ) );
@@ -57,6 +61,17 @@ abstract public class Level extends Observable implements Observer, ILevel {
 
     protected boolean addLevelElement( Actor levelElement ) {
         return this.levelElements.add( levelElement );
+    }
+
+    public void reset() {
+        try {
+            createLevel();
+        }
+        catch ( FileNotFoundException e ) {
+            e.printStackTrace();
+        }
+        addCollision();
+        addCollectables();
     }
 
     public HashSet<ControlableActor> getPlayers() {

@@ -8,9 +8,6 @@ import java.io.FileNotFoundException;
 
 public class Level1 extends PacManLevel {
 
-    public Level1() throws FileNotFoundException {
-    }
-
     @Override
     public void createLevel() throws FileNotFoundException {
         addPlayer( PacMan.initPacMan1() );

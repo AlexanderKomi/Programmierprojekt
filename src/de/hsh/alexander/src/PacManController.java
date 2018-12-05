@@ -11,7 +11,7 @@ import java.util.Observer;
 public class PacManController extends GameEntryPoint {
 
     private final PacManFxmlChanger changer;
-    private final PacManGame game;
+    private       PacManGame        game;
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
@@ -36,6 +36,10 @@ public class PacManController extends GameEntryPoint {
                     break;
                 case UpdateCodes.PacMan.showEndScreen:
                     changer.changeFxml( new PacManEndScreen(), UpdateCodes.PacMan.showEndScreen );
+                    break;
+                case UpdateCodes.PacMan.repeatGame:
+                    this.game.reset();
+                    changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     break;
                 default:
                     logParsingError( o, arg );
