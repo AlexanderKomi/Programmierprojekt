@@ -35,7 +35,7 @@ public class Leertastenklatsche implements Observer {
     }
 
     private void initGame() throws FileNotFoundException {
-        thedude = new TheDude( WindowConfig.window_width / 2,
+        thedude = new TheDude( WindowConfig.window_width / 2 -75,
                                WindowConfig.window_height * 0.4
         );
         thedude.setSpeed( 0 );
@@ -50,7 +50,7 @@ public class Leertastenklatsche implements Observer {
     }
 
     private void createNewEnemies() {
-        if ( timer.elabsedTime() > 2.0d-score/100.0 ) {
+        if ( timer.elabsedTime() > 2.0d-score/75.0 ) {
             timer.resetTimer();
             try {
                 Enemy e = Enemy.createEnemy();
