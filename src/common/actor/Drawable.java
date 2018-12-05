@@ -347,7 +347,7 @@ public class Drawable extends Observable {
     }
 
     public void setCurrentImage( Image currentImage ) {
-        this.imageView.setSmooth( false );
+        //this.imageView.setSmooth( false );
         this.currentImage = currentImage;
         this.imageView.setImage( this.currentImage );
     }
