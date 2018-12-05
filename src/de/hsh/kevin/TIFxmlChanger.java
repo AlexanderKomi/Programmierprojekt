@@ -7,50 +7,40 @@ import common.updates.UpdateCodes;
 import de.hsh.kevin.controller.TIGameController;
 import de.hsh.kevin.controller.TIGameOverController;
 import de.hsh.kevin.controller.TIMenuController;
-import de.hsh.kevin.logic.Config;
 
 import java.util.Observable;
 
 public class TIFxmlChanger extends FxmlChanger {
 
     public TIFxmlChanger(FxModul fxModul, String fxmlPath, Observable fxController) {
-	super(fxModul, fxmlPath, fxController);
+        super(fxModul, fxmlPath, fxController);
     }
 
     @Override
     public void changeFxml(Observable o, String msg) {
-	if (o instanceof TIMenuController) {
-	    handle_TIMenuController(msg);
-	} else if (o instanceof TIGameOverController) {
-	    handle_TIGameOverController(msg);
-	}
+        if (o instanceof TIMenuController) {
+            switch (msg) {
+            case UpdateCodes.DefaultCodes.exitToMainGUI:
+                ((GameEntryPoint) getFxModul()).exitToMainGUI();
+                break;
+            }
+        } else if (o instanceof TIGameOverController) {
+            switch (msg) {
+            case UpdateCodes.DefaultCodes.exitToMainGUI:
+                ((GameEntryPoint) getFxModul()).exitToMainGUI();
+                break;
+            case UpdateCodes.TunnelInvader.gameMenu:
+                changeScene(TIMenuController.fxml, new TIMenuController());
+                break;
+            }
+        }
     }
 
     public void changeGameFxml(Observable o, TIGameController game) {
-	changeScene(TIGameController.fxml, game);
+        changeScene(TIGameController.fxml, game);
     }
 
     public void changeGameOverFxml(Observable o, TIGameOverController gameOver) {
-	changeScene(TIGameOverController.fxml, gameOver);
-    }
-
-    private void handle_TIMenuController(String msg) {
-
-	switch (msg) {
-	case UpdateCodes.DefaultCodes.exitToMainGUI:
-	    ((GameEntryPoint) getFxModul()).exitToMainGUI();
-	    break;
-	}
-    }
-
-    private void handle_TIGameOverController(String msg) {
-	switch (msg) {
-	case UpdateCodes.DefaultCodes.exitToMainGUI:
-	    ((GameEntryPoint) getFxModul()).exitToMainGUI();
-	    break;
-	case UpdateCodes.TunnelInvader.gameMenu:
-	    changeScene(TIMenuController.fxml, new TIMenuController());
-	    break;
-	}
+        changeScene(TIGameOverController.fxml, gameOver);
     }
 }

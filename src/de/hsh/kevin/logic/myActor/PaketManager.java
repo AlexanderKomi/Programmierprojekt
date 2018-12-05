@@ -31,7 +31,6 @@ public class PaketManager {
      * Erstellt zu 50:50 ein Good oder BadPaket
      */
     public void createNewPaket() {
-        double rand = Math.random();
         createNewPaket(0.5);
     }
 
@@ -45,28 +44,19 @@ public class PaketManager {
     }
 
     public void createNewPaket(double chance, int anzahl) {
-        ArrayList<Paket> newPakete = new ArrayList<>();
-        double[][] pos = new double[anzahl][2];
-
         double rand = 0;
+
         for (int i = 0; i < anzahl; i++) {
+            Paket p = null;
             rand = Math.random();
             if (rand < chance) {
-                newPakete.add(createGoodPaket());
+                p = createGoodPaket();
             } else {
-                newPakete.add(createBadPaket());
+                p = createBadPaket();
             }
-            
-            setOnFreeLocation(newPakete.get(i));
-            pakete.add(newPakete.get(i));
 
-//            // Position setzen
-//            do {
-//                rand = Math.random() * width;
-//            } while (rand + newPakete.get(i).getWidth() > width);
-//
-//            newPakete.get(i).setPos(rand, -(newPakete.get(i).getHeight() + 1));
-
+            setOnFreeLocation(p);
+            pakete.add(p);
         }
 
     }

@@ -64,7 +64,7 @@ public class GameField {
         playerKeyMap.put("A", Direction.Left);
         playerKeyMap.put("D", Direction.Right);
 
-        // TODO Movement nach links (Taste rechts) ist dauerhaft (Easteregg)
+        // Easteregg Steuerung invertiert 
         playerKeyMap.put("Left", Direction.Right);
         playerKeyMap.put("Right", Direction.Left);
 
