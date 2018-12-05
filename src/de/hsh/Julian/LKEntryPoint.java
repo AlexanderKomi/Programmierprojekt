@@ -61,7 +61,18 @@ public class LKEntryPoint extends GameEntryPoint {
             this.canvas = (Canvas) arg;
             Logger.log( this.getClass() + ": init after canvas pass" );
             initAfterCanvasPass();
-        } else {
+        }
+        else if ( arg instanceof String ) {
+            String message = (String) arg;
+            if ( message.equals( "b_backtomenu" ) ) {
+                exitToMainGUI(); // TODO : Fix this call. Is not implemented correctly.
+            }
+            else {
+                changer.changeFxml( o, (String) arg );
+            }
+            Logger.log( this.getClass() + " : update : " + message );
+        }
+        else {
             changer.changeFxml(o, (String) arg);
         }
     }
