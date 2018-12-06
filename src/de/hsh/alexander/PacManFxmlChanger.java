@@ -1,4 +1,4 @@
-package de.hsh.alexander.src;
+package de.hsh.alexander;
 
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
@@ -22,9 +22,9 @@ public class PacManFxmlChanger extends FxmlChanger {
 
     @Override
     public void changeFxml( Observable o, String msg ) {
-        switch (msg) {
+        switch ( msg ) {
             case UpdateCodes.PacMan.startGame:
-                this.changeScene( PacManGame.fxml, o );
+                this.changeScene( de.hsh.alexander.PacManGame.fxml, o );
                 break;
             case UpdateCodes.PacMan.showEndScreen:
                 this.changeScene( PacManEndScreen.fxml, o );

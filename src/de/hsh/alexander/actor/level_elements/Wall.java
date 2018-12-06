@@ -1,7 +1,7 @@
-package de.hsh.alexander.src.actor.level_elements;
+package de.hsh.alexander.actor.level_elements;
 
 import common.actor.LevelElement;
-import de.hsh.alexander.src.actor.ResourcePaths;
+import de.hsh.alexander.actor.ResourcePaths;
 
 import java.io.FileNotFoundException;
 import java.util.List;

@@ -1,11 +1,11 @@
-package de.hsh.alexander.src.actor.level_elements;
+package de.hsh.alexander.actor.level_elements;
 
 import common.actor.LevelElement;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import static de.hsh.alexander.src.actor.ResourcePaths.Actor.LevelElements.SMD.pictures;
+import static de.hsh.alexander.actor.ResourcePaths.Actor.LevelElements.SMD.pictures;
 
 public class SMD extends LevelElement {
 

@@ -1,4 +1,4 @@
-package de.hsh.alexander.src;
+package de.hsh.alexander;
 
 import common.updates.UpdateCodes;
 import common.util.Logger;

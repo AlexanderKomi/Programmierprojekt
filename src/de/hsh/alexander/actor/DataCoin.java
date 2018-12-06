@@ -1,4 +1,4 @@
-package de.hsh.alexander.src.actor;
+package de.hsh.alexander.actor;
 
 import common.actor.Collectable;
 

@@ -1,14 +1,14 @@
-package de.hsh.alexander.src.level;
+package de.hsh.alexander.level;
 
-import de.hsh.alexander.src.actor.DataCoin;
-import de.hsh.alexander.src.actor.ResourcePaths;
-import de.hsh.alexander.src.actor.level_elements.SMD;
-import de.hsh.alexander.src.actor.level_elements.Wall;
-import de.hsh.alexander.src.actor.player.PacMan;
+import de.hsh.alexander.actor.DataCoin;
+import de.hsh.alexander.actor.ResourcePaths;
+import de.hsh.alexander.actor.level_elements.SMD;
+import de.hsh.alexander.actor.level_elements.Wall;
+import de.hsh.alexander.actor.player.PacMan;
 
 import java.io.FileNotFoundException;
 
-public class Level1 extends PacManLevel {
+public class Level1 extends de.hsh.alexander.level.PacManLevel {
 
     private static final String backgroundImage = ResourcePaths.Actor.LevelElements.Backgrounds.leeresFenster;
 

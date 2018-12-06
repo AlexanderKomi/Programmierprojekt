@@ -1,11 +1,11 @@
-package de.hsh.alexander.src;
+package de.hsh.alexander;
 
 import common.actor.Level;
 import common.config.WindowConfig;
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import de.hsh.alexander.src.level.Level1;
-import de.hsh.alexander.src.level.PacManLevel;
+import de.hsh.alexander.level.Level1;
+import de.hsh.alexander.level.PacManLevel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;

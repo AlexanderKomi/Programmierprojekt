@@ -1,4 +1,4 @@
-package de.hsh.alexander.src;
+package de.hsh.alexander;
 
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
@@ -10,14 +10,16 @@ import java.util.Observer;
 
 public class PacManController extends GameEntryPoint {
 
-    private final PacManFxmlChanger changer;
-    private       PacManGame        game;
+    private final de.hsh.alexander.PacManFxmlChanger changer;
+    private       de.hsh.alexander.PacManGame        game;
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
-        this.game = new PacManGame();
+        this.game = new de.hsh.alexander.PacManGame();
         game.addObserver( this );
-        changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
+        changer = new de.hsh.alexander.PacManFxmlChanger( this,
+                                                          de.hsh.alexander.PacManMenu.fxml,
+                                                          new de.hsh.alexander.PacManMenu() );
     }
 
     /**
@@ -29,21 +31,21 @@ public class PacManController extends GameEntryPoint {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
-                    this.game = new PacManGame();
+                    this.game = new de.hsh.alexander.PacManGame();
                     game.addObserver( this );
                     changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     break;
                 case UpdateCodes.PacMan.mainMenu:
-                    this.game = new PacManGame();
+                    this.game = new de.hsh.alexander.PacManGame();
                     game.addObserver( this );
                     changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     exitToMainGUI();
                     break;
                 case UpdateCodes.PacMan.showEndScreen:
-                    changer.changeFxml( new PacManEndScreen(), UpdateCodes.PacMan.showEndScreen );
+                    changer.changeFxml( new de.hsh.alexander.PacManEndScreen(), UpdateCodes.PacMan.showEndScreen );
                     break;
                 case UpdateCodes.PacMan.repeatGame:
-                    this.game = new PacManGame();
+                    this.game = new de.hsh.alexander.PacManGame();
                     changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     break;
                 default:
@@ -62,7 +64,7 @@ public class PacManController extends GameEntryPoint {
     }
 
     @Override
-    public void render(int fps) {
+    public void render( int fps ) {
         if ( game != null ) {
             if ( game.initialized ) {
                 game.render( fps );

@@ -1,4 +1,4 @@
-package de.hsh.alexander.src;
+package de.hsh.alexander;
 
 
 import common.updates.UpdateCodes;
@@ -15,11 +15,11 @@ public class PacManMenu extends Observable {
     public static final String fxml = "PacManMenu.fxml";
 
     @FXML
-    public        VBox     basicPane;
+    public VBox   basicPane;
     @FXML
-    public        Button   backButton;
+    public Button backButton;
     @FXML
-    public        Button   okButton;
+    public Button okButton;
 
 
     public void backButtonPressed( ActionEvent actionEvent ) {

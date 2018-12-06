@@ -1,4 +1,4 @@
-package de.hsh.alexander.src.level;
+package de.hsh.alexander.level;
 
 import common.actor.Collectable;
 import common.actor.Level;

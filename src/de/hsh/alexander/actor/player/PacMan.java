@@ -1,4 +1,4 @@
-package de.hsh.alexander.src.actor.player;
+package de.hsh.alexander.actor.player;
 
 import common.actor.ControlableActor;
 import common.actor.Direction;
@@ -7,8 +7,8 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 
-import static de.hsh.alexander.src.actor.ResourcePaths.Actor.Player.PacMan.pacman1Pictures;
-import static de.hsh.alexander.src.actor.ResourcePaths.Actor.Player.PacMan.pacman2Pictures;
+import static de.hsh.alexander.actor.ResourcePaths.Actor.Player.PacMan.pacman1Pictures;
+import static de.hsh.alexander.actor.ResourcePaths.Actor.Player.PacMan.pacman2Pictures;
 
 public class PacMan extends ControlableActor {
 
@@ -46,7 +46,6 @@ public class PacMan extends ControlableActor {
     public PacMan( HashMap<String, Direction> keyMap, String... pictureFileName ) throws FileNotFoundException {
         this( start_x, start_y, keyMap, pictureFileName );
     }
-
 
 
     @Override

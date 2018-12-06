@@ -5,7 +5,7 @@ import common.MainMenu;
 import common.engine.components.game.GameEntryPoint;
 import common.util.Logger;
 import de.hsh.Julian.LKEntryPoint;
-import de.hsh.alexander.src.PacManController;
+import de.hsh.alexander.PacManController;
 import de.hsh.amir.AmirEntryPoint;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGameEntryPoint;
