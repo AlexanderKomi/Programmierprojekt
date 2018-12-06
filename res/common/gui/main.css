@@ -10,7 +10,7 @@
 	-fx-pref-height : 40;
 	-fx-pref-width : 40;
 	-fx-border-width: 0 0 0 0;
-	-fx-graphic: url("./shutdown.png");
+	-fx-graphic: url("shutdown.png");
 	-fx-background-color: transparent;
 }
 
@@ -27,7 +27,7 @@
 	-fx-pref-height : 40;
 	-fx-pref-width : 40;
 	-fx-border-width: 0 0 0 0;
-	-fx-graphic: url("./folder.png");
+	-fx-graphic: url("folder.png");
 	-fx-background-color: transparent;
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
 }
@@ -36,7 +36,7 @@
 	-fx-pref-height : 40;
 	-fx-pref-width : 40;
 	-fx-border-width: 0 0 0 0;
-	-fx-graphic: url("./folder.png");
+	-fx-graphic: url("folder.png");
 	-fx-background-color: transparent;
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
 }
@@ -45,7 +45,7 @@
 	-fx-pref-height : 40;
 	-fx-pref-width : 40;
 	-fx-border-width: 0 0 0 0;
-	-fx-graphic: url("./folder.png");
+	-fx-graphic: url("folder.png");
 	-fx-background-color: transparent;
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
 }
@@ -54,7 +54,7 @@
 	-fx-pref-height : 40;
 	-fx-pref-width : 40;
 	-fx-border-width: 0 0 0 0;
-	-fx-graphic: url("./folder.png");
+	-fx-graphic: url("folder.png");
 	-fx-background-color: transparent;
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
 }
@@ -63,7 +63,7 @@
 	-fx-pref-height : 40;
 	-fx-pref-width : 40;
 	-fx-border-width: 0 0 0 0;
-	-fx-graphic: url("./folder.png");
+	-fx-graphic: url("folder.png");
 	-fx-background-color: transparent;
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
 }
@@ -72,7 +72,7 @@
 	-fx-pref-height : 40;
 	-fx-pref-width : 40;
 	-fx-border-width: 0 0 0 0;
-	-fx-graphic: url("./folder.png");
+	-fx-graphic: url("folder.png");
 	-fx-background-color: transparent;
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
 }
