@@ -8,7 +8,7 @@ import java.util.Random;
 import common.actor.Direction;
 import de.hsh.kevin.logic.myActor.Paket;
 import de.hsh.kevin.logic.myActor.PaketManager;
-import de.hsh.kevin.logic.myActor.Player;
+import de.hsh.kevin.logic.myActor.PlayerCharacter;
 import de.hsh.kevin.logic.myActor.Projectile;
 import de.hsh.kevin.logic.myActor.ProjectileManager;
 import de.hsh.kevin.logic.myActor.enmPaketTyp;
@@ -22,7 +22,7 @@ public class GameField {
     private Score score;
     private PaketManager paketManager;
     private ProjectileManager projectileManager;
-    private Player player;
+    private PlayerCharacter player;
     private Leben leben;
 
     private int spawnDelay;
@@ -72,9 +72,9 @@ public class GameField {
         playerImages.add(Config.resLocation + "player/player1.png");
         playerImages.add(Config.resLocation + "player/player2.png");
 
-        Player p = null;
+        PlayerCharacter p = null;
         try {
-            p = new Player(playerImages, playerKeyMap);
+            p = new PlayerCharacter(playerImages, playerKeyMap);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -82,7 +82,7 @@ public class GameField {
         player = p;
     }
 
-    public Player getPlayer() {
+    public PlayerCharacter getPlayer() {
         return player;
     }
 
