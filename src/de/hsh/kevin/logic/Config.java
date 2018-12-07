@@ -2,7 +2,7 @@ package de.hsh.kevin.logic;
 
 public class Config {
 
-    public static final String resLocation = "de/hsh/kevin/res/";
+    public static final String resLocation =  "/de/hsh/kevin/res/";
     public static final int paketSpawnDelay = 50;
     public static final int projectileSpawnDelay = 400;
     public static final int maxLife = 4;

@@ -12,8 +12,10 @@ import java.util.Observable;
 
 public class TIFxmlChanger extends FxmlChanger {
 
+    private static final String fxmlPackage = "res/";
+
     public TIFxmlChanger(FxModul fxModul, String fxmlPath, Observable fxController) {
-        super(fxModul, fxmlPath, fxController);
+        super(fxModul, fxmlPackage + fxmlPath, fxController);
     }
 
     @Override
@@ -30,17 +32,17 @@ public class TIFxmlChanger extends FxmlChanger {
                 ((GameEntryPoint) getFxModul()).exitToMainGUI();
                 break;
             case UpdateCodes.TunnelInvader.gameMenu:
-                changeScene(TIMenuController.fxml, new TIMenuController());
+                changeScene(fxmlPackage + TIMenuController.fxml, new TIMenuController());
                 break;
             }
         }
     }
 
     public void changeGameFxml(Observable o, TIGameController game) {
-        changeScene(TIGameController.fxml, game);
+        changeScene(fxmlPackage + TIGameController.fxml, game);
     }
 
     public void changeGameOverFxml(Observable o, TIGameOverController gameOver) {
-        changeScene(TIGameOverController.fxml, gameOver);
+        changeScene(fxmlPackage + TIGameOverController.fxml, gameOver);
     }
 }

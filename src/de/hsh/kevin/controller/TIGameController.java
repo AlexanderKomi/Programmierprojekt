@@ -23,7 +23,7 @@ import de.hsh.kevin.logic.Config;
 
 public class TIGameController extends Observable implements Initializable {
 
-    public static final String fxml = "res/TIGame.fxml";
+    public static final String fxml = "TIGame.fxml";
     private boolean initialized = false;
     private boolean gameOver;
 
