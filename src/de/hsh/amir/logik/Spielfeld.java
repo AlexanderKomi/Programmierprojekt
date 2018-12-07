@@ -7,9 +7,9 @@ import javafx.scene.input.KeyEvent;
 import java.io.FileNotFoundException;
 import java.util.Observable;
 
-public class GameField extends Level{
+public class Spielfeld extends Level{
 
-    public GameField() throws FileNotFoundException {
+    public Spielfeld() throws FileNotFoundException {
     }
 
     @Override
