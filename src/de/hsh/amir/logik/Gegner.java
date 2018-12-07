@@ -38,7 +38,9 @@ public class Gegner extends Collectable {
         setPos(this.getX(), this.getY() + speed);
     }
 
-    //Getter und Setter
+    /**
+     * Setter überprüft ob der Gegnertyp richtig gesetzt wurde
+     */
     public void setGegnerTyp(int gegnerTyp) {
         if (gegnerTyp == 1) {
             this.gegnerTyp = gegnerTyp;
@@ -54,7 +56,7 @@ public class Gegner extends Collectable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Ich bin ein GegnerObjekt aus AmirsGame";
     }
 }
