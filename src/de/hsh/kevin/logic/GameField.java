@@ -93,7 +93,7 @@ public class GameField {
 
         if (spawnDelayBuffer == spawnDelay) {
             Random rand = new Random();
-            int number = rand.nextInt(Config.getMaxSpawnCount());
+            int number = rand.nextInt(Config.getMaxSpawnCount()) + 1;
             paketManager.createNewPaket(Config.spawnChanceGtoB, number);
         }
         spawnDelayBuffer--;
