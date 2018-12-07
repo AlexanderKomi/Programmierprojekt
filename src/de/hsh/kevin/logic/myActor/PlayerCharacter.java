@@ -2,14 +2,14 @@ package de.hsh.kevin.logic.myActor;
 
 import common.actor.ControlableActor;
 import common.actor.Direction;
+import common.util.ImageLoader;
 import javafx.scene.image.Image;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 
-public class Player extends ControlableActor {
+public class PlayerCharacter extends ControlableActor {
 
     private static final double startX = 250;
     private static final double startY = 750;
@@ -18,11 +18,11 @@ public class Player extends ControlableActor {
     private static Image idleImage;
     private static boolean isFiring;
 
-    public Player(String pictureFileName, HashMap<String, Direction> keyMap) throws FileNotFoundException {
+    public PlayerCharacter(String pictureFileName, HashMap<String, Direction> keyMap) throws FileNotFoundException {
 	this(pictureFileName, startX, startY, keyMap);
     }
 
-    public Player(String pictureFileName, double x, double y, HashMap<String, Direction> keyMap)
+    public PlayerCharacter(String pictureFileName, double x, double y, HashMap<String, Direction> keyMap)
 	    throws FileNotFoundException {
 	super(pictureFileName, x, y, keyMap);
 	this.setSpeed(defaultSpeed);
@@ -36,7 +36,7 @@ public class Player extends ControlableActor {
      * @param keyMap
      * @throws FileNotFoundException
      */
-    public Player(List<String> pictureFileName, HashMap<String, Direction> keyMap) throws FileNotFoundException {
+    public PlayerCharacter(List<String> pictureFileName, HashMap<String, Direction> keyMap) throws FileNotFoundException {
 	this(pictureFileName, startX, startY, keyMap);
     }
 
@@ -48,13 +48,13 @@ public class Player extends ControlableActor {
      * @param keyMap
      * @throws FileNotFoundException
      */
-    public Player(List<String> pictureFileName, double x, double y, HashMap<String, Direction> keyMap)
+    public PlayerCharacter(List<String> pictureFileName, double x, double y, HashMap<String, Direction> keyMap)
 	    throws FileNotFoundException {
 	super(pictureFileName.get(0), x, y, keyMap);
 	this.setSpeed(defaultSpeed);
 	if (pictureFileName.size() >= 2) {
-	    idleImage = new Image(new FileInputStream(pictureFileName.get(0)));
-	    firingImage = new Image(new FileInputStream(pictureFileName.get(1)));
+        idleImage = ImageLoader.loadImage( pictureFileName.get( 0 ) );
+        firingImage = ImageLoader.loadImage( pictureFileName.get( 1 ) );
 	}
     }
 

@@ -23,7 +23,7 @@ import de.hsh.kevin.logic.Config;
 
 public class TIGameController extends Observable implements Initializable {
 
-    public static final String fxml = "res/TIGame.fxml";
+    public static final String fxml = "TIGame.fxml";
     private boolean initialized = false;
     private boolean gameOver;
 
@@ -105,12 +105,7 @@ public class TIGameController extends Observable implements Initializable {
 	
 	clearCanvas();
 
-	this.gameField.getPlayer().draw(this.gameCanvas);
-	this.gameField.spawnPakete();
-	this.gameField.spawnProjectile();
-
-	this.gameField.draw(this.gameCanvas);
-	this.gameField.moveAll();
+	this.gameField.game(gameCanvas);
 	
 	updateLbl_leben();
 	updateLbl_score();

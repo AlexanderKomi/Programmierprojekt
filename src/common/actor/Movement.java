@@ -5,7 +5,7 @@ import javafx.scene.input.KeyEvent;
 import java.util.HashMap;
 import java.util.Set;
 
-public class Movement {
+public final class Movement {
 
     private HashMap<String, Direction>  keymap;
     private HashMap<Direction, Boolean> holdDown = initHoldDown();

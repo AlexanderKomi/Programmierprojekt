@@ -1,6 +1,6 @@
 package common.config;
 
-public class Authors {
+public final class Authors {
 
     private static final String seperator = " : ";
 

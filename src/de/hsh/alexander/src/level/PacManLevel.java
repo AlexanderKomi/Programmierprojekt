@@ -5,20 +5,11 @@ import common.actor.Level;
 import common.util.Logger;
 import javafx.scene.input.KeyEvent;
 
-import java.io.FileNotFoundException;
 import java.util.Observable;
 
 abstract public class PacManLevel extends Level {
 
     public static final String gameFinishedMessage = "PacMan : Game finished";
-
-    PacManLevel() throws FileNotFoundException {
-    }
-
-    @Override
-    public void createLevel() throws FileNotFoundException {
-
-    }
 
     @Override
     public void keyboardInput( KeyEvent keyEvent ) {

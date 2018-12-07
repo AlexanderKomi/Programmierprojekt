@@ -15,19 +15,24 @@ import java.util.Observer;
  */
 abstract public class Level extends Observable implements Observer, ILevel {
 
-    private HashSet<Actor>            npcs          = new HashSet<>();
-    private HashSet<ControlableActor> players       = new HashSet<>();
-    private ArrayList<Actor>          levelElements = new ArrayList<>();
-    private ArrayList<Collectable>    collectables  = new ArrayList<>();
+    private BackgroundImage           backgroundImage = new BackgroundImage();
+    private HashSet<Actor>            npcs            = new HashSet<>();
+    private HashSet<ControlableActor> players         = new HashSet<>();
+    private ArrayList<Actor>          levelElements   = new ArrayList<>();
+    private ArrayList<Collectable>    collectables    = new ArrayList<>();
 
 
-    public Level() throws FileNotFoundException {
-        createLevel();
+    public Level() {
+        reset();
+    }
 
+    private void addCollision() {
         levelElements.forEach(
                 levelElement -> players.forEach(
                         pacMan -> pacMan.addCollidingActor( levelElement ) ) );
+    }
 
+    private void addCollectables() {
         collectables.forEach(
                 collectable -> players.forEach(
                         player -> player.addCollidingActor( collectable ) ) );
@@ -35,6 +40,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
 
     @Override
     public void render( Canvas canvas, int fps ) {
+        backgroundImage.draw( canvas );
         npcs.forEach( npc -> npc.draw( canvas ) );
         levelElements.forEach( levelElement -> levelElement.draw( canvas ) );
         collectables.forEach( collectable -> collectable.draw( canvas ) );
@@ -59,6 +65,17 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return this.levelElements.add( levelElement );
     }
 
+    public void reset() {
+        try {
+            createLevel();
+        }
+        catch ( FileNotFoundException e ) {
+            e.printStackTrace();
+        }
+        addCollision();
+        addCollectables();
+    }
+
     public HashSet<ControlableActor> getPlayers() {
         return players;
     }
@@ -73,5 +90,13 @@ abstract public class Level extends Observable implements Observer, ILevel {
 
     public ArrayList<Collectable> getCollectables() {
         return this.collectables;
+    }
+
+    public void setBackgroundImage( BackgroundImage backgroundImage ) {
+        this.backgroundImage = backgroundImage;
+    }
+
+    public void setBackgroundImage( String filepath ) {
+        this.backgroundImage.setCurrentImage( filepath );
     }
 }

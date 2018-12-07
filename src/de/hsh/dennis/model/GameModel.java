@@ -24,6 +24,8 @@ import java.util.Observable;
 public class GameModel extends Observable {
 
     //Score & Health
+    private int health_init = 100;
+    private int score_init = 0;
     public static int health;
     public static StringProperty health_string = new SimpleStringProperty("100");
     public static int score;
@@ -31,7 +33,10 @@ public class GameModel extends Observable {
 
     //GAME STATES
     public boolean gameLost = false;
-    public boolean gameFinished = false;
+
+
+
+    public Config.Level.Difficulty difficulty = Config.Level.Difficulty.EASY;
 
     //Objects
     private NpcHandler npcHandler;
@@ -47,10 +52,11 @@ public class GameModel extends Observable {
 
     //Audio Stuff
     private boolean musicStart = true;
-    private AudioPlayer aa = new AudioPlayer();
+    private AudioPlayer ap;
+
     // --- ACT ------------------------------------------------------------------------------------
     private boolean ai = false;
-
+    private boolean acting = false;
 
     public GameModel() {
         try {
@@ -58,19 +64,31 @@ public class GameModel extends Observable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        reset();
+    }
+
+    public void reset(){
+        score = score_init;
+        health = health_init;
+        ai = false;
+        musicStart = true;
+        ap=null;
+        canvas = null;
+        npcHandler = null;
     }
 
     public void act() {
-        if (!checkEnd()) {
             if (!ai) {
                 actInit();
             }
+        if(acting){
+        updateHealth(npcHandler.getHealthChange());
+        updateScore(npcHandler.getScoreChange());
+
             npcHandler.spawning();
             npcHandler.move();
-            updateHealth(npcHandler.getHealthChange());
-            updateScore(npcHandler.getScoreChange());
 
-            //TODO: repair!
+            
             npcList = npcHandler.getNpcList();
             collideCheck();
 
@@ -78,24 +96,27 @@ public class GameModel extends Observable {
             resetSkin();
             NpcHandler.drawNpcs();
             gc.drawImage(player.getSkin(), player.getPosX(), player.getPosY());
-        } else {
-            clearCanvas();
-        }
+
+        checkEnd();}
     }
 
     private void actInit() {
         if (npcHandler == null) {
             npcHandler = new NpcHandler(canvas);
-            npcHandler.loadNpcs(Config.Level.Difficulty.EASY);
+
         }
+        npcHandler.loadNpcs(difficulty);
+
         if (musicStart) {
             musicStart = false;
-            aa.loadFile(this.getClass().getResource("audio/jingle.mp3").getPath());
-            aa.play();
+            ap = new AudioPlayer();
+            ap.loadFile(this.getClass().getResource("audio/jingle.mp3").getPath());
+            ap.play();
         }
         score = 0;
         health = 100;
         ai = true;
+        acting = true;
     }
 
 
@@ -106,7 +127,6 @@ public class GameModel extends Observable {
         if (k == Custom.UP || k == Custom.UP_ALT) {
             player.changeSkin(Direction.Up);
             setResetTimer();
-            debugging();
             return;
         } else if (k == Custom.LEFT || k == Custom.LEFT_ALT) {
             player.changeSkin(Direction.Left);
@@ -128,23 +148,27 @@ public class GameModel extends Observable {
         for (Npc npc : npcList) {
             if (npc != null) {
 
-                //BOT?
-                if (npc.getNpcType() == NPCEnums.NpcType.BOT) {
-                    if (npc.getSpawnType() == NPCEnums.Spawn.RIGHT && player.getDirection() == Direction.Right) {
-                        if (player.doesCollide(npc)) {
-                            npcHandler.hitNpc(npc);
-                        }
-                    }
+                //hässlich aber korrekt ...
+                //BOT
+                if (npc.getNpcType() == NPCEnums.NpcType.BOT
+                        && ((npc.getSpawnType() == NPCEnums.Spawn.RIGHT && player.getDirection() == Direction.Right) || (npc.getSpawnType() == NPCEnums.Spawn.LEFT && player.getDirection() == Direction.Left))
+                        && player.doesCollide(npc)) {
+                    npcHandler.hitNpc(npc);
                 }
 
-                //BOT left hit?
-                else if (npc.getSpawnType() == NPCEnums.Spawn.LEFT && player.getDirection() == Direction.Left && npc.getNpcType() == NPCEnums.NpcType.BOT) {
-                    if (player.doesCollide(npc)) {
-                        npcHandler.hitNpc(npc);
-                    }
+                //PACKAGE
+                else if (npc.getNpcType() == NPCEnums.NpcType.PACKAGE
+                        && player.getDirection() == Direction.Down
+                        && player.doesCollide(npc)) {
+                    npcHandler.hitNpc(npc);
                 }
-                //
-                //else if(){}
+
+                //HACKER
+                else if (npc.getNpcType() == NPCEnums.NpcType.HACKER
+                        && player.getDirection() == Direction.Up
+                        && player.doesCollide(npc)) {
+                    npcHandler.hitNpc(npc);
+                }
             }
         }
     }
@@ -170,17 +194,31 @@ public class GameModel extends Observable {
         gc = this.canvas.getGraphicsContext2D();
     }
 
-    private boolean checkEnd() {
-        if (gameLost) {
-            setChanged();
-            notifyObservers(UpdateCodes.Dennis.gameLost);
-            return true;
-        } else if (gameFinished) {
-            setChanged();
-            notifyObservers(UpdateCodes.Dennis.gameWon);
-            return true;
+    private void checkEnd() {
+        if(ai) {
+            if (health == 0) {
+                acting = false;
+                ap.pause();
+                Logger.log("1");
+                setChanged();
+                notifyObservers(UpdateCodes.Dennis.gameLost);
+
+            } else if (npcHandler.isEndReached() && score > 0) {
+                acting = false;
+                ap.pause();
+                Logger.log("2");
+                setChanged();
+                notifyObservers(UpdateCodes.Dennis.gameWon);
+
+            } else if(npcHandler.isEndReached() && score <= 0){
+                acting = false;
+                ap.pause();
+                Logger.log("3");
+                setChanged();
+                notifyObservers(UpdateCodes.Dennis.gameLost);
+
+            }
         }
-        return false;
     }
 
     private void clearCanvas() {
@@ -215,27 +253,12 @@ public class GameModel extends Observable {
         return null;
     }
 
-    //debugging
-    void debugging() {
-        /*
-
-
-        for (Npc n : spawnArray) {
-            if (n != null) {
-                Logger.log(n.toString());
-            } else {
-                Logger.log("\n\n!!! JSON beschädigt !!!\n");
-            }
-        }
-
-
-        try {
-            //npcHandler.spawnNpc(new Package(NPCEnums.Spawn.RIGHT));
-            npcHandler.spawnNpc(new Bot(NPCEnums.Spawn.RIGHT));
-            //npcHandler.spawnNpc(new Hacker(NPCEnums.Spawn.RIGHT));
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-        */
+    public Config.Level.Difficulty getDifficulty() {
+        return difficulty;
     }
+
+    public void setDifficulty(Config.Level.Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
 }

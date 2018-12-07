@@ -11,12 +11,10 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import static common.util.Path.getExecutionLocation;
-
 public class Leertastenklatsche implements Observer {
 
 
-    static final String     location = getExecutionLocation() + "de/hsh/Julian/";
+    static final String     location = "/de/hsh/Julian/";
     private      SpawnTimer timer    = new SpawnTimer();
 
     private int score = 0;
@@ -70,9 +68,12 @@ public class Leertastenklatsche implements Observer {
         for ( Enemy enemy : enemyList ) {
             if ( enemy.getX() > WindowConfig.window_width / 2 ) {
                 enemy.setPos( enemy.getX() - 1.0 - score / 10.0, enemy.getY() );
-                enemy.rotate( 90 );
+                enemy.rotate( 0 );
             }
-            else { enemy.setPos( enemy.getX() + 1+score/10.0, enemy.getY() ); }
+            else {
+                enemy.setPos( enemy.getX() + 1 + score / 10.0, enemy.getY() );
+                enemy.rotate( 0 );
+            }
         }
     }
 

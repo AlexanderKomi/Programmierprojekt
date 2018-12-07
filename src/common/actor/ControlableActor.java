@@ -3,33 +3,34 @@ package common.actor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class ControlableActor extends Actor {
+abstract public class ControlableActor extends Actor {
 
 
-    protected ControlableActor( String pictureFileName, HashMap<String, Direction> keymap ) throws FileNotFoundException {
+    protected ControlableActor( String pictureFileName, HashMap<String, Direction> keymap ) {
         super( pictureFileName );
         this.movement.setKeyMap( keymap );
     }
 
-    protected ControlableActor( String pictureFileName, double x, double y, HashMap<String, Direction> keymap )
-            throws FileNotFoundException {
+    protected ControlableActor( String pictureFileName, double x, double y, HashMap<String, Direction> keymap ) {
         super( pictureFileName, x, y );
         this.movement.setKeyMap( keymap );
     }
 
-    protected ControlableActor( List<String> pictureFileName, double x, double y, HashMap<String, Direction> keymap, int delay )
-            throws FileNotFoundException {
+    protected ControlableActor( String[] pictureFileName, double x, double y, HashMap<String, Direction> keymap, int delay ) {
+        super( x, y, delay, pictureFileName );
+        this.movement.setKeyMap( keymap );
+    }
+
+    protected ControlableActor( List<String> pictureFileName, double x, double y, HashMap<String, Direction> keymap, int delay ) {
         super( pictureFileName, x, y, delay );
         this.movement.setKeyMap( keymap );
     }
 
-    protected ControlableActor( double x, double y, HashMap<String, Direction> keymap, int delay, String... pictureFileNames )
-            throws FileNotFoundException {
+    protected ControlableActor( double x, double y, HashMap<String, Direction> keymap, int delay, String... pictureFileNames ) {
         super( Arrays.asList( pictureFileNames ), x, y, delay );
         this.movement.setKeyMap( keymap );
     }

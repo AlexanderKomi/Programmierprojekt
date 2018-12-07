@@ -12,7 +12,7 @@ import java.util.Observable;
 
 public class TIMenuController extends Observable{
 
-    public static final String fxml = "res/TIMenu.fxml";
+    public static final String fxml = "TIMenu.fxml";
 
     @FXML
     public Button btn_start;
@@ -26,6 +26,12 @@ public class TIMenuController extends Observable{
     @FXML
     public Button btn_sammlung;
 
+    
+    public TIMenuController() {
+       Config.setDifficulyPreset();
+    }
+    
+    
     @FXML
     void difficultyPressed(ActionEvent event) {
 	Config.switchDifficulty();

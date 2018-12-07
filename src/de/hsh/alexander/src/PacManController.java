@@ -11,11 +11,11 @@ import java.util.Observer;
 public class PacManController extends GameEntryPoint {
 
     private final PacManFxmlChanger changer;
-    private final PacManGame game;
+    private       PacManGame        game;
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
-        game = new PacManGame();
+        this.game = new PacManGame();
         game.addObserver( this );
         changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
     }
@@ -29,13 +29,22 @@ public class PacManController extends GameEntryPoint {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
+                    this.game = new PacManGame();
+                    game.addObserver( this );
                     changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     break;
                 case UpdateCodes.PacMan.mainMenu:
+                    this.game = new PacManGame();
+                    game.addObserver( this );
+                    changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     exitToMainGUI();
                     break;
                 case UpdateCodes.PacMan.showEndScreen:
                     changer.changeFxml( new PacManEndScreen(), UpdateCodes.PacMan.showEndScreen );
+                    break;
+                case UpdateCodes.PacMan.repeatGame:
+                    this.game = new PacManGame();
+                    changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
                     break;
                 default:
                     logParsingError( o, arg );
@@ -55,7 +64,9 @@ public class PacManController extends GameEntryPoint {
     @Override
     public void render(int fps) {
         if ( game != null ) {
-            game.render(fps);
+            if ( game.initialized ) {
+                game.render( fps );
+            }
         }
     }
 

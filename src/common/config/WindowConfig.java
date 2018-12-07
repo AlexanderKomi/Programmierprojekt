@@ -1,6 +1,6 @@
 package common.config;
 
-public class WindowConfig {
+public final class WindowConfig {
 
     public static final String mainGui_title   = "Awesome Game Collection";
     public static final String alexander_title = "Pacman Coop";

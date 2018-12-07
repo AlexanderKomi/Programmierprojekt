@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
@@ -19,31 +18,27 @@ import java.util.ResourceBundle;
 
 public class PacManGame extends Observable implements Observer, Initializable {
 
-    public static final  String   fxml          = "PacManGame.fxml";
-    private static       boolean  initialized   = false;
+    public static final String fxml = "PacManGame.fxml";
+    boolean initialized = false;
 
     private Level currentLevel;
+
+    public PacManGame() {
+        reset();
+    }
 
     @FXML
     private Canvas gameCanvas;
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
-        if ( !initialized ) {
-            this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
-            try {
-                currentLevel = new Level1();
-            }
-            catch ( FileNotFoundException e ) {
-                e.printStackTrace();
-            }
-
-            currentLevel.addObserver( this );
-            this.gameCanvas.setOnKeyPressed( currentLevel::keyboardInput ); // Only fires, when traversable
-            this.gameCanvas.setOnKeyReleased( currentLevel::keyboardInput ); // Only fires, when traversable
-            initialized = true;
-            Logger.log( this.getClass() + ": init executed" );
+        if ( initialized ) {
+            return;
         }
+        initialized = true;
+        reset();
+        Logger.log( this.getClass() + ": init executed" );
+
     }
 
     @Override
@@ -64,12 +59,31 @@ public class PacManGame extends Observable implements Observer, Initializable {
         }
     }
 
-    void render(int fps) {
+    void render( int fps ) {
         if ( !initialized ) {
             return;
         }
         clearCanvas();
-        currentLevel.render( this.gameCanvas, fps );
+        this.currentLevel.render( this.gameCanvas, fps );
+    }
+
+    void reset() {
+        if ( !initialized ) {
+            this.gameCanvas = new Canvas();
+        }
+
+        this.currentLevel = new Level1();
+        this.currentLevel.reset();
+        this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
+        this.gameCanvas.setOnKeyPressed( e -> {
+            this.currentLevel.keyboardInput( e );
+            Logger.log( "Key pressed" );
+        } ); // Only fires, when traversable
+        this.gameCanvas.setOnKeyReleased( this.currentLevel::keyboardInput ); // Only fires, when traversable
+
+
+        this.currentLevel.addObserver( this );
+        Logger.log( this.getClass() + ": Resetted game" );
     }
 
     private void clearCanvas() {
