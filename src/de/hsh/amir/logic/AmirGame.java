@@ -1,4 +1,4 @@
-package de.hsh.amir.logik;
+package de.hsh.amir.logic;
 
 import common.util.Logger;
 import javafx.scene.canvas.Canvas;

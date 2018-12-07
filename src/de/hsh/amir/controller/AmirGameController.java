@@ -1,6 +1,6 @@
 package de.hsh.amir.controller;
 
-import de.hsh.amir.logik.AmirGame;
+import de.hsh.amir.logic.AmirGame;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;

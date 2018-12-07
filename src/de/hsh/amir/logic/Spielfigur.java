@@ -1,4 +1,4 @@
-package de.hsh.amir.logik;
+package de.hsh.amir.logic;
 
 
 import common.actor.ControlableActor;
