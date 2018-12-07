@@ -42,6 +42,7 @@ public class RAM extends GameEntryPoint {
     public void render(int fps) {
         if ( initialized ) {
             game.render( fps );
+
         }
     }
 
