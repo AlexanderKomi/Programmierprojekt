@@ -13,7 +13,7 @@ public class TIGameOverController extends GameMenu {
 
     public static AnchorPane gameOverPane;
 
-    public static final String fxml = "res/TIGameOver.fxml";
+    public static final String fxml = "TIGameOver.fxml";
     private Score score;
 
     @FXML
