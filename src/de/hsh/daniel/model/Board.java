@@ -13,7 +13,7 @@ import java.util.Collections;
  */
 public class Board  {
 
-    private ArrayList<Card>         cardList     = new ArrayList<Card>();
+    private ArrayList<Card>         cardList     = new ArrayList<>();
     private ramImgLoader            imgLoader    = new ramImgLoader();
     private ArrayList<Image>        imgList      = new ArrayList<>();
     private static final String     imgLocation  = "de/hsh/daniel/images/";
@@ -23,14 +23,18 @@ public class Board  {
 
 
     public void initCards(int numberOfPairs) {
+        imgLoader.imgToList();
+        imgList = imgLoader.getImgList();
         for (int i = 0; i<numberOfPairs; i++){
-            cardList.add(i, new Card(imgList.get(i).toString()));
-            cardList.add((i+1), new Card(imgList.get(i).toString()));
+            Card c1 = new Card(imgList.get(i), i);
+            Card c2 = new Card(imgList.get(i), i);
+            cardList.add(i, c1);
+            cardList.add((i+1), c2);
         }
         Logger.log(cardList.toString());
 
-        imgLoader.imgToList();
-        imgList = imgLoader.getImgList();
+
+
 
         for(Card c : cardList) {
             for (int i = 1; i < imgList.size(); i++) {

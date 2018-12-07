@@ -1,24 +1,19 @@
 package de.hsh.daniel.model;
 
-import common.actor.Actor;
-import common.util.Logger;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
 
+public class Card {
 
-public class Card extends Actor {
-
-    private int                             id;
+    private int                             id = 0;
     private Image                           image;
-    private static final Image              cardBackImg = new Image("de/hsh/daniel/images/back.png");
     private boolean                         cardMatched;
     private boolean                         cardSelected;
 
 
-    public Card(String pictureFileName) {
-        super(pictureFileName);
-        this.id += 1;
+    public Card(Image img, int id) {
+        this.image = img;
+        this.id = id;
     }
 
 
