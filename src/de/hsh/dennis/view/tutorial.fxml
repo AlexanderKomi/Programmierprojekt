@@ -38,6 +38,6 @@
         </VBox>
     </children>
     <stylesheets>
-        <URL value="@resources/dimensions.css"/>
+        <URL value="@css/dimensions.css"/>
     </stylesheets>
 </HBox>

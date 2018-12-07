@@ -4,11 +4,11 @@ import common.GameContainer;
 import common.MainMenu;
 import common.engine.components.game.GameEntryPoint;
 import common.util.Logger;
-import de.hsh.Julian.Leertastenklatsche;
+import de.hsh.Julian.LKEntryPoint;
 import de.hsh.alexander.src.PacManController;
-import de.hsh.amir.AmirsGame;
+import de.hsh.amir.AmirEntryPoint;
 import de.hsh.daniel.RAM;
-import de.hsh.dennis.DennisGame;
+import de.hsh.dennis.DennisGameEntryPoint;
 import de.hsh.kevin.controller.TIController;
 
 import java.util.Observable;
@@ -34,17 +34,16 @@ public class Updater {
             if ( gameEntryPoint instanceof PacManController ) {
                 UpdatePacman.update( (PacManController) gameEntryPoint, arg, gameContainer );
             }
-            else if ( gameEntryPoint instanceof AmirsGame ) {
-                UpdateAmirsGame.update( (AmirsGame) gameEntryPoint, arg, gameContainer );
+            else if ( gameEntryPoint instanceof AmirEntryPoint) {
+                UpdateAmirsGame.update( (AmirEntryPoint) gameEntryPoint, arg, gameContainer );
             }
             else if ( gameEntryPoint instanceof RAM ) {
                 update( (RAM) gameEntryPoint, arg, gameContainer );
+            } else if (gameEntryPoint instanceof DennisGameEntryPoint) {
+                UpdateDDOSDefender.update((DennisGameEntryPoint) gameEntryPoint, arg, gameContainer);
             }
-            else if ( gameEntryPoint instanceof DennisGame ) {
-                UpdateDDOSDefender.update( (DennisGame) gameEntryPoint, arg, gameContainer );
-            }
-            else if ( gameEntryPoint instanceof Leertastenklatsche ) {
-                update( (Leertastenklatsche) gameEntryPoint, arg, gameContainer );
+            else if ( gameEntryPoint instanceof LKEntryPoint) {
+                update( (LKEntryPoint) gameEntryPoint, arg, gameContainer );
             }
             else if ( gameEntryPoint instanceof TIController ) {
                 UpdateTunnelInvader.update( (TIController) gameEntryPoint, arg, gameContainer );
@@ -61,7 +60,7 @@ public class Updater {
         }
     }
 
-    public static void update( AmirsGame game, Object arg, GameContainer gameContainer ) {
+    public static void update( AmirEntryPoint game, Object arg, GameContainer gameContainer ) {
         Logger.log( game, arg );
     }
 
@@ -69,10 +68,11 @@ public class Updater {
         Logger.log( game, arg );
     }
 
-    public static void update( DennisGame game, Object arg, GameContainer gameContainer ) { Logger.log( game, arg );
+    public static void update(DennisGameEntryPoint game, Object arg, GameContainer gameContainer) {
+        Logger.log(game, arg);
     }
 
-    public static void update( Leertastenklatsche game, Object arg, GameContainer gameContainer ) {
+    public static void update(LKEntryPoint game, Object arg, GameContainer gameContainer ) {
         Logger.log( game, arg );
     }
 

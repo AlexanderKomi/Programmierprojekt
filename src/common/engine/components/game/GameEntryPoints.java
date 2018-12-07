@@ -1,13 +1,10 @@
 package common.engine.components.game;
 
-import common.events.KeyEventManager;
-import common.events.MouseEventManager;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class GameEntryPoints extends ArrayList<GameEntryPoint> {
+public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
 
     public GameEntryPoints() {
     }
@@ -69,18 +66,6 @@ public class GameEntryPoints extends ArrayList<GameEntryPoint> {
 
     public GameEntryPoints[] toArray() {
         return (GameEntryPoints[]) super.toArray();
-    }
-
-    public void addKeyEventManager(KeyEventManager keyEventManager) {
-        this.forEach(game -> {
-            game.addObservable(keyEventManager);
-        });
-    }
-
-    public void addMouseEventManager(MouseEventManager mouseEventManager) {
-        this.forEach(game -> {
-            game.addObservable(mouseEventManager);
-        });
     }
 
     public ArrayList<String> getNames() {

@@ -2,15 +2,14 @@ package common.updates;
 
 import common.GameContainer;
 import common.util.Logger;
-import de.hsh.amir.AmirsGame;
-import de.hsh.dennis.DennisGame;
+import de.hsh.amir.AmirEntryPoint;
 
 /**
  * Created by yy9-mys-u1 on 23.11.18.
  */
 public class UpdateAmirsGame {
 
-    public static void update(AmirsGame amirGame, Object arg, GameContainer gameContainer) {
+    public static void update(AmirEntryPoint amirGame, Object arg, GameContainer gameContainer) {
         if (arg instanceof String) {
             String message = (String) arg;
             switch (message) {

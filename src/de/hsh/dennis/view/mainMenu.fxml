@@ -23,7 +23,7 @@
         </VBox>
     </children>
     <stylesheets>
-        <URL value="@resources/dimensions.css"/>
-        <URL value="@resources/mainMenu.css"/>
+        <URL value="@css/dimensions.css"/>
+        <URL value="@css/mainMenu.css"/>
     </stylesheets>
 </HBox>

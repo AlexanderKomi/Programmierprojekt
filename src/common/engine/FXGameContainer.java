@@ -4,8 +4,6 @@ import common.MainMenu;
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
 import common.engine.components.game.GameEntryPoints;
-import common.events.KeyEventManager;
-import common.events.MouseEventManager;
 import common.util.Logger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -22,8 +20,6 @@ import java.util.Observer;
  */
 public abstract class FXGameContainer extends Container implements Observer {
 
-    private static KeyEventManager   keyEventManager;
-    private static MouseEventManager mouseEventManager;
     private        Stage             stage;
     private        GameEntryPoints   gameEntryPoints = new GameEntryPoints(); // Tracks all the gameEntryPoints
     //Engine properties
@@ -43,8 +39,6 @@ public abstract class FXGameContainer extends Container implements Observer {
         }
         Container.setLaunched( true );
         this.initStage( primaryStage );
-        keyEventManager = new KeyEventManager();
-        mouseEventManager = new MouseEventManager();
 
         this.setGameEntryPoints( createGames( this ) );
 
@@ -52,12 +46,6 @@ public abstract class FXGameContainer extends Container implements Observer {
         this.getMenu().addObserver( this );
         this.getMenu().initGameNames();
 
-        this.stage.setScene(this.getMenu().getScene());
-        //keyEventManager.addKeyEvents( this.getMenu().getScene() );
-        //mouseEventManager.addKeyEvents( this.getMenu().getScene() );
-
-        this.gameEntryPoints.addKeyEventManager( keyEventManager );
-        this.gameEntryPoints.addMouseEventManager( mouseEventManager );
         this.stage.setScene(this.getMenu().getScene());
         this.startEngine();
         this.showWindow();
@@ -132,16 +120,8 @@ public abstract class FXGameContainer extends Container implements Observer {
         return this.getGameEntryPoints().contains( gameEntryPoint );
     }
 
-    public static KeyEventManager getKeyEventManager() {
-        return keyEventManager;
-    }
-
     public boolean containsGame( String gameName ) {
         return this.getGameEntryPoints().contains( gameName );
-    }
-
-    protected void setGameShown( int index ) {
-        this.setGameShown( this.getGameEntryPoints().get( index ) );
     }
 
     public void setGameShown(String gameName) {
@@ -154,7 +134,7 @@ public abstract class FXGameContainer extends Container implements Observer {
         }
     }
 
-    public void setGameShown( GameEntryPoint gameEntryPoint ) {
+    private void setGameShown( GameEntryPoint gameEntryPoint ) {
         Scene s = gameEntryPoint.getScene();
         stage.setTitle(gameEntryPoint.getName());
         Logger.log( this.getClass() + ": GameEntryPoint scene : " + s );
@@ -173,9 +153,5 @@ public abstract class FXGameContainer extends Container implements Observer {
         } else {
             throw new NullPointerException("Scene is null");
         }
-    }
-
-    private void setStage(Stage stage) {
-        this.stage = stage;
     }
 }

@@ -11,7 +11,7 @@ import java.util.Observable;
  * @author Alexander Komischke
  * @see GameContainerInterface
  */
-public class Java2DEngine extends Observable implements Runnable {
+public final class Java2DEngine extends Observable implements Runnable {
 
 
     private static final double                 UPDATE_CAP = 1.0 / 60.0;

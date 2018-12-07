@@ -1,189 +1,141 @@
 package de.hsh.Julian;
 
 import common.config.WindowConfig;
-import common.engine.components.game.GameEntryPoint;
-import common.events.KeyEventManager;
 import common.util.Logger;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+import de.hsh.dennis.model.NpcLogic.SpawnTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import static common.util.Path.getExecutionLocation;
+public class Leertastenklatsche implements Observer {
 
-//
-//
 
-public class Leertastenklatsche extends GameEntryPoint {
+    static final String     location = "/de/hsh/Julian/";
+    private      SpawnTimer timer    = new SpawnTimer();
 
-    private GraphicsContext   gc;
-    private Pane              root         = new Pane();
-    private Canvas            canvas       = new Canvas( WindowConfig.window_width, WindowConfig.window_height );
-    private int               score        = 0;
-    private Sprite            thedude      = new Sprite();
-    private String            location     = getLocation();
-    private ArrayList<String> input        = new ArrayList<String>();
-    private ArrayList<Sprite> enemyList    = new ArrayList<Sprite>();
-    //private Sprite            enem = new Sprite();
+    private int score = 0;
+    private int leben=3;
 
-    public Leertastenklatsche( Observer o ) {
-        super( o, "Leertastenklatsche" );
-        this.canvas.setFocusTraversable( true );// DO NOT DELETE!!!! -> Otherwise does not fire events!
-        this.setGameContentPane( this.initGameContentWindow( o ) );
-        this.getGameContentPane().setOnKeyPressed(
-                e -> {
-                    String code = e.getCode().toString();
-                    if ( !input.contains( code ) ) {
-                        input.add( code );
-                    }
+    private      TheDude           thedude;
+    private      ArrayList<Enemy>  enemyList       = new ArrayList<>();
 
-                } );
-        this.getScene().setRoot( (Parent) this.getGameContentPane() );
+    public Leertastenklatsche() {
+        try {
+            initGame();
+        }
+        catch ( FileNotFoundException e ) {
+            e.printStackTrace();
+        }
     }
 
-    private Node getGameContentPane() {
-        return this.root;
+    private void initGame() throws FileNotFoundException {
+        thedude = new TheDude( WindowConfig.window_width / 2 -75,
+                               WindowConfig.window_height * 0.4
+        );
+        thedude.setSpeed( 0 );
     }
 
-    private void setGameContentPane(Pane initGameContentWindow) {
-        this.root=initGameContentWindow;    }
-
-    public Pane initGameContentWindow( Observer observer ) {
-
-     //   Logger.log( "Dir : " + getExecutionLocation(),  Path.getAllFileNames(getExecutionLocation()) );
-        addKeyListener();
-        root.getChildren().add( canvas );
-        initializeGraphicsContext();
-
-        thedude.setImage( location + "/thedude.png" );
-        thedude.setPosition(WindowConfig.window_width/2, WindowConfig.window_height*0.6);
-        collisionDetection();
-        createEnemies();
-        parseInput( input );
-        return root;
-    }
-    //Getting the input and realizing when stopping input
-    private void addKeyListener() {
-        canvas.setOnKeyPressed(
-                e -> {
-                    String code = e.getCode().toString();
-                    if ( !input.contains( code ) ) {
-                        input.add( code );
-                    }
-                    Logger.log(this.getClass()+ " Key pressed : " + code );
-                } );
-
-        root.setOnKeyReleased(
-                e -> {
-                    String code = e.getCode().toString();
-                    input.remove( code );
-                    Logger.log(this.getClass()+ " Key pressed : " + code );
-                } );
-
+    void render( Canvas gc ) {
+        createNewEnemies();
+        enemyList.forEach( enemy -> {
+            enemy.draw( gc );
+        } );
+        updateEnemies();
+        thedude.draw( gc );
+        renderScore( gc );
     }
 
-    private void initializeGraphicsContext() {
-        Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 36 );
-        gc = canvas.getGraphicsContext2D();
-        gc.setFont( theFont );
-        gc.setFill( Color.BLACK );
-        gc.setStroke( Color.BLACK );
-        gc.setLineWidth( 1 );
-    }
-
-    private void collisionDetection() {
-        for ( Sprite enemy : enemyList ) {
-            if ( thedude.intersects( enemy ) ) {
-                score++;
+    private void createNewEnemies() {
+        if ( timer.elabsedTime() > 2.0d-score/75.0 ) {
+            timer.resetTimer();
+            try {
+                Enemy e = Enemy.createEnemy();
+                e.addObserver( this );
+                thedude.addCollidingActor( e );
+                enemyList.add( e );
+            }
+            catch ( FileNotFoundException e ) {
+                e.printStackTrace();
             }
         }
     }
-    // Gegner erstellen und zufällig links oder rechts starten lassen
-    private void createEnemies() {
-        for ( int i = 0 ; i < 15 ; i++ ) {
-            Sprite enemyvirus = new Sprite();
-            enemyvirus.setImage( location + "/enemyvirus.png" );
-            /*double px = 350 * Math.random() + 50;
-            double py = 350 * Math.random() + 50;*/
-            double px=WindowConfig.window_width-enemyvirus.getWidth();
-            double rng=Math.random();
-            if(rng<0.5)
-                px=0;
-            //Logger.log(this.getClass() + ": rng=" + rng);
-            enemyvirus.setPosition( px, WindowConfig.window_height*0.6 );
 
-            enemyList.add( enemyvirus );
+    private void updateEnemies() {
+        for ( Enemy enemy : enemyList ) {
+            if ( enemy.getX() > WindowConfig.window_width / 2 ) {
+                enemy.setPos( enemy.getX() - 1.0 - score / 10.0, enemy.getY() );
+                enemy.rotate( 0 );
+            }
+            else {
+                enemy.setPos( enemy.getX() + 1 + score / 10.0, enemy.getY() );
+                enemy.rotate( 0 );
+            }
         }
     }
 
-    private void parseInput( ArrayList<String> input ) {
-        double v = 0.5;
-        thedude.setVelocity( 0, 0 );
-        if ( input.contains( "LEFT" ) ) {
-            thedude.addVelocity( -v, 0 );
-        }
-        if ( input.contains( "RIGHT" ) ) {
-            thedude.addVelocity( v, 0 );
-        }
-        /*if ( input.contains( "UP" ) ) {
-            thedude.addVelocity( 0, -v );
-        }
-        if ( input.contains( "DOWN" ) ) {
-            thedude.addVelocity( 0, v );
-        }*/
-    }
-
-    public void render(int fps) {
-        parseInput( input );
-        gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
-
-        for ( Sprite enemy : enemyList ){
-
-            enemy.render( gc );
-
-        }
-
-        String pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (100 * score);
+    private void renderScore( Canvas canvas ) {
+        GraphicsContext gc         = canvas.getGraphicsContext2D();
+        String          pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (score)+"\nVerbleibende Leben: "+ (leben);
         //Logger.log(getClass()+" Score: "+score);
 
         gc.fillText( pointsText, 360, 36 );
         gc.strokeText( pointsText, 360, 36 );
+    }
 
-        thedude.update( 10 );
-        thedude.render( gc );
+    void parseInput( String code ) {
+        if ( code.equals( "LEFT" ) ) {
+            if ( !thedude.turnedleft ) {
+                thedude.swapImage();
+                thedude.turnedleft = true;
+            }
+        }
+        else if ( code.equals( "RIGHT" ) ) {
+            if ( thedude.turnedleft ) {
+                thedude.swapImage();
+                thedude.turnedleft = false;
+            }
+        }
     }
 
     @Override
     public void update( Observable o, Object arg ) {
-        if ( o instanceof KeyEventManager ) {
-            if ( arg instanceof KeyEvent ) {
-                KeyEvent keyEvent = (KeyEvent) arg;
-                String   type     = keyEvent.getEventType().getName();
-                if ( type.equals( "KEY_PRESSED" ) ) {
-                    String code = keyEvent.getCode().toString();
-                    if ( !input.contains( code ) ) {
-                        input.add( code );
+        if ( o instanceof Enemy ) {
+            Enemy e = (Enemy) o;
+            for ( Enemy enemy : this.enemyList ) {
+                Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
+                if ( enemy.id == e.id ) {
+                    this.thedude.getCollisionActors().remove( enemy );
+                    enemyList.remove( enemy );
+                    Logger.log( this.getClass() + ": Found enemy with same id" );
+                    if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
+                        if ( thedude.turnedleft ) {
+                            score++;
+                        }
+                        else
+                            leben--;
                     }
-                }
-                else if ( type.equals( "KEY_RELEASED" ) ) {
-                    String code = keyEvent.getCode().toString();
-                    input.remove( code );
+                    else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
+                        if ( !thedude.turnedleft ) {
+                            score++;
+                        }
+                        else
+                            leben--;
+                    }
+                    return;
                 }
             }
         }
     }
 
-    private String getLocation() {
-        return getExecutionLocation() + "de/hsh/Julian";
+    public int getScore() {
+        return score;
     }
 
+    public void setScore( int score ) {
+        this.score = score;
+    }
 }

@@ -8,24 +8,24 @@ public class Score {
     }
 
     public int getScore() {
-	return score;
+        return score;
     }
 
     public void increase() {
-	score++;
+        score++;
     }
-    
+
     public void decrease() {
-	if(score >= 2) {
-	    score -= 2;
-	} else {
-	    score = 0;
-	}
-	
+        if (score >= 2) {
+            score -= 2;
+        } else {
+            score = 0;
+        }
+
     }
-    
+
     public void setScore(int score) {
-	this.score = score;
+        this.score = score;
     }
 
 }

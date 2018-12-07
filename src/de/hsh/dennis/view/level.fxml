@@ -1,18 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 <?import java.net.URL?>
-<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:id="hbox_1" >
+<HBox fx:id="hbox_1" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
     <children>
         <VBox fx:id="vbox_1" alignment="CENTER" HBox.hgrow="ALWAYS">
             <children>
-                <Canvas fx:id="canvas" height="800.0" onKeyPressed="#key_pressed" width="1200.0" VBox.vgrow="ALWAYS"/>
+                <AnchorPane VBox.vgrow="ALWAYS">
+                    <children>
+                        <HBox prefHeight="100.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" text="[ Score ]"
+                                               AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="1000.0"
+                                               AnchorPane.topAnchor="30.0"/>
+                                        <TextField fx:id="tf_score" alignment="CENTER" editable="false" layoutX="510.0"
+                                                   layoutY="60.0" AnchorPane.leftAnchor="100.0"
+                                                   AnchorPane.rightAnchor="1000.0" AnchorPane.topAnchor="50.0">
+                                            <font>
+                                                <Font size="15.0"/>
+                                            </font>
+                                        </TextField>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" text="[ Health ]"
+                                               AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0"
+                                               AnchorPane.topAnchor="30.0"/>
+                                        <TextField fx:id="tf_health" alignment="CENTER" editable="false"
+                                                   AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0"
+                                                   AnchorPane.topAnchor="50.0">
+                                            <font>
+                                                <Font size="15.0"/>
+                                            </font>
+                                        </TextField>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </HBox>
+                        <Canvas fx:id="canvas" layoutX="600.0" layoutY="100.0" onKeyPressed="#key_pressed"
+                                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+                    </children>
+                </AnchorPane>
             </children>
         </VBox>
     </children>
     <stylesheets>
-        <URL value="@resources/dimensions.css"/>
+        <URL value="@css/dimensions.css"/>
     </stylesheets>
 </HBox>

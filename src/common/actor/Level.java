@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Observable;
 import java.util.Observer;
 
 /**
@@ -12,21 +13,26 @@ import java.util.Observer;
  *
  * @author Alex
  */
-abstract public class Level implements Observer, ILevel {
+abstract public class Level extends Observable implements Observer, ILevel {
 
-    private HashSet<Actor>            npcs          = new HashSet<>();
-    private HashSet<ControlableActor> players       = new HashSet<>();
-    private ArrayList<Actor>          levelElements = new ArrayList<>();
-    private ArrayList<Actor>          collectables  = new ArrayList<>();
+    private BackgroundImage           backgroundImage = new BackgroundImage();
+    private HashSet<Actor>            npcs            = new HashSet<>();
+    private HashSet<ControlableActor> players         = new HashSet<>();
+    private ArrayList<Actor>          levelElements   = new ArrayList<>();
+    private ArrayList<Collectable>    collectables    = new ArrayList<>();
 
 
-    public Level() throws FileNotFoundException {
-        createLevel();
+    public Level() {
+        reset();
+    }
 
+    private void addCollision() {
         levelElements.forEach(
                 levelElement -> players.forEach(
                         pacMan -> pacMan.addCollidingActor( levelElement ) ) );
+    }
 
+    private void addCollectables() {
         collectables.forEach(
                 collectable -> players.forEach(
                         player -> player.addCollidingActor( collectable ) ) );
@@ -34,13 +40,14 @@ abstract public class Level implements Observer, ILevel {
 
     @Override
     public void render( Canvas canvas, int fps ) {
+        backgroundImage.draw( canvas );
         npcs.forEach( npc -> npc.draw( canvas ) );
         levelElements.forEach( levelElement -> levelElement.draw( canvas ) );
         collectables.forEach( collectable -> collectable.draw( canvas ) );
         players.forEach( pacMan -> pacMan.draw( canvas ) );
     }
 
-    protected synchronized boolean collected( Collectable collectable ) {
+    protected boolean collected( Collectable collectable ) {
         players.forEach( p -> p.getCollisionActors().remove( collectable ) );
         return collectables.remove( collectable );
     }
@@ -58,6 +65,17 @@ abstract public class Level implements Observer, ILevel {
         return this.levelElements.add( levelElement );
     }
 
+    public void reset() {
+        try {
+            createLevel();
+        }
+        catch ( FileNotFoundException e ) {
+            e.printStackTrace();
+        }
+        addCollision();
+        addCollectables();
+    }
+
     public HashSet<ControlableActor> getPlayers() {
         return players;
     }
@@ -68,5 +86,17 @@ abstract public class Level implements Observer, ILevel {
 
     public HashSet<Actor> getNpcs() {
         return npcs;
+    }
+
+    public ArrayList<Collectable> getCollectables() {
+        return this.collectables;
+    }
+
+    public void setBackgroundImage( BackgroundImage backgroundImage ) {
+        this.backgroundImage = backgroundImage;
+    }
+
+    public void setBackgroundImage( String filepath ) {
+        this.backgroundImage.setCurrentImage( filepath );
     }
 }

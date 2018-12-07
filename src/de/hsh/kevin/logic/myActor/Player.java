@@ -2,9 +2,9 @@ package de.hsh.kevin.logic.myActor;
 
 import common.actor.ControlableActor;
 import common.actor.Direction;
+import common.util.ImageLoader;
 import javafx.scene.image.Image;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
@@ -53,8 +53,8 @@ public class Player extends ControlableActor {
 	super(pictureFileName.get(0), x, y, keyMap);
 	this.setSpeed(defaultSpeed);
 	if (pictureFileName.size() >= 2) {
-	    idleImage = new Image(new FileInputStream(pictureFileName.get(0)));
-	    firingImage = new Image(new FileInputStream(pictureFileName.get(1)));
+        idleImage = ImageLoader.loadImage( pictureFileName.get( 0 ) );
+        firingImage = ImageLoader.loadImage( pictureFileName.get( 1 ) );
 	}
     }
 
