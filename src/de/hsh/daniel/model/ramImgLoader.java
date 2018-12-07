@@ -22,7 +22,7 @@ public class ramImgLoader {
 
     public ArrayList<Image> imgToList() {
         fileCount = countImageFiles();
-        for(int i = 1; i < (fileCount) ; i++) {
+        for(int i = 1; i <= (fileCount) ; i++) {
             Image img = new Image(imgLocation+i+".png");
             imgList.add(img);
         }
@@ -32,15 +32,12 @@ public class ramImgLoader {
 
     private int countImageFiles() {
         File f = new File("C:\\Users\\danie\\Desktop\\HsH\\workspaces\\Programmierprojekt\\src\\de\\hsh\\daniel\\images");
-        File[] files = f.listFiles();
 
-        if(files != null) {
-            for (int i = 0; i < files.length; i++) {
+        for (File file : f.listFiles()) {
+            if (file.isFile()) {
                 fileCount++;
-                File file = files[i];
             }
         }
-
     Logger.log("Files in path: "+fileCount);
     return fileCount;
     }

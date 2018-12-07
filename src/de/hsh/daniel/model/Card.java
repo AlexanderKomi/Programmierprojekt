@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public class Card {
 
-    private int                             id = 0;
+    private int                             id;
     private Image                           image;
     private boolean                         cardMatched;
     private boolean                         cardSelected;

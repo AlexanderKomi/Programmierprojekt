@@ -33,9 +33,6 @@ public class Board  {
         }
         Logger.log(cardList.toString());
 
-
-
-
         for(Card c : cardList) {
             for (int i = 1; i < imgList.size(); i++) {
                 c.setImage(imgList.get(i));
