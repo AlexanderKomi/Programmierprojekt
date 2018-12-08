@@ -1,0 +1,4 @@
+#vbox {
+    -fx-graphic: url("./pointsBox.png");
+    -fx-background-color: transparent;
+}

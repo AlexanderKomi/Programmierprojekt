@@ -3,11 +3,15 @@ package de.hsh.alexander.src.level;
 import common.actor.Collectable;
 import common.actor.Level;
 import common.util.Logger;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyEvent;
 
 import java.util.Observable;
 
 abstract public class PacManLevel extends Level {
+
+    public static SimpleIntegerProperty player1Points = new SimpleIntegerProperty( 0 );
+    public static SimpleIntegerProperty player2Points = new SimpleIntegerProperty( 0 );
 
     public static final String gameFinishedMessage = "PacMan : Game finished";
 
