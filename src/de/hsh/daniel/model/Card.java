@@ -16,9 +16,7 @@ public class Card {
         this.id = id;
     }
 
-
-
-
+    
     @Override
     public String toString() {
         return "id: " + this.getId();

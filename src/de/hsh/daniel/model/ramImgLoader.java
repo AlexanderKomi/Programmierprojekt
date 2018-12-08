@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -17,12 +18,10 @@ public class ramImgLoader {
 
     private static final ArrayList<Image>   imgList     = new ArrayList<Image>();
     private static final String             imgLocation = "de/hsh/daniel/images/";
-    private int                             fileCount;
     JFXPanel jfxPanel = new JFXPanel();
 
     public ArrayList<Image> imgToList() {
-        fileCount = countImageFiles();
-        for(int i = 1; i <= (fileCount) ; i++) {
+        for(int i = 1; i <= 5 ; i++) {
             Image img = new Image(imgLocation+i+".png");
             imgList.add(img);
         }
@@ -30,17 +29,6 @@ public class ramImgLoader {
         return imgList;
     }
 
-    private int countImageFiles() {
-        File f = new File("C:\\Users\\danie\\Desktop\\HsH\\workspaces\\Programmierprojekt\\src\\de\\hsh\\daniel\\images");
-
-        for (File file : f.listFiles()) {
-            if (file.isFile()) {
-                fileCount++;
-            }
-        }
-    Logger.log("Files in path: "+fileCount);
-    return fileCount;
-    }
 
     public ArrayList<Image> getImgList(){ return this.imgList;}
 }

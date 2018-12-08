@@ -1,6 +1,11 @@
 package de.hsh.daniel.model;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
+import java.awt.*;
+
 
 /**
  * THis is the game started
@@ -8,5 +13,6 @@ import javafx.scene.canvas.Canvas;
 public class Game {
 
     public void render( Canvas gameCanvas, int fps ) {
+
     }
 }

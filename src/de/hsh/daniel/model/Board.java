@@ -21,8 +21,12 @@ public class Board  {
     //TODO: Get number of pairs from MenuButton
     private int numberOfPairs;
 
+    public Board(){
 
-    public void initCards(int numberOfPairs) {
+    }
+
+
+    public ArrayList<Card> initCards(int numberOfPairs) {
         imgLoader.imgToList();
         imgList = imgLoader.getImgList();
         for (int i = 0; i<numberOfPairs; i++){
@@ -40,6 +44,7 @@ public class Board  {
         }
         Collections.shuffle(cardList);
         Logger.log(cardList);
+        return cardList;
     }
 }
 
