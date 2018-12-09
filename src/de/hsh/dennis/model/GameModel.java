@@ -137,6 +137,8 @@ public class GameModel extends Observable {
 
     // --- /ACT -----------------------------------------------------------------------------------
 
+
+    //TODO: CollisionsAbfrage hier anbinden und für das FalschDrücken Bestrafung einfügen!
     public void userInput(KeyCode k) {
 
         if (k == Custom.UP || k == Custom.UP_ALT) {
