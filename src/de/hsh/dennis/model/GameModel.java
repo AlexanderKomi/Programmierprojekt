@@ -7,6 +7,7 @@ import de.hsh.dennis.model.KeyLayout.Movement.Custom;
 import de.hsh.dennis.model.NpcLogic.Config;
 import de.hsh.dennis.model.NpcLogic.NPCEnums;
 import de.hsh.dennis.model.NpcLogic.NpcHandler;
+import de.hsh.dennis.model.NpcLogic.SpawnTimer;
 import de.hsh.dennis.model.NpcLogic.actors.Npc;
 import de.hsh.dennis.model.NpcLogic.actors.Player;
 import de.hsh.dennis.model.audio.AudioPlayer;
@@ -45,14 +46,18 @@ public class GameModel extends Observable {
     private Player player;
     private List<Npc> npcList;
 
+
+
     //animation timing values
-    private double animationDelay = 0.5; //animation delay in seconds
+    private double animationDelay = 0.1; //animation delay in seconds
     private long skinResetTimer;
     private boolean reset = false;
 
     //Audio Stuff
     private boolean musicStart = true;
     private AudioPlayer ap;
+    SpawnTimer audioTimer;
+    private double audioDelay = 8.35;       //ausprobierter Wert, ersetzen durch berechneten Wert (Wie lange muss der Sound warten bis er spielen darf um mit den Enemys synchron zu sein. Abhängikkeit Geschwindigkeit, Abstand SpawnPunkt zur Mitte!)
 
     // --- ACT ------------------------------------------------------------------------------------
     private boolean ai = false;
@@ -64,6 +69,7 @@ public class GameModel extends Observable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
         reset();
     }
 
@@ -82,13 +88,23 @@ public class GameModel extends Observable {
                 actInit();
             }
         if(acting){
+
+            audioTimer.start();
+
+            if (musicStart && audioTimer.getCurrentTimeStamp() >= audioDelay) {
+                musicStart = false;
+                ap.play();
+            }
+
+
+
         updateHealth(npcHandler.getHealthChange());
         updateScore(npcHandler.getScoreChange());
 
             npcHandler.spawning();
             npcHandler.move();
 
-            
+
             npcList = npcHandler.getNpcList();
             collideCheck();
 
@@ -105,14 +121,13 @@ public class GameModel extends Observable {
             npcHandler = new NpcHandler(canvas);
 
         }
-        npcHandler.loadNpcs(difficulty);
+        //npcHandler.loadNpcs(difficulty);
+        npcHandler.generateNpcs("jingle.mp3");
 
-        if (musicStart) {
-            musicStart = false;
-            ap = new AudioPlayer();
-            ap.loadFile(this.getClass().getResource("audio/jingle.mp3").getPath());
-            ap.play();
-        }
+        ap = new AudioPlayer();
+        ap.loadFile(this.getClass().getResource("audio/jingle.mp3").getPath());
+        audioTimer = new SpawnTimer();
+
         score = 0;
         health = 100;
         ai = true;
@@ -184,9 +199,18 @@ public class GameModel extends Observable {
             double elapsedSeconds = elapsedTime / 1000;
             if (elapsedSeconds >= animationDelay) {
                 player.setSkinToDefault();
+                player.setDirection(Direction.Non);
                 reset = false;
             }
         }
+    }
+
+    private void resetSkinFast() {
+
+                player.setSkinToDefault();
+                player.setDirection(Direction.Non);
+                reset = false;
+
     }
 
     public void setCanvas(Canvas canvas) {

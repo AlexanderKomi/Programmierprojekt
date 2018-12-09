@@ -1,9 +1,15 @@
 package de.hsh.dennis.model.NpcLogic;
 
 import common.util.Logger;
+import common.util.RandomInt;
+import de.hsh.dennis.model.NpcLogic.actors.Bot;
+import de.hsh.dennis.model.NpcLogic.actors.Hacker;
 import de.hsh.dennis.model.NpcLogic.actors.Npc;
+import de.hsh.dennis.model.NpcLogic.actors.Package;
+import de.hsh.dennis.model.audio.AudioAnalyser;
 import javafx.scene.canvas.Canvas;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,6 +22,7 @@ public class NpcHandler {
     private static Canvas canvas;
     private SpawnTimer time = new SpawnTimer();
     private NpcIO npcIO = new NpcIO();
+    private AudioAnalyser aa = new AudioAnalyser();
 
     private Npc[] spawnArray;
     private int spawnIterator = 0;
@@ -33,9 +40,12 @@ public class NpcHandler {
         NpcHandler.canvas = canvas;
     }
 
-    public boolean isEndReached(){
-        synchronized (npcList){
-        if(spawnIterator == spawnArray.length && npcList.isEmpty()){return true;}}
+    public boolean isEndReached() {
+        synchronized (npcList) {
+            if (spawnIterator == spawnArray.length && npcList.isEmpty()) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -58,16 +68,57 @@ public class NpcHandler {
             if (npcList.size() <= npcLimit) {
                 getNpcList().add(npc);
             }
-            Logger.log("Npc: " + npc.getNpcType() + " spawned after " + time.getCurrentSec() + " seconds.");
+            Logger.log("Npc: " + npc.getNpcType() + " spawned at " + npc.getSpawnTime() + " seconds.");
         }
     }
 
     public void loadNpcs(Config.Level.Difficulty dif) {
+
         Npc[] temp = npcIO.loadLevel(dif);
 
         Arrays.sort(temp);
 
         spawnArray = temp;
+    }
+
+    public void generateNpcs(String pathToMp3) {
+
+
+        aa.loadSound(pathToMp3);
+        List<Double> tempTimes = aa.getSpawnTimes();
+        aa.clearAudioFile();
+
+        List<Npc> temp = new ArrayList<>();
+
+        for (Double d : tempTimes) {
+
+            try {
+                NPCEnums.Spawn direction;
+                int dirTemp = RandomInt.randInt(1, 2);
+                if (dirTemp == 1){direction = NPCEnums.Spawn.RIGHT;}else{direction = NPCEnums.Spawn.LEFT;}
+
+                switch (RandomInt.randInt(1, 3)){
+                    case 1:
+                        temp.add(new Package(direction, (double) d));
+                        break;
+                    case 2:
+                        temp.add(new Bot(direction, (double) d));
+                        break;
+                    case 3:
+                        temp.add(new Hacker(direction, (double) d));
+                        break;
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //converting
+        spawnArray = new Npc[temp.size()];
+        for (int i = 0; i < spawnArray.length; i++) {
+            spawnArray[i] = temp.get(i);
+        }
+
     }
 
     private void removeNpcs() {

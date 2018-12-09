@@ -8,10 +8,16 @@ import java.io.FileNotFoundException;
 
 public class Package extends Npc {
 
-    private static final String pictureFileName = Path.getExecutionLocation() + "de/hsh/dennis/resources/actors/Bot/bot_standard.png";
+    private static final String pictureFileName = "/de/hsh/dennis/resources/actors/Bot/bot_standard.png";
+    private static final int defaultSpeed = 1;
 
     public Package(NPCEnums.Spawn spawnType) throws FileNotFoundException {
         super(pictureFileName, spawnType, NPCEnums.NpcType.PACKAGE);
+        setCurrentImage(Config.Package.skin_standard);
+    }
+
+    public Package(NPCEnums.Spawn spawnType, double spawnTime) throws FileNotFoundException {
+        super(pictureFileName, spawnType, NPCEnums.NpcType.PACKAGE, spawnTime, defaultSpeed);
         setCurrentImage(Config.Package.skin_standard);
     }
 
