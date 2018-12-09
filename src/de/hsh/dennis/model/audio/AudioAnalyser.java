@@ -45,7 +45,7 @@ public class AudioAnalyser {
 
 
                 for(Beat b : beats){
-                    if(b.energy >= 0.6){
+                    if(b.energy >= 0.4){
                         spawnTimes.add(b.timeMs / 1000d);
                     }
                 }

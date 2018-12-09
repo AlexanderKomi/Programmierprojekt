@@ -122,10 +122,10 @@ public class GameModel extends Observable {
 
         }
         //npcHandler.loadNpcs(difficulty);
-        npcHandler.generateNpcs("jingle.mp3");
+        npcHandler.generateNpcs("sound1.mp3");
 
         ap = new AudioPlayer();
-        ap.loadFile(this.getClass().getResource("audio/jingle.mp3").getPath());
+        ap.loadFile(this.getClass().getResource("audio/sound1.mp3").getPath());
         audioTimer = new SpawnTimer();
 
         score = 0;
