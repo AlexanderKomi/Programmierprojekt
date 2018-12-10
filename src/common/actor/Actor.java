@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 abstract public class Actor extends Drawable {
 
 
-    protected Movement       movement        = new Movement();
+    Movement movement = new Movement();
     private   HashSet<Actor> collisionActors = new HashSet<>();
 
     public Actor( String pictureFileName ) {
@@ -91,18 +91,23 @@ abstract public class Actor extends Drawable {
         if ( this.doesCollide() ) {
             return current_pos;
         }
-        return new_pos;
+        else {
+            return new_pos;
+        }
     }
 
     public boolean doesCollide() {
         try {
-            return this.getCollisionActors()
-                       .stream()
-                       .anyMatch( this::doesCollide );
+            for ( Actor a : this.collisionActors ) {
+                if ( this.doesCollide( a ) ) {
+                    return true;
+                }
+            }
+            return false;
         }
         catch ( NullPointerException npe ) {
             npe.printStackTrace();
-            return false;
+            return true;
         }
         catch ( ConcurrentModificationException cme ) {
             cme.printStackTrace();
@@ -118,15 +123,10 @@ abstract public class Actor extends Drawable {
                 Collectable c = (Collectable) other;
                 c.wasCollected( this );
             }
+            return true;
         }
-        boolean b2 = CollisionCheck.doesCollide( other, this );
-        if ( b2 ) {
-            if ( other instanceof Collectable ) {
-                Collectable c = (Collectable) other;
-                c.wasCollected( this );
-            }
-        }
-        return b || b2;
+        return CollisionCheck.doesCollide( other, this );
+        //return CollisionCheck.doesCollide( other, this );
     }
 
     public List<Actor> getCollidingActors() throws ConcurrentModificationException {

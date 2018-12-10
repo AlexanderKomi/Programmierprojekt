@@ -25,8 +25,4 @@ public class DataCoin extends Collectable {
     public DataCoin( double x, double y ) {
         super( x, y, default_delay, pictureFilePaths );
     }
-
-    public static DataCoin createAtPos( double x, double y ) {
-        return new DataCoin( x, y );
-    }
 }

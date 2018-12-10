@@ -77,6 +77,11 @@ abstract public class Level extends Observable implements Observer, ILevel {
     }
 
     public void reset( Canvas gameCanvas ) {
+        backgroundImage = new BackgroundImage();
+        npcs = new HashSet<>();
+        players = new HashSet<>();
+        levelElements = new ArrayList<>();
+        collectables = new ArrayList<>();
         try {
             createLevel();
         }

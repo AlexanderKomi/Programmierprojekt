@@ -1,5 +1,6 @@
 package de.hsh.alexander.src.level;
 
+import common.util.Logger;
 import de.hsh.alexander.src.actor.DataCoin;
 import de.hsh.alexander.src.actor.ResourcePaths;
 import de.hsh.alexander.src.actor.level_elements.SMD;
@@ -29,6 +30,7 @@ public class Level1 extends PacManLevel {
     }
 
     private void addPlayers() {
+        Logger.log( "Add Players" );
         addPlayer( new PacMan1( 250, 250 ) );
         addPlayer( new PacMan2( 150, 150 ) );
     }

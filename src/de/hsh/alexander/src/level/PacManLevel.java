@@ -18,7 +18,7 @@ abstract public class PacManLevel extends Level {
 
     public static final String gameFinishedMessage = "PacMan : Game finished";
 
-    public PacManLevel( Canvas gameCanvas ) {
+    PacManLevel( Canvas gameCanvas ) {
         super( gameCanvas );
     }
 
@@ -29,7 +29,9 @@ abstract public class PacManLevel extends Level {
             double x = clickEvent.getX();
             double y = clickEvent.getY();
             Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
-            this.addCollectable( DataCoin.createAtPos( x, y ) );
+            this.addCollectable(
+                    new DataCoin( x, y )
+                               );
         } );
     }
 
@@ -70,19 +72,13 @@ abstract public class PacManLevel extends Level {
     }
 
     private void coinCollected( Collectable c ) {
-        /*
-        Logger.log( "\tCollected : " + c + "\n" +
-
-                    "\t\tBy : " + c.getCollector() );
-        */
-        this.collected( c );
         Actor a = c.getCollector();
         if ( a instanceof PacMan ) {
             PacMan p = (PacMan) a;
             p.addPoint();
         }
+        this.collected( c );
         if ( this.getCollectables().isEmpty() ) {
-            //Logger.log( this.getClass() + ": Collect every collectable, so game finished screen should be shown" );
             this.setChanged();
             this.notifyObservers( gameFinishedMessage );
         }
