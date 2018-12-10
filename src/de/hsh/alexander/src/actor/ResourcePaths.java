@@ -41,13 +41,15 @@ public final class ResourcePaths {
                 public static final String[] pictures  = {
                         SMD.directory + "smd_0.png",
                         SMD.directory + "smd_1.png",
-                        SMD.directory + "smd_2.png"
+                        SMD.directory + "smd_2.png",
+                        SMD.directory + "smd_3.png"
                 };
             }
 
             public static final class Backgrounds {
                 public static final String directory     = LevelElements.directory + "backgrounds/";
                 public static final String leeresFenster = Backgrounds.directory + "leeresFenster.png";
+                public static final String microChip     = Backgrounds.directory + "chip.jpg";
             }
 
         }
