@@ -2,6 +2,7 @@ package de.hsh.alexander.src.actor.player;
 
 import common.actor.ControlableActor;
 import common.actor.Direction;
+import common.util.Logger;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.Arrays;
@@ -16,6 +17,7 @@ public class PacMan extends ControlableActor {
     private static final int                   default_speed        = 10;
     private static final int                   change_picture_delay = 5;
 
+    private Direction facingDirection = Direction.Left;
 
     public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) {
         this( pictureFileName, start_x, start_y, keyMap );
@@ -77,7 +79,54 @@ public class PacMan extends ControlableActor {
             xyTuple[ 0 ] = movement_speed;
             xyTuple[ 1 ] = 0;
         }
+
+        changeFacingDirection( xyTuple );
+
         return xyTuple;
+    }
+
+    private void changeFacingDirection( double[] xyTuple ) {
+        if ( xyTuple[ 0 ] > 0 ) {
+            if ( this.facingDirection != Direction.Right ) {
+                this.facingDirection = Direction.Right;
+                if ( this.getScaleX() > 0 ) {
+                    this.scaleImageWidth( -1 );
+                }
+                Logger.log( "This : " + this.getX() + ", " + this.getWidth() );
+                Logger.log( "Facing Direction changed to: " + this.facingDirection );
+            }
+        }
+        else if ( xyTuple[ 0 ] < 0 ) {
+            if ( this.facingDirection != Direction.Left ) {
+                this.facingDirection = Direction.Left;
+                if ( this.getScaleX() < 0 ) {
+                    this.scaleImageWidth( -1 );
+                }
+                Logger.log( "Facing Direction changed to: " + this.facingDirection );
+            }
+        }
+        else if ( xyTuple[ 1 ] > 0 ) {
+            if ( this.facingDirection != Direction.Down ) {
+                this.facingDirection = Direction.Down;
+                if ( this.getScaleY() < 0 ) {
+                    this.rotate( 90 );
+                    //this.scaleImageHeight( -1 );
+                    //this.scaleImageWidth( -1 );
+                }
+                Logger.log( "Facing Direction changed to: " + this.facingDirection );
+            }
+        }
+        else if ( xyTuple[ 1 ] < 0 ) {
+            if ( this.facingDirection != Direction.Up ) {
+                this.facingDirection = Direction.Up;
+                if ( this.getScaleY() > 0 ) {
+                    this.rotate( 90 );
+                    //this.scaleImageHeight( -1 );
+                    //this.scaleImageWidth( -1 );
+                }
+                Logger.log( "Facing Direction changed to: " + this.facingDirection );
+            }
+        }
     }
 
     public SimpleIntegerProperty getPointProperty() {

@@ -1,15 +1,10 @@
 package common.actor;
 
-import javafx.application.Platform;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
 
-import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -28,7 +23,6 @@ abstract public class Drawable extends Observable {
 
     private double x;
     private double y;
-
     private double height;
     private double width;
 
@@ -39,6 +33,11 @@ abstract public class Drawable extends Observable {
     private boolean switchImageAutomatically = true;
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
+
+    private double outputX;
+    private double outputY;
+    private double outputWidth;
+    private double outputHeight;
 
     private ImageView        imageView       = new ImageView();
     private Image            currentImage;
@@ -51,10 +50,17 @@ abstract public class Drawable extends Observable {
 
     public Drawable( String pictureFileName, double x, double y ) {
         this.setCurrentImage( loadPicture( pictureFileName ) );
+
         this.setHeight( this.getCurrentImage().getHeight() );
         this.setWidth( this.getCurrentImage().getWidth() );
+        this.setOutputHeight( this.getHeight() );
+        this.setOutputWidth( this.getWidth() );
+
         this.setX( x );
         this.setY( y );
+        this.setOutputX( x );
+        this.setOutputY( y );
+
         this.id = id_counter;
         id_counter++;
     }
@@ -92,15 +98,6 @@ abstract public class Drawable extends Observable {
         this.addSwitchingImage( mustHave );
     }
 
-    public Drawable( Drawable d ) {
-        this.setCurrentImage( d.getCurrentImage() );
-        this.name = d.getName();
-        this.setPos( d.getPos() );
-        this.height = d.getHeight();
-        this.width = d.getWidth();
-        this.id = d.id;
-    }
-
     public Drawable( String mustHave, List<String> asList, double x, double y, int delay ) {
         this( asList, x, y, delay );
         this.addSwitchingImage( mustHave );
@@ -109,6 +106,8 @@ abstract public class Drawable extends Observable {
     private Drawable( double x, double y, int delay ) {
         this.setX( x );
         this.setY( y );
+        this.setOutputX( x );
+        this.setOutputY( y );
         this.setSwitchingDelay( delay );
     }
 
@@ -119,12 +118,7 @@ abstract public class Drawable extends Observable {
     private Image loadPicture( String fileName ) {
         this.name = fileName;
         if ( !TextureBuffer.contains( fileName ) ) {
-            try {
-                TextureBuffer.addFile( fileName );
-            }
-            catch ( FileNotFoundException e ) {
-                e.printStackTrace();
-            }
+            TextureBuffer.addFile( fileName );
         }
         return TextureBuffer.getImage( fileName );
     }
@@ -155,15 +149,30 @@ abstract public class Drawable extends Observable {
     }
 
     public void scaleImageWidth( double factor ) {
+        if ( factor > 0 ) {
+            this.width *= factor;
+            this.outputWidth *= factor;
+        }
+        else {
+            this.setX( this.getX() + this.getWidth() );
+            this.width *= factor;
+            this.outputWidth *= factor;
+        }
         this.scaleX *= factor;
-        this.width *= factor;
         this.imageView.setFitWidth( scaleX );
         this.imageView.setScaleX( scaleX );
     }
 
     public void scaleImageHeight( double factor ) {
+        if ( factor > 0 ) {
+            this.height *= factor;
+            this.outputHeight *= factor;
+        }
+        else {
+            this.height *= factor;
+            this.outputHeight *= factor;
+        }
         this.scaleY *= factor;
-        this.height *= factor;
         this.imageView.setFitHeight( scaleY );
         this.imageView.setScaleY( scaleY );
     }
@@ -204,7 +213,12 @@ abstract public class Drawable extends Observable {
         this.setPos( in_bounds_pos );
         this.setPos( beforeDrawing( old_pos, in_bounds_pos ) ); // Maybe reset ? :)
         switchImages();
-        canvas.drawImage( this.currentImage, this.x, this.y, this.width, this.height );
+        canvas.drawImage( this.currentImage,
+                          this.x, this.y, this.width, this.height
+                          //,this.outputX, this.outputY, this.outputWidth, this.outputHeight
+                          // This is for the rotation on drawing, but still very buggy
+
+                        );
     }
 
     public void draw( GraphicsContext gc ) {
@@ -229,8 +243,10 @@ abstract public class Drawable extends Observable {
         return temp;
     }
 
+    @Deprecated
     public void rotate( double rotate ) {
-
+        this.imageView.setRotate( this.imageView.getRotate() + rotate );
+        /*
         try {
             Platform.runLater( () -> {
                 this.imageView.setRotate( rotate );
@@ -244,6 +260,7 @@ abstract public class Drawable extends Observable {
             iae.printStackTrace();
             System.exit( 1 );
         }
+        */
     }
 
     @Override
@@ -293,6 +310,30 @@ abstract public class Drawable extends Observable {
         this.setY( y );
     }
 
+    protected double getScaleY() {
+        return this.scaleY;
+    }
+
+    protected double getScaleX() {
+        return this.scaleX;
+    }
+
+    public double getOutputWidth() {
+        return outputWidth;
+    }
+
+    public double getOutputHeight() {
+        return outputHeight;
+    }
+
+    public double getOutputX() {
+        return outputX;
+    }
+
+    public double getOutputY() {
+        return outputY;
+    }
+
     public void setPos( double[] pos ) {
         this.setX( pos[ 0 ] );
         this.setY( pos[ 1 ] );
@@ -317,6 +358,7 @@ abstract public class Drawable extends Observable {
 
     public void setX( double x ) {
         this.x = x;
+        this.outputX = x;
     }
 
     public double getY() {
@@ -325,6 +367,7 @@ abstract public class Drawable extends Observable {
 
     public void setY( double y ) {
         this.y = y;
+        this.outputY = y;
     }
 
     public double getHeight() {
@@ -409,9 +452,27 @@ abstract public class Drawable extends Observable {
             if ( !heightIsSet ) {
                 this.setCurrentImage( this.switchingImages.get( 0 ) );
                 this.setWidth( this.currentImage.getWidth() );
+                this.setOutputWidth( this.currentImage.getWidth() );
                 this.setHeight( this.currentImage.getHeight() );
+                this.setOutputHeight( this.currentImage.getHeight() );
                 heightIsSet = true;
             }
         }
+    }
+
+    public void setOutputWidth( double outputWidth ) {
+        this.outputWidth = outputWidth;
+    }
+
+    public void setOutputHeight( double outputHeight ) {
+        this.outputHeight = outputHeight;
+    }
+
+    public void setOutputX( double outputX ) {
+        this.outputX = outputX;
+    }
+
+    public void setOutputY( double outputY ) {
+        this.outputY = outputY;
     }
 }

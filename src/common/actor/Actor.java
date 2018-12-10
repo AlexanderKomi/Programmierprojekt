@@ -129,7 +129,15 @@ abstract public class Actor extends Drawable {
             }
             return true;
         }
-        return CollisionCheck.doesCollide( other, this );
+        boolean b2 = CollisionCheck.doesCollide( other, this );
+        if ( b2 ) {
+            if ( other instanceof Collectable ) {
+                Collectable c = (Collectable) other;
+                c.wasCollected( this );
+            }
+            return true;
+        }
+        return false;
         //return CollisionCheck.doesCollide( other, this );
     }
 

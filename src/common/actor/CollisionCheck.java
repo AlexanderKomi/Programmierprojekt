@@ -26,13 +26,29 @@ public class CollisionCheck {
                 false, false
         };
 
-        if ( (x + new_x) >= 0 &&
-             (x + new_x + width) <= canvas_widht ) {
-            temp[ 0 ] = true;
+        if ( width > 0 ) {
+            if ( (x + new_x) >= 0 &&
+                 (x + new_x + width) <= canvas_widht ) {
+                temp[ 0 ] = true;
+            }
         }
-        if ( (y + new_y) >= 0 &&
-             (y + new_y + height) <= canvas_height ) {
-            temp[ 1 ] = true;
+        else if ( width < 0 ) {
+            if ( (x + new_x) >= 0 &&
+                 (x + new_x) <= canvas_widht ) {
+                temp[ 0 ] = true;
+            }
+        }
+        if ( height > 0 ) {
+            if ( (y + new_y) >= 0 &&
+                 (y + new_y + height) <= canvas_height ) {
+                temp[ 1 ] = true;
+            }
+        }
+        else {
+            if ( (y + new_y) >= 0 &&
+                 (y + new_y) <= canvas_height ) {
+                temp[ 1 ] = true;
+            }
         }
         return temp;
     }
@@ -78,12 +94,16 @@ public class CollisionCheck {
      * @return
      */
     private static boolean checkUpperLeftCorner( Drawable a, Drawable b ) {
-        if ( a.getX() <= b.getX() && a.getX() + a.getWidth() >= b.getX() ) {
-            return a.getY() <= b.getY() && a.getY() + a.getHeight() >= b.getY();
+        return checkUpperLeftCorner( a.getX(), a.getY(), a.getWidth(), a.getHeight(), b.getX(), b.getY() );
+    }
+
+    private static boolean checkUpperLeftCorner( double a_x, double a_y, double a_width, double a_height,
+                                                 double b_x, double b_y ) {
+        if ( a_x <= b_x && a_x + a_width >= b_x ) {
+            return a_y <= b_y && a_y + a_height >= b_y;
         }
         return false;
     }
-
 
     /**
      * Obere Rechte Ecke von b schneidet a
