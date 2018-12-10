@@ -5,6 +5,7 @@ import common.actor.CollisionCheck;
 import common.config.WindowConfig;
 import de.hsh.alexander.src.actor.ResourcePaths;
 import de.hsh.alexander.src.actor.collectables.DataCoin;
+import de.hsh.alexander.src.actor.level_elements.Fan;
 import de.hsh.alexander.src.actor.level_elements.SMD;
 import de.hsh.alexander.src.actor.player.PacMan1;
 import de.hsh.alexander.src.actor.player.PacMan2;
@@ -21,7 +22,7 @@ public class Level1 extends PacManLevel {
     public void createLevel( Canvas gameCanvas ) {
         setBackgroundImage( backgroundImage, 950, 800 );
         addPlayers();
-        addLevelElements();
+        addLevelElements( gameCanvas );
         createCollectables( gameCanvas );
     }
 
@@ -49,13 +50,19 @@ public class Level1 extends PacManLevel {
         return false;
     }
 
-    private void addLevelElements() {
+    private void addLevelElements( Canvas gameCanvas ) {
+        Fan f = new Fan( 200, 50 );
+        addLevelElement( f );
+
         for ( int y = 0 ; y < WindowConfig.window_height ; y = y + 200 ) {
             for ( int x = 0 ; x < WindowConfig.window_width ; x = x + 200 ) {
-                SMD smd = new SMD( x, y );
-                if ( !collidesWithPlayer( smd ) ) {
-                    if ( !collidesWithLevelElement( smd ) ) {
-                        addLevelElement( smd );
+                SMD       smd = new SMD( x, y );
+                boolean[] xy  = CollisionCheck.isInBounds( smd, gameCanvas );
+                if ( xy[ 0 ] && xy[ 1 ] ) {
+                    if ( !collidesWithPlayer( smd ) ) {
+                        if ( !collidesWithLevelElement( smd ) ) {
+                            addLevelElement( smd );
+                        }
                     }
                 }
             }
