@@ -99,4 +99,10 @@ abstract public class Level extends Observable implements Observer, ILevel {
     public void setBackgroundImage( String filepath ) {
         this.backgroundImage.setCurrentImage( filepath );
     }
+
+    protected void setBackgroundImage( String filepath, int width, int height ) {
+        this.backgroundImage.setCurrentImage( filepath );
+        this.backgroundImage.setWidth( width );
+        this.backgroundImage.setHeight( height );
+    }
 }

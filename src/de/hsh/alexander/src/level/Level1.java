@@ -15,7 +15,7 @@ public class Level1 extends PacManLevel {
 
     @Override
     public void createLevel() throws FileNotFoundException {
-        setBackgroundImage( backgroundImage );
+        setBackgroundImage( backgroundImage, 950, 800 );
 
         addPlayer( new PacMan1( 250, 250 ) );
         addPlayer( new PacMan2( 150, 150 ) );
@@ -27,4 +27,5 @@ public class Level1 extends PacManLevel {
         addLevelElement( Wall.initTestWall() );
         addLevelElement( new SMD( 700, 500 ) );
     }
+
 }
