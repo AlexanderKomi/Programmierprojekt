@@ -41,7 +41,7 @@ public class Level1 extends PacManLevel {
 
     @Override
     protected boolean addCollectable( Collectable c ) {
-        if ( collidesWithCollectable( c ) ) {
+        if ( !collidesWithCollectable( c ) ) {
             return super.addCollectable( c );
         }
         return false;
