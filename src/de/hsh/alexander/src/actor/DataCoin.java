@@ -2,8 +2,6 @@ package de.hsh.alexander.src.actor;
 
 import common.actor.Collectable;
 
-import java.io.FileNotFoundException;
-
 public class DataCoin extends Collectable {
 
     public static final  String data_coin_dir = ResourcePaths.Actor.Collectables.DataCoin.directory;
@@ -24,7 +22,11 @@ public class DataCoin extends Collectable {
             data_coin_dir + "data_coin_11.png"
     };
 
-    public DataCoin( double x, double y ) throws FileNotFoundException {
+    public DataCoin( double x, double y ) {
         super( x, y, default_delay, pictureFilePaths );
+    }
+
+    public static DataCoin createAtPos( double x, double y ) {
+        return new DataCoin( x, y );
     }
 }

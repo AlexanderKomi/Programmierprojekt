@@ -4,10 +4,12 @@ import common.actor.Actor;
 import common.actor.Collectable;
 import common.actor.Level;
 import common.util.Logger;
+import de.hsh.alexander.src.actor.DataCoin;
 import de.hsh.alexander.src.actor.player.PacMan;
 import de.hsh.alexander.src.actor.player.PacMan1;
 import de.hsh.alexander.src.actor.player.PacMan2;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
 import java.util.Observable;
@@ -16,9 +18,19 @@ abstract public class PacManLevel extends Level {
 
     public static final String gameFinishedMessage = "PacMan : Game finished";
 
+    public PacManLevel( Canvas gameCanvas ) {
+        super( gameCanvas );
+    }
+
     @Override
-    public void reset() {
-        super.reset();
+    public void reset( Canvas gameCanvas ) {
+        super.reset( gameCanvas );
+        gameCanvas.setOnMouseClicked( clickEvent -> {
+            double x = clickEvent.getX();
+            double y = clickEvent.getY();
+            Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
+            this.addCollectable( DataCoin.createAtPos( x, y ) );
+        } );
     }
 
     public SimpleIntegerProperty getPacMan1Property() {
@@ -58,8 +70,11 @@ abstract public class PacManLevel extends Level {
     }
 
     private void coinCollected( Collectable c ) {
+        /*
         Logger.log( "\tCollected : " + c + "\n" +
+
                     "\t\tBy : " + c.getCollector() );
+        */
         this.collected( c );
         Actor a = c.getCollector();
         if ( a instanceof PacMan ) {
@@ -67,7 +82,7 @@ abstract public class PacManLevel extends Level {
             p.addPoint();
         }
         if ( this.getCollectables().isEmpty() ) {
-            Logger.log( this.getClass() + ": Collect every collectable, so game finished screen should be shown" );
+            //Logger.log( this.getClass() + ": Collect every collectable, so game finished screen should be shown" );
             this.setChanged();
             this.notifyObservers( gameFinishedMessage );
         }

@@ -2,6 +2,7 @@ package de.hsh.amir.logic;
 
 
 import common.actor.Level;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
 import java.io.FileNotFoundException;
@@ -9,7 +10,8 @@ import java.util.Observable;
 
 public class Spielfeld extends Level{
 
-    public Spielfeld() throws FileNotFoundException {
+    public Spielfeld( Canvas gameCanvas ) {
+        super( gameCanvas );
     }
 
     @Override

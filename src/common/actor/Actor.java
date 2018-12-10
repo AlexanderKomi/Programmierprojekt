@@ -100,7 +100,13 @@ abstract public class Actor extends Drawable {
                        .stream()
                        .anyMatch( this::doesCollide );
         }
+        catch ( NullPointerException npe ) {
+            npe.printStackTrace();
+            return false;
+        }
         catch ( ConcurrentModificationException cme ) {
+            cme.printStackTrace();
+            //Logger.log(this.getClass() +": Exception : " + " : " + cme.getMessage());
             return true;
         }
     }
@@ -113,9 +119,14 @@ abstract public class Actor extends Drawable {
                 c.wasCollected( this );
             }
         }
-        return b ||
-               CollisionCheck.doesCollide( other, this )
-                ;
+        boolean b2 = CollisionCheck.doesCollide( other, this );
+        if ( b2 ) {
+            if ( other instanceof Collectable ) {
+                Collectable c = (Collectable) other;
+                c.wasCollected( this );
+            }
+        }
+        return b || b2;
     }
 
     public List<Actor> getCollidingActors() throws ConcurrentModificationException {

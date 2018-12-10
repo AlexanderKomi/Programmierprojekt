@@ -5,15 +5,16 @@ import de.hsh.alexander.src.actor.ResourcePaths;
 import de.hsh.alexander.src.actor.level_elements.SMD;
 import de.hsh.alexander.src.actor.player.PacMan1;
 import de.hsh.alexander.src.actor.player.PacMan2;
-
-import java.io.FileNotFoundException;
+import javafx.scene.canvas.Canvas;
 
 public class Level1 extends PacManLevel {
 
     private static final String backgroundImage = ResourcePaths.Actor.LevelElements.Backgrounds.microChip;
 
+    public Level1( Canvas gameCanvas ) {super( gameCanvas );}
+
     @Override
-    public void createLevel() throws FileNotFoundException {
+    public void createLevel() {
         setBackgroundImage( backgroundImage, 950, 800 );
         addPlayers();
         addLevelElements();

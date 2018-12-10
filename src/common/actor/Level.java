@@ -1,12 +1,10 @@
 package common.actor;
 
+import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * A simple level structure.
@@ -22,8 +20,8 @@ abstract public class Level extends Observable implements Observer, ILevel {
     private ArrayList<Collectable>    collectables    = new ArrayList<>();
 
 
-    public Level() {
-        reset();
+    public Level( Canvas gameCanvas ) {
+        reset( gameCanvas );
     }
 
     private void addCollision() {
@@ -40,11 +38,23 @@ abstract public class Level extends Observable implements Observer, ILevel {
 
     @Override
     public void render( Canvas canvas, int fps ) {
-        backgroundImage.draw( canvas );
-        npcs.forEach( npc -> npc.draw( canvas ) );
-        levelElements.forEach( levelElement -> levelElement.draw( canvas ) );
-        collectables.forEach( collectable -> collectable.draw( canvas ) );
-        players.forEach( pacMan -> pacMan.draw( canvas ) );
+        try {
+            backgroundImage.draw( canvas );
+            npcs.forEach( npc -> npc.draw( canvas ) );
+            levelElements.forEach( levelElement -> levelElement.draw( canvas ) );
+            for ( Collectable c : collectables ) {
+                c.draw( canvas );
+            }
+            for ( ControlableActor c : players ) {
+                c.draw( canvas );
+            }
+            //collectables.forEach( collectable -> collectable.draw( canvas ) );
+            //players.forEach( pacMan -> pacMan.draw( canvas ) );
+
+        }
+        catch ( ConcurrentModificationException cme ) {
+            Logger.log( "---------> " + this.getClass() + ": Exception : " + cme.getMessage() );
+        }
     }
 
     protected boolean collected( Collectable collectable ) {
@@ -54,6 +64,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
 
     protected boolean addCollectable( Collectable c ) {
         c.addObserver( this );
+        players.forEach( player -> player.addCollidingActor( c ) );
         return this.collectables.add( c );
     }
 
@@ -65,7 +76,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return this.levelElements.add( levelElement );
     }
 
-    public void reset() {
+    public void reset( Canvas gameCanvas ) {
         try {
             createLevel();
         }
