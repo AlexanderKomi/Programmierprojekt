@@ -5,6 +5,7 @@ import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.alexander.src.level.Level1;
 import de.hsh.alexander.src.level.PacManLevel;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -43,6 +44,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
         }
         initialized = true;
         reset();
+        bindLabelsToPoints();
         Logger.log( this.getClass() + ": init executed" );
 
     }
@@ -81,6 +83,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
         this.currentLevel = new Level1();
         this.currentLevel.reset();
 
+
         this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
         this.gameCanvas.setOnKeyPressed( e -> {
             this.currentLevel.keyboardInput( e );
@@ -92,10 +95,28 @@ public class PacManGame extends Observable implements Observer, Initializable {
         Logger.log( this.getClass() + ": Resetted game" );
     }
 
+    private void bindLabelsToPoints() {
+        this.currentLevel.getPacMan1Property().addListener( ( obj, oldValue, newValue ) -> {
+            Platform.runLater( () -> {
+                this.player1Points.setText( String.valueOf( newValue ) );
+            } );
+        } );
+
+        this.currentLevel.getPacMan2Property().addListener( ( obj, oldValue, newValue ) -> {
+            Platform.runLater( () -> {
+                this.player2Points.setText( String.valueOf( newValue ) );
+            } );
+        } );
+
+    }
+
     private void clearCanvas() {
         this.gameCanvas.getGraphicsContext2D().setFill( Color.WHITE );
         this.gameCanvas.getGraphicsContext2D().clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
     }
 
+    public PacManLevel getCurrentLevel() {
+        return this.currentLevel;
+    }
 
 }

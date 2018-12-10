@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PacMan extends ControlableActor {
 
-    private              SimpleIntegerProperty points               = new SimpleIntegerProperty();
+    private              SimpleIntegerProperty points               = new SimpleIntegerProperty( 0 );
     private static final double                start_x              = 100;
     private static final double                start_y              = 100;
     private static final int                   default_speed        = 10;

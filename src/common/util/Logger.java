@@ -83,4 +83,7 @@ public class Logger {
         return log( parentName, children );
     }
 
+    public static String log( Exception e ) {
+        return Logger.log( e.getMessage() );
+    }
 }

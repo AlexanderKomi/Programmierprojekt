@@ -6,6 +6,7 @@ import common.actor.Level;
 import common.util.Logger;
 import de.hsh.alexander.src.actor.player.PacMan;
 import de.hsh.alexander.src.actor.player.PacMan1;
+import de.hsh.alexander.src.actor.player.PacMan2;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyEvent;
 
@@ -25,6 +26,14 @@ abstract public class PacManLevel extends Level {
                            .filter( player -> player instanceof PacMan )
                            .map( player -> (PacMan) player )
                            .filter( pacman -> pacman instanceof PacMan1 )
+                           .map( PacMan::getPointProperty ).findFirst().get();
+    }
+
+    public SimpleIntegerProperty getPacMan2Property() {
+        return getPlayers().stream()
+                           .filter( player -> player instanceof PacMan )
+                           .map( player -> (PacMan) player )
+                           .filter( pacman -> pacman instanceof PacMan2 )
                            .map( PacMan::getPointProperty ).findFirst().get();
     }
 
