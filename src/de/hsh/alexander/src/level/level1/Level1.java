@@ -31,8 +31,10 @@ public class Level1 extends PacManLevel {
                 DataCoin  d  = new DataCoin( x, y );
                 boolean[] xy = CollisionCheck.isInBounds( d, gameCanvas );
                 if ( xy[ 0 ] && xy[ 1 ] ) {
-                    if ( !collidesWithLevelElement( d ) ) {
-                        addCollectable( d );
+                    if ( !collidesWithPlayer( d ) ) {
+                        if ( !collidesWithLevelElement( d ) ) {
+                            addCollectable( d );
+                        }
                     }
                 }
             }
@@ -48,8 +50,15 @@ public class Level1 extends PacManLevel {
     }
 
     private void addLevelElements() {
-        for ( int x = 700 ; x > 200 ; x = x - 200 ) {
-            addLevelElement( new SMD( x, 500 ) );
+        for ( int y = 0 ; y < WindowConfig.window_height ; y = y + 200 ) {
+            for ( int x = 0 ; x < WindowConfig.window_width ; x = x + 200 ) {
+                SMD smd = new SMD( x, y );
+                if ( !collidesWithPlayer( smd ) ) {
+                    if ( !collidesWithLevelElement( smd ) ) {
+                        addLevelElement( smd );
+                    }
+                }
+            }
         }
     }
 

@@ -66,6 +66,16 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return false;
     }
 
+
+    protected boolean collidesWithPlayer( Actor d ) {
+        for ( ControlableActor controlableActor : getPlayers() ) {
+            if ( controlableActor.doesCollide( d ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected boolean collidesWithCollectable( Actor a ) {
         for ( Collectable coll : getCollectables() ) {
             if ( coll.doesCollide( a ) ) {
