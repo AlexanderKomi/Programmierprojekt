@@ -4,7 +4,7 @@ import common.actor.Actor;
 import common.actor.Collectable;
 import common.actor.Level;
 import common.util.Logger;
-import de.hsh.alexander.src.actor.DataCoin;
+import de.hsh.alexander.src.actor.collectables.DataCoin;
 import de.hsh.alexander.src.actor.player.PacMan;
 import de.hsh.alexander.src.actor.player.PacMan1;
 import de.hsh.alexander.src.actor.player.PacMan2;

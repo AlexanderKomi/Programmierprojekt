@@ -1,8 +1,9 @@
 package de.hsh.alexander.src.level;
 
+import common.actor.CollisionCheck;
 import common.util.Logger;
-import de.hsh.alexander.src.actor.DataCoin;
 import de.hsh.alexander.src.actor.ResourcePaths;
+import de.hsh.alexander.src.actor.collectables.DataCoin;
 import de.hsh.alexander.src.actor.level_elements.SMD;
 import de.hsh.alexander.src.actor.player.PacMan1;
 import de.hsh.alexander.src.actor.player.PacMan2;
@@ -15,12 +16,24 @@ public class Level1 extends PacManLevel {
     public Level1( Canvas gameCanvas ) {super( gameCanvas );}
 
     @Override
-    public void createLevel() {
+    public void createLevel( Canvas gameCanvas ) {
         setBackgroundImage( backgroundImage, 950, 800 );
         addPlayers();
         addLevelElements();
-        addCollectable( new DataCoin( 50, 50 ) );
-        addCollectable( new DataCoin( 350, 50 ) );
+        createCollectables( gameCanvas );
+    }
+
+    private void createCollectables( Canvas gameCanvas ) {
+        for ( int y = 0 ; y < 2000 ; y += 50 ) {
+            for ( int x = 0 ; x < 2000 ; x += 50 ) {
+                DataCoin  d  = new DataCoin( x, y );
+                boolean[] xy = CollisionCheck.isInBounds( d, gameCanvas, x, y );
+                if ( xy[ 0 ] && xy[ 1 ] ) {
+                    addCollectable( d );
+                }
+            }
+        }
+        //addCollectable( new DataCoin( 350, 50 ) );
     }
 
     private void addLevelElements() {

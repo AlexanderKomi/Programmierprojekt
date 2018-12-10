@@ -1,6 +1,7 @@
-package de.hsh.alexander.src.actor;
+package de.hsh.alexander.src.actor.collectables;
 
 import common.actor.Collectable;
+import de.hsh.alexander.src.actor.ResourcePaths;
 
 public class DataCoin extends Collectable {
 

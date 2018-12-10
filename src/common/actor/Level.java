@@ -83,7 +83,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         levelElements = new ArrayList<>();
         collectables = new ArrayList<>();
         try {
-            createLevel();
+            createLevel( gameCanvas );
         }
         catch ( FileNotFoundException e ) {
             e.printStackTrace();

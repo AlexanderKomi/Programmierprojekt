@@ -8,7 +8,7 @@ import javafx.scene.canvas.Canvas;
  * @author Kevin Jeske
  * @author Alexander Komischke
  */
-class CollisionCheck {
+public class CollisionCheck {
 
     /**
      * Returns an boolean Array with index 0 equals x coordinate and
