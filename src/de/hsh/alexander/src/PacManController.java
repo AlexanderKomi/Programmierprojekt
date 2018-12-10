@@ -16,9 +16,6 @@ public class PacManController extends GameEntryPoint {
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
-        this.game = new PacManGame();
-        game.addObserver( this );
-        this.pacManEndScreen = new PacManEndScreen();
         this.changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
     }
 
@@ -39,6 +36,7 @@ public class PacManController extends GameEntryPoint {
                     exitToMainGUI();
                     break;
                 case UpdateCodes.PacMan.showEndScreen:
+                    this.pacManEndScreen = new PacManEndScreen();
                     changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
                     pacManEndScreen.afterInitialization(
                             game.getCurrentLevel().getPacMan1Property().get(),

@@ -133,7 +133,7 @@ public abstract class FXGameContainer extends Container implements Observer {
         }
     }
 
-    private void setGameShown( GameEntryPoint gameEntryPoint ) {
+    protected void setGameShown( GameEntryPoint gameEntryPoint ) {
         Scene s = gameEntryPoint.getScene();
         stage.setTitle(gameEntryPoint.getName());
         if (s != null) {
