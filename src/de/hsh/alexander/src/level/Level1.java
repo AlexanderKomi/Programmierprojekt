@@ -1,6 +1,8 @@
 package de.hsh.alexander.src.level;
 
+import common.actor.Actor;
 import common.actor.CollisionCheck;
+import common.actor.LevelElement;
 import common.util.Logger;
 import de.hsh.alexander.src.actor.ResourcePaths;
 import de.hsh.alexander.src.actor.collectables.DataCoin;
@@ -24,16 +26,30 @@ public class Level1 extends PacManLevel {
     }
 
     private void createCollectables( Canvas gameCanvas ) {
+        Logger.log( "Canvas : " + gameCanvas.getWidth() + ", " + gameCanvas.getHeight() );
+
         for ( int y = 0 ; y < 2000 ; y += 50 ) {
             for ( int x = 0 ; x < 2000 ; x += 50 ) {
                 DataCoin  d  = new DataCoin( x, y );
-                boolean[] xy = CollisionCheck.isInBounds( d, gameCanvas, x, y );
+                boolean[] xy = CollisionCheck.isInBounds( d, gameCanvas );
                 if ( xy[ 0 ] && xy[ 1 ] ) {
-                    addCollectable( d );
+                    if ( !collidesWithLevelElement( d ) ) {
+                        addCollectable( d );
+                    }
                 }
             }
         }
-        //addCollectable( new DataCoin( 350, 50 ) );
+
+        addCollectable( new DataCoin( 350, 50 ) );
+    }
+
+    private boolean collidesWithLevelElement( Actor a ) {
+        for ( LevelElement levelElement : getLevelElements() ) {
+            if ( levelElement.doesCollide( a ) ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void addLevelElements() {

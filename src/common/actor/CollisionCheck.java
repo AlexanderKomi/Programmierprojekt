@@ -10,6 +10,37 @@ import javafx.scene.canvas.Canvas;
  */
 public class CollisionCheck {
 
+    public static boolean[] isInBounds( Drawable a, Canvas canvas ) {
+        return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas );
+    }
+
+    public static boolean[] isInBounds( double x,
+                                        double y,
+                                        double width,
+                                        double height,
+                                        double canvas_widht,
+                                        double canvas_height,
+                                        double new_x,
+                                        double new_y ) {
+        boolean[] temp = new boolean[] {
+                false, false
+        };
+
+        if ( (x + new_x) >= 0 &&
+             (x + new_x + width) <= canvas_widht ) {
+            temp[ 0 ] = true;
+        }
+        if ( (y + new_y) >= 0 &&
+             (y + new_y + height) <= canvas_height ) {
+            temp[ 1 ] = true;
+        }
+        return temp;
+    }
+
+    public static boolean[] isInBounds( double x, double y, double width, double height, Canvas canvas ) {
+        return isInBounds( x, y, width, height, canvas.getWidth(), canvas.getHeight(), 0, 0 );
+    }
+
     /**
      * Returns an boolean Array with index 0 equals x coordinate and
      * index 1 equals y coordinate
@@ -18,19 +49,18 @@ public class CollisionCheck {
      * @author Kevin
      */
     public static boolean[] isInBounds( Drawable a, Canvas canvas, double new_x, double new_y ) {
-        boolean[] temp = new boolean[] {
-                false, false
-        };
+        return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas.getWidth(), canvas.getHeight(), new_x, new_y );
+    }
 
-        if ( (a.getX() + new_x) >= 0 &&
-             (a.getX() + new_x + a.getWidth()) <= canvas.getWidth() ) {
-            temp[ 0 ] = true;
-        }
-        if ( (a.getY() + new_y >= 0) &&
-             (a.getY() + new_y + a.getHeight()) <= canvas.getHeight() ) {
-            temp[ 1 ] = true;
-        }
-        return temp;
+    /**
+     * Returns an boolean Array with index 0 equals x coordinate and
+     * index 1 equals y coordinate
+     *
+     * @author Alex
+     * @author Kevin
+     */
+    public static boolean[] isInBounds( Drawable a, double canvas_widht, double canvas_height, double new_x, double new_y ) {
+        return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas_widht, canvas_height, new_x, new_y );
     }
 
     static boolean doesCollide( Drawable a, Drawable b ) {

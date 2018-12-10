@@ -81,8 +81,6 @@ public class PacManGame extends Observable implements Observer, Initializable {
         }
 
         this.currentLevel = new Level1( gameCanvas );
-        this.currentLevel.reset( gameCanvas );
-
 
         this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
         this.gameCanvas.setOnKeyPressed( e -> {

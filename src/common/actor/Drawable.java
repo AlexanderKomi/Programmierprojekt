@@ -12,6 +12,15 @@ import javafx.scene.paint.Color;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * Drawable is an image with bounds checking.
+ * Also support Sprites, scaling and rotation.
+ * <p>
+ * Use the constructors as you like :)
+ * Its easier to support multiple projects, when many constructors are given as an interface.
+ * <p>
+ * Every Drawable can be drawn on a canvas.
+ */
 abstract public class Drawable extends Observable {
 
     private static int id_counter = 0;
@@ -163,6 +172,7 @@ abstract public class Drawable extends Observable {
         scaleImageHeight( factor );
         scaleImageWidth( factor );
     }
+
     public void draw( Canvas canvas ) {
         draw( canvas, 0, 0 );
     }
@@ -172,13 +182,29 @@ abstract public class Drawable extends Observable {
     }
 
     public void draw( Canvas canvas, double offset_to_new_x, double offset_to_new_y ) {
-        boolean[] isInBounds    = isInBounds( canvas, offset_to_new_x, offset_to_new_y );
-        double[]  in_bounds_pos = calcPosAfterBounds( isInBounds, offset_to_new_x, offset_to_new_y );
-        double[]  old_pos       = this.getPos();
+        draw( canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight(), offset_to_new_x, offset_to_new_y );
+    }
+
+    public void draw( GraphicsContext canvas,
+                      double canvas_width,
+                      double canvas_height,
+                      double offset_to_new_x,
+                      double offset_to_new_y ) {
+
+        boolean[] isInBounds = CollisionCheck.isInBounds( this.getX(),
+                                                          this.getY(),
+                                                          this.getWidth(),
+                                                          this.getHeight(),
+                                                          canvas_width,
+                                                          canvas_height,
+                                                          offset_to_new_x,
+                                                          offset_to_new_y );
+        double[] in_bounds_pos = calcPosAfterBounds( isInBounds, offset_to_new_x, offset_to_new_y );
+        double[] old_pos       = this.getPos();
         this.setPos( in_bounds_pos );
         this.setPos( beforeDrawing( old_pos, in_bounds_pos ) ); // Maybe reset ? :)
         switchImages();
-        canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
+        canvas.drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
 
     public void draw( GraphicsContext gc ) {
@@ -253,17 +279,6 @@ abstract public class Drawable extends Observable {
     public void onClick() {
         this.setChanged();
         this.notifyObservers( this.getClass() + ": clicked" );
-    }
-
-    /**
-     * Returns an boolean Array with index 0 equals x coordinate and
-     * index 1 equals y coordinate
-     *
-     * @author Alex
-     * @author Kevin
-     */
-    boolean[] isInBounds( Canvas canvas, double new_x, double new_y ) {
-        return CollisionCheck.isInBounds( this, canvas, new_x, new_y );
     }
 
     private void movePos( double horizontal, double vertical ) {

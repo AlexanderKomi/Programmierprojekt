@@ -5,11 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Actor is a drawable with a few added features.
+ * A commonly used feature is collision with other actors or the movement of an actor, when it should be drawn.
+ */
 abstract public class Actor extends Drawable {
 
 
     Movement movement = new Movement();
-    private   HashSet<Actor> collisionActors = new HashSet<>();
+    private HashSet<Actor> collisionActors = new HashSet<>();
 
     public Actor( String pictureFileName ) {
         this( pictureFileName, 0, 0 );

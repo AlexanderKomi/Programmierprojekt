@@ -1,6 +1,5 @@
 package common.actor;
 
-import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 
 import java.io.FileNotFoundException;
@@ -16,7 +15,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
     private BackgroundImage           backgroundImage = new BackgroundImage();
     private HashSet<Actor>            npcs            = new HashSet<>();
     private HashSet<ControlableActor> players         = new HashSet<>();
-    private ArrayList<Actor>          levelElements   = new ArrayList<>();
+    private ArrayList<LevelElement>   levelElements   = new ArrayList<>();
     private ArrayList<Collectable>    collectables    = new ArrayList<>();
 
 
@@ -41,7 +40,9 @@ abstract public class Level extends Observable implements Observer, ILevel {
         try {
             backgroundImage.draw( canvas );
             npcs.forEach( npc -> npc.draw( canvas ) );
-            levelElements.forEach( levelElement -> levelElement.draw( canvas ) );
+            for ( LevelElement levelElement : levelElements ) {
+                levelElement.draw( canvas );
+            }
             for ( Collectable c : collectables ) {
                 c.draw( canvas );
             }
@@ -50,10 +51,9 @@ abstract public class Level extends Observable implements Observer, ILevel {
             }
             //collectables.forEach( collectable -> collectable.draw( canvas ) );
             //players.forEach( pacMan -> pacMan.draw( canvas ) );
-
         }
         catch ( ConcurrentModificationException cme ) {
-            Logger.log( "---------> " + this.getClass() + ": Exception : " + cme.getMessage() );
+            cme.printStackTrace();
         }
     }
 
@@ -72,7 +72,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return this.players.add( player );
     }
 
-    protected boolean addLevelElement( Actor levelElement ) {
+    protected boolean addLevelElement( LevelElement levelElement ) {
         return this.levelElements.add( levelElement );
     }
 
@@ -96,7 +96,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return players;
     }
 
-    public ArrayList<Actor> getLevelElements() {
+    public ArrayList<LevelElement> getLevelElements() {
         return levelElements;
     }
 
