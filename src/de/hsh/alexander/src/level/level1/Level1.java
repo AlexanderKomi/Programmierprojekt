@@ -27,8 +27,8 @@ public class Level1 extends PacManLevel {
     }
 
     private void createCollectables( Canvas gameCanvas ) {
-        for ( int y = 0 ; y < WindowConfig.window_height ; y += 50 ) {
-            for ( int x = 0 ; x < WindowConfig.window_width ; x += 50 ) {
+        for ( int y = 0 ; y < WindowConfig.window_height ; y += 250 ) {
+            for ( int x = 0 ; x < WindowConfig.window_width ; x += 250 ) {
                 DataCoin  d  = new DataCoin( x, y );
                 boolean[] xy = CollisionCheck.isInBounds( d, gameCanvas );
                 if ( xy[ 0 ] && xy[ 1 ] ) {
