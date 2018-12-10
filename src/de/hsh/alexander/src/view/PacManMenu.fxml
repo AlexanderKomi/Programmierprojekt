@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<VBox fx:id="basicPane" alignment="CENTER" prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/8.0.191"
+<VBox fx:id="basicPane" alignment="CENTER" prefHeight="800" prefWidth="1200"
       xmlns:fx="http://javafx.com/fxml/1">
     <TextFlow textAlignment="CENTER">
         <Label text="PacMan">
