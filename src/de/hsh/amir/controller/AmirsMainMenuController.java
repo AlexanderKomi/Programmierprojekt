@@ -13,10 +13,6 @@ import java.util.Observable;
 public class AmirsMainMenuController extends Observable{
 
     public static final String fxml = "view/AmirsMenu.fxml";
-
-    @FXML
-    private HBox hbox_1;
-
     @FXML
     private VBox vbox_1;
 
