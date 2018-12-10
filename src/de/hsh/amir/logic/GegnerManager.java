@@ -3,7 +3,7 @@ package de.hsh.amir.logic;
 import java.util.ArrayList;
 
 public class GegnerManager {
-    private ArrayList<Gegner> gegnerListe;
+    private ArrayList<Gegner> gegnerListe = new ArrayList<Gegner>();
     private Points points;
 
     public GegnerManager(ArrayList<Gegner> gegnerListe, Points points) {

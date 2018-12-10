@@ -26,6 +26,8 @@ public class Spielfeld extends Level{
 
     @Override
     public void update(Observable o, Object arg) {
-
+        /**
+         * Abbruchbedingungen
+         */
     }
 }
