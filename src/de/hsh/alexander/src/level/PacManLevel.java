@@ -18,7 +18,7 @@ abstract public class PacManLevel extends Level {
 
     public static final String gameFinishedMessage = "PacMan : Game finished";
 
-    PacManLevel( Canvas gameCanvas ) {
+    protected PacManLevel( Canvas gameCanvas ) {
         super( gameCanvas );
     }
 

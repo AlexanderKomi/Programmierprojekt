@@ -4,7 +4,6 @@ import common.MainMenu;
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
 import common.engine.components.game.GameEntryPoints;
-import common.util.Logger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -137,11 +136,8 @@ public abstract class FXGameContainer extends Container implements Observer {
     private void setGameShown( GameEntryPoint gameEntryPoint ) {
         Scene s = gameEntryPoint.getScene();
         stage.setTitle(gameEntryPoint.getName());
-        Logger.log( this.getClass() + ": GameEntryPoint scene : " + s );
         if (s != null) {
             if (s.rootProperty().get() != null) {
-                Logger.log(this.getClass() + ": Draw Scene");
-
                 try {
                     getStage().setScene(s);
                 } catch (Exception e) {

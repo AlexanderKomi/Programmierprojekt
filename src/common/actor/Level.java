@@ -57,9 +57,33 @@ abstract public class Level extends Observable implements Observer, ILevel {
         }
     }
 
+    protected boolean collidesWithLevelElement( Actor a ) {
+        for ( LevelElement levelElement : getLevelElements() ) {
+            if ( levelElement.doesCollide( a ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean collidesWithCollectable( Actor a ) {
+        for ( Collectable coll : getCollectables() ) {
+            if ( coll.doesCollide( a ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected boolean collected( Collectable collectable ) {
         players.forEach( p -> p.getCollisionActors().remove( collectable ) );
         return collectables.remove( collectable );
+    }
+
+    protected void addCollectables( Collection<Collectable> c ) {
+        for ( Collectable collectable : c ) {
+            addCollectable( collectable );
+        }
     }
 
     protected boolean addCollectable( Collectable c ) {
