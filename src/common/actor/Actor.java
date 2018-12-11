@@ -1,11 +1,9 @@
 package common.actor;
 
-import java.lang.ref.Reference;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Actor is a drawable with a few added features.
@@ -15,7 +13,7 @@ abstract public class Actor extends Drawable {
 
 
     Movement movement = new Movement();
-    private ArrayList<WeakReference<Actor>> collisionActors = new ArrayList<>();
+    private List<Actor> collisionActors = Collections.synchronizedList( new ArrayList<>() );
 
     public Actor( String pictureFileName ) {
         this( pictureFileName, 0, 0 );
@@ -25,12 +23,12 @@ abstract public class Actor extends Drawable {
         super( pictureFileName, x, y );
     }
 
-    public Actor( String pictureFileName, ArrayList<WeakReference<Actor>> collisionActors ) {
+    public Actor( String pictureFileName, ArrayList<Actor> collisionActors ) {
         super( pictureFileName );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( String pictureFileName, double x, double y, ArrayList<WeakReference<Actor>> collisionActors ) {
+    public Actor( String pictureFileName, double x, double y, ArrayList<Actor> collisionActors ) {
         super( pictureFileName, x, y );
         this.collisionActors = collisionActors;
     }
@@ -43,17 +41,17 @@ abstract public class Actor extends Drawable {
         super( pictureFilePaths );
     }
 
-    public Actor( ArrayList<WeakReference<Actor>> collisionActors, String mustHavePicture, String... pictureFilePaths ) {
+    public Actor( ArrayList<Actor> collisionActors, String mustHavePicture, String... pictureFilePaths ) {
         super( mustHavePicture, pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths, ArrayList<WeakReference<Actor>> collisionActors ) {
+    public Actor( List<String> pictureFilePaths, ArrayList<Actor> collisionActors ) {
         super( pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths, double x, double y, ArrayList<WeakReference<Actor>> collisionActors ) {
+    public Actor( List<String> pictureFilePaths, double x, double y, ArrayList<Actor> collisionActors ) {
         super( pictureFilePaths, x, y );
         this.collisionActors = collisionActors;
     }
@@ -62,7 +60,7 @@ abstract public class Actor extends Drawable {
                   double x,
                   double y,
                   int delay,
-                  ArrayList<WeakReference<Actor>> collisionActors ) {
+                  ArrayList<Actor> collisionActors ) {
         super( pictureFilePaths, x, y, delay );
         this.collisionActors = collisionActors;
     }
@@ -70,7 +68,7 @@ abstract public class Actor extends Drawable {
     public Actor( double x,
                   double y,
                   int delay,
-                  ArrayList<WeakReference<Actor>> collisionActors,
+                  ArrayList<Actor> collisionActors,
                   String mustHave,
                   String... pictureFilePaths ) {
         super( x, y, delay, mustHave, pictureFilePaths );
@@ -109,11 +107,13 @@ abstract public class Actor extends Drawable {
 
     public boolean doesCollide() {
         try {
-            for ( WeakReference<Actor> a : this.collisionActors ) {
-                if ( this.doesCollide( a.get() ) ) {
+
+            for ( Actor a : this.getCollisionActors() ) {
+                if ( this.doesCollide( a ) ) {
                     return true;
                 }
-            }
+                }
+
             return false;
         }
         catch ( NullPointerException npe ) {
@@ -121,39 +121,24 @@ abstract public class Actor extends Drawable {
             return true;
         }
         catch ( ConcurrentModificationException cme ) {
-            cme.printStackTrace();
+            //cme.printStackTrace();
             //Logger.log(this.getClass() +": Exception : " + " : " + cme.getMessage());
             return true;
         }
+
     }
 
     public boolean doesCollide( Actor other ) {
-        boolean b = CollisionCheck.doesCollide( this, other );
+        boolean b = CollisionCheck.doesCollide( this, other ) ||
+                    CollisionCheck.doesCollide( other, this );
         if ( b ) {
             if ( other instanceof Collectable ) {
                 Collectable c = (Collectable) other;
                 c.wasCollected( this );
+                return false;
             }
-            return true;
         }
-        boolean b2 = CollisionCheck.doesCollide( other, this );
-        if ( b2 ) {
-            if ( other instanceof Collectable ) {
-                Collectable c = (Collectable) other;
-                c.wasCollected( this );
-            }
-            return true;
-        }
-        return false;
-        //return CollisionCheck.doesCollide( other, this );
-    }
-
-    public List<Actor> getCollidingActors() throws ConcurrentModificationException {
-        return this.getCollisionActors()
-                   .stream()
-                   .map( Reference::get )
-                   .filter( this::doesCollide )
-                   .collect( Collectors.toList() );
+        return b;
     }
 
     // ----------------------------------- GETTER AND SETTER -----------------------------------
@@ -165,12 +150,12 @@ abstract public class Actor extends Drawable {
         return this.movement.getVelocity();
     }
 
-    public ArrayList<WeakReference<Actor>> getCollisionActors() {
-        return collisionActors;
+    public List<Actor> getCollisionActors() {
+        return this.collisionActors;
     }
 
     public boolean addCollidingActor( Actor a ) {
-        return this.collisionActors.add( new WeakReference<>( a ) );
+        return this.collisionActors.add( a );
     }
 
 }
