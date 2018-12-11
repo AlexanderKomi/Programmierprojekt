@@ -74,7 +74,7 @@ public class LKEntryPoint extends GameEntryPoint {
 
                 changer.changeFxml( o, (String) arg );
             }
-            Logger.log( this.getClass() + " : update : " + message );
+           // Logger.log( this.getClass() + " : update : " + message );
         }
         else {
             changer.changeFxml(o, (String) arg);

@@ -19,7 +19,7 @@ public class Leertastenklatsche extends Observable implements Observer {
 
     private int score = 0;
     private int leben=3;
-
+    private boolean gamedone=false;
     private      TheDude           thedude;
     private      ArrayList<Enemy>  enemyList       = new ArrayList<>();
 
@@ -109,14 +109,14 @@ public class Leertastenklatsche extends Observable implements Observer {
 
     @Override
     public void update( Observable o, Object arg ) {
-        if ( o instanceof Enemy ) {
+        if ( o instanceof Enemy &&gamedone==false ) {
             Enemy e = (Enemy) o;
             for ( Enemy enemy : this.enemyList ) {
                 //Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
                 if ( enemy.id == e.id ) {
                     this.thedude.getCollisionActors().remove( enemy );
                     enemyList.remove( enemy );
-                    Logger.log( this.getClass() + ": Found enemy with same id" );
+                   // Logger.log( this.getClass() + ": Found enemy with same id" );
                     if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
                         if ( thedude.turnedleft ) {
                             score++;
@@ -145,7 +145,9 @@ public class Leertastenklatsche extends Observable implements Observer {
         }
     }
     private void gameOver(){
-        if(leben<=0){
+
+        if(leben<=0 && gamedone ==false){
+            gamedone=true;
             PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\noo.wav");
             setChanged();
             notifyObservers("gameover");
