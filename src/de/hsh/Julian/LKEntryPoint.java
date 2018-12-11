@@ -60,7 +60,7 @@ public class LKEntryPoint extends GameEntryPoint {
     public void update(Observable o, Object arg) {
         if (arg instanceof Canvas) {
             this.canvas = (Canvas) arg;
-            Logger.log( this.getClass() + ": init after canvas pass" );
+
             initAfterCanvasPass();
         }
         else if ( arg instanceof String ) {
@@ -71,6 +71,7 @@ public class LKEntryPoint extends GameEntryPoint {
                 exitToMainGUI();
             }
             else {
+
                 changer.changeFxml( o, (String) arg );
             }
             Logger.log( this.getClass() + " : update : " + message );
@@ -82,6 +83,7 @@ public class LKEntryPoint extends GameEntryPoint {
 
     private void initAfterCanvasPass() {
         this.lk = new Leertastenklatsche();
+        lk.addObserver(this);
         initializeGraphicsContext();
         addKeyListener();
         renderable = true;

@@ -5,11 +5,16 @@ import java.io.File;
 
 public class PlaySound {
 
-    public static void playSound(String path){
-        String musicFile = path;     // For example
+    public static String musicFile=null;
+    public static MediaPlayer mediaPlayer;
 
-        Media sound = new Media(new File(musicFile).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+    public static void playSound(String path){
+
+        if(musicFile==null||!musicFile.equals(path)) { //Perfomance-Kniff
+            musicFile = path;
+            Media sound = new Media(new File(musicFile).toURI().toString());
+            mediaPlayer = new MediaPlayer(sound);
+        }
         mediaPlayer.play();
     }
 }

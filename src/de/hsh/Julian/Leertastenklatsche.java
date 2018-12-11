@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Leertastenklatsche implements Observer {
+public class Leertastenklatsche extends Observable implements Observer {
 
 
     static final String     location = "/de/hsh/Julian/";
@@ -101,6 +101,7 @@ public class Leertastenklatsche implements Observer {
 
             }
         }
+        //EASTEREGG ;-))
         else if ( code.equals( "SPACE" ) ) {
             PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\cat.wav");
         }
@@ -111,7 +112,7 @@ public class Leertastenklatsche implements Observer {
         if ( o instanceof Enemy ) {
             Enemy e = (Enemy) o;
             for ( Enemy enemy : this.enemyList ) {
-                Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
+                //Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
                 if ( enemy.id == e.id ) {
                     this.thedude.getCollisionActors().remove( enemy );
                     enemyList.remove( enemy );
@@ -122,9 +123,10 @@ public class Leertastenklatsche implements Observer {
                             PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
                         }
                         else{
-                            leben--; //TODO: GameOverscreen if Leben =0
+                            leben--;
                             PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\hit.wav");
-                        }; //TODO: GameOverscreen if Leben =0
+                            gameOver();
+                        }
                     }
                     else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
                         if ( !thedude.turnedleft ) {
@@ -132,8 +134,9 @@ public class Leertastenklatsche implements Observer {
                             PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
                         }
                         else {
-                            leben--; //TODO: GameOverscreen if Leben =0
+                            leben--;
                             PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\hit.wav");
+                            gameOver();
                         }
                     }
                     return;
@@ -141,7 +144,15 @@ public class Leertastenklatsche implements Observer {
             }
         }
     }
+    private void gameOver(){
+        if(leben<=0){
+            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\noo.wav");
+            setChanged();
+            notifyObservers("gameover");
 
+
+        }
+    }
     public int getScore() {
         return score;
     }
