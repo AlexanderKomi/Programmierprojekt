@@ -116,18 +116,22 @@ public class Leertastenklatsche implements Observer {
                     if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
                         if ( thedude.turnedleft ) {
                             score++;
-                            PlaySound.playSound();
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
                         }
-                        else
+                        else{
                             leben--; //TODO: GameOverscreen if Leben =0
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\hit.wav");
+                        }; //TODO: GameOverscreen if Leben =0
                     }
                     else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
                         if ( !thedude.turnedleft ) {
                             score++;
-                            PlaySound.playSound();
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
                         }
-                        else
+                        else {
                             leben--; //TODO: GameOverscreen if Leben =0
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\hit.wav");
+                        }
                     }
                     return;
                 }
