@@ -15,6 +15,7 @@ public class Spielfigur extends ControlableActor{
     private static final double startY = 750;
     private static final int defaultSpeed = 10;
 
+
     protected Spielfigur(String pictureFileName, HashMap<String, Direction> keyMap) throws FileNotFoundException {
         this(pictureFileName, startX, startY, keyMap);
     }

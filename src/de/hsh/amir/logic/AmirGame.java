@@ -8,6 +8,7 @@ public class AmirGame {
     private Gegner gegner;
 
     public void render(Canvas canvas, int fps) {
+        spielfigur.draw(canvas);
         Logger.log("render");
     }
 
