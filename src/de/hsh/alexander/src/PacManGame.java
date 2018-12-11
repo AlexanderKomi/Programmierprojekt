@@ -3,8 +3,8 @@ package de.hsh.alexander.src;
 import common.config.WindowConfig;
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import de.hsh.alexander.src.level.Level1;
 import de.hsh.alexander.src.level.PacManLevel;
+import de.hsh.alexander.src.level.level1.Level1;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -81,8 +81,6 @@ public class PacManGame extends Observable implements Observer, Initializable {
         }
 
         this.currentLevel = new Level1( gameCanvas );
-        this.currentLevel.reset( gameCanvas );
-
 
         this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
         this.gameCanvas.setOnKeyPressed( e -> {

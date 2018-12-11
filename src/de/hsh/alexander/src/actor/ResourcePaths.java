@@ -37,12 +37,14 @@ public final class ResourcePaths {
             }
 
             public static final class SMD {
-                public static final String   directory = LevelElements.directory + "smd/";
-                public static final String[] pictures  = {
-                        SMD.directory + "smd_0.png",
-                        SMD.directory + "smd_1.png",
-                        SMD.directory + "smd_2.png",
-                        SMD.directory + "smd_3.png"
+                public static final String   directory  = LevelElements.directory + "smd/";
+                public static final String   prefix     = "smd_";
+                public static final String   fileEnding = ".png";
+                public static final String[] pictures   = {
+                        SMD.directory + prefix + "0" + fileEnding,
+                        SMD.directory + prefix + "1" + fileEnding,
+                        SMD.directory + prefix + "2" + fileEnding,
+                        SMD.directory + prefix + "3" + fileEnding
                 };
             }
 
@@ -52,6 +54,19 @@ public final class ResourcePaths {
                 public static final String microChip     = Backgrounds.directory + "chip.jpg";
             }
 
+            public static final class Fan {
+                public static final String   directory  = LevelElements.directory + "fan/";
+                public static final String   prefix     = "fan_";
+                public static final String   fileEnding = ".png";
+                public static final String[] pictures   = {
+                        directory + prefix + "0" + fileEnding,
+                        directory + prefix + "1" + fileEnding,
+                        directory + prefix + "2" + fileEnding,
+                        directory + prefix + "3" + fileEnding,
+                        directory + prefix + "4" + fileEnding,
+                        directory + prefix + "5" + fileEnding
+                };
+            }
         }
 
         public static final class Collectables {

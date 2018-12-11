@@ -15,7 +15,7 @@ public class Spielfeld extends Level{
     }
 
     @Override
-    public void createLevel() throws FileNotFoundException {
+    public void createLevel( Canvas gameCanvas ) throws FileNotFoundException {
 
     }
 

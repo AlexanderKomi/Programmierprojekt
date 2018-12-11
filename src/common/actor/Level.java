@@ -1,9 +1,9 @@
 package common.actor;
 
-import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 
 import java.io.FileNotFoundException;
+import java.lang.ref.WeakReference;
 import java.util.*;
 
 /**
@@ -13,11 +13,11 @@ import java.util.*;
  */
 abstract public class Level extends Observable implements Observer, ILevel {
 
-    private BackgroundImage           backgroundImage = new BackgroundImage();
-    private HashSet<Actor>            npcs            = new HashSet<>();
-    private HashSet<ControlableActor> players         = new HashSet<>();
-    private ArrayList<Actor>          levelElements   = new ArrayList<>();
-    private ArrayList<Collectable>    collectables    = new ArrayList<>();
+    private BackgroundImage                       backgroundImage = new BackgroundImage();
+    private ArrayList<Actor>                      npcs            = new ArrayList<>();
+    private LinkedList<ControlableActor>          players         = new LinkedList<>();
+    private ArrayList<LevelElement>               levelElements   = new ArrayList<>();
+    private ArrayList<WeakReference<Collectable>> collectables    = new ArrayList<>();
 
 
     public Level( Canvas gameCanvas ) {
@@ -33,7 +33,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
     private void addCollectables() {
         collectables.forEach(
                 collectable -> players.forEach(
-                        player -> player.addCollidingActor( collectable ) ) );
+                        player -> player.addCollidingActor( collectable.get() ) ) );
     }
 
     @Override
@@ -41,49 +41,88 @@ abstract public class Level extends Observable implements Observer, ILevel {
         try {
             backgroundImage.draw( canvas );
             npcs.forEach( npc -> npc.draw( canvas ) );
-            levelElements.forEach( levelElement -> levelElement.draw( canvas ) );
-            for ( Collectable c : collectables ) {
-                c.draw( canvas );
+            for ( LevelElement levelElement : levelElements ) {
+                levelElement.draw( canvas );
+            }
+            for ( WeakReference<Collectable> c : collectables ) {
+                Objects.requireNonNull( c.get() ).draw( canvas );
             }
             for ( ControlableActor c : players ) {
                 c.draw( canvas );
             }
             //collectables.forEach( collectable -> collectable.draw( canvas ) );
             //players.forEach( pacMan -> pacMan.draw( canvas ) );
-
         }
         catch ( ConcurrentModificationException cme ) {
-            Logger.log( "---------> " + this.getClass() + ": Exception : " + cme.getMessage() );
+            cme.printStackTrace();
         }
     }
 
+    protected boolean collidesWithLevelElement( Actor a ) {
+        for ( LevelElement levelElement : getLevelElements() ) {
+            if ( levelElement.doesCollide( a ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    protected boolean collidesWithPlayer( Actor d ) {
+        for ( ControlableActor controlableActor : getPlayers() ) {
+            if ( controlableActor.doesCollide( d ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean collidesWithCollectable( Actor a ) {
+        for ( WeakReference<Collectable> coll : getCollectables() ) {
+            if ( coll.get().doesCollide( a ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected boolean collected( Collectable collectable ) {
-        players.forEach( p -> p.getCollisionActors().remove( collectable ) );
+        players.forEach(
+                p -> {
+                    p.getCollisionActors().remove( collectable );
+                } );
+        collectable.deleteObservers();
         return collectables.remove( collectable );
+    }
+
+    protected void addCollectables( Collection<Collectable> c ) {
+        for ( Collectable collectable : c ) {
+            addCollectable( collectable );
+        }
     }
 
     protected boolean addCollectable( Collectable c ) {
         c.addObserver( this );
         players.forEach( player -> player.addCollidingActor( c ) );
-        return this.collectables.add( c );
+        return this.collectables.add( new WeakReference<>( c ) );
     }
 
     protected boolean addPlayer( ControlableActor player ) {
         return this.players.add( player );
     }
 
-    protected boolean addLevelElement( Actor levelElement ) {
+    protected boolean addLevelElement( LevelElement levelElement ) {
         return this.levelElements.add( levelElement );
     }
 
     public void reset( Canvas gameCanvas ) {
         backgroundImage = new BackgroundImage();
-        npcs = new HashSet<>();
-        players = new HashSet<>();
+        npcs = new ArrayList<>();
+        players = new LinkedList<>();
         levelElements = new ArrayList<>();
         collectables = new ArrayList<>();
         try {
-            createLevel();
+            createLevel( gameCanvas );
         }
         catch ( FileNotFoundException e ) {
             e.printStackTrace();
@@ -92,19 +131,19 @@ abstract public class Level extends Observable implements Observer, ILevel {
         addCollectables();
     }
 
-    public HashSet<ControlableActor> getPlayers() {
+    public LinkedList<ControlableActor> getPlayers() {
         return players;
     }
 
-    public ArrayList<Actor> getLevelElements() {
+    public ArrayList<LevelElement> getLevelElements() {
         return levelElements;
     }
 
-    public HashSet<Actor> getNpcs() {
+    public ArrayList<Actor> getNpcs() {
         return npcs;
     }
 
-    public ArrayList<Collectable> getCollectables() {
+    public ArrayList<WeakReference<Collectable>> getCollectables() {
         return this.collectables;
     }
 

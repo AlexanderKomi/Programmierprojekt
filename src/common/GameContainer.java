@@ -69,7 +69,12 @@ public class GameContainer extends FXGameContainer {
     @Override
     public void render( int fps ) {
         if ( this.getGameEntryPoints() != null ) {
-            this.getGameEntryPoints().render(fps);
+            try {
+                this.getGameEntryPoints().render( fps );
+            }
+            catch ( InternalError ie ) {
+                ie.printStackTrace();
+            }
         }
     }
 

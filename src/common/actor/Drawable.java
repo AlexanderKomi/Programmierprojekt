@@ -1,17 +1,21 @@
 package common.actor;
 
-import javafx.application.Platform;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
 
-import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * Drawable is an image with bounds checking.
+ * Also support Sprites, scaling and rotation.
+ * <p>
+ * Use the constructors as you like :)
+ * Its easier to support multiple projects, when many constructors are given as an interface.
+ * <p>
+ * Every Drawable can be drawn on a canvas.
+ */
 abstract public class Drawable extends Observable {
 
     private static int id_counter = 0;
@@ -19,7 +23,6 @@ abstract public class Drawable extends Observable {
 
     private double x;
     private double y;
-
     private double height;
     private double width;
 
@@ -30,6 +33,11 @@ abstract public class Drawable extends Observable {
     private boolean switchImageAutomatically = true;
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
+
+    private double outputX;
+    private double outputY;
+    private double outputWidth;
+    private double outputHeight;
 
     private ImageView        imageView       = new ImageView();
     private Image            currentImage;
@@ -42,10 +50,17 @@ abstract public class Drawable extends Observable {
 
     public Drawable( String pictureFileName, double x, double y ) {
         this.setCurrentImage( loadPicture( pictureFileName ) );
+
         this.setHeight( this.getCurrentImage().getHeight() );
         this.setWidth( this.getCurrentImage().getWidth() );
+        this.setOutputHeight( this.getHeight() );
+        this.setOutputWidth( this.getWidth() );
+
         this.setX( x );
         this.setY( y );
+        this.setOutputX( x );
+        this.setOutputY( y );
+
         this.id = id_counter;
         id_counter++;
     }
@@ -83,15 +98,6 @@ abstract public class Drawable extends Observable {
         this.addSwitchingImage( mustHave );
     }
 
-    public Drawable( Drawable d ) {
-        this.setCurrentImage( d.getCurrentImage() );
-        this.name = d.getName();
-        this.setPos( d.getPos() );
-        this.height = d.getHeight();
-        this.width = d.getWidth();
-        this.id = d.id;
-    }
-
     public Drawable( String mustHave, List<String> asList, double x, double y, int delay ) {
         this( asList, x, y, delay );
         this.addSwitchingImage( mustHave );
@@ -100,6 +106,8 @@ abstract public class Drawable extends Observable {
     private Drawable( double x, double y, int delay ) {
         this.setX( x );
         this.setY( y );
+        this.setOutputX( x );
+        this.setOutputY( y );
         this.setSwitchingDelay( delay );
     }
 
@@ -110,12 +118,7 @@ abstract public class Drawable extends Observable {
     private Image loadPicture( String fileName ) {
         this.name = fileName;
         if ( !TextureBuffer.contains( fileName ) ) {
-            try {
-                TextureBuffer.addFile( fileName );
-            }
-            catch ( FileNotFoundException e ) {
-                e.printStackTrace();
-            }
+            TextureBuffer.addFile( fileName );
         }
         return TextureBuffer.getImage( fileName );
     }
@@ -146,15 +149,30 @@ abstract public class Drawable extends Observable {
     }
 
     public void scaleImageWidth( double factor ) {
+        if ( factor > 0 ) {
+            this.width *= factor;
+            this.outputWidth *= factor;
+        }
+        else {
+            this.setX( this.getX() + this.getWidth() );
+            this.width *= factor;
+            this.outputWidth *= factor;
+        }
         this.scaleX *= factor;
-        this.width *= factor;
         this.imageView.setFitWidth( scaleX );
         this.imageView.setScaleX( scaleX );
     }
 
     public void scaleImageHeight( double factor ) {
+        if ( factor > 0 ) {
+            this.height *= factor;
+            this.outputHeight *= factor;
+        }
+        else {
+            this.height *= factor;
+            this.outputHeight *= factor;
+        }
         this.scaleY *= factor;
-        this.height *= factor;
         this.imageView.setFitHeight( scaleY );
         this.imageView.setScaleY( scaleY );
     }
@@ -163,6 +181,9 @@ abstract public class Drawable extends Observable {
         scaleImageHeight( factor );
         scaleImageWidth( factor );
     }
+
+    // ---------------------------------- START DRAW ----------------------------------
+
     public void draw( Canvas canvas ) {
         draw( canvas, 0, 0 );
     }
@@ -172,22 +193,55 @@ abstract public class Drawable extends Observable {
     }
 
     public void draw( Canvas canvas, double offset_to_new_x, double offset_to_new_y ) {
-        boolean[] isInBounds    = isInBounds( canvas, offset_to_new_x, offset_to_new_y );
-        double[]  in_bounds_pos = calcPosAfterBounds( isInBounds, offset_to_new_x, offset_to_new_y );
-        double[]  old_pos       = this.getPos();
+        draw( canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight(), offset_to_new_x, offset_to_new_y );
+    }
+
+    public void draw( GraphicsContext canvas,
+                      double canvas_width,
+                      double canvas_height,
+                      double offset_to_new_x,
+                      double offset_to_new_y ) {
+
+        boolean[] isInBounds = CollisionCheck.isInBounds( this.getX(),
+                                                          this.getY(),
+                                                          this.getWidth(),
+                                                          this.getHeight(),
+                                                          canvas_width,
+                                                          canvas_height,
+                                                          offset_to_new_x,
+                                                          offset_to_new_y );
+        double[] in_bounds_pos = calcPosAfterBounds( isInBounds, offset_to_new_x, offset_to_new_y );
+        double[] old_pos       = this.getPos();
         this.setPos( in_bounds_pos );
         this.setPos( beforeDrawing( old_pos, in_bounds_pos ) ); // Maybe reset ? :)
         switchImages();
-        canvas.getGraphicsContext2D().drawImage( this.currentImage, this.x, this.y, this.width, this.height );
+        canvas.drawImage( this.currentImage,
+                          this.x, this.y, this.width, this.height
+                          //,this.outputX, this.outputY, this.outputWidth, this.outputHeight
+                          // This is for the rotation on drawing, but still very buggy
+
+                        );
     }
 
     public void draw( GraphicsContext gc ) {
         gc.drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
 
+    /**
+     * Override this method, to apply any new checks or manipulate the position before the new position is drawn.
+     *
+     * @param current_pos
+     *         The current position of the Drawable
+     * @param new_pos
+     *         The next position of the Drawable
+     *
+     * @return Returns the new position of the Drawable.
+     */
     protected double[] beforeDrawing( double[] current_pos, double[] new_pos ) {
         return new_pos;
     }
+
+    // ---------------------------------- END DRAW ----------------------------------
 
     private double[] calcPosAfterBounds( boolean[] isInBounds, double new_x, double new_y ) {
         double[] temp = new double[] {
@@ -203,8 +257,17 @@ abstract public class Drawable extends Observable {
         return temp;
     }
 
-    public void rotate( double rotate ) {
 
+    /**
+     * Use with caution!
+     * Rotation is not Thread-safe in JavaFX, if used while multiple Threads are able to access the data!
+     *
+     * @author Alexander Komischke
+     * */
+    @Deprecated
+    public void rotate( double rotate ) {
+        this.imageView.setRotate( this.imageView.getRotate() + rotate );
+        /*
         try {
             Platform.runLater( () -> {
                 this.imageView.setRotate( rotate );
@@ -218,6 +281,7 @@ abstract public class Drawable extends Observable {
             iae.printStackTrace();
             System.exit( 1 );
         }
+        */
     }
 
     @Override
@@ -242,28 +306,17 @@ abstract public class Drawable extends Observable {
     }
 
     private String prepareToString() {
-        String result = "name:" + this.getName() + ", ";
-        result += "x:" + this.getX() + ", ";
-        result += "y:" + this.getY() + ", ";
-        result += "width:" + this.getWidth() + ", ";
-        result += "height:" + this.getHeight();
-        return result;
+        StringBuilder result = new StringBuilder( "name:" ).append( this.getName() ).append( ", " );
+        result.append( "x:" ).append( this.getX() ).append( ", " );
+        result.append( "y:" ).append( this.getY() ).append( ", " );
+        result.append( "width:" ).append( this.getWidth() ).append( ", " );
+        result.append( "height:" ).append( this.getHeight() );
+        return result.toString();
     }
 
     public void onClick() {
         this.setChanged();
         this.notifyObservers( this.getClass() + ": clicked" );
-    }
-
-    /**
-     * Returns an boolean Array with index 0 equals x coordinate and
-     * index 1 equals y coordinate
-     *
-     * @author Alex
-     * @author Kevin
-     */
-    boolean[] isInBounds( Canvas canvas, double new_x, double new_y ) {
-        return CollisionCheck.isInBounds( this, canvas, new_x, new_y );
     }
 
     private void movePos( double horizontal, double vertical ) {
@@ -276,6 +329,30 @@ abstract public class Drawable extends Observable {
     public void setPos( double x, double y ) {
         this.setX( x );
         this.setY( y );
+    }
+
+    protected double getScaleY() {
+        return this.scaleY;
+    }
+
+    protected double getScaleX() {
+        return this.scaleX;
+    }
+
+    public double getOutputWidth() {
+        return outputWidth;
+    }
+
+    public double getOutputHeight() {
+        return outputHeight;
+    }
+
+    public double getOutputX() {
+        return outputX;
+    }
+
+    public double getOutputY() {
+        return outputY;
     }
 
     public void setPos( double[] pos ) {
@@ -302,6 +379,7 @@ abstract public class Drawable extends Observable {
 
     public void setX( double x ) {
         this.x = x;
+        this.outputX = x;
     }
 
     public double getY() {
@@ -310,6 +388,7 @@ abstract public class Drawable extends Observable {
 
     public void setY( double y ) {
         this.y = y;
+        this.outputY = y;
     }
 
     public double getHeight() {
@@ -394,9 +473,27 @@ abstract public class Drawable extends Observable {
             if ( !heightIsSet ) {
                 this.setCurrentImage( this.switchingImages.get( 0 ) );
                 this.setWidth( this.currentImage.getWidth() );
+                this.setOutputWidth( this.currentImage.getWidth() );
                 this.setHeight( this.currentImage.getHeight() );
+                this.setOutputHeight( this.currentImage.getHeight() );
                 heightIsSet = true;
             }
         }
+    }
+
+    public void setOutputWidth( double outputWidth ) {
+        this.outputWidth = outputWidth;
+    }
+
+    public void setOutputHeight( double outputHeight ) {
+        this.outputHeight = outputHeight;
+    }
+
+    public void setOutputX( double outputX ) {
+        this.outputX = outputX;
+    }
+
+    public void setOutputY( double outputY ) {
+        this.outputY = outputY;
     }
 }

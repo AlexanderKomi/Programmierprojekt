@@ -69,27 +69,37 @@ public class MainMenu extends common.engine.components.menu.MainMenu implements 
 
     public void initGameNames() {
         try {
-            AnchorPane p = (AnchorPane) this.vbox.getChildren().get(0);
-            GridPane g = (GridPane) p.getChildren().get(0);
+            bindGamesToButtons( new String[] {
+                    WindowConfig.alexander_title,
+                    WindowConfig.amir_title,
+                    WindowConfig.dennis_title,
+                    WindowConfig.daniel_title,
+                    WindowConfig.kevin_title,
+                    WindowConfig.julian_title
+            } );
 
-            for (int i = 0; i <= 5; i++){
-                VBox tempBox = (VBox) g.getChildren().get(i);
-                String gameName = this.gameNames.get(i);
-
-                ((Text) (tempBox).getChildren().get(1)).setText(gameName); // Set the Text to the game name
-
-                Button b = (Button) tempBox.getChildren().get(0);
-
-                b.setOnAction(buttonEvent -> this.notifyObservers(gameName));
-            }
-
-            HBox shutdownBox = (HBox) this.vbox.getChildren().get(1);
-            Button shutdownButton = (Button) shutdownBox.getChildren().get(0);
-            shutdownButton.setOnAction(shutdownEvent -> this.notifyObservers(UpdateCodes.MainMenu.shutdown));
-        } catch (NullPointerException npe) {
+            HBox   shutdownBox    = (HBox) this.vbox.getChildren().get( 1 );
+            Button shutdownButton = (Button) shutdownBox.getChildren().get( 0 );
+            shutdownButton.setOnAction( shutdownEvent -> this.notifyObservers( UpdateCodes.MainMenu.shutdown ) );
+        }
+        catch ( NullPointerException npe ) {
             npe.printStackTrace();
         }
 
+    }
+
+    private void bindGamesToButtons( String[] gameNames ) {
+        AnchorPane p = (AnchorPane) this.vbox.getChildren().get( 0 );
+        GridPane   g = (GridPane) p.getChildren().get( 0 );
+
+        for ( int i = 0 ; i <= 5 ; i++ ) {
+            String gameName = gameNames[ i ];
+
+            VBox tempBox = (VBox) g.getChildren().get( i );
+            ((Text) (tempBox).getChildren().get( 1 )).setText( gameName ); // Set the Text to the game name
+            Button b = (Button) tempBox.getChildren().get( 0 );
+            b.setOnAction( buttonEvent -> this.notifyObservers( gameName ) );
+        }
     }
 
     public void setGameContainer(GameContainer gameContainer) {

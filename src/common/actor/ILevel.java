@@ -8,8 +8,9 @@ import java.io.FileNotFoundException;
 public interface ILevel {
     /**
      * Create all your level elements
+     * @param gameCanvas
      */
-    void createLevel() throws FileNotFoundException;
+    void createLevel( Canvas gameCanvas ) throws FileNotFoundException;
 
     /**
      * What happens, when a key is pressed?

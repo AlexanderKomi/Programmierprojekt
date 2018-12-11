@@ -1,6 +1,9 @@
-package de.hsh.alexander.src.actor;
+package de.hsh.alexander.src.actor.collectables;
 
 import common.actor.Collectable;
+import de.hsh.alexander.src.actor.ResourcePaths;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DataCoin extends Collectable {
 
@@ -23,6 +26,6 @@ public class DataCoin extends Collectable {
     };
 
     public DataCoin( double x, double y ) {
-        super( x, y, default_delay, pictureFilePaths );
+        super( x, y, default_delay + ThreadLocalRandom.current().nextInt( 0, 10 ), pictureFilePaths );
     }
 }

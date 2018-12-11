@@ -16,10 +16,6 @@ public class PacMan1 extends PacMan {
         return pacMan1KeyMap;
     }
 
-    public PacMan1() {
-        super( ResourcePaths.Actor.Player.PacMan.pacman1Pictures, createKeyMap() );
-    }
-
     public PacMan1( double x, double y ) {
         super( x, y, createKeyMap(), ResourcePaths.Actor.Player.PacMan.pacman1Pictures );
     }
