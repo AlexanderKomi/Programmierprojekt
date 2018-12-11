@@ -10,10 +10,30 @@ import javafx.scene.canvas.Canvas;
  */
 public class CollisionCheck {
 
+    /**
+     * Just a Wrapper.
+     */
     public static boolean[] isInBounds( Drawable a, Canvas canvas ) {
         return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas );
     }
 
+
+    /**
+     * Calculates if a rectangle with a tuple of coordinates (x, y) and given width and height,
+     * is positioned in a rectangle canvas_widht and canvas_height.
+     * <p>
+     * The coordinates (new_x, new_y) are an offset to the (x,y) Tuple, not new coordinates!
+     * This implementation is in particullar useful to calculate if a new position oder the next position of the rectangle is
+     * in the greater rectangle.
+     *
+     * @return an boolean Array with index 0 for x coordinate and
+     * * index 1 for y coordinate. When true is written at the corresponding index, it means, that the corresponding
+     * coordinate
+     * * is in bounds.
+     *
+     * @author Alexander Komischke
+     * @author Kevin Jeske
+     */
     public static boolean[] isInBounds( double x,
                                         double y,
                                         double width,
@@ -53,13 +73,20 @@ public class CollisionCheck {
         return temp;
     }
 
+    /**
+     * Just a Wrapper.
+     * */
     public static boolean[] isInBounds( double x, double y, double width, double height, Canvas canvas ) {
         return isInBounds( x, y, width, height, canvas.getWidth(), canvas.getHeight(), 0, 0 );
     }
 
     /**
-     * Returns an boolean Array with index 0 equals x coordinate and
-     * index 1 equals y coordinate
+     *
+     *
+     * @return an boolean Array with index 0 for x coordinate and
+     *      * index 1 for y coordinate. When true is written at the corresponding index, it means, that the corresponding
+     *      coordinate
+     *      * is in bounds.
      *
      * @author Alex
      * @author Kevin

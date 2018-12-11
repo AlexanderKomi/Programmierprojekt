@@ -182,6 +182,8 @@ abstract public class Drawable extends Observable {
         scaleImageWidth( factor );
     }
 
+    // ---------------------------------- START DRAW ----------------------------------
+
     public void draw( Canvas canvas ) {
         draw( canvas, 0, 0 );
     }
@@ -225,9 +227,21 @@ abstract public class Drawable extends Observable {
         gc.drawImage( this.currentImage, this.x, this.y, this.width, this.height );
     }
 
+    /**
+     * Override this method, to apply any new checks or manipulate the position before the new position is drawn.
+     *
+     * @param current_pos
+     *         The current position of the Drawable
+     * @param new_pos
+     *         The next position of the Drawable
+     *
+     * @return Returns the new position of the Drawable.
+     */
     protected double[] beforeDrawing( double[] current_pos, double[] new_pos ) {
         return new_pos;
     }
+
+    // ---------------------------------- END DRAW ----------------------------------
 
     private double[] calcPosAfterBounds( boolean[] isInBounds, double new_x, double new_y ) {
         double[] temp = new double[] {
@@ -243,6 +257,13 @@ abstract public class Drawable extends Observable {
         return temp;
     }
 
+
+    /**
+     * Use with caution!
+     * Rotation is not Thread-safe in JavaFX, if used while multiple Threads are able to access the data!
+     *
+     * @author Alexander Komischke
+     * */
     @Deprecated
     public void rotate( double rotate ) {
         this.imageView.setRotate( this.imageView.getRotate() + rotate );
@@ -285,12 +306,12 @@ abstract public class Drawable extends Observable {
     }
 
     private String prepareToString() {
-        String result = "name:" + this.getName() + ", ";
-        result += "x:" + this.getX() + ", ";
-        result += "y:" + this.getY() + ", ";
-        result += "width:" + this.getWidth() + ", ";
-        result += "height:" + this.getHeight();
-        return result;
+        StringBuilder result = new StringBuilder( "name:" ).append( this.getName() ).append( ", " );
+        result.append( "x:" ).append( this.getX() ).append( ", " );
+        result.append( "y:" ).append( this.getY() ).append( ", " );
+        result.append( "width:" ).append( this.getWidth() ).append( ", " );
+        result.append( "height:" ).append( this.getHeight() );
+        return result.toString();
     }
 
     public void onClick() {
