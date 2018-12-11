@@ -43,7 +43,7 @@ public class Updater {
                 UpdateDDOSDefender.update((DennisGameEntryPoint) gameEntryPoint, arg, gameContainer);
             }
             else if ( gameEntryPoint instanceof LKEntryPoint) {
-                update( (LKEntryPoint) gameEntryPoint, arg, gameContainer );
+                UpdateLK.update( (LKEntryPoint) gameEntryPoint, arg, gameContainer );
             }
             else if ( gameEntryPoint instanceof TIController ) {
                 UpdateTunnelInvader.update( (TIController) gameEntryPoint, arg, gameContainer );

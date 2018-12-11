@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns:fx="http://javafx.com/fxml/1">
    <ImageView fitHeight="800.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../resources/background_after_start.png" />

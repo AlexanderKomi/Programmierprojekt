@@ -2,6 +2,7 @@ package de.hsh.Julian;
 
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
+import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.Julian.controller.LKStart;
 import javafx.scene.canvas.Canvas;
@@ -65,7 +66,9 @@ public class LKEntryPoint extends GameEntryPoint {
         else if ( arg instanceof String ) {
             String message = (String) arg;
             if ( message.equals( "b_backtomenu" ) ) {
-                exitToMainGUI(); // TODO : Fix this call. Is not implemented correctly.
+
+
+                exitToMainGUI();
             }
             else {
                 changer.changeFxml( o, (String) arg );
