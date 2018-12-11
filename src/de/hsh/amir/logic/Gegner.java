@@ -14,22 +14,22 @@ public class Gegner extends Collectable {
     private int gegnerTyp;
 
     //Konstruktoren
-    public Gegner(String pictureFileName, int gegnerTyp) throws FileNotFoundException {
+    public Gegner(String pictureFileName, int gegnerTyp) {
         super(pictureFileName, startX, startY);
         setGegnerTyp(gegnerTyp);
     }
 
-    public Gegner(String pictureFileName, double x, double y, int gegnerTyp) throws FileNotFoundException {
+    public Gegner(String pictureFileName, double x, double y, int gegnerTyp) {
         super(pictureFileName, x, y);
         setGegnerTyp(gegnerTyp);
     }
 
-    public Gegner(List<String> pictureFilePaths, double x, double y, int gegnerTyp) throws FileNotFoundException {
+    public Gegner(List<String> pictureFilePaths, double x, double y, int gegnerTyp) {
         super(pictureFilePaths, x, y, changePictureDelay);
         setGegnerTyp(gegnerTyp);
     }
 
-    public Gegner(double x, double y, int gegnerTyp, String... pictureFilePaths) throws FileNotFoundException {
+    public Gegner(double x, double y, int gegnerTyp, String... pictureFilePaths) {
         super(x, y, changePictureDelay, pictureFilePaths);
         setGegnerTyp(gegnerTyp);
     }
