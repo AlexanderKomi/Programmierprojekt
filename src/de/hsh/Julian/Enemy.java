@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 public class Enemy extends Collectable {
 
     public static final String imageLocation = Leertastenklatsche.location + "enemyvirus.png";
+    public static final String imageLocation2 = Leertastenklatsche.location + "enemyvirus_turned.png";
 
     public Enemy( String imagePath ) throws FileNotFoundException {
         super( imagePath );
@@ -21,9 +22,12 @@ public class Enemy extends Collectable {
         /*double px = 350 * Math.random() + 50;
         double py = 350 * Math.random() + 50;*/
         double rng = Math.random();
-        if ( rng < 0.5 ) { px = enemyvirus.getWidth(); }
+        if ( rng < 0.5 ) {
+            px = enemyvirus.getWidth();
+            enemyvirus.setCurrentImage(imageLocation2);
+        }
         //Logger.log(this.getClass() + ": rng=" + rng);
-        enemyvirus.setPos( px, WindowConfig.window_height * 0.5 );
+        enemyvirus.setPos( px, WindowConfig.window_height * 0.9 );
         return enemyvirus;
     }
 }
