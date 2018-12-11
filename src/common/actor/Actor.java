@@ -1,7 +1,9 @@
 package common.actor;
 
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +15,7 @@ abstract public class Actor extends Drawable {
 
 
     Movement movement = new Movement();
-    private HashSet<Actor> collisionActors = new HashSet<>();
+    private ArrayList<WeakReference<Actor>> collisionActors = new ArrayList<>();
 
     public Actor( String pictureFileName ) {
         this( pictureFileName, 0, 0 );
@@ -23,12 +25,12 @@ abstract public class Actor extends Drawable {
         super( pictureFileName, x, y );
     }
 
-    public Actor( String pictureFileName, HashSet<Actor> collisionActors ) {
+    public Actor( String pictureFileName, ArrayList<WeakReference<Actor>> collisionActors ) {
         super( pictureFileName );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( String pictureFileName, double x, double y, HashSet<Actor> collisionActors ) {
+    public Actor( String pictureFileName, double x, double y, ArrayList<WeakReference<Actor>> collisionActors ) {
         super( pictureFileName, x, y );
         this.collisionActors = collisionActors;
     }
@@ -41,17 +43,17 @@ abstract public class Actor extends Drawable {
         super( pictureFilePaths );
     }
 
-    public Actor( HashSet<Actor> collisionActors, String mustHavePicture, String... pictureFilePaths ) {
+    public Actor( ArrayList<WeakReference<Actor>> collisionActors, String mustHavePicture, String... pictureFilePaths ) {
         super( mustHavePicture, pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths, HashSet<Actor> collisionActors ) {
+    public Actor( List<String> pictureFilePaths, ArrayList<WeakReference<Actor>> collisionActors ) {
         super( pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths, double x, double y, HashSet<Actor> collisionActors ) {
+    public Actor( List<String> pictureFilePaths, double x, double y, ArrayList<WeakReference<Actor>> collisionActors ) {
         super( pictureFilePaths, x, y );
         this.collisionActors = collisionActors;
     }
@@ -60,12 +62,17 @@ abstract public class Actor extends Drawable {
                   double x,
                   double y,
                   int delay,
-                  HashSet<Actor> collisionActors ) {
+                  ArrayList<WeakReference<Actor>> collisionActors ) {
         super( pictureFilePaths, x, y, delay );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( double x, double y, int delay, HashSet<Actor> collisionActors, String mustHave, String... pictureFilePaths ) {
+    public Actor( double x,
+                  double y,
+                  int delay,
+                  ArrayList<WeakReference<Actor>> collisionActors,
+                  String mustHave,
+                  String... pictureFilePaths ) {
         super( x, y, delay, mustHave, pictureFilePaths );
         this.collisionActors = collisionActors;
     }
@@ -102,8 +109,8 @@ abstract public class Actor extends Drawable {
 
     public boolean doesCollide() {
         try {
-            for ( Actor a : this.collisionActors ) {
-                if ( this.doesCollide( a ) ) {
+            for ( WeakReference<Actor> a : this.collisionActors ) {
+                if ( this.doesCollide( a.get() ) ) {
                     return true;
                 }
             }
@@ -144,6 +151,7 @@ abstract public class Actor extends Drawable {
     public List<Actor> getCollidingActors() throws ConcurrentModificationException {
         return this.getCollisionActors()
                    .stream()
+                   .map( Reference::get )
                    .filter( this::doesCollide )
                    .collect( Collectors.toList() );
     }
@@ -157,12 +165,12 @@ abstract public class Actor extends Drawable {
         return this.movement.getVelocity();
     }
 
-    public HashSet<Actor> getCollisionActors() {
+    public ArrayList<WeakReference<Actor>> getCollisionActors() {
         return collisionActors;
     }
 
     public boolean addCollidingActor( Actor a ) {
-        return this.collisionActors.add( a );
+        return this.collisionActors.add( new WeakReference<>( a ) );
     }
 
 }

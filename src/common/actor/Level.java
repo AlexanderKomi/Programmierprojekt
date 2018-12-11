@@ -3,6 +3,7 @@ package common.actor;
 import javafx.scene.canvas.Canvas;
 
 import java.io.FileNotFoundException;
+import java.lang.ref.WeakReference;
 import java.util.*;
 
 /**
@@ -12,11 +13,11 @@ import java.util.*;
  */
 abstract public class Level extends Observable implements Observer, ILevel {
 
-    private BackgroundImage           backgroundImage = new BackgroundImage();
-    private HashSet<Actor>            npcs            = new HashSet<>();
-    private HashSet<ControlableActor> players         = new HashSet<>();
-    private ArrayList<LevelElement>   levelElements   = new ArrayList<>();
-    private ArrayList<Collectable>    collectables    = new ArrayList<>();
+    private BackgroundImage                       backgroundImage = new BackgroundImage();
+    private ArrayList<Actor>                      npcs            = new ArrayList<>();
+    private LinkedList<ControlableActor>          players         = new LinkedList<>();
+    private ArrayList<LevelElement>               levelElements   = new ArrayList<>();
+    private ArrayList<WeakReference<Collectable>> collectables    = new ArrayList<>();
 
 
     public Level( Canvas gameCanvas ) {
@@ -32,7 +33,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
     private void addCollectables() {
         collectables.forEach(
                 collectable -> players.forEach(
-                        player -> player.addCollidingActor( collectable ) ) );
+                        player -> player.addCollidingActor( collectable.get() ) ) );
     }
 
     @Override
@@ -43,8 +44,8 @@ abstract public class Level extends Observable implements Observer, ILevel {
             for ( LevelElement levelElement : levelElements ) {
                 levelElement.draw( canvas );
             }
-            for ( Collectable c : collectables ) {
-                c.draw( canvas );
+            for ( WeakReference<Collectable> c : collectables ) {
+                Objects.requireNonNull( c.get() ).draw( canvas );
             }
             for ( ControlableActor c : players ) {
                 c.draw( canvas );
@@ -77,8 +78,8 @@ abstract public class Level extends Observable implements Observer, ILevel {
     }
 
     protected boolean collidesWithCollectable( Actor a ) {
-        for ( Collectable coll : getCollectables() ) {
-            if ( coll.doesCollide( a ) ) {
+        for ( WeakReference<Collectable> coll : getCollectables() ) {
+            if ( coll.get().doesCollide( a ) ) {
                 return true;
             }
         }
@@ -86,7 +87,11 @@ abstract public class Level extends Observable implements Observer, ILevel {
     }
 
     protected boolean collected( Collectable collectable ) {
-        players.forEach( p -> p.getCollisionActors().remove( collectable ) );
+        players.forEach(
+                p -> {
+                    p.getCollisionActors().remove( collectable );
+                } );
+        collectable.deleteObservers();
         return collectables.remove( collectable );
     }
 
@@ -99,7 +104,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
     protected boolean addCollectable( Collectable c ) {
         c.addObserver( this );
         players.forEach( player -> player.addCollidingActor( c ) );
-        return this.collectables.add( c );
+        return this.collectables.add( new WeakReference<>( c ) );
     }
 
     protected boolean addPlayer( ControlableActor player ) {
@@ -112,8 +117,8 @@ abstract public class Level extends Observable implements Observer, ILevel {
 
     public void reset( Canvas gameCanvas ) {
         backgroundImage = new BackgroundImage();
-        npcs = new HashSet<>();
-        players = new HashSet<>();
+        npcs = new ArrayList<>();
+        players = new LinkedList<>();
         levelElements = new ArrayList<>();
         collectables = new ArrayList<>();
         try {
@@ -126,7 +131,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         addCollectables();
     }
 
-    public HashSet<ControlableActor> getPlayers() {
+    public LinkedList<ControlableActor> getPlayers() {
         return players;
     }
 
@@ -134,11 +139,11 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return levelElements;
     }
 
-    public HashSet<Actor> getNpcs() {
+    public ArrayList<Actor> getNpcs() {
         return npcs;
     }
 
-    public ArrayList<Collectable> getCollectables() {
+    public ArrayList<WeakReference<Collectable>> getCollectables() {
         return this.collectables;
     }
 

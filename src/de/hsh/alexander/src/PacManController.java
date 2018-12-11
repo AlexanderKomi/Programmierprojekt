@@ -32,6 +32,7 @@ public class PacManController extends GameEntryPoint {
                     break;
                 case UpdateCodes.PacMan.mainMenu:
                     Logger.log( "-------------------MAIN MENU----------------------" );
+                    this.game.deleteObservers();
                     this.game = null;
                     exitToMainGUI();
                     break;
@@ -58,6 +59,9 @@ public class PacManController extends GameEntryPoint {
     }
 
     private void startGame() {
+        if ( this.game != null ) {
+            this.game.deleteObservers();
+        }
         this.game = new PacManGame();
         game.addObserver( this );
         changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
