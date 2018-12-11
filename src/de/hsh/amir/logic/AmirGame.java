@@ -19,6 +19,7 @@ public class AmirGame {
     }
 
     public void render(int fps) {
+        gegnerManager.move(canvas);
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         spielfigur.draw(canvas);
         gegnerManager.draw(canvas);
