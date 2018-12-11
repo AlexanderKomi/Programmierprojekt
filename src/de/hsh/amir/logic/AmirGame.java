@@ -1,16 +1,12 @@
 package de.hsh.amir.logic;
 
-import common.actor.Direction;
 import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-
 public class AmirGame {
     private Spielfigur spielfigur;
-    private Gegner gegner;
+    private GegnerManager gegnerManager;
     private Canvas canvas;
 
     public AmirGame(Canvas canvas) {
@@ -25,10 +21,16 @@ public class AmirGame {
     public void render(int fps) {
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         spielfigur.draw(canvas);
+        gegnerManager.draw(canvas);
     }
 
+    /**
+     * setze Spiel zurück und initialisiert es neu
+     */
     public void reset() {
         initializePlayer();
+        gegnerManager = new GegnerManager();
+        gegnerManager.erstelleGegner();
     }
 
     public void onKeyPressed(KeyEvent event) {
