@@ -101,6 +101,9 @@ public class Leertastenklatsche implements Observer {
 
             }
         }
+        else if ( code.equals( "SPACE" ) ) {
+            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\cat.wav");
+        }
     }
 
     @Override
