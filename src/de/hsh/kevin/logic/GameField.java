@@ -13,7 +13,9 @@ import de.hsh.kevin.logic.myActor.Projectile;
 import de.hsh.kevin.logic.myActor.ProjectileManager;
 import de.hsh.kevin.logic.myActor.enmPaketTyp;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
 public class GameField {
     private double width;
@@ -151,6 +153,7 @@ public class GameField {
     }
 
     public void draw(Canvas canvas) {
+        clearCanvas(canvas);
         player.draw(canvas);
         paketManager.draw(canvas);
         projectileManager.draw(canvas);
@@ -162,6 +165,12 @@ public class GameField {
         spawnPakete();
         spawnProjectile();
         draw(canvas);
+    }
+    
+    public void clearCanvas(Canvas canvas) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.rgb(100, 100, 100));
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     private void collision() {

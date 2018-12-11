@@ -1,11 +1,11 @@
 package de.hsh.kevin.logic.myActor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.hsh.kevin.logic.Leben;
 import de.hsh.kevin.logic.Score;
 import javafx.scene.canvas.Canvas;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PaketManager {
 

@@ -10,9 +10,10 @@ import java.util.Observer;
 
 public class TIController extends GameEntryPoint {
 
-    private TIFxmlChanger changer;
-    private TIGameController game;
-    private Score score;
+    private TIFxmlChanger        changer;
+    private TIGameController     game;
+    private TIGameOverController gameOver;
+    private Score                score;
 
     public TIController(Observer o) {
         super(o, UpdateCodes.TunnelInvader.gameName);
@@ -27,11 +28,17 @@ public class TIController extends GameEntryPoint {
             switch (msg) {
             case UpdateCodes.TunnelInvader.playGame:
                 score = new Score();
+                if ( game != null ) {
+                    game.deleteObservers();
+                }
                 game = new TIGameController(score);
                 changer.changeGameFxml(o, game);
                 break;
             case UpdateCodes.TunnelInvader.gameOver:
-                TIGameOverController gameOver = new TIGameOverController(score);
+                if ( gameOver != null ) {
+                    gameOver.deleteObservers();
+                }
+                gameOver = new TIGameOverController( score );
                 changer.changeGameOverFxml(o, gameOver);
                 gameOver.setScore();
                 break;
