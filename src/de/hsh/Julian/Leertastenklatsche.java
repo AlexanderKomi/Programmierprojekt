@@ -91,12 +91,14 @@ public class Leertastenklatsche implements Observer {
             if ( !thedude.turnedleft ) {
                 thedude.swapImage();
                 thedude.turnedleft = true;
+
             }
         }
         else if ( code.equals( "RIGHT" ) ) {
             if ( thedude.turnedleft ) {
                 thedude.swapImage();
                 thedude.turnedleft = false;
+
             }
         }
     }
@@ -114,6 +116,7 @@ public class Leertastenklatsche implements Observer {
                     if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
                         if ( thedude.turnedleft ) {
                             score++;
+                            PlaySound.playSound();
                         }
                         else
                             leben--; //TODO: GameOverscreen if Leben =0
@@ -121,6 +124,7 @@ public class Leertastenklatsche implements Observer {
                     else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
                         if ( !thedude.turnedleft ) {
                             score++;
+                            PlaySound.playSound();
                         }
                         else
                             leben--; //TODO: GameOverscreen if Leben =0
