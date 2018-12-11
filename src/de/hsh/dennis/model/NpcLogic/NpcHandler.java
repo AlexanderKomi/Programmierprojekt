@@ -8,6 +8,7 @@ import de.hsh.dennis.model.NpcLogic.actors.Npc;
 import de.hsh.dennis.model.NpcLogic.actors.Package;
 import de.hsh.dennis.model.audio.AudioAnalyser;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -159,9 +160,12 @@ public class NpcHandler {
                         healthChange -= pointValue;
                         break;
                     default:
+                        punish();
                         Logger.log(this.getClass() + "Switching in removeNpcs : default.");
+
                 }
                 npcList.remove(npc);
+                //punish();
             }
 
 
@@ -169,6 +173,12 @@ public class NpcHandler {
         }
 
     }
+
+    private void punish() {
+        canvas.getGraphicsContext2D().setFill(Color.RED);
+        canvas.getGraphicsContext2D().fillRect(0,0, canvas.getWidth(), canvas.getHeight());
+    }
+
 
     public void hitNpc(Npc npc) {
         synchronized (npcsToHit) {

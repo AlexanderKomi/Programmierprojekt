@@ -52,6 +52,7 @@ public class GameModel extends Observable {
     private double animationDelay = 0.1; //animation delay in seconds
     private long skinResetTimer;
     private boolean reset = false;
+    public  int fps = -1;
 
     //Audio Stuff
     private boolean musicStart = true;
@@ -106,7 +107,7 @@ public class GameModel extends Observable {
 
 
             npcList = npcHandler.getNpcList();
-            collideCheck();
+            //collideCheck();
 
             clearCanvas();
             resetSkin();
@@ -144,22 +145,29 @@ public class GameModel extends Observable {
         if (k == Custom.UP || k == Custom.UP_ALT) {
             player.changeSkin(Direction.Up);
             setResetTimer();
+            collideCheck();
             return;
         } else if (k == Custom.LEFT || k == Custom.LEFT_ALT) {
             player.changeSkin(Direction.Left);
             setResetTimer();
+            collideCheck();
             return;
         } else if (k == Custom.DOWN || k == Custom.DOWN_ALT) {
             player.changeSkin(Direction.Down);
             setResetTimer();
+            collideCheck();
             return;
         } else if (k == Custom.RIGHT || k == Custom.RIGHT_ALT) {
             player.changeSkin(Direction.Right);
             setResetTimer();
+            collideCheck();
             return;
         }
-        Logger.log("unbidden Key Input \'" + k + "\'");
+
+        //Logger.log("unbidden Key Input \'" + k + "\'");
     }
+
+
 
     private void collideCheck() {
         for (Npc npc : npcList) {
@@ -278,6 +286,16 @@ public class GameModel extends Observable {
         }
         return null;
     }
+
+    public int getFps() {
+        return fps;
+    }
+
+    public void setFps(int fps) {
+        this.fps = fps;
+        audioDelay = 0;
+    }
+
 
     public Config.Level.Difficulty getDifficulty() {
         return difficulty;

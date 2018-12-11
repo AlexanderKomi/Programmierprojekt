@@ -33,6 +33,7 @@ public class DennisGameEntryPoint extends GameEntryPoint {
 
     @Override
     public void render(int fps) {
+        if(gm.fps == -1){gm.setFps(fps);}
         if (rendering) {
             gm.act();
         }
