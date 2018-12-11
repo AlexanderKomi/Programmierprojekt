@@ -1,6 +1,7 @@
 package de.hsh.amir.controller;
 
 import common.updates.UpdateCodes;
+import common.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -10,7 +11,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.Observable;
 
-public class AmirsMainMenuController extends Observable{
+public class AmirsMainMenuController extends Observable {
 
     public static final String fxml = "view/AmirsMenu.fxml";
     @FXML
@@ -33,20 +34,18 @@ public class AmirsMainMenuController extends Observable{
 
     @FXML
     void button_clicked(ActionEvent event) {
-        String id = getId( event );
+        String id = getId(event);
         this.setChanged();
-        if ( id.equals( "startGameButton" ) ) {
-            this.notifyObservers( UpdateCodes.Amir.startGame );
-        }
-        else if ( id.equals( "exitButton" ) ) {
-            this.notifyObservers( UpdateCodes.Amir.mainMenu );
-        }
-        else {
-            this.notifyObservers( id );
+        if (id.equals("startGameButton")) {
+            this.notifyObservers(UpdateCodes.Amir.startGame);
+        } else if (id.equals("exitButton")) {
+            this.notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
+        } else {
+            this.notifyObservers(id);
         }
     }
 
-    private String getId( ActionEvent event ) {
+    private String getId(ActionEvent event) {
         return ((Node) event.getSource()).getId();
     }
 }
