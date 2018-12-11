@@ -26,6 +26,7 @@ public class Leertastenklatsche extends Observable implements Observer {
     public Leertastenklatsche() {
         try {
             initGame();
+
         }
         catch ( FileNotFoundException e ) {
             e.printStackTrace();

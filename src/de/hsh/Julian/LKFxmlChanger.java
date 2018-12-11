@@ -27,6 +27,7 @@ public class LKFxmlChanger extends FxmlChanger {
     @Override
     public void changeFxml( Observable o, String msg ) {
 
+
             switch (msg){
                 case "b_backtomenu":
                     Logger.log(this.getClass()+" b_backtomenu_clicked");
@@ -38,11 +39,16 @@ public class LKFxmlChanger extends FxmlChanger {
                     c.passCanvas();
                     break;
                 case "gameover":
-                    Logger.log(this.getClass()+" LKEND "+LKEnd.fxml);
-                    Logger.log("blyat");
+
                     LKEnd l = new LKEnd();
                     changeScene(LKEnd.fxml, l );
                     //l.passCanvas();
+                    break;
+                case "b_retry":
+                    Logger.log("jo");
+                    SpielBildschirm_controller d = new SpielBildschirm_controller();
+                    changeScene(SpielBildschirm_controller.fxml, d);
+                    d.passCanvas();
                     break;
                 default:
                     Logger.log( this.getClass().getName() + " default SwitchCase." );
