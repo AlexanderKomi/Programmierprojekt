@@ -27,6 +27,7 @@ public class LKFxmlChanger extends FxmlChanger {
         if(o instanceof LKStart){
             switch (msg){
                 case "b_backtomenu":
+                    Logger.log(this.getClass()+" b_backtomenu_clicked");
                     ((GameEntryPoint) getFxModul()).exitToMainGUI();
                     break;
                 case "b_start":
