@@ -27,7 +27,7 @@ public class Enemy extends Collectable {
             enemyvirus.setCurrentImage(imageLocation2);
         }
         //Logger.log(this.getClass() + ": rng=" + rng);
-        enemyvirus.setPos( px, WindowConfig.window_height * 0.75 );
+        enemyvirus.setPos( px, WindowConfig.window_height * 0.85 );
         return enemyvirus;
     }
 }

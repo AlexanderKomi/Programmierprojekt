@@ -34,7 +34,7 @@ public class Leertastenklatsche implements Observer {
 
     private void initGame() throws FileNotFoundException {
         thedude = new TheDude( WindowConfig.window_width / 2 -75,
-                               WindowConfig.window_height * 0.6
+                               WindowConfig.window_height * 0.73
         );
         thedude.setSpeed( 0 );
     }
