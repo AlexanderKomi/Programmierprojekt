@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import common.actor.Direction;
+import common.util.Logger;
 import de.hsh.kevin.logic.myActor.Paket;
 import de.hsh.kevin.logic.myActor.PaketManager;
 import de.hsh.kevin.logic.myActor.PlayerCharacter;
@@ -183,6 +184,7 @@ public class GameField {
 
         paketManager.getPakete().stream().parallel().forEach(p -> {
             if (player.doesCollide(p)) {
+                Sound.playSound(enmSounds.collision);
                 leben.decrease();
                 toRemove.add(p);
             }
@@ -200,6 +202,7 @@ public class GameField {
         paketManager.getPakete().stream().parallel().forEach(paket -> {
             projectileManager.getProjectiles().stream().parallel().forEach(proj -> {
                 if (paket.doesCollide(proj)) {
+                    Sound.playSound(enmSounds.hit);
                     if (!toRemovePakete.contains(paket)) {
                         toRemovePakete.add(paket);
                     }
