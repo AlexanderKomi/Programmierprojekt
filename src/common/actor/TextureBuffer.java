@@ -21,4 +21,11 @@ final class TextureBuffer {
     static boolean contains( final String fileName ) {
         return fileToImage.containsKey( fileName );
     }
+
+    static Image loadImage( final String fileName ) {
+        if ( !TextureBuffer.contains( fileName ) ) {
+            TextureBuffer.addFile( fileName );
+        }
+        return TextureBuffer.getImage( fileName );
+    }
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
  *
  * @author Alexander Komischke
  */
-public class Logger {
+public final class Logger {
 
     private static final String separator       = "\t : \t";
     private static final String topic_separator = " ------------------------- ";

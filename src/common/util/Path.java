@@ -10,7 +10,7 @@ import java.util.Arrays;
  *
  * @author Alexander Komischke
  */
-public class Path {
+public final class Path {
 
     public static void main( String[] args ) {
         //standAlone( args );

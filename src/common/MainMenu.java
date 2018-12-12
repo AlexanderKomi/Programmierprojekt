@@ -14,13 +14,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
  * @author Alexander Komischke
  */
-public class MainMenu extends common.engine.components.menu.MainMenu implements Initializable {
+public final class MainMenu extends common.engine.components.menu.MainMenu implements Initializable {
 
     @FXML
     public AnchorPane ap_desktop;
@@ -53,8 +52,6 @@ public class MainMenu extends common.engine.components.menu.MainMenu implements 
     public Button b_shutdown;
     @FXML
     public ComboBox<String> cb_credits = new ComboBox<>();
-    private GameContainer gameContainer;
-    private ArrayList<String> gameNames = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -100,14 +97,6 @@ public class MainMenu extends common.engine.components.menu.MainMenu implements 
             Button b = (Button) tempBox.getChildren().get( 0 );
             b.setOnAction( buttonEvent -> this.notifyObservers( gameName ) );
         }
-    }
-
-    public void setGameContainer(GameContainer gameContainer) {
-        this.gameContainer = gameContainer;
-    }
-
-    public void setGameNames(ArrayList<String> gameNames) {
-        this.gameNames = gameNames;
     }
 
 }

@@ -5,7 +5,7 @@ import de.hsh.alexander.src.actor.ResourcePaths;
 
 import java.util.HashMap;
 
-public class PacMan1 extends PacMan {
+public final class PacMan1 extends PacMan {
 
     private static HashMap<String, Direction> createKeyMap() {
         HashMap<String, Direction> pacMan1KeyMap = new HashMap<>();

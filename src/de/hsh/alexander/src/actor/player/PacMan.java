@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PacMan extends ControlableActor {
 
-    private              SimpleIntegerProperty points               = new SimpleIntegerProperty( 0 );
+    private final        SimpleIntegerProperty points               = new SimpleIntegerProperty( 0 );
     private static final double                start_x              = 100;
     private static final double                start_y              = 100;
     private static final int                   default_speed        = 10;
@@ -85,7 +85,7 @@ public class PacMan extends ControlableActor {
         return xyTuple;
     }
 
-    private void changeFacingDirection( double[] xyTuple ) {
+    private void changeFacingDirection( final double[] xyTuple ) {
         if ( xyTuple[ 0 ] > 0 ) {
             if ( this.facingDirection != Direction.Right ) {
                 this.facingDirection = Direction.Right;
@@ -108,20 +108,24 @@ public class PacMan extends ControlableActor {
         else if ( xyTuple[ 1 ] > 0 ) {
             if ( this.facingDirection != Direction.Down ) {
                 this.facingDirection = Direction.Down;
+                /*
                 if ( this.getScaleY() < 0 ) {
                     //this.scaleImageHeight( -1 );
                     //this.scaleImageWidth( -1 );
                 }
+                */
                 Logger.log( "Facing Direction changed to: " + this.facingDirection );
             }
         }
         else if ( xyTuple[ 1 ] < 0 ) {
             if ( this.facingDirection != Direction.Up ) {
                 this.facingDirection = Direction.Up;
+                /*
                 if ( this.getScaleY() > 0 ) {
                     //this.scaleImageHeight( -1 );
                     //this.scaleImageWidth( -1 );
                 }
+                */
                 Logger.log( "Facing Direction changed to: " + this.facingDirection );
             }
         }

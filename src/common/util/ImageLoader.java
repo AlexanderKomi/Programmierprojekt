@@ -11,7 +11,7 @@ import java.io.InputStream;
 public final class ImageLoader {
 
     public static Image loadImage( final String relativeFilePath ) {
-        InputStream u = ImageLoader.class.getResourceAsStream( relativeFilePath );
+        final InputStream u = ImageLoader.class.getResourceAsStream( relativeFilePath );
         if ( u == null ) {
             throw new NullPointerException( "Image does not exist : " + relativeFilePath );
         }

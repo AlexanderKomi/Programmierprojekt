@@ -50,26 +50,20 @@ public class GameContainer extends FXGameContainer {
             e.printStackTrace();
         }
 
-        mainMenu.setGameNames( games );
         mainMenu.addObserver(this);
         return mainMenu;
     }
 
 
     @Override
-    public void startContainer( String[] args ) {
+    public void startContainer( final String[] args ) {
         launch( args );
     }
 
     @Override
-    public void render( int fps ) {
+    public void render( final int fps ) {
         if ( this.getGameEntryPoints() != null ) {
-            try {
-                this.getGameEntryPoints().render( fps );
-            }
-            catch ( InternalError ie ) {
-                ie.printStackTrace();
-            }
+            this.getGameEntryPoints().render( fps );
         }
     }
 

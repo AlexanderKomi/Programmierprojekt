@@ -2,11 +2,11 @@ package de.hsh.alexander.src.actor;
 
 public final class ResourcePaths {
 
-    public static final String resourceFolderPath = "/de/hsh/alexander/res/";
+    private static final String resourceFolderPath = "/de/hsh/alexander/res/";
 
     public static final class Actor {
 
-        public static final String actorFolderPath = resourceFolderPath + "actor/";
+        static final String actorFolderPath = resourceFolderPath + "actor/";
 
         public static final class Player {
             public static final String directory = actorFolderPath + "player/";
@@ -30,16 +30,16 @@ public final class ResourcePaths {
         }
 
         public static final class LevelElements {
-            public static final String directory = actorFolderPath + "level_elements/";
+            static final String directory = actorFolderPath + "level_elements/";
 
             public static final class Wall {
                 public static final String directory = LevelElements.directory + "wall/";
             }
 
             public static final class SMD {
-                public static final String   directory  = LevelElements.directory + "smd/";
-                public static final String   prefix     = "smd_";
-                public static final String   fileEnding = ".png";
+                static final        String   directory  = LevelElements.directory + "smd/";
+                static final        String   prefix     = "smd_";
+                static final        String   fileEnding = ".png";
                 public static final String[] pictures   = {
                         SMD.directory + prefix + "0" + fileEnding,
                         SMD.directory + prefix + "1" + fileEnding,
@@ -55,9 +55,9 @@ public final class ResourcePaths {
             }
 
             public static final class Fan {
-                public static final String   directory  = LevelElements.directory + "fan/";
-                public static final String   prefix     = "fan_";
-                public static final String   fileEnding = ".png";
+                static final        String   directory  = LevelElements.directory + "fan/";
+                static final        String   prefix     = "fan_";
+                static final        String   fileEnding = ".png";
                 public static final String[] pictures   = {
                         directory + prefix + "0" + fileEnding,
                         directory + prefix + "1" + fileEnding,
@@ -70,7 +70,7 @@ public final class ResourcePaths {
         }
 
         public static final class Collectables {
-            public static final String directory = actorFolderPath + "collectables/";
+            static final String directory = actorFolderPath + "collectables/";
 
             public static final class DataCoin {
                 public static final String directory = Collectables.directory + "data_coin/";

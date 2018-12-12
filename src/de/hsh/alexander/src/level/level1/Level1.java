@@ -13,7 +13,7 @@ import de.hsh.alexander.src.actor.player.PacMan2;
 import de.hsh.alexander.src.level.PacManLevel;
 import javafx.scene.canvas.Canvas;
 
-public class Level1 extends PacManLevel {
+public final class Level1 extends PacManLevel {
 
     private static final String backgroundImage = ResourcePaths.Actor.LevelElements.Backgrounds.microChip;
 
