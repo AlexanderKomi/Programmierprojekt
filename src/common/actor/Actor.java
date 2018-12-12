@@ -107,12 +107,17 @@ abstract public class Actor extends Drawable {
 
     public boolean doesCollide() {
         try {
+            List<Actor> list = Collections.synchronizedList( this.getCollisionActors() );
+            synchronized ( list ) {
+                int size = list.size();
+                for ( int i = 0 ; i < size ; i++ ) {
+                    if ( this.doesCollide( list.get( i ) ) ) {
+                        return true;
+                    }
+                    size = list.size();
+                }
+            }
 
-            for ( Actor a : this.getCollisionActors() ) {
-                if ( this.doesCollide( a ) ) {
-                    return true;
-                }
-                }
 
             return false;
         }
@@ -121,14 +126,14 @@ abstract public class Actor extends Drawable {
             return true;
         }
         catch ( ConcurrentModificationException cme ) {
-            //cme.printStackTrace();
+            cme.printStackTrace();
             //Logger.log(this.getClass() +": Exception : " + " : " + cme.getMessage());
             return true;
         }
 
     }
 
-    public boolean doesCollide( Actor other ) {
+    public synchronized boolean doesCollide( Actor other ) {
         boolean b = CollisionCheck.doesCollide( this, other ) ||
                     CollisionCheck.doesCollide( other, this );
         if ( b ) {

@@ -87,10 +87,15 @@ abstract public class Level extends Observable implements Observer, ILevel {
     }
 
 
-    protected boolean collidesWithPlayer( Actor d ) {
-        for ( ControlableActor controlableActor : getPlayers() ) {
-            if ( controlableActor.doesCollide( d ) ) {
-                return true;
+    protected synchronized boolean collidesWithPlayer( Actor d ) {
+        List<ControlableActor> l = Collections.synchronizedList( getPlayers() );
+        synchronized ( l ) {
+            for ( ControlableActor controlableActor : l ) {
+                synchronized ( controlableActor ) {
+                    if ( controlableActor.doesCollide( d ) ) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -107,23 +112,25 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return false;
     }
 
-    protected boolean collected( Collectable collectable ) {
+    protected synchronized boolean collected( Collectable collectable ) {
         collectable.deleteObservers();
-        players.forEach(
-                p -> {
-                    List<Actor> list = Collections.synchronizedList( p.getCollisionActors() );
-                    synchronized ( list ) {
-                        boolean b = list.remove( collectable );
-                        if ( !b ) {
-                            Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
+        synchronized ( players ) {
+            players.forEach(
+                    p -> {
+                        List<Actor> list = Collections.synchronizedList( p.getCollisionActors() );
+                        synchronized ( list ) {
+                            boolean b = list.remove( collectable );
+                            if ( !b ) {
+                                Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
+                            }
                         }
-                    }
-                } );
-        boolean result = false;
-        synchronized ( collectables ) {
-            result = collectables.remove( collectable );
+                    } );
         }
-        return result;
+        synchronized ( collectables ) {
+            boolean result;
+            result = collectables.remove( collectable );
+            return result;
+        }
     }
 
     protected void addCollectables( Collection<Collectable> c ) {
