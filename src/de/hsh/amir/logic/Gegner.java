@@ -7,9 +7,9 @@ import java.util.List;
 
 public class Gegner extends Collectable {
 
-    private static final double startX = 100;
+    private static final double startX = 200;
     private static final double startY = 10;
-    private static final int changePictureDelay = 15;
+    private static final int changePictureDelay = 1;
     private double speed = 3;
     private int gegnerTyp;
 
