@@ -68,8 +68,8 @@ abstract public class ControlableActor extends Actor {
         return xyTuple;
     }
 
-    protected double[] calculateDirectedSpeed( Direction direction, double movement_speed ) {
-        double[] xyTuple = new double[ 2 ];
+    protected double[] calculateDirectedSpeed( final Direction direction, final double movement_speed ) {
+        final double[] xyTuple = new double[ 2 ];
         if ( direction == Direction.Down ) {
             xyTuple[ 0 ] += 0;
             xyTuple[ 1 ] += movement_speed;
@@ -94,8 +94,6 @@ abstract public class ControlableActor extends Actor {
     public void setKeyMap( HashMap<String, Direction> keyMap ) {
         this.movement.setKeyMap( keyMap );
     }
-
-
 
     public Movement getMovement() {
         return movement;

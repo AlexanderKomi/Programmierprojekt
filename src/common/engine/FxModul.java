@@ -44,8 +44,7 @@ public abstract class FxModul extends Observable implements Observer {
      * @param container belonging observer
      */
     public FxModul(Observer container) {
-        initScene();
-        this.addObserver(Objects.requireNonNull(container));
+        this( container, true );
     }
 
     /***
@@ -85,9 +84,6 @@ public abstract class FxModul extends Observable implements Observer {
         this.setScene(new Scene(new Pane()));
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-    }
     // ----------------------------------- GETTER & SETTER  -----------------------------------
 
     public Scene getScene() {

@@ -41,39 +41,26 @@ abstract public class Level extends Observable implements Observer, ILevel {
             synchronized ( backgroundImage ) {
                 backgroundImage.draw( canvas );
             }
-            synchronized ( npcs ) {
-                npcs.forEach( npc -> {
-                    synchronized ( npc ) {
-                        npc.draw( canvas );
-                    }
-                } );
-            }
-            synchronized ( levelElements ) {
-                for ( LevelElement levelElement : levelElements ) {
-                    synchronized ( levelElement ) {
-                        levelElement.draw( canvas );
-                    }
-                }
-            }
-            synchronized ( collectables ) {
-                for ( Collectable c : collectables ) {
-                    if ( c != null ) {
-                        synchronized ( c ) {
-                            c.draw( canvas );
-                        }
-                    }
-                }
-            }
-            synchronized ( players ) {
-                for ( ControlableActor c : players ) {
-                    synchronized ( c ) {
-                        c.draw( canvas );
-                    }
-                }
-            }
+            this.draw( npcs, canvas );
+            this.draw( levelElements, canvas );
+            this.draw( collectables, canvas );
+            this.draw( players, canvas );
         }
         catch ( ConcurrentModificationException cme ) {
             cme.printStackTrace();
+        }
+    }
+
+    private synchronized <T extends Actor> void draw( final List<T> list, Canvas canvas ) {
+        synchronized ( list ) {
+            int size = list.size();
+            for ( int i = 0 ; i < size ; i++ ) {
+                final T t = list.get( i );
+                if ( t != null ) {
+                    t.draw( canvas );
+                }
+                size = list.size();
+            }
         }
     }
 

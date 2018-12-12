@@ -34,14 +34,14 @@ public class CollisionCheck {
      * @author Alexander Komischke
      * @author Kevin Jeske
      */
-    public static boolean[] isInBounds( double x,
-                                        double y,
-                                        double width,
-                                        double height,
-                                        double canvas_widht,
-                                        double canvas_height,
-                                        double new_x,
-                                        double new_y ) {
+    public static boolean[] isInBounds( final double x,
+                                        final double y,
+                                        final double width,
+                                        final double height,
+                                        final double canvas_widht,
+                                        final double canvas_height,
+                                        final double new_x,
+                                        final double new_y ) {
         boolean[] temp = new boolean[] {
                 false, false
         };
@@ -76,7 +76,7 @@ public class CollisionCheck {
     /**
      * Just a Wrapper.
      * */
-    public static boolean[] isInBounds( double x, double y, double width, double height, Canvas canvas ) {
+    public static boolean[] isInBounds( final double x, final double y, final double width, final double height, Canvas canvas ) {
         return isInBounds( x, y, width, height, canvas.getWidth(), canvas.getHeight(), 0, 0 );
     }
 
@@ -91,7 +91,9 @@ public class CollisionCheck {
      * @author Alex
      * @author Kevin
      */
-    public static boolean[] isInBounds( Drawable a, Canvas canvas, double new_x, double new_y ) {
+    public static boolean[] isInBounds( Drawable a, Canvas canvas,
+                                        final double new_x,
+                                        final double new_y ) {
         return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas.getWidth(), canvas.getHeight(), new_x, new_y );
     }
 
@@ -102,7 +104,11 @@ public class CollisionCheck {
      * @author Alex
      * @author Kevin
      */
-    public static boolean[] isInBounds( Drawable a, double canvas_widht, double canvas_height, double new_x, double new_y ) {
+    public static boolean[] isInBounds( Drawable a,
+                                        final double canvas_widht,
+                                        final double canvas_height,
+                                        final double new_x,
+                                        final double new_y ) {
         return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas_widht, canvas_height, new_x, new_y );
     }
 
@@ -124,8 +130,8 @@ public class CollisionCheck {
         return checkUpperLeftCorner( a.getX(), a.getY(), a.getWidth(), a.getHeight(), b.getX(), b.getY() );
     }
 
-    private static boolean checkUpperLeftCorner( double a_x, double a_y, double a_width, double a_height,
-                                                 double b_x, double b_y ) {
+    private static boolean checkUpperLeftCorner( final double a_x, final double a_y, final double a_width, final double a_height,
+                                                 final double b_x, final double b_y ) {
         if ( a_x <= b_x && a_x + a_width >= b_x ) {
             return a_y <= b_y && a_y + a_height >= b_y;
         }

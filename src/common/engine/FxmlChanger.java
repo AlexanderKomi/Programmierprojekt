@@ -18,7 +18,7 @@ import java.util.Observable;
  */
 public abstract class FxmlChanger extends Observable {
 
-    private FxModul fxModul;
+    private final FxModul fxModul;
 
     /**
      * @param fxModul      The FxModul in which this constructor is called or rather in which the scene to be edited is located.
@@ -28,7 +28,7 @@ public abstract class FxmlChanger extends Observable {
     public FxmlChanger(FxModul fxModul, String fxmlPath, Observable fxController) {
 
         if (fxModul != null && fxmlPath != null && !fxmlPath.equals("") && fxController != null) {
-            setFxModul(fxModul);
+            this.fxModul = fxModul;
             this.addObserver(fxModul);
             init(fxmlPath, fxController);
         } else throw new NullPointerException("\t\tConstructor: FxmlChanger invalid parameters!");
@@ -83,9 +83,5 @@ public abstract class FxmlChanger extends Observable {
 
     public FxModul getFxModul() {
         return this.fxModul;
-    }
-
-    private void setFxModul(FxModul fxModul) {
-        this.fxModul = fxModul;
     }
 }

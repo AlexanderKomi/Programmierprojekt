@@ -25,7 +25,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
     private PacManLevel currentLevel;
 
     public PacManGame() {
-        reset();
+        //reset();
     }
 
     @FXML
@@ -46,7 +46,6 @@ public class PacManGame extends Observable implements Observer, Initializable {
         reset();
         bindLabelsToPoints();
         Logger.log( this.getClass() + ": init executed" );
-
     }
 
     @Override
@@ -72,23 +71,21 @@ public class PacManGame extends Observable implements Observer, Initializable {
             return;
         }
         clearCanvas();
-        this.currentLevel.render( this.gameCanvas, fps );
+        if ( this.currentLevel != null ) {
+            this.currentLevel.render( this.gameCanvas, fps );
+        }
     }
 
     void reset() {
         if ( !initialized ) {
-            this.gameCanvas = new Canvas();
+            return;
         }
-
         this.currentLevel = new Level1( gameCanvas );
-
         this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
         this.gameCanvas.setOnKeyPressed( e -> {
             this.currentLevel.keyboardInput( e );
         } ); // Only fires, when traversable
         this.gameCanvas.setOnKeyReleased( this.currentLevel::keyboardInput ); // Only fires, when traversable
-
-
         this.currentLevel.addObserver( this );
         Logger.log( this.getClass() + ": Resetted game" );
     }

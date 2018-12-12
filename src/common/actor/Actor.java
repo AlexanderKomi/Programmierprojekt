@@ -12,23 +12,23 @@ import java.util.List;
 abstract public class Actor extends Drawable {
 
 
-    Movement movement = new Movement();
+    final   Movement    movement        = new Movement();
     private List<Actor> collisionActors = Collections.synchronizedList( new ArrayList<>() );
 
-    public Actor( String pictureFileName ) {
+    public Actor( final String pictureFileName ) {
         this( pictureFileName, 0, 0 );
     }
 
-    public Actor( String pictureFileName, double x, double y ) {
+    public Actor( final String pictureFileName, double x, double y ) {
         super( pictureFileName, x, y );
     }
 
-    public Actor( String pictureFileName, ArrayList<Actor> collisionActors ) {
+    public Actor( final String pictureFileName, final ArrayList<Actor> collisionActors ) {
         super( pictureFileName );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( String pictureFileName, double x, double y, ArrayList<Actor> collisionActors ) {
+    public Actor( final String pictureFileName, final double x, final double y, ArrayList<Actor> collisionActors ) {
         super( pictureFileName, x, y );
         this.collisionActors = collisionActors;
     }
@@ -51,23 +51,23 @@ abstract public class Actor extends Drawable {
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths, double x, double y, ArrayList<Actor> collisionActors ) {
+    public Actor( List<String> pictureFilePaths, final double x, final double y, ArrayList<Actor> collisionActors ) {
         super( pictureFilePaths, x, y );
         this.collisionActors = collisionActors;
     }
 
     public Actor( List<String> pictureFilePaths,
-                  double x,
-                  double y,
-                  int delay,
+                  final double x,
+                  final double y,
+                  final int delay,
                   ArrayList<Actor> collisionActors ) {
         super( pictureFilePaths, x, y, delay );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( double x,
-                  double y,
-                  int delay,
+    public Actor( final double x,
+                  final double y,
+                  final int delay,
                   ArrayList<Actor> collisionActors,
                   String mustHave,
                   String... pictureFilePaths ) {
@@ -160,7 +160,10 @@ abstract public class Actor extends Drawable {
     }
 
     public boolean addCollidingActor( Actor a ) {
-        return this.collisionActors.add( a );
+        if ( !this.collisionActors.contains( a ) ) {
+            return this.collisionActors.add( a );
+        }
+        return false;
     }
 
 }

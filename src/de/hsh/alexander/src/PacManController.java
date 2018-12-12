@@ -75,9 +75,7 @@ public class PacManController extends GameEntryPoint {
     public void render(int fps) {
         if ( game != null ) {
             if ( game.initialized ) {
-                synchronized ( game ) {
-                    game.render( fps );
-                }
+                game.render( fps );
             }
         }
     }
