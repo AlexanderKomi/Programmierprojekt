@@ -2,6 +2,8 @@ package de.hsh.kevin.logic.myActor;
 
 import de.hsh.kevin.logic.Leben;
 import de.hsh.kevin.logic.Score;
+import de.hsh.kevin.logic.Sound;
+import de.hsh.kevin.logic.enmSounds;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;
@@ -77,6 +79,7 @@ public class PaketManager {
                 if (paket.getPaketTyp() == enmPaketTyp.good) {
                     score.increase();
                 } else {
+                    Sound.playSound(enmSounds.badPaketIgnored);
                     leben.decrease();
                 }
                 toRemove.add(paket);

@@ -1,41 +1,51 @@
 package de.hsh.amir.logic;
 
+import common.actor.Actor;
 import common.actor.Collectable;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class Gegner extends Collectable {
+public class Gegner extends Actor {
 
-    private static final double startX = 100;
+    private static final double startX = 200;
     private static final double startY = 10;
-    private static final int changePictureDelay = 15;
-    private double speed = 3;
+    private static final int changePictureDelay = 1;
+    private static double gegnerSpeed = 3;
     private int gegnerTyp;
 
     //Konstruktoren
-    public Gegner(String pictureFileName, int gegnerTyp) throws FileNotFoundException {
+    public Gegner(String pictureFileName, int gegnerTyp) {
         super(pictureFileName, startX, startY);
         setGegnerTyp(gegnerTyp);
     }
 
-    public Gegner(String pictureFileName, double x, double y, int gegnerTyp) throws FileNotFoundException {
+    public static void setGegnerSpeed(double speed){
+        gegnerSpeed=speed;
+    }
+
+    public Gegner(String pictureFileName, double x, int gegnerTyp) {
+        super(pictureFileName, x, startY);
+        setGegnerTyp(gegnerTyp);
+    }
+
+    public Gegner(String pictureFileName, double x, double y, int gegnerTyp) {
         super(pictureFileName, x, y);
         setGegnerTyp(gegnerTyp);
     }
 
-    public Gegner(List<String> pictureFilePaths, double x, double y, int gegnerTyp) throws FileNotFoundException {
+    public Gegner(List<String> pictureFilePaths, double x, double y, int gegnerTyp) {
         super(pictureFilePaths, x, y, changePictureDelay);
         setGegnerTyp(gegnerTyp);
     }
 
-    public Gegner(double x, double y, int gegnerTyp, String... pictureFilePaths) throws FileNotFoundException {
+    public Gegner(double x, double y, int gegnerTyp, String... pictureFilePaths) {
         super(x, y, changePictureDelay, pictureFilePaths);
         setGegnerTyp(gegnerTyp);
     }
 
     public void move() {
-        setPos(this.getX(), this.getY() + speed);
+        setPos(this.getX(), this.getY() + gegnerSpeed);
     }
 
     /**

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Leertastenklatsche implements Observer {
+public class Leertastenklatsche extends Observable implements Observer {
 
 
     static final String     location = "/de/hsh/Julian/";
@@ -19,13 +19,14 @@ public class Leertastenklatsche implements Observer {
 
     private int score = 0;
     private int leben=3;
-
+    private boolean gamedone=false;
     private      TheDude           thedude;
     private      ArrayList<Enemy>  enemyList       = new ArrayList<>();
 
     public Leertastenklatsche() {
         try {
             initGame();
+
         }
         catch ( FileNotFoundException e ) {
             e.printStackTrace();
@@ -34,7 +35,7 @@ public class Leertastenklatsche implements Observer {
 
     private void initGame() throws FileNotFoundException {
         thedude = new TheDude( WindowConfig.window_width / 2 -75,
-                               WindowConfig.window_height * 0.4
+                               WindowConfig.window_height * 0.73
         );
         thedude.setSpeed( 0 );
     }
@@ -50,7 +51,7 @@ public class Leertastenklatsche implements Observer {
     }
 
     private void createNewEnemies() {
-        if ( timer.elabsedTime() > 2.0d-score/75.0 ) {
+        if ( timer.elabsedTime() > 2.0d-score/50.0 ) {
             timer.resetTimer();
             try {
                 Enemy e = Enemy.createEnemy();
@@ -91,46 +92,70 @@ public class Leertastenklatsche implements Observer {
             if ( !thedude.turnedleft ) {
                 thedude.swapImage();
                 thedude.turnedleft = true;
+
             }
         }
         else if ( code.equals( "RIGHT" ) ) {
             if ( thedude.turnedleft ) {
                 thedude.swapImage();
                 thedude.turnedleft = false;
+
             }
+        }
+        //EASTEREGG ;-))
+        else if ( code.equals( "SPACE" ) ) {
+            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\cat.wav");
         }
     }
 
     @Override
     public void update( Observable o, Object arg ) {
-        if ( o instanceof Enemy ) {
+        if ( o instanceof Enemy &&gamedone==false ) {
             Enemy e = (Enemy) o;
             for ( Enemy enemy : this.enemyList ) {
-                Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
+                //Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
                 if ( enemy.id == e.id ) {
                     this.thedude.getCollisionActors().remove( enemy );
                     enemyList.remove( enemy );
-                    Logger.log( this.getClass() + ": Found enemy with same id" );
+                   // Logger.log( this.getClass() + ": Found enemy with same id" );
                     if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
                         if ( thedude.turnedleft ) {
                             score++;
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
                         }
-                        else
+                        else{
                             leben--;
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\hit.wav");
+                            gameOver();
+                        }
                     }
                     else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
                         if ( !thedude.turnedleft ) {
                             score++;
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
                         }
-                        else
+                        else {
                             leben--;
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\hit.wav");
+                            gameOver();
+                        }
                     }
                     return;
                 }
             }
         }
     }
+    private void gameOver(){
 
+        if(leben<=0 && gamedone ==false){
+            gamedone=true;
+            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\noo.wav");
+            setChanged();
+            notifyObservers("gameover");
+
+
+        }
+    }
     public int getScore() {
         return score;
     }

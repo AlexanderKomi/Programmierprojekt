@@ -5,11 +5,13 @@ import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.Julian.controller.LKStart;
+import de.hsh.Julian.controller.SpielBildschirm_controller;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import sun.rmi.runtime.Log;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -60,20 +62,23 @@ public class LKEntryPoint extends GameEntryPoint {
     public void update(Observable o, Object arg) {
         if (arg instanceof Canvas) {
             this.canvas = (Canvas) arg;
-            Logger.log( this.getClass() + ": init after canvas pass" );
+
             initAfterCanvasPass();
         }
         else if ( arg instanceof String ) {
             String message = (String) arg;
             if ( message.equals( "b_backtomenu" ) ) {
 
-
+                changer.changeScene(LKStart.fxml, new LKStart());
                 exitToMainGUI();
             }
-            else {
+            /*else if(message.equals("b_retry")){
+                changer.changeScene(SpielBildschirm_controller.fxml, new SpielBildschirm_controller());
+            }*/else{
+                Logger.log((String) arg);
                 changer.changeFxml( o, (String) arg );
             }
-            Logger.log( this.getClass() + " : update : " + message );
+           // Logger.log( this.getClass() + " : update : " + message );
         }
         else {
             changer.changeFxml(o, (String) arg);
@@ -82,6 +87,7 @@ public class LKEntryPoint extends GameEntryPoint {
 
     private void initAfterCanvasPass() {
         this.lk = new Leertastenklatsche();
+        lk.addObserver(this);
         initializeGraphicsContext();
         addKeyListener();
         renderable = true;

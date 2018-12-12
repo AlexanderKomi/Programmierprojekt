@@ -14,8 +14,8 @@
             <Image url="@../tounguewag-xlarge-1200x630.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="b_backtomenu" layoutX="454.0" layoutY="240.0" mnemonicParsing="false" text="Back to Main Menu" />
-      <Button fx:id="b_retry" layoutX="454.0" layoutY="200.0" mnemonicParsing="false" text="Retry" />
+      <Button fx:id="b_backtomenu" layoutX="57.0" layoutY="290.0" mnemonicParsing="false" onAction="#button_clicked" text="Back to Main Menu" />
+      <Button fx:id="b_retry" layoutX="57.0" layoutY="232.0" mnemonicParsing="false" onAction="#button_clicked" prefHeight="39.0" prefWidth="178.0" text="Retry" />
       <Label layoutX="57.0" layoutY="14.0" prefHeight="84.0" prefWidth="433.0" text="GAME OVER" textFill="#da0d0d">
          <font>
             <Font size="48.0" />
