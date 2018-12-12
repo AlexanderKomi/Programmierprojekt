@@ -28,14 +28,16 @@ public class GegnerManager implements Observer {
     }
 
     public void erstelleGegner() {
-        Gegner gegner = new Gegner("/de/hsh/amir/resources/enemyFigur.png", 1);
+        Random random = new Random();
+        int zufallsZahl1 = 200 + random.nextInt(800);
+        Gegner gegner = new Gegner("/de/hsh/amir/resources/enemyFigur.png", zufallsZahl1, 1);
         gegner.addObserver(this);
         this.gegnerListe.add(gegner);
     }
 
     /**
      * erstellt minimal einen und maximal fünf Gegner unabhängig
-     * übergebenen Parameter
+     * übergebenen Parameter //TODO
      *
      * @param anzahlGegner
      */
@@ -59,7 +61,7 @@ public class GegnerManager implements Observer {
      */
     public void move(Canvas canvas) {
         Random random = new Random();
-        int zufallsZahl = 200 + random.nextInt(1000);
+        int zufallsZahl = 200 + random.nextInt(800);
         for (Gegner gegner : gegnerListe) {
             gegner.move();
             if (gegner.getY() >= canvas.getHeight()) {

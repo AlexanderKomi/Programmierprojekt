@@ -1,21 +1,31 @@
 package de.hsh.amir.logic;
 
+import common.actor.Actor;
 import common.actor.Collectable;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class Gegner extends Collectable {
+public class Gegner extends Actor {
 
     private static final double startX = 200;
     private static final double startY = 10;
     private static final int changePictureDelay = 1;
-    private double speed = 3;
+    private static double gegnerSpeed = 3;
     private int gegnerTyp;
 
     //Konstruktoren
     public Gegner(String pictureFileName, int gegnerTyp) {
         super(pictureFileName, startX, startY);
+        setGegnerTyp(gegnerTyp);
+    }
+
+    public static void setGegnerSpeed(double speed){
+        gegnerSpeed=speed;
+    }
+
+    public Gegner(String pictureFileName, double x, int gegnerTyp) {
+        super(pictureFileName, x, startY);
         setGegnerTyp(gegnerTyp);
     }
 
@@ -35,7 +45,7 @@ public class Gegner extends Collectable {
     }
 
     public void move() {
-        setPos(this.getX(), this.getY() + speed);
+        setPos(this.getX(), this.getY() + gegnerSpeed);
     }
 
     /**

@@ -2,6 +2,7 @@ package de.hsh.amir.controller;
 
 import common.updates.UpdateCodes;
 import common.util.Logger;
+import de.hsh.amir.logic.Gegner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -40,7 +41,25 @@ public class AmirsMainMenuController extends Observable {
             this.notifyObservers(UpdateCodes.Amir.startGame);
         } else if (id.equals("exitButton")) {
             this.notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
-        } else {
+        } else if (id.equals("level1Button")) {
+            Logger.log(this.getClass() + " : level1 Button");
+            Gegner.setGegnerSpeed(30);
+            level1Button.setDisable(true);
+            level2Button.setDisable(false);
+            level3Button.setDisable(false);
+        } else if (id.equals("level2Button")) {
+            Logger.log(this.getClass() + " : level2 Button");
+            Gegner.setGegnerSpeed(30);
+            level1Button.setDisable(false);
+            level2Button.setDisable(true);
+            level3Button.setDisable(false);
+        } else if (id.equals("level3Button")) {
+            Logger.log(this.getClass() + " : level3 Button");
+            Gegner.setGegnerSpeed(30);
+            level1Button.setDisable(false);
+            level2Button.setDisable(false);
+            level3Button.setDisable(true);
+        }else {
             this.notifyObservers(id);
         }
     }
