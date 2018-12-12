@@ -13,11 +13,11 @@ import java.util.*;
  */
 abstract public class Level extends Observable implements Observer, ILevel {
 
-    private BackgroundImage              backgroundImage = new BackgroundImage();
-    private ArrayList<Actor>             npcs            = new ArrayList<>();
-    private LinkedList<ControlableActor> players         = new LinkedList<>();
-    private ArrayList<LevelElement>      levelElements   = new ArrayList<>();
-    private ArrayList<Collectable>       collectables    = new ArrayList<>();
+    private BackgroundImage        backgroundImage = new BackgroundImage();
+    private List<Actor>            npcs            = Collections.synchronizedList( new ArrayList<>() );
+    private List<ControlableActor> players         = Collections.synchronizedList( new LinkedList<>() );
+    private List<LevelElement>     levelElements   = Collections.synchronizedList( new ArrayList<>() );
+    private List<Collectable>      collectables    = Collections.synchronizedList( new ArrayList<>() );
 
     public Level( Canvas gameCanvas ) {
         reset( gameCanvas );
@@ -38,18 +38,38 @@ abstract public class Level extends Observable implements Observer, ILevel {
     @Override
     public void render( Canvas canvas, int fps ) {
         try {
-            backgroundImage.draw( canvas );
-            npcs.forEach( npc -> npc.draw( canvas ) );
-            for ( LevelElement levelElement : levelElements ) {
-                levelElement.draw( canvas );
+            synchronized ( backgroundImage ) {
+                backgroundImage.draw( canvas );
             }
-            for ( Collectable c : collectables ) {
-                if ( c != null ) {
-                    c.draw( canvas );
+            synchronized ( npcs ) {
+                npcs.forEach( npc -> {
+                    synchronized ( npc ) {
+                        npc.draw( canvas );
+                    }
+                } );
+            }
+            synchronized ( levelElements ) {
+                for ( LevelElement levelElement : levelElements ) {
+                    synchronized ( levelElement ) {
+                        levelElement.draw( canvas );
+                    }
                 }
             }
-            for ( ControlableActor c : players ) {
-                c.draw( canvas );
+            synchronized ( collectables ) {
+                for ( Collectable c : collectables ) {
+                    if ( c != null ) {
+                        synchronized ( c ) {
+                            c.draw( canvas );
+                        }
+                    }
+                }
+            }
+            synchronized ( players ) {
+                for ( ControlableActor c : players ) {
+                    synchronized ( c ) {
+                        c.draw( canvas );
+                    }
+                }
             }
         }
         catch ( ConcurrentModificationException cme ) {
@@ -91,12 +111,19 @@ abstract public class Level extends Observable implements Observer, ILevel {
         collectable.deleteObservers();
         players.forEach(
                 p -> {
-                    boolean b = p.getCollisionActors().remove( collectable );
-                    if ( !b ) {
-                        Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
+                    List<Actor> list = Collections.synchronizedList( p.getCollisionActors() );
+                    synchronized ( list ) {
+                        boolean b = list.remove( collectable );
+                        if ( !b ) {
+                            Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
+                        }
                     }
                 } );
-        return collectables.remove( collectable );
+        boolean result = false;
+        synchronized ( collectables ) {
+            result = collectables.remove( collectable );
+        }
+        return result;
     }
 
     protected void addCollectables( Collection<Collectable> c ) {
@@ -135,19 +162,19 @@ abstract public class Level extends Observable implements Observer, ILevel {
         addCollectables();
     }
 
-    public LinkedList<ControlableActor> getPlayers() {
+    public List<ControlableActor> getPlayers() {
         return players;
     }
 
-    public ArrayList<LevelElement> getLevelElements() {
+    public List<LevelElement> getLevelElements() {
         return levelElements;
     }
 
-    public ArrayList<Actor> getNpcs() {
+    public List<Actor> getNpcs() {
         return npcs;
     }
 
-    public ArrayList<Collectable> getCollectables() {
+    public List<Collectable> getCollectables() {
         return this.collectables;
     }
 
