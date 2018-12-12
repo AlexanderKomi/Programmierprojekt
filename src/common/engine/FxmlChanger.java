@@ -30,19 +30,9 @@ public abstract class FxmlChanger extends Observable {
         if (fxModul != null && fxmlPath != null && !fxmlPath.equals("") && fxController != null) {
             this.fxModul = fxModul;
             this.addObserver(fxModul);
-            init(fxmlPath, fxController);
+            fxController.addObserver( fxModul );
+            this.fxModul.setScene( new Scene( Objects.requireNonNull( loadFxml( fxmlPath, fxController ) ) ) );
         } else throw new NullPointerException("\t\tConstructor: FxmlChanger invalid parameters!");
-    }
-
-    /**
-     * Init method to load a .fxml als starting-Scene.
-     *
-     * @param fxmlpath   Path to the fxml to be loaded
-     * @param controller The controller suitable for the .fxml
-     */
-    private void init(String fxmlpath, Observable controller) {
-        controller.addObserver(getFxModul());
-        getFxModul().setScene(new Scene(Objects.requireNonNull(loadFxml(fxmlpath, controller))));
     }
 
     /***
@@ -81,7 +71,7 @@ public abstract class FxmlChanger extends Observable {
 
     // --- Getter & Setter ----------------------------------------------------------------
 
-    public FxModul getFxModul() {
+    protected FxModul getFxModul() {
         return this.fxModul;
     }
 }

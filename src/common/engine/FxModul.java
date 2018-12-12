@@ -22,24 +22,6 @@ public abstract class FxModul extends Observable implements Observer {
     private Scene loadedScene;      //local scene being worked on.
 
     /***
-     * Default Constructor with no effects.
-     */
-    public FxModul() {
-
-    }
-
-    /**
-     * Constructor with the option to not load a default scene.
-     *
-     * @param b true -> load a default scene, false -> default scene = null;
-     */
-    public FxModul(boolean b) {
-        if (b) {
-            initScene();
-        }
-    }
-
-    /***
      * Constructor with a passed observer object.
      * @param container belonging observer
      */
@@ -54,7 +36,7 @@ public abstract class FxModul extends Observable implements Observer {
      */
     public FxModul(Observer container, boolean b) {
         if (b) {
-            initScene();
+            this.loadedScene = new Scene( new Pane() );
         }
         this.addObserver(Objects.requireNonNull(container));
     }
@@ -64,7 +46,7 @@ public abstract class FxModul extends Observable implements Observer {
      * @param scene
      */
     public FxModul(Scene scene) {
-        this.setScene(Objects.requireNonNull(scene));
+        this.loadedScene = Objects.requireNonNull( scene );
     }
 
     /***
@@ -73,15 +55,8 @@ public abstract class FxModul extends Observable implements Observer {
      * @param controller
      */
     public FxModul(Scene scene, Observer controller) {
-        this.setScene(Objects.requireNonNull(scene));
+        this.loadedScene = Objects.requireNonNull( scene );
         this.addObserver(Objects.requireNonNull(controller));
-    }
-
-    /***
-     * Method to load a default scene.
-     */
-    private void initScene() {
-        this.setScene(new Scene(new Pane()));
     }
 
     // ----------------------------------- GETTER & SETTER  -----------------------------------
