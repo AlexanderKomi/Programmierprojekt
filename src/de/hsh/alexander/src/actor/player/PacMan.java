@@ -109,7 +109,6 @@ public class PacMan extends ControlableActor {
             if ( this.facingDirection != Direction.Down ) {
                 this.facingDirection = Direction.Down;
                 if ( this.getScaleY() < 0 ) {
-                    this.rotate( 90 );
                     //this.scaleImageHeight( -1 );
                     //this.scaleImageWidth( -1 );
                 }
@@ -120,7 +119,6 @@ public class PacMan extends ControlableActor {
             if ( this.facingDirection != Direction.Up ) {
                 this.facingDirection = Direction.Up;
                 if ( this.getScaleY() > 0 ) {
-                    this.rotate( 90 );
                     //this.scaleImageHeight( -1 );
                     //this.scaleImageWidth( -1 );
                 }

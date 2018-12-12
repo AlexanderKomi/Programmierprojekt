@@ -1,7 +1,6 @@
 package de.hsh.Julian;
 
 import common.config.WindowConfig;
-import common.util.Logger;
 import de.hsh.dennis.model.NpcLogic.SpawnTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -69,11 +68,9 @@ public class Leertastenklatsche extends Observable implements Observer {
         for ( Enemy enemy : enemyList ) {
             if ( enemy.getX() > WindowConfig.window_width / 2 ) {
                 enemy.setPos( enemy.getX() - 1.0 - score / 10.0, enemy.getY() );
-                enemy.rotate( 0 );
             }
             else {
                 enemy.setPos( enemy.getX() + 1 + score / 10.0, enemy.getY() );
-                enemy.rotate( 0 );
             }
         }
     }

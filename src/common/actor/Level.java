@@ -64,7 +64,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         }
     }
 
-    protected boolean collidesWithLevelElement( Actor a ) {
+    protected boolean collidesWithLevelElement( final Actor a ) {
         for ( LevelElement levelElement : getLevelElements() ) {
             if ( levelElement.doesCollide( a ) ) {
                 return true;
@@ -99,7 +99,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return false;
     }
 
-    protected synchronized boolean collected( Collectable collectable ) {
+    protected synchronized boolean collected( final Collectable collectable ) {
         collectable.deleteObservers();
         synchronized ( players ) {
             players.forEach(
@@ -113,9 +113,10 @@ abstract public class Level extends Observable implements Observer, ILevel {
                         }
                     } );
         }
-        synchronized ( collectables ) {
-            boolean result;
-            result = collectables.remove( collectable );
+        final List<Collectable> temp = Collections.synchronizedList( collectables );
+        synchronized ( temp ) {
+            boolean result = temp.remove( collectable );
+            this.collectables.retainAll( temp );
             return result;
         }
     }

@@ -19,7 +19,7 @@ import java.util.*;
 abstract public class Drawable extends Observable {
 
     private static int id_counter = 0;
-    public         int id;
+    public final   int id;
 
     private double x;
     private double y;
@@ -34,14 +34,9 @@ abstract public class Drawable extends Observable {
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
 
-    private double outputX;
-    private double outputY;
-    private double outputWidth;
-    private double outputHeight;
-
-    private ImageView        imageView       = new ImageView();
-    private Image            currentImage;
-    private ArrayList<Image> switchingImages = new ArrayList<>();
+    private final ImageView        imageView       = new ImageView();
+    private       Image            currentImage;
+    private       ArrayList<Image> switchingImages = new ArrayList<>();
 
 
     public Drawable( String pictureFileName ) {
@@ -53,14 +48,9 @@ abstract public class Drawable extends Observable {
 
         this.setHeight( this.getCurrentImage().getHeight() );
         this.setWidth( this.getCurrentImage().getWidth() );
-        this.setOutputHeight( this.getHeight() );
-        this.setOutputWidth( this.getWidth() );
 
         this.setX( x );
         this.setY( y );
-        this.setOutputX( x );
-        this.setOutputY( y );
-
         this.id = id_counter;
         id_counter++;
     }
@@ -89,8 +79,6 @@ abstract public class Drawable extends Observable {
     public Drawable( List<String> pictureFilePaths, double x, double y, int delay ) {
         this( x, y, delay );
         this.setSwitchingImages( pictureFilePaths );
-        this.id = id_counter;
-        id_counter++;
     }
 
     public Drawable( double x, double y, int delay, String mustHave, String... pictureFilePaths ) {
@@ -106,9 +94,9 @@ abstract public class Drawable extends Observable {
     private Drawable( double x, double y, int delay ) {
         this.setX( x );
         this.setY( y );
-        this.setOutputX( x );
-        this.setOutputY( y );
         this.setSwitchingDelay( delay );
+        this.id = id_counter;
+        id_counter++;
     }
 
     public Drawable( double x, double y, int delay, String[] pictureFileName ) {
@@ -151,12 +139,10 @@ abstract public class Drawable extends Observable {
     public void scaleImageWidth( double factor ) {
         if ( factor > 0 ) {
             this.width *= factor;
-            this.outputWidth *= factor;
         }
         else {
             this.setX( this.getX() + this.getWidth() );
             this.width *= factor;
-            this.outputWidth *= factor;
         }
         this.scaleX *= factor;
         this.imageView.setFitWidth( scaleX );
@@ -166,11 +152,9 @@ abstract public class Drawable extends Observable {
     public void scaleImageHeight( double factor ) {
         if ( factor > 0 ) {
             this.height *= factor;
-            this.outputHeight *= factor;
         }
         else {
             this.height *= factor;
-            this.outputHeight *= factor;
         }
         this.scaleY *= factor;
         this.imageView.setFitHeight( scaleY );
@@ -257,33 +241,6 @@ abstract public class Drawable extends Observable {
         return temp;
     }
 
-
-    /**
-     * Use with caution!
-     * Rotation is not Thread-safe in JavaFX, if used while multiple Threads are able to access the data!
-     *
-     * @author Alexander Komischke
-     * */
-    @Deprecated
-    public void rotate( double rotate ) {
-        this.imageView.setRotate( this.imageView.getRotate() + rotate );
-        /*
-        try {
-            Platform.runLater( () -> {
-                this.imageView.setRotate( rotate );
-                SnapshotParameters params = new SnapshotParameters();
-                params.setFill( Color.TRANSPARENT );
-                Image temp = this.imageView.snapshot( params, (WritableImage) this.imageView.getImage() );
-                this.setCurrentImage( temp );
-            } );
-        }
-        catch ( IllegalArgumentException | IllegalStateException iae ) {
-            iae.printStackTrace();
-            System.exit( 1 );
-        }
-        */
-    }
-
     @Override
     public boolean equals( Object obj ) {
         if ( obj instanceof Drawable ) {
@@ -339,22 +296,6 @@ abstract public class Drawable extends Observable {
         return this.scaleX;
     }
 
-    public double getOutputWidth() {
-        return outputWidth;
-    }
-
-    public double getOutputHeight() {
-        return outputHeight;
-    }
-
-    public double getOutputX() {
-        return outputX;
-    }
-
-    public double getOutputY() {
-        return outputY;
-    }
-
     public void setPos( double[] pos ) {
         this.setX( pos[ 0 ] );
         this.setY( pos[ 1 ] );
@@ -379,7 +320,6 @@ abstract public class Drawable extends Observable {
 
     public void setX( double x ) {
         this.x = x;
-        this.outputX = x;
     }
 
     public double getY() {
@@ -388,7 +328,6 @@ abstract public class Drawable extends Observable {
 
     public void setY( double y ) {
         this.y = y;
-        this.outputY = y;
     }
 
     public double getHeight() {
@@ -473,27 +412,9 @@ abstract public class Drawable extends Observable {
             if ( !heightIsSet ) {
                 this.setCurrentImage( this.switchingImages.get( 0 ) );
                 this.setWidth( this.currentImage.getWidth() );
-                this.setOutputWidth( this.currentImage.getWidth() );
                 this.setHeight( this.currentImage.getHeight() );
-                this.setOutputHeight( this.currentImage.getHeight() );
                 heightIsSet = true;
             }
         }
-    }
-
-    public void setOutputWidth( double outputWidth ) {
-        this.outputWidth = outputWidth;
-    }
-
-    public void setOutputHeight( double outputHeight ) {
-        this.outputHeight = outputHeight;
-    }
-
-    public void setOutputX( double outputX ) {
-        this.outputX = outputX;
-    }
-
-    public void setOutputY( double outputY ) {
-        this.outputY = outputY;
     }
 }
