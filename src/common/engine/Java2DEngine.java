@@ -15,7 +15,7 @@ public final class Java2DEngine extends Observable implements Runnable {
 
 
     private static final double                 UPDATE_CAP = 1.0 / 60.0;
-    private              Thread                 gameThread;
+    private static       Thread                 gameThread;
     private              GameContainerInterface gameContainer;
     private              boolean                running    = false;
     private              int                    fps;
@@ -26,7 +26,7 @@ public final class Java2DEngine extends Observable implements Runnable {
      * Initializes the AmirsGame Thread, with an instance of this class.
      */
     void init() {
-        this.gameThread = new Thread( this, "Java 2D Engine" );
+        gameThread = new Thread( this, "Java 2D Engine" );
     }
 
     /**
@@ -35,9 +35,9 @@ public final class Java2DEngine extends Observable implements Runnable {
      */
     void start() {
         if ( !this.isRunning() ) {
-            this.setRunning( true );
-            if ( !this.gameThread.isInterrupted() ) {
-                this.gameThread.start();
+            this.running = true;
+            if ( !gameThread.isInterrupted() ) {
+                gameThread.start();
             }
         }
     }
@@ -46,8 +46,8 @@ public final class Java2DEngine extends Observable implements Runnable {
         return this.running;
     }
 
-    void setRunning( boolean running ) {
-        this.running = running;
+    void shutdown() {
+        this.running = false;
     }
 
     /**
@@ -112,9 +112,9 @@ public final class Java2DEngine extends Observable implements Runnable {
      * Interrupts the engine thread.
      */
     private void stop() {
-        if ( this.isRunning() ) {
-            this.setRunning( false );
-            this.gameThread.interrupt();
+        if ( this.running ) {
+            this.running = (false);
+            gameThread.interrupt();
         }
     }
 
@@ -127,7 +127,7 @@ public final class Java2DEngine extends Observable implements Runnable {
      * @return Returns 1 if a new frame is rendered.<br>
      * Returns 0 when cpu idles.
      */
-    private int render( boolean shouldRender ) {
+    private int render( final boolean shouldRender ) {
         if ( shouldRender ) {
 
             // START ------------------------ Render gameContainer ------------------------
@@ -136,7 +136,7 @@ public final class Java2DEngine extends Observable implements Runnable {
             return 1;
         }
         else {
-            if ( !this.gameThread.isInterrupted() ) {
+            if ( !gameThread.isInterrupted() ) {
                 try {
                     Thread.sleep( 1 ); // CPU Idle
                 }

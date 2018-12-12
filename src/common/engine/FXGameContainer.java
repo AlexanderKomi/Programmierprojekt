@@ -92,7 +92,7 @@ public abstract class FXGameContainer extends Container implements Observer {
     @Override
     public void stopContainer() {
         this.setRunning( false );
-        this.getEngine().setRunning( false );
+        this.getEngine().shutdown();
         Platform.exit();
     }
 
