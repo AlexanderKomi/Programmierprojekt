@@ -19,48 +19,61 @@ abstract public class Actor extends Drawable {
         this( pictureFileName, 0, 0 );
     }
 
-    public Actor( final String pictureFileName, double x, double y ) {
+    public Actor( final String pictureFileName,
+                  final double x,
+                  final double y ) {
         super( pictureFileName, x, y );
     }
 
-    public Actor( final String pictureFileName, final ArrayList<Actor> collisionActors ) {
+    public Actor( final String pictureFileName,
+                  final ArrayList<Actor> collisionActors ) {
         super( pictureFileName );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( final String pictureFileName, final double x, final double y, ArrayList<Actor> collisionActors ) {
+    public Actor( final String pictureFileName,
+                  final double x,
+                  final double y,
+                  final ArrayList<Actor> collisionActors ) {
         super( pictureFileName, x, y );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( String mustHavePicture, String... pictureFilePaths ) {
+    public Actor( final String mustHavePicture,
+                  final String... pictureFilePaths ) {
         super( mustHavePicture, pictureFilePaths );
     }
 
-    public Actor( String[] pictureFilePaths ) {
+    public Actor( final String[] pictureFilePaths ) {
         super( pictureFilePaths );
     }
 
-    public Actor( ArrayList<Actor> collisionActors, String mustHavePicture, String... pictureFilePaths ) {
+    public Actor( final ArrayList<Actor> collisionActors,
+                  final String mustHavePicture,
+                  final String... pictureFilePaths ) {
         super( mustHavePicture, pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths, ArrayList<Actor> collisionActors ) {
+    public Actor( final List<String> pictureFilePaths,
+                  final ArrayList<Actor> collisionActors ) {
         super( pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths, final double x, final double y, ArrayList<Actor> collisionActors ) {
+    public Actor( final List<String> pictureFilePaths,
+                  final double x,
+                  final double y,
+                  final ArrayList<Actor> collisionActors ) {
         super( pictureFilePaths, x, y );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths,
+    public Actor( final List<String> pictureFilePaths,
                   final double x,
                   final double y,
                   final int delay,
-                  ArrayList<Actor> collisionActors ) {
+                  final ArrayList<Actor> collisionActors ) {
         super( pictureFilePaths, x, y, delay );
         this.collisionActors = collisionActors;
     }
@@ -68,26 +81,26 @@ abstract public class Actor extends Drawable {
     public Actor( final double x,
                   final double y,
                   final int delay,
-                  ArrayList<Actor> collisionActors,
-                  String mustHave,
-                  String... pictureFilePaths ) {
+                  final ArrayList<Actor> collisionActors,
+                  final String mustHave,
+                  final String... pictureFilePaths ) {
         super( x, y, delay, mustHave, pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 
-    public Actor( List<String> pictureFilePaths ) {
+    public Actor( final List<String> pictureFilePaths ) {
         this( pictureFilePaths, 0, 0, 0 );
     }
 
-    public Actor( List<String> pictureFilePaths, double x, double y, int delay ) {
+    public Actor( final List<String> pictureFilePaths, final double x, final double y, final int delay ) {
         super( pictureFilePaths, x, y, delay );
     }
 
-    public Actor( double x, double y, int delay, String mustHave, String... pictureFilePaths ) {
+    public Actor( final double x, final double y, final int delay, final String mustHave, final String... pictureFilePaths ) {
         super( x, y, delay, mustHave, pictureFilePaths );
     }
 
-    public Actor( String mustHave, List<String> asList, double x, double y, int delay ) {
+    public Actor( String mustHave, List<String> asList, final double x, final double y, final int delay ) {
         super( mustHave, asList, x, y, delay );
     }
 
@@ -96,7 +109,7 @@ abstract public class Actor extends Drawable {
     }
 
     @Override
-    protected double[] beforeDrawing( double[] current_pos, double[] new_pos ) {
+    protected double[] beforeDrawing( final double[] current_pos, final double[] new_pos ) {
         if ( this.doesCollide() ) {
             return current_pos;
         }
@@ -107,7 +120,7 @@ abstract public class Actor extends Drawable {
 
     public boolean doesCollide() {
         try {
-            List<Actor> list = Collections.synchronizedList( this.getCollisionActors() );
+            final List<Actor> list = Collections.synchronizedList( this.getCollisionActors() );
             synchronized ( list ) {
                 int size = list.size();
                 for ( int i = 0 ; i < size ; i++ ) {
@@ -133,17 +146,21 @@ abstract public class Actor extends Drawable {
 
     }
 
-    public synchronized boolean doesCollide( Actor other ) {
-        boolean b = CollisionCheck.doesCollide( this, other ) ||
-                    CollisionCheck.doesCollide( other, this );
+    public synchronized boolean doesCollide( final Actor other ) {
+        final boolean b = CollisionCheck.doesCollide( this, other ) ||
+                          CollisionCheck.doesCollide( other, this );
         if ( b ) {
             if ( other instanceof Collectable ) {
-                Collectable c = (Collectable) other;
+                final Collectable c = (Collectable) other;
                 c.wasCollected( this );
                 return false;
             }
         }
         return b;
+    }
+
+    public void setCollisionActors( List<Actor> list ) {
+        this.collisionActors = list;
     }
 
     // ----------------------------------- GETTER AND SETTER -----------------------------------

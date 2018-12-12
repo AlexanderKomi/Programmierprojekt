@@ -66,7 +66,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
         }
     }
 
-    void render( int fps ) {
+    void render( final int fps ) {
         if ( !initialized ) {
             return;
         }
@@ -82,9 +82,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
         }
         this.currentLevel = new Level1( gameCanvas );
         this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
-        this.gameCanvas.setOnKeyPressed( e -> {
-            this.currentLevel.keyboardInput( e );
-        } ); // Only fires, when traversable
+        this.gameCanvas.setOnKeyPressed( e -> this.currentLevel.keyboardInput( e ) );
         this.gameCanvas.setOnKeyReleased( this.currentLevel::keyboardInput ); // Only fires, when traversable
         this.currentLevel.addObserver( this );
         Logger.log( this.getClass() + ": Resetted game" );

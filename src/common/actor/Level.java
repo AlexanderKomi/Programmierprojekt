@@ -111,11 +111,12 @@ abstract public class Level extends Observable implements Observer, ILevel {
                                 Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
                             }
                         }
+                        p.setCollisionActors( list );
                     } );
         }
         final List<Collectable> temp = Collections.synchronizedList( collectables );
         synchronized ( temp ) {
-            boolean result = temp.remove( collectable );
+            final boolean result = temp.remove( collectable );
             this.collectables.retainAll( temp );
             return result;
         }

@@ -39,11 +39,11 @@ abstract public class Drawable extends Observable {
     private       ArrayList<Image> switchingImages = new ArrayList<>();
 
 
-    public Drawable( String pictureFileName ) {
+    public Drawable( final String pictureFileName ) {
         this( pictureFileName, 0, 0 );
     }
 
-    public Drawable( String pictureFileName, double x, double y ) {
+    public Drawable( final String pictureFileName, final double x, final double y ) {
         this.setCurrentImage( loadPicture( pictureFileName ) );
 
         this.setHeight( this.getCurrentImage().getHeight() );
@@ -55,43 +55,43 @@ abstract public class Drawable extends Observable {
         id_counter++;
     }
 
-    public Drawable( String pictureFile, String... pictureFilePaths ) {
+    public Drawable( final String pictureFile, final String... pictureFilePaths ) {
         this( pictureFile, Arrays.asList( pictureFilePaths ), 0, 0, 0 );
     }
 
-    public Drawable( String[] pictureFilePaths ) {
+    public Drawable( final String[] pictureFilePaths ) {
         this( 0, 0, 0 );
         this.setSwitchingImages( Arrays.asList( pictureFilePaths ) );
     }
 
-    public Drawable( List<String> pictureFilePaths ) {
+    public Drawable( final List<String> pictureFilePaths ) {
         this( pictureFilePaths, 0, 0, 0 );
     }
 
-    public Drawable( List<String> pictureFilePaths, int delay ) {
+    public Drawable( final List<String> pictureFilePaths, final int delay ) {
         this( pictureFilePaths, 0, 0, delay );
     }
 
-    public Drawable( List<String> pictureFilePaths, double x, double y ) {
+    public Drawable( final List<String> pictureFilePaths, final double x, final double y ) {
         this( pictureFilePaths, x, y, 0 );
     }
 
-    public Drawable( List<String> pictureFilePaths, double x, double y, int delay ) {
+    public Drawable( final List<String> pictureFilePaths, final double x, final double y, final int delay ) {
         this( x, y, delay );
         this.setSwitchingImages( pictureFilePaths );
     }
 
-    public Drawable( double x, double y, int delay, String mustHave, String... pictureFilePaths ) {
+    public Drawable( final double x, final double y, final int delay, final String mustHave, final String... pictureFilePaths ) {
         this( Arrays.asList( pictureFilePaths ), x, y, delay );
         this.addSwitchingImage( mustHave );
     }
 
-    public Drawable( String mustHave, List<String> asList, double x, double y, int delay ) {
+    public Drawable( final String mustHave, final List<String> asList, final double x, final double y, final int delay ) {
         this( asList, x, y, delay );
         this.addSwitchingImage( mustHave );
     }
 
-    private Drawable( double x, double y, int delay ) {
+    private Drawable( final double x, final double y, final int delay ) {
         this.setX( x );
         this.setY( y );
         this.setSwitchingDelay( delay );
@@ -99,11 +99,11 @@ abstract public class Drawable extends Observable {
         id_counter++;
     }
 
-    public Drawable( double x, double y, int delay, String[] pictureFileName ) {
+    public Drawable( final double x, final double y, final int delay, final String[] pictureFileName ) {
         this( Arrays.asList( pictureFileName ), x, y, delay );
     }
 
-    private Image loadPicture( String fileName ) {
+    private Image loadPicture( final String fileName ) {
         this.name = fileName;
         if ( !TextureBuffer.contains( fileName ) ) {
             TextureBuffer.addFile( fileName );
@@ -114,7 +114,7 @@ abstract public class Drawable extends Observable {
     /**
      * Switch switchingImages based on buffer implementation.
      */
-    protected void switchImages() {
+    protected synchronized void switchImages() {
         if ( this.switchingImages.isEmpty() || !this.switchImageAutomatically ) {
             return;
         }
@@ -127,7 +127,7 @@ abstract public class Drawable extends Observable {
 
     public void switchToNextImage() {
         this.switchingBuffer = 0;
-        int index = this.switchingImages.indexOf( this.currentImage );
+        final int index = this.switchingImages.indexOf( this.currentImage );
         if ( index < this.switchingImages.size() - 1 ) {
             this.setCurrentImage( this.switchingImages.get( index + 1 ) );
         }
@@ -383,12 +383,11 @@ abstract public class Drawable extends Observable {
     }
 
     public void setCurrentImage( Image currentImage ) {
-        //this.imageView.setSmooth( false );
         this.currentImage = currentImage;
-        this.imageView.setImage( this.currentImage );
+        this.imageView.setImage( this.getCurrentImage() );
     }
 
-    public void setCurrentImage( String filePath ) {
+    public void setCurrentImage( final String filePath ) {
         this.currentImage = loadPicture( filePath );
     }
 
@@ -404,17 +403,14 @@ abstract public class Drawable extends Observable {
         this.getSwitchingImages().add( this.loadPicture( imagePath ) );
     }
 
-    public void setSwitchingImages( List<String> imagePaths ) {
-        boolean heightIsSet = false;
-
+    private void setSwitchingImages( List<String> imagePaths ) {
         for ( String filePath : imagePaths ) {
             this.switchingImages.add( loadPicture( filePath ) );
-            if ( !heightIsSet ) {
-                this.setCurrentImage( this.switchingImages.get( 0 ) );
-                this.setWidth( this.currentImage.getWidth() );
-                this.setHeight( this.currentImage.getHeight() );
-                heightIsSet = true;
-            }
+        }
+        if ( this.switchingImages.size() > 0 ) {
+            this.setCurrentImage( this.switchingImages.get( 0 ) );
+            this.setWidth( this.currentImage.getWidth() );
+            this.setHeight( this.currentImage.getHeight() );
         }
     }
 }

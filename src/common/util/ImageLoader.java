@@ -8,9 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ImageLoader {
+public final class ImageLoader {
 
-    public static Image loadImage( String relativeFilePath ) {
+    public static Image loadImage( final String relativeFilePath ) {
         InputStream u = ImageLoader.class.getResourceAsStream( relativeFilePath );
         if ( u == null ) {
             throw new NullPointerException( "Image does not exist : " + relativeFilePath );
