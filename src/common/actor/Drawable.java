@@ -35,7 +35,6 @@ abstract public class Drawable extends Observable {
     private double  scaleY                   = 1.0;
 
     private final ImageView        imageView       = new ImageView();
-    private       Image            currentImage;
     private       ArrayList<Image> switchingImages = new ArrayList<>();
 
 
@@ -127,7 +126,7 @@ abstract public class Drawable extends Observable {
 
     public void switchToNextImage() {
         this.switchingBuffer = 0;
-        final int index = this.switchingImages.indexOf( this.currentImage );
+        final int index = this.switchingImages.indexOf( this.getCurrentImage() );
         if ( index < this.switchingImages.size() - 1 ) {
             this.setCurrentImage( this.switchingImages.get( index + 1 ) );
         }
@@ -177,10 +176,10 @@ abstract public class Drawable extends Observable {
     }
 
     public void draw( Canvas canvas, double offset_to_new_x, double offset_to_new_y ) {
-        draw( canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight(), offset_to_new_x, offset_to_new_y );
+        draw( canvas, canvas.getWidth(), canvas.getHeight(), offset_to_new_x, offset_to_new_y );
     }
 
-    public void draw( GraphicsContext canvas,
+    public void draw( Canvas canvas,
                       double canvas_width,
                       double canvas_height,
                       double offset_to_new_x,
@@ -199,16 +198,13 @@ abstract public class Drawable extends Observable {
         this.setPos( in_bounds_pos );
         this.setPos( beforeDrawing( old_pos, in_bounds_pos ) ); // Maybe reset ? :)
         switchImages();
-        canvas.drawImage( this.currentImage,
-                          this.x, this.y, this.width, this.height
-                          //,this.outputX, this.outputY, this.outputWidth, this.outputHeight
-                          // This is for the rotation on drawing, but still very buggy
-
-                        );
+        canvas.getGraphicsContext2D().drawImage( this.getCurrentImage(),
+                                                 this.x, this.y, this.width, this.height
+                                               );
     }
 
     public void draw( GraphicsContext gc ) {
-        gc.drawImage( this.currentImage, this.x, this.y, this.width, this.height );
+        gc.drawImage( this.getCurrentImage(), this.x, this.y, this.width, this.height );
     }
 
     /**
@@ -249,7 +245,7 @@ abstract public class Drawable extends Observable {
                    this.getHeight() == d.getHeight() &&
                    this.getWidth() == d.getWidth() &&
                    this.getName().equals( d.getName() ) &&
-                   this.currentImage.equals( d.currentImage )
+                   this.getCurrentImage().equals( d.getCurrentImage() )
                     ;
         }
         return false;
@@ -379,16 +375,15 @@ abstract public class Drawable extends Observable {
     }
 
     public Image getCurrentImage() {
-        return currentImage;
+        return this.imageView.getImage();
     }
 
     public void setCurrentImage( Image currentImage ) {
-        this.currentImage = currentImage;
-        this.imageView.setImage( this.getCurrentImage() );
+        this.imageView.setImage( currentImage );
     }
 
     public void setCurrentImage( final String filePath ) {
-        this.currentImage = loadPicture( filePath );
+        this.imageView.setImage( loadPicture( filePath ) );
     }
 
     public ArrayList<Image> getSwitchingImages() {
@@ -409,8 +404,8 @@ abstract public class Drawable extends Observable {
         }
         if ( this.switchingImages.size() > 0 ) {
             this.setCurrentImage( this.switchingImages.get( 0 ) );
-            this.setWidth( this.currentImage.getWidth() );
-            this.setHeight( this.currentImage.getHeight() );
+            this.setWidth( this.getCurrentImage().getWidth() );
+            this.setHeight( this.getCurrentImage().getHeight() );
         }
     }
 }

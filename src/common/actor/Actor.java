@@ -124,14 +124,15 @@ abstract public class Actor extends Drawable {
             synchronized ( list ) {
                 int size = list.size();
                 for ( int i = 0 ; i < size ; i++ ) {
-                    if ( this.doesCollide( list.get( i ) ) ) {
-                        return true;
+                    final Actor a = list.get( i );
+                    synchronized ( a ) {
+                        if ( this.doesCollide( a ) ) {
+                            return true;
+                        }
                     }
                     size = list.size();
                 }
             }
-
-
             return false;
         }
         catch ( NullPointerException npe ) {
@@ -150,16 +151,18 @@ abstract public class Actor extends Drawable {
         final boolean b = CollisionCheck.doesCollide( this, other ) ||
                           CollisionCheck.doesCollide( other, this );
         if ( b ) {
-            if ( other instanceof Collectable ) {
-                final Collectable c = (Collectable) other;
-                c.wasCollected( this );
-                return false;
+            if ( this instanceof ControlableActor ) {
+                if ( other instanceof Collectable ) {
+                    final Collectable c = (Collectable) other;
+                    c.wasCollected( this );
+                    return false;
+                }
             }
         }
         return b;
     }
 
-    public void setCollisionActors( List<Actor> list ) {
+    public void setCollisionActors( final List<Actor> list ) {
         this.collisionActors = list;
     }
 

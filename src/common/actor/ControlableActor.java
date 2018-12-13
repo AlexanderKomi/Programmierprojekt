@@ -1,7 +1,6 @@
 package common.actor;
 
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 
 import java.util.Arrays;
@@ -62,10 +61,10 @@ abstract public class ControlableActor extends Actor {
     }
 
     public void draw( Canvas canvas ) {
-        this.draw( canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight() );
+        this.draw( canvas, canvas.getWidth(), canvas.getHeight() );
     }
 
-    public void draw( GraphicsContext gc, final double canvas_width, final double canvas_height ) {
+    public void draw( Canvas gc, final double canvas_width, final double canvas_height ) {
         final double[] temp = this.calculateNewPosFromInput();
         super.draw( gc, canvas_width, canvas_height, temp[ 0 ], temp[ 1 ] );
     }

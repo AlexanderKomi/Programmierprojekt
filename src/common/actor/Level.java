@@ -74,8 +74,8 @@ abstract public class Level extends Observable implements Observer, ILevel {
     }
 
 
-    protected synchronized boolean collidesWithPlayer( Actor d ) {
-        List<ControlableActor> l = Collections.synchronizedList( getPlayers() );
+    protected synchronized boolean collidesWithPlayer( final Actor d ) {
+        final List<ControlableActor> l = Collections.synchronizedList( getPlayers() );
         synchronized ( l ) {
             for ( ControlableActor controlableActor : l ) {
                 synchronized ( controlableActor ) {
@@ -88,7 +88,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return false;
     }
 
-    protected boolean collidesWithCollectable( Actor a ) {
+    protected boolean collidesWithCollectable( final Actor a ) {
         for ( Collectable coll : getCollectables() ) {
             if ( coll != null ) {
                 if ( coll.doesCollide( a ) ) {
@@ -105,8 +105,8 @@ abstract public class Level extends Observable implements Observer, ILevel {
         synchronized ( players ) {
             int size = players.size();
             for ( int i = 0 ; i < size ; i++ ) {
-                ControlableActor  c = players.get( i );
-                final List<Actor> l = Collections.synchronizedList( c.getCollisionActors() );
+                final ControlableActor c = players.get( i );
+                final List<Actor>      l = Collections.synchronizedList( c.getCollisionActors() );
                 synchronized ( l ) {
                     boolean b = l.remove( collectable );
                     if ( !b ) {
@@ -126,15 +126,17 @@ abstract public class Level extends Observable implements Observer, ILevel {
         }
     }
 
-    protected void addCollectables( Collection<Collectable> c ) {
-        for ( Collectable collectable : c ) {
-            addCollectable( collectable );
-        }
-    }
-
-    protected boolean addCollectable( Collectable c ) {
+    protected boolean addCollectable( final Collectable c ) {
         c.addObserver( this );
-        players.forEach( player -> player.addCollidingActor( c ) );
+        final List<ControlableActor> players = Collections.synchronizedList( this.players );
+        synchronized ( players ) {
+            int size = players.size();
+            for ( int i = 0 ; i < size ; i++ ) {
+                players.get( i ).addCollidingActor( c );
+                size = players.size();
+            }
+            this.players = players;
+        }
         return this.collectables.add( c );
     }
 
