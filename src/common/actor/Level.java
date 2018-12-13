@@ -101,18 +101,22 @@ abstract public class Level extends Observable implements Observer, ILevel {
 
     protected synchronized boolean collected( final Collectable collectable ) {
         collectable.deleteObservers();
+        final List<ControlableActor> players = Collections.synchronizedList( this.players );
         synchronized ( players ) {
-            players.forEach(
-                    p -> {
-                        List<Actor> list = Collections.synchronizedList( p.getCollisionActors() );
-                        synchronized ( list ) {
-                            boolean b = list.remove( collectable );
-                            if ( !b ) {
-                                Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
-                            }
-                        }
-                        p.setCollisionActors( list );
-                    } );
+            int size = players.size();
+            for ( int i = 0 ; i < size ; i++ ) {
+                ControlableActor  c = players.get( i );
+                final List<Actor> l = Collections.synchronizedList( c.getCollisionActors() );
+                synchronized ( l ) {
+                    boolean b = l.remove( collectable );
+                    if ( !b ) {
+                        Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
+                    }
+                }
+                c.setCollisionActors( l );
+
+                size = players.size();
+            }
         }
         final List<Collectable> temp = Collections.synchronizedList( collectables );
         synchronized ( temp ) {

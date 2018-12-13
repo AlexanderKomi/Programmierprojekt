@@ -59,25 +59,31 @@ abstract public class PacManLevel extends Level {
     @Override
     public void update( Observable o, Object arg ) {
         if ( o instanceof Collectable ) {
-            Collectable c = (Collectable) o;
-            if ( arg instanceof String ) {
-                if ( arg.equals( Collectable.collected ) ) {
-                    coinCollected( c );
+            final Collectable c = (Collectable) o;
+            synchronized ( c ) {
+                if ( arg instanceof String ) {
+                    if ( arg.equals( Collectable.collected ) ) {
+                        coinCollected( c );
+                    }
                 }
             }
+
         }
         else {
             Logger.log( this.getClass() + ": unknown observable=" + o + " , arg=" + arg );
         }
     }
 
-    private void coinCollected( Collectable c ) {
-        Actor a = c.getCollector();
-        if ( a instanceof PacMan ) {
-            PacMan p = (PacMan) a;
-            p.addPoint();
+    private void coinCollected( final Collectable c ) {
+        synchronized ( c ) {
+            final Actor a = c.getCollector();
+            if ( a instanceof PacMan ) {
+                final PacMan p = (PacMan) a;
+                p.addPoint();
+            }
+            this.collected( c );
+
         }
-        this.collected( c );
         if ( this.getCollectables().isEmpty() ) {
             this.setChanged();
             this.notifyObservers( gameFinishedMessage );
