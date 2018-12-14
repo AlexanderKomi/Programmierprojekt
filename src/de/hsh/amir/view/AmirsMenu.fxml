@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="800.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true" smooth="false">
@@ -32,7 +31,7 @@
                   <Font name="System Bold" size="35.0" />
                </font>
             </Button>
-             <Button fx:id="level1Button" mnemonicParsing="false" onAction="#button_clicked" prefHeight="64.0" prefWidth="200.0" text="Level1">
+             <Button fx:id="level1Button" disable="true" mnemonicParsing="false" onAction="#button_clicked" prefHeight="64.0" prefWidth="200.0" text="Level1">
                <VBox.margin>
                   <Insets />
                </VBox.margin>

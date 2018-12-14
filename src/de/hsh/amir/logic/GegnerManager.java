@@ -1,6 +1,6 @@
 package de.hsh.amir.logic;
 
-import common.util.Logger;
+import de.hsh.amir.controller.AmirsMainMenuController;
 import de.hsh.kevin.logic.Score;
 import javafx.scene.canvas.Canvas;
 
@@ -57,16 +57,36 @@ public class GegnerManager implements Observer {
 
     /**
      * Bewegt Gegner jedes mal an einer neuen Position.
+     *
      * @param canvas
      */
     public void move(Canvas canvas) {
         Random random = new Random();
         int zufallsZahl = 200 + random.nextInt(800);
-        for (Gegner gegner : gegnerListe) {
-            gegner.move();
-            if (gegner.getY() >= canvas.getHeight()) {
-                gegner.setY(-30);
-                gegner.setX(zufallsZahl);
+        int levelNumber = AmirsMainMenuController.LEVEL_NUMBER;
+        if (levelNumber == 1) {
+            for (Gegner gegner : gegnerListe) {
+                gegner.move();
+                if (gegner.getY() >= canvas.getHeight()) {
+                    gegner.setY(-30);
+                    gegner.setX(zufallsZahl);
+                }
+            }
+        } else if (levelNumber == 2) {
+            for (Gegner gegner : gegnerListe) {
+                gegner.moveDiagonal();
+                if (gegner.getY() >= canvas.getHeight()) {
+                    gegner.setY(-30);
+                    gegner.setX(zufallsZahl);
+                }
+            }
+        } else {
+            for (Gegner gegner : gegnerListe) {
+                gegner.moveDiagonal();
+                if (gegner.getY() >= canvas.getHeight()) {
+                    gegner.setY(-30);
+                    gegner.setX(zufallsZahl);
+                }
             }
         }
     }

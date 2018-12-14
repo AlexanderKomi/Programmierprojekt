@@ -1,13 +1,11 @@
 package de.hsh.amir.controller;
 
 import common.updates.UpdateCodes;
-import common.util.Logger;
 import de.hsh.amir.logic.Gegner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.Observable;
@@ -15,6 +13,9 @@ import java.util.Observable;
 public class AmirsMainMenuController extends Observable {
 
     public static final String fxml = "view/AmirsMenu.fxml";
+    public static final int GEGNER_SPEED = 3;
+    public static int LEVEL_NUMBER = 1;
+
     @FXML
     private VBox vbox_1;
 
@@ -42,26 +43,35 @@ public class AmirsMainMenuController extends Observable {
         } else if (id.equals("exitButton")) {
             this.notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
         } else if (id.equals("level1Button")) {
-            Logger.log(this.getClass() + " : level1 Button");
-            Gegner.setGegnerSpeed(30);
+            setGegnerSpeed(GEGNER_SPEED);
             level1Button.setDisable(true);
             level2Button.setDisable(false);
             level3Button.setDisable(false);
+            LEVEL_NUMBER = 1;
         } else if (id.equals("level2Button")) {
-            Logger.log(this.getClass() + " : level2 Button");
-            Gegner.setGegnerSpeed(30);
+            setGegnerSpeed(2*GEGNER_SPEED);
             level1Button.setDisable(false);
             level2Button.setDisable(true);
             level3Button.setDisable(false);
+            LEVEL_NUMBER = 2;
         } else if (id.equals("level3Button")) {
-            Logger.log(this.getClass() + " : level3 Button");
-            Gegner.setGegnerSpeed(30);
+            setGegnerSpeed(2.5*GEGNER_SPEED);
             level1Button.setDisable(false);
             level2Button.setDisable(false);
             level3Button.setDisable(true);
-        }else {
+            LEVEL_NUMBER = 3;
+        } else {
             this.notifyObservers(id);
         }
+    }
+
+    /**
+     * Setzt Gegnergeschwindigkeit global auf den übergebenen Wert.
+     *
+     * @param speed
+     */
+    private void setGegnerSpeed(double speed) {
+        Gegner.setGegnerSpeed(speed);
     }
 
     private String getId(ActionEvent event) {
