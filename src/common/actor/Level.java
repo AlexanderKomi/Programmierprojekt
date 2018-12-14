@@ -24,15 +24,21 @@ abstract public class Level extends Observable implements Observer, ILevel {
     }
 
     private void addCollision() {
-        levelElements.forEach(
-                levelElement -> players.forEach(
-                        pacMan -> pacMan.addCollidingActor( levelElement ) ) );
+        synchronized ( this.levelElements ) {
+            this.levelElements.forEach(
+                    levelElement -> players.forEach(
+                            pacMan -> pacMan.addCollidingActor( levelElement ) ) );
+
+        }
     }
 
     private void addCollectables() {
-        collectables.forEach(
-                collectable -> players.forEach(
-                        player -> player.addCollidingActor( collectable ) ) );
+        synchronized ( this.collectables ) {
+            this.collectables.forEach(
+                    collectable -> players.forEach(
+                            player -> player.addCollidingActor( collectable ) ) );
+
+        }
     }
 
     @Override
@@ -188,7 +194,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         this.backgroundImage.setCurrentImage( filepath );
     }
 
-    protected void setBackgroundImage( String filepath, int width, int height ) {
+    protected void setBackgroundImage( final String filepath, final int width, final int height ) {
         this.backgroundImage.setCurrentImage( filepath );
         this.backgroundImage.setWidth( width );
         this.backgroundImage.setHeight( height );

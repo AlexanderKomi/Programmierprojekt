@@ -21,11 +21,11 @@ public final class Level1 extends PacManLevel {
 
     @Override
     public void createLevel( Canvas gameCanvas ) {
-        Logger.log( this.getClass() + ": create Level" );
         setBackgroundImage( backgroundImage, 950, 800 );
         addPlayers();
         addLevelElements( gameCanvas );
         createCollectables( gameCanvas );
+        Logger.log( this.getClass() + ": created Level" );
     }
 
     private void createCollectables( Canvas gameCanvas ) {
@@ -53,18 +53,20 @@ public final class Level1 extends PacManLevel {
     }
 
     private void addLevelElements( Canvas gameCanvas ) {
+
         Fan f = new Fan( 200, 50 );
+
         addLevelElement( f );
 
-        for ( int y = 0 ; y < WindowConfig.window_height ; y = y + 200 ) {
-            for ( int x = 0 ; x < WindowConfig.window_width ; x = x + 200 ) {
+        int smd_offset = 200;
+
+        for ( int y = 0 ; y < WindowConfig.window_height ; y = y + smd_offset ) {
+            for ( int x = 0 ; x < WindowConfig.window_width ; x = x + smd_offset ) {
                 SMD       smd = new SMD( x, y );
-                boolean[] xy  = CollisionCheck.isInBounds( smd, gameCanvas );
-                if ( xy[ 0 ] && xy[ 1 ] ) {
-                    if ( !collidesWithPlayer( smd ) ) {
-                        if ( !collidesWithLevelElement( smd ) ) {
-                            addLevelElement( smd );
-                        }
+                synchronized ( smd ) {
+                    boolean[] xy = CollisionCheck.isInBounds( smd, gameCanvas );
+                    if ( xy[ 0 ] && xy[ 1 ] ) {
+                        addLevelElement( smd );
                     }
                 }
             }

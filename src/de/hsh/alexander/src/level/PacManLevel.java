@@ -3,6 +3,7 @@ package de.hsh.alexander.src.level;
 import common.actor.Actor;
 import common.actor.Collectable;
 import common.actor.Level;
+import common.actor.LevelElement;
 import common.util.Logger;
 import de.hsh.alexander.src.actor.collectables.DataCoin;
 import de.hsh.alexander.src.actor.player.PacMan;
@@ -33,6 +34,7 @@ abstract public class PacManLevel extends Level {
                     new DataCoin( x, y )
                                );
         } );
+        Logger.log( this.getClass() + ": Resettet Level" );
     }
 
     public SimpleIntegerProperty getPacMan1Property() {
@@ -91,5 +93,15 @@ abstract public class PacManLevel extends Level {
         else {
             Logger.log( this.getClass() + ": Still " + this.getCollectables().size() + " to collect." );
         }
+    }
+
+    @Override
+    protected boolean addLevelElement( LevelElement levelElement ) {
+        if ( !collidesWithPlayer( levelElement ) ) {
+            if ( !collidesWithLevelElement( levelElement ) ) {
+                return super.addLevelElement( levelElement );
+            }
+        }
+        return false;
     }
 }
