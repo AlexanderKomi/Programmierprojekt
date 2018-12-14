@@ -4,6 +4,7 @@ import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import de.hsh.kevin.TIFxmlChanger;
 import de.hsh.kevin.logic.Score;
+import javafx.application.Platform;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -51,7 +52,7 @@ public class TIController extends GameEntryPoint {
 
     public void render(int fps) {
         if (game != null) {
-            game.render(fps);
+            Platform.runLater( () -> game.render( fps ) );
         }
     }
 

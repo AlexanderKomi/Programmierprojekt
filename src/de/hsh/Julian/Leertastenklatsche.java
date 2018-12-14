@@ -2,6 +2,7 @@ package de.hsh.Julian;
 
 import common.config.WindowConfig;
 import de.hsh.dennis.model.NpcLogic.SpawnTimer;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -41,12 +42,14 @@ public class Leertastenklatsche extends Observable implements Observer {
 
     void render( Canvas gc ) {
         createNewEnemies();
-        enemyList.forEach( enemy -> {
-            enemy.draw( gc );
-        } );
         updateEnemies();
-        thedude.draw( gc );
         renderScore( gc );
+        Platform.runLater( () -> {
+            enemyList.forEach( enemy -> {
+                enemy.draw( gc );
+            } );
+            thedude.draw( gc );
+        } );
     }
 
     private void createNewEnemies() {

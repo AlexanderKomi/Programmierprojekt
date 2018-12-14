@@ -2,16 +2,14 @@ package de.hsh.Julian;
 
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
-import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.Julian.controller.LKStart;
-import de.hsh.Julian.controller.SpielBildschirm_controller;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import sun.rmi.runtime.Log;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -53,8 +51,10 @@ public class LKEntryPoint extends GameEntryPoint {
 
     public void render(int fps) {
         if(renderable) {
-            gc.clearRect(0, 0, WindowConfig.window_width, WindowConfig.window_height);
-            lk.render( this.canvas );
+            Platform.runLater( () -> {
+                gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
+                lk.render( this.canvas );
+            } );
         }
     }
 

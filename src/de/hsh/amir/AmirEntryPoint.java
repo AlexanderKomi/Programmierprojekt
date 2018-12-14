@@ -6,6 +6,7 @@ import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.amir.controller.AmirGameController;
 import de.hsh.amir.controller.AmirsMainMenuController;
+import javafx.application.Platform;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -55,7 +56,9 @@ public class AmirEntryPoint extends GameEntryPoint {
     @Override
     public void render(int fps) {
         if ( initialized ) {
-            amirGame.render( fps );
+            Platform.runLater( () -> {
+                amirGame.render( fps );
+            } );
         }
     }
 
