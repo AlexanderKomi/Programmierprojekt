@@ -17,8 +17,8 @@ public final class Java2DEngine extends Observable implements Runnable {
     private static final double                 UPDATE_CAP = 1.0 / 60.0;
     private static       Thread                 gameThread;
     private final        GameContainerInterface gameContainer;
-    private              boolean                running    = false;
-    private              int                    fps;
+    private static       boolean                running    = false;
+    static               int                    fps;
 
     /**
      * Must be called before start().
@@ -34,9 +34,9 @@ public final class Java2DEngine extends Observable implements Runnable {
      * Use configMainMenu once before start.
      * Only starts the gameContainer thread.
      */
-    void start() {
+    final void start() {
         if ( !this.isRunning() ) {
-            this.running = true;
+            running = true;
             if ( !gameThread.isInterrupted() ) {
                 gameThread.start();
             }
@@ -44,11 +44,11 @@ public final class Java2DEngine extends Observable implements Runnable {
     }
 
     private boolean isRunning() {
-        return this.running;
+        return running;
     }
 
     void shutdown() {
-        this.running = false;
+        running = false;
     }
 
     /**
@@ -80,9 +80,9 @@ public final class Java2DEngine extends Observable implements Runnable {
 
 
         boolean shouldRender;
-        this.running = true;
+        running = true;
 
-        while ( this.running ) {
+        while ( running ) {
             shouldRender = false;
 
             // Needed for CPU idle time and rendering
@@ -98,7 +98,7 @@ public final class Java2DEngine extends Observable implements Runnable {
 
                 if ( frame_time >= 1 ) {
                     frame_time = 0;
-                    this.fps = frames;
+                    fps = frames;
                     frames = 0;
                 }
 
@@ -113,8 +113,8 @@ public final class Java2DEngine extends Observable implements Runnable {
      * Interrupts the engine thread.
      */
     private void stop() {
-        if ( this.running ) {
-            this.running = (false);
+        if ( running ) {
+            running = (false);
             gameThread.interrupt();
         }
     }
@@ -128,11 +128,11 @@ public final class Java2DEngine extends Observable implements Runnable {
      * @return Returns 1 if a new frame is rendered.<br>
      * Returns 0 when cpu idles.
      */
-    private int render( final boolean shouldRender ) {
+    private byte render( final boolean shouldRender ) {
         if ( shouldRender ) {
 
             // START ------------------------ Render gameContainer ------------------------
-            this.gameContainer.render(this.fps);
+            this.gameContainer.render( fps );
             // STOP  ------------------------ Render gameContainer ------------------------
             return 1;
         }
@@ -147,10 +147,6 @@ public final class Java2DEngine extends Observable implements Runnable {
             }
         }
         return 0;
-    }
-
-    int getFps() {
-        return this.fps;
     }
 
 }

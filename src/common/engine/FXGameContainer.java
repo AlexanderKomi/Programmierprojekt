@@ -19,8 +19,8 @@ import java.util.Observer;
  */
 public abstract class FXGameContainer extends Container implements Observer {
 
-    private        Stage             stage;
-    private        GameEntryPoints   gameEntryPoints = new GameEntryPoints(); // Tracks all the gameEntryPoints
+    private        Stage           stage;
+    private static GameEntryPoints gameEntryPoints = new GameEntryPoints(); // Tracks all the gameEntryPoints
     //Engine properties
 
     private common.MainMenu menu;
@@ -96,7 +96,7 @@ public abstract class FXGameContainer extends Container implements Observer {
         Platform.exit();
     }
 
-    public Stage getStage() {
+    private Stage getStage() {
         return this.stage;
     }
 
@@ -111,7 +111,7 @@ public abstract class FXGameContainer extends Container implements Observer {
             throw new IllegalArgumentException( "GameEntryPoints are null" );
         }
         else {
-            this.gameEntryPoints = gameEntryPoints;
+            FXGameContainer.gameEntryPoints = gameEntryPoints;
         }
     }
 

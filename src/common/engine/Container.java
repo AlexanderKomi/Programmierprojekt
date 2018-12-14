@@ -20,7 +20,7 @@ public abstract class Container extends Application
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
 
-    void startEngine() {
+    final void startEngine() {
         this.setRunning( true );
         this.getEngine().start();
     }
@@ -29,7 +29,7 @@ public abstract class Container extends Application
         return Container.fxApplicationLaunched;
     }
 
-    static void setLaunched( boolean value ) {
+    static void setLaunched( final boolean value ) {
         Container.fxApplicationLaunched = value;
     }
 
@@ -39,9 +39,5 @@ public abstract class Container extends Application
 
     public synchronized void setRunning( boolean running ) {
         this.running = running;
-    }
-
-    protected int getFPS() {
-        return this.engine.getFps();
     }
 }
