@@ -29,7 +29,7 @@ abstract public class Drawable extends Observable {
     private String name;
 
     private int     switchingBuffer          = 0;
-    private int     switchingDelay           = 0;
+    private double  switchingDelay           = 0;
     private boolean switchImageAutomatically = true;
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
@@ -358,11 +358,11 @@ abstract public class Drawable extends Observable {
         this.switchingBuffer = switchingBuffer;
     }
 
-    public int getSwitchingDelay() {
+    public double getSwitchingDelay() {
         return switchingDelay;
     }
 
-    public void setSwitchingDelay( int switchingDelay ) {
+    public void setSwitchingDelay( double switchingDelay ) {
         this.switchingDelay = switchingDelay;
     }
 

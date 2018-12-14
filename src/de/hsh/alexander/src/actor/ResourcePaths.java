@@ -9,32 +9,32 @@ public final class ResourcePaths {
         static final String actorFolderPath = resourceFolderPath + "actor/";
 
         public static final class Player {
-            public static final String directory = actorFolderPath + "player/";
+            static final String directory = actorFolderPath + "player/";
 
             public static final class PacMan {
-                public static final String   pacman1Directory = Player.directory + "pacman1/";
+                static final String pacman1Directory = Player.directory + "pacman1/";
+                static final String file_prefix      = "pacman";
+                static final String file_type        = ".png";
+
                 public static final String[] pacman1Pictures  = {
-                        pacman1Directory + "pacman1_0.png",
-                        pacman1Directory + "pacman1_1.png",
-                        pacman1Directory + "pacman1_2.png",
-                        pacman1Directory + "pacman1_3.png",
+                        pacman1Directory + file_prefix + "1_0" + file_type,
+                        pacman1Directory + file_prefix + "1_1" + file_type,
+                        pacman1Directory + file_prefix + "1_2" + file_type,
+                        pacman1Directory + file_prefix + "1_3" + file_type,
                         };
-                public static final String   pacman2Directory = Player.directory + "pacman2/";
+
+                static final        String   pacman2Directory = Player.directory + "pacman2/";
                 public static final String[] pacman2Pictures  = {
-                        pacman2Directory + "pacman2_0.png",
-                        pacman2Directory + "pacman2_1.png",
-                        pacman2Directory + "pacman2_2.png",
-                        pacman2Directory + "pacman2_3.png",
+                        pacman2Directory + file_prefix + "2_0" + file_type,
+                        pacman2Directory + file_prefix + "2_1" + file_type,
+                        pacman2Directory + file_prefix + "2_2" + file_type,
+                        pacman2Directory + file_prefix + "2_3" + file_type,
                         };
             }
         }
 
         public static final class LevelElements {
             static final String directory = actorFolderPath + "level_elements/";
-
-            public static final class Wall {
-                public static final String directory = LevelElements.directory + "wall/";
-            }
 
             public static final class SMD {
                 static final        String   directory  = LevelElements.directory + "smd/";
@@ -49,7 +49,7 @@ public final class ResourcePaths {
             }
 
             public static final class Backgrounds {
-                public static final String directory     = LevelElements.directory + "backgrounds/";
+                static final        String directory     = LevelElements.directory + "backgrounds/";
                 public static final String leeresFenster = Backgrounds.directory + "leeresFenster.png";
                 public static final String microChip     = Backgrounds.directory + "chip.jpg";
             }
@@ -73,7 +73,23 @@ public final class ResourcePaths {
             static final String directory = actorFolderPath + "collectables/";
 
             public static final class DataCoin {
-                public static final String directory = Collectables.directory + "data_coin/";
+                static final        String   data_coin_dir    = Collectables.directory + "data_coin/";
+                static final        String   file_prefix      = "data_coin_";
+                static final        String   file_type        = ".png";
+                public static final String[] pictureFilePaths = new String[] {
+                        data_coin_dir + file_prefix + "00" + file_type,
+                        data_coin_dir + file_prefix + "01" + file_type,
+                        data_coin_dir + file_prefix + "02" + file_type,
+                        data_coin_dir + file_prefix + "03" + file_type,
+                        data_coin_dir + file_prefix + "04" + file_type,
+                        data_coin_dir + file_prefix + "05" + file_type,
+                        data_coin_dir + file_prefix + "06" + file_type,
+                        data_coin_dir + file_prefix + "07" + file_type,
+                        data_coin_dir + file_prefix + "08" + file_type,
+                        data_coin_dir + file_prefix + "09" + file_type,
+                        data_coin_dir + file_prefix + "10" + file_type,
+                        data_coin_dir + file_prefix + "11" + file_type
+                };
             }
         }
 

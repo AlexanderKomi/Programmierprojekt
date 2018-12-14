@@ -54,15 +54,14 @@ public final class Level1 extends PacManLevel {
 
     private void addLevelElements( Canvas gameCanvas ) {
 
-        Fan f = new Fan( 200, 50 );
-
-        addLevelElement( f );
+        addLevelElement( new Fan( 200, 50 ) );
+        addLevelElement( new Fan( 500, 50 ) );
 
         int smd_offset = 200;
 
-        for ( int y = 0 ; y < WindowConfig.window_height ; y = y + smd_offset ) {
+        for ( int y = 0 ; y < WindowConfig.window_height ; y = y + smd_offset )
             for ( int x = 0 ; x < WindowConfig.window_width ; x = x + smd_offset ) {
-                SMD       smd = new SMD( x, y );
+                SMD smd = new SMD( x, y );
                 synchronized ( smd ) {
                     boolean[] xy = CollisionCheck.isInBounds( smd, gameCanvas );
                     if ( xy[ 0 ] && xy[ 1 ] ) {
@@ -70,7 +69,6 @@ public final class Level1 extends PacManLevel {
                     }
                 }
             }
-        }
     }
 
     private void addPlayers() {

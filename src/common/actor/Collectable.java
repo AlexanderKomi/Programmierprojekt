@@ -23,6 +23,12 @@ abstract public class Collectable extends Actor {
         super( x, y, delay, pictureFilePaths );
     }
 
+    protected Collectable( double x, double y, int delay, double scale, String... pictureFilePaths ) {
+        super( x, y, delay, pictureFilePaths );
+        this.scaleImage( scale );
+    }
+
+
     public void wasCollected( Actor collector ) {
         this.collector = collector;
         this.setChanged();

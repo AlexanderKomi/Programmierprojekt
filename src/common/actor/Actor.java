@@ -135,28 +135,20 @@ abstract public class Actor extends Drawable {
             }
             return false;
         }
-        catch ( NullPointerException npe ) {
+        catch ( NullPointerException | ConcurrentModificationException npe ) {
             npe.printStackTrace();
             return true;
         }
-        catch ( ConcurrentModificationException cme ) {
-            cme.printStackTrace();
-            //Logger.log(this.getClass() +": Exception : " + " : " + cme.getMessage());
-            return true;
-        }
-
     }
 
     public synchronized boolean doesCollide( final Actor other ) {
         final boolean b = CollisionCheck.doesCollide( this, other ) ||
                           CollisionCheck.doesCollide( other, this );
         if ( b ) {
-            if ( this instanceof ControlableActor ) {
-                if ( other instanceof Collectable ) {
-                    final Collectable c = (Collectable) other;
-                    c.wasCollected( this );
-                    return false;
-                }
+            if ( this instanceof ControlableActor && other instanceof Collectable ) {
+                final Collectable c = (Collectable) other;
+                c.wasCollected( this );
+                return false;
             }
         }
         return b;
