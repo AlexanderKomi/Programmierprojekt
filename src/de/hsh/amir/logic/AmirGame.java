@@ -25,23 +25,23 @@ public class AmirGame {
 
     public void render(int fps) {
         timer++;
-        if(timer==120){
+        if (timer == 120) {
             gegnerManager.erstelleGegner(4);
-            timer=0;
+            timer = 0;
         }
         collisionGegnerSpieler();
         gegnerManager.move(canvas);
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         spielfigur.draw(canvas);
         gegnerManager.draw(canvas);
-        if(spielGewonnen()){
+        if (spielGewonnen()) {
             //TODO
         }
     }
 
-    private boolean spielGewonnen(){
+    private boolean spielGewonnen() {
         int punkte = points.getScore();
-        if(punkte==10){
+        if (punkte == 10) {
             return true;
         }
         return false;
@@ -57,7 +57,7 @@ public class AmirGame {
             if (spielfigur.doesCollide(gegner)) {
                 points.increase();
                 toRemove.add(gegner);
-                Logger.log(this.getClass()+" : bin in collisionGegnerSpiler");
+                Logger.log(this.getClass() + " : bin in collisionGegnerSpiler");
             }
         }
 
