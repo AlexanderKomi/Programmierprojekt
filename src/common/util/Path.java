@@ -1,5 +1,7 @@
 package common.util;
 
+import de.hsh.alexander.src.actor.ResourcePaths;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,8 +16,9 @@ public final class Path {
 
     public static void main( String[] args ) {
         //standAlone( args );
-
-        Logger.log( "Dir : " + getExecutionLocation(), Path.getAllFileNames() );
+        Logger.log( "Relative Path : " +
+                    Path.getRessourceFromPath( ResourcePaths.Actor.LevelElements.Condensator.picture ).toExternalForm() );
+        //Logger.log( "Dir : " + getExecutionLocation(), Path.getAllFileNames() );
     }
 
     public static String[] getAllFileNames() {
@@ -176,17 +179,9 @@ public final class Path {
      */
     public static URL getRessourceFromPath( String filePath ) {
         URL    result;
-        String execLoc = Path.getExecutionLocation();
-
-        if ( execLoc.endsWith( "jar" ) ) {
-            execLoc = filePath;
-        }
-        else {
-            execLoc += filePath;
-        }
-        result = Path.class.getResource( execLoc );
+        result = Path.class.getResource( filePath );
         if ( result == null ) {
-            throw new NullPointerException( "File does not exist : " + execLoc );
+            throw new NullPointerException( "File does not exist : " + filePath );
         }
 
         return result;

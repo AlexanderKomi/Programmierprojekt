@@ -2,6 +2,7 @@ package de.hsh.Julian;
 
 import common.config.WindowConfig;
 import common.util.Logger;
+import common.util.PlaySound;
 import de.hsh.dennis.model.NpcLogic.SpawnTimer;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
