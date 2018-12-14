@@ -54,6 +54,12 @@ public final class ResourcePaths {
                 public static final String microChip     = Backgrounds.directory + "chip.jpg";
             }
 
+            public static final class Condensator {
+                static final        String directory = LevelElements.directory + "condensator/";
+                public static final String picture   = directory + "Condensator.png";
+
+            }
+
             public static final class Fan {
                 static final        String   directory  = LevelElements.directory + "fan/";
                 static final        String   prefix     = "fan_";

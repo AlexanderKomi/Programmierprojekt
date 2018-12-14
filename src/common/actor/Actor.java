@@ -108,6 +108,8 @@ abstract public class Actor extends Drawable {
         super( x, y, delay, pictureFileName );
     }
 
+    public Actor( double x, double y, double scale, String picturePath ) {super( x, y, scale, picturePath );}
+
     @Override
     protected double[] beforeDrawing( final double[] current_pos, final double[] new_pos ) {
         if ( this.doesCollide() ) {

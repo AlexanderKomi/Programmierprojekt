@@ -28,6 +28,10 @@ abstract public class Collectable extends Actor {
         this.scaleImage( scale );
     }
 
+    protected Collectable( double x, double y, double scale, String picturePath ) {
+        super( x, y, scale, picturePath );
+        this.scaleImage( scale );
+    }
 
     public void wasCollected( Actor collector ) {
         this.collector = collector;

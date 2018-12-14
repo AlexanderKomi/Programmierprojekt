@@ -1,9 +1,7 @@
 package de.hsh.alexander.src.level;
 
-import common.actor.Actor;
-import common.actor.Collectable;
-import common.actor.Level;
-import common.actor.LevelElement;
+import common.actor.*;
+import common.config.WindowConfig;
 import common.util.Logger;
 import de.hsh.alexander.src.actor.collectables.DataCoin;
 import de.hsh.alexander.src.actor.player.PacMan;
@@ -62,14 +60,11 @@ abstract public class PacManLevel extends Level {
     public void update( Observable o, Object arg ) {
         if ( o instanceof Collectable ) {
             final Collectable c = (Collectable) o;
-            synchronized ( c ) {
-                if ( arg instanceof String ) {
-                    if ( arg.equals( Collectable.collected ) ) {
-                        coinCollected( c );
-                    }
+            if ( arg instanceof String ) {
+                if ( arg.equals( Collectable.collected ) ) {
+                    coinCollected( c );
                 }
             }
-
         }
         else {
             Logger.log( this.getClass() + ": unknown observable=" + o + " , arg=" + arg );
@@ -77,15 +72,13 @@ abstract public class PacManLevel extends Level {
     }
 
     private void coinCollected( final Collectable c ) {
-        synchronized ( c ) {
-            final Actor a = c.getCollector();
-            if ( a instanceof PacMan ) {
-                final PacMan p = (PacMan) a;
-                p.addPoint();
-            }
-            this.collected( c );
-
+        final Actor a = c.getCollector();
+        if ( a instanceof PacMan ) {
+            final PacMan p = (PacMan) a;
+            p.addPoint();
         }
+        this.collected( c );
+
         if ( this.getCollectables().isEmpty() ) {
             this.setChanged();
             this.notifyObservers( gameFinishedMessage );
@@ -93,6 +86,28 @@ abstract public class PacManLevel extends Level {
         else {
             Logger.log( this.getClass() + ": Still " + this.getCollectables().size() + " to collect." );
         }
+    }
+
+    protected void createDataCoins( Canvas gameCanvas ) {
+        for ( int y = 0 ; y < WindowConfig.window_height ; y += 50 ) {
+            for ( int x = 0 ; x < WindowConfig.window_width ; x += 50 ) {
+                final DataCoin  d  = new DataCoin( x, y );
+                final boolean[] xy = CollisionCheck.isInBounds( d, gameCanvas );
+                if ( xy[ 0 ] && xy[ 1 ] ) {
+                    addCollectable( d );
+                }
+            }
+        }
+    }
+
+    @Override
+    protected boolean addCollectable( Collectable c ) {
+        if ( !collidesWithPlayer( c ) ) {
+            if ( !collidesWithLevelElement( c ) ) {
+                return super.addCollectable( c );
+            }
+        }
+        return false;
     }
 
     @Override

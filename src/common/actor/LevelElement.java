@@ -35,4 +35,9 @@ abstract public class LevelElement extends Actor {
     public LevelElement( final double x, final double y, final int delay, final String... pictureFilePaths ) {
         super( x, y, delay, pictureFilePaths );
     }
+
+    protected LevelElement( double x, double y, String picturePath, double scale ) {
+        super( x, y, scale, picturePath );
+        this.scaleImage( scale );
+    }
 }

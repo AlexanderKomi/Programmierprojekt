@@ -102,6 +102,11 @@ abstract public class Drawable extends Observable {
         this( Arrays.asList( pictureFileName ), x, y, delay );
     }
 
+    public Drawable( double x, double y, double scale, String picturePath ) {
+        this( picturePath, x, y );
+        this.scaleImage( scale );
+    }
+
     private Image loadPicture( final String fileName ) {
         this.name = fileName;
         if ( !TextureBuffer.contains( fileName ) ) {
@@ -163,6 +168,10 @@ abstract public class Drawable extends Observable {
     public void scaleImage( double factor ) {
         scaleImageHeight( factor );
         scaleImageWidth( factor );
+    }
+
+    public void rotate( double degree ) {
+        this.imageView.setRotate( this.imageView.getRotate() + degree );
     }
 
     // ---------------------------------- START DRAW ----------------------------------
