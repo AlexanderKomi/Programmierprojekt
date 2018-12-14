@@ -1,12 +1,12 @@
 package de.hsh.Julian;
 
 import common.config.WindowConfig;
+import common.util.Logger;
 import de.hsh.dennis.model.NpcLogic.SpawnTimer;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -24,16 +24,10 @@ public class Leertastenklatsche extends Observable implements Observer {
     private      ArrayList<Enemy>  enemyList       = new ArrayList<>();
 
     public Leertastenklatsche() {
-        try {
-            initGame();
-
-        }
-        catch ( FileNotFoundException e ) {
-            e.printStackTrace();
-        }
+        initGame();
     }
 
-    private void initGame() throws FileNotFoundException {
+    private void initGame() {
         thedude = new TheDude( WindowConfig.window_width / 2 -75,
                                WindowConfig.window_height * 0.73
         );
@@ -43,8 +37,8 @@ public class Leertastenklatsche extends Observable implements Observer {
     void render( Canvas gc ) {
         createNewEnemies();
         updateEnemies();
-        renderScore( gc );
         Platform.runLater( () -> {
+            renderScore( gc );
             enemyList.forEach( enemy -> {
                 enemy.draw( gc );
             } );
@@ -55,15 +49,10 @@ public class Leertastenklatsche extends Observable implements Observer {
     private void createNewEnemies() {
         if ( timer.elabsedTime() > 2.0d-score/50.0 ) {
             timer.resetTimer();
-            try {
-                Enemy e = Enemy.createEnemy();
-                e.addObserver( this );
-                thedude.addCollidingActor( e );
-                enemyList.add( e );
-            }
-            catch ( FileNotFoundException e ) {
-                e.printStackTrace();
-            }
+            Enemy e = Enemy.createEnemy();
+            e.addObserver( this );
+            thedude.addCollidingActor( e );
+            enemyList.add( e );
         }
     }
 
@@ -88,36 +77,36 @@ public class Leertastenklatsche extends Observable implements Observer {
     }
 
     void parseInput( String code ) {
-        if ( code.equals( "LEFT" ) ) {
-            if ( !thedude.turnedleft ) {
-                thedude.swapImage();
-                thedude.turnedleft = true;
-
-            }
-        }
-        else if ( code.equals( "RIGHT" ) ) {
-            if ( thedude.turnedleft ) {
-                thedude.swapImage();
-                thedude.turnedleft = false;
-
-            }
-        }
-        //EASTEREGG ;-))
-        else if ( code.equals( "SPACE" ) ) {
-            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\cat.wav");
+        switch ( code ) {
+            case "LEFT":
+                if ( !thedude.turnedleft ) {
+                    thedude.swapImage();
+                    thedude.turnedleft = true;
+                }
+                break;
+            case "RIGHT":
+                if ( thedude.turnedleft ) {
+                    thedude.swapImage();
+                    thedude.turnedleft = false;
+                }
+                break;
+            //EASTEREGG ;-))
+            case "SPACE":
+                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\cat.wav" );
+                break;
         }
     }
 
     @Override
     public void update( Observable o, Object arg ) {
-        if ( o instanceof Enemy &&gamedone==false ) {
+        if ( o instanceof Enemy && !gamedone ) {
             Enemy e = (Enemy) o;
             for ( Enemy enemy : this.enemyList ) {
                 //Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
                 if ( enemy.id == e.id ) {
                     this.thedude.getCollisionActors().remove( enemy );
                     enemyList.remove( enemy );
-                   // Logger.log( this.getClass() + ": Found enemy with same id" );
+                    Logger.log( this.getClass() + ": Found enemy with same id" );
                     if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
                         if ( thedude.turnedleft ) {
                             score++;
@@ -147,13 +136,11 @@ public class Leertastenklatsche extends Observable implements Observer {
     }
     private void gameOver(){
 
-        if(leben<=0 && gamedone ==false){
+        if ( leben <= 0 && !gamedone ) {
             gamedone=true;
             PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\noo.wav");
             setChanged();
             notifyObservers("gameover");
-
-
         }
     }
     public int getScore() {

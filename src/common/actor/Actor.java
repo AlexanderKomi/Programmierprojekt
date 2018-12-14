@@ -147,7 +147,7 @@ abstract public class Actor extends Drawable {
         final boolean b = CollisionCheck.doesCollide( this, other ) ||
                           CollisionCheck.doesCollide( other, this );
         if ( b ) {
-            if ( this instanceof ControlableActor && other instanceof Collectable ) {
+            if ( other instanceof Collectable ) {
                 final Collectable c = (Collectable) other;
                 c.wasCollected( this );
                 return false;

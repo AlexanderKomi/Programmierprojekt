@@ -53,8 +53,9 @@ public class LKEntryPoint extends GameEntryPoint {
         if(renderable) {
             Platform.runLater( () -> {
                 gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
-                lk.render( this.canvas );
+
             } );
+            lk.render( this.canvas );
         }
     }
 
