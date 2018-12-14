@@ -13,8 +13,7 @@ public abstract class Container extends Application
     private       boolean      running = false;
 
     Container() {
-        this.engine = new Java2DEngine();
-        this.getEngine().setGameContainer( this ); // This must be in every class, which is an FXGameContainer.
+        this.engine = new Java2DEngine( this );// This must be in every class, which is an FXGameContainer.
     }
 
     public Java2DEngine getEngine() {return this.engine;}
@@ -23,7 +22,6 @@ public abstract class Container extends Application
 
     void startEngine() {
         this.setRunning( true );
-        this.getEngine().init();
         this.getEngine().start();
     }
 

@@ -16,16 +16,17 @@ public final class Java2DEngine extends Observable implements Runnable {
 
     private static final double                 UPDATE_CAP = 1.0 / 60.0;
     private static       Thread                 gameThread;
-    private              GameContainerInterface gameContainer;
+    private final        GameContainerInterface gameContainer;
     private              boolean                running    = false;
     private              int                    fps;
 
     /**
      * Must be called before start().
      * <p>
-     * Initializes the AmirsGame Thread, with an instance of this class.
+     * Initializes the Game Thread, with an instance of this class.
      */
-    void init() {
+    public Java2DEngine( GameContainerInterface container ) {
+        this.gameContainer = container;
         gameThread = new Thread( this, "Java 2D Engine" );
     }
 
@@ -150,10 +151,6 @@ public final class Java2DEngine extends Observable implements Runnable {
 
     int getFps() {
         return this.fps;
-    }
-
-    <T extends Container> void setGameContainer( T fxgame ) {
-        this.gameContainer = fxgame;
     }
 
 }
