@@ -10,6 +10,7 @@ import de.hsh.alexander.src.actor.player.PacMan2;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.util.Observable;
 
@@ -24,16 +25,19 @@ abstract public class PacManLevel extends Level {
     @Override
     public void reset( Canvas gameCanvas ) {
         super.reset( gameCanvas );
-        gameCanvas.setOnMouseClicked( clickEvent -> {
-            double x = clickEvent.getX();
-            double y = clickEvent.getY();
-            Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
-            this.addCollectable(
-                    new DataCoin( x, y )
-                               );
-        } );
+        gameCanvas.setOnMouseClicked( this::onMouseClick );
         Logger.log( this.getClass() + ": Resettet Level" );
         isGameFinished();
+    }
+
+    private void onMouseClick( final MouseEvent clickEvent ) {
+        double x = clickEvent.getX();
+        double y = clickEvent.getY();
+        Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
+        this.addCollectable(
+                new DataCoin( x, y )
+                           );
+
     }
 
     public SimpleIntegerProperty getPacMan1Property() {
@@ -73,10 +77,12 @@ abstract public class PacManLevel extends Level {
     }
 
     private void coinCollected( final Collectable c ) {
-        final Actor a = c.getCollector();
-        if ( a instanceof PacMan ) {
-            final PacMan p = (PacMan) a;
-            p.addPoint();
+        if ( c instanceof DataCoin ) {
+            final Actor a = c.getCollector();
+            if ( a instanceof PacMan ) {
+                final PacMan p = (PacMan) a;
+                p.addPoint();
+            }
         }
         this.collected( c );
 
@@ -85,8 +91,8 @@ abstract public class PacManLevel extends Level {
         }
     }
 
-    private boolean isGameFinished() {
-        if ( this.getCollectables().isEmpty() ) {
+    protected boolean isGameFinished() {
+        if ( this.getCollectables().size() == 0 ) {
             this.setChanged();
             this.notifyObservers( gameFinishedMessage );
             return true;
@@ -100,7 +106,7 @@ abstract public class PacManLevel extends Level {
                 final DataCoin  d  = new DataCoin( x, y );
                 final boolean[] xy = CollisionCheck.isInBounds( d, gameCanvas );
                 if ( xy[ 0 ] && xy[ 1 ] ) {
-                    addCollectable( d );
+                    boolean created = addCollectable( d );
                 }
             }
         }

@@ -85,6 +85,8 @@ public final class ResourcePaths {
         public static final class Collectables {
             static final String directory = actorFolderPath + "collectables/";
 
+            public static final String invisiblePicture = directory + "Empty.png";
+
             public static final class DataCoin {
                 static final        String   data_coin_dir    = Collectables.directory + "data_coin/";
                 static final        String   file_prefix      = "data_coin_";

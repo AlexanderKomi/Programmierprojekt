@@ -33,6 +33,9 @@ abstract public class Collectable extends Actor {
         this.scaleImage( scale );
     }
 
+    public Collectable( double x, double y, String invisiblePictures ) {this( invisiblePictures, x, y );}
+
+
     public void wasCollected( Actor collector ) {
         this.collector = collector;
         this.setChanged();

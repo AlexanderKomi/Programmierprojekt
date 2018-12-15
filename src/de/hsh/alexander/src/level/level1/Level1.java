@@ -2,6 +2,7 @@ package de.hsh.alexander.src.level.level1;
 
 import common.actor.Collectable;
 import common.config.WindowConfig;
+import de.hsh.alexander.src.actor.collectables.Invisible;
 import de.hsh.alexander.src.actor.level_elements.Condensator;
 import de.hsh.alexander.src.actor.level_elements.Fan;
 import de.hsh.alexander.src.actor.level_elements.SMD;
@@ -22,7 +23,13 @@ public final class Level1 extends PacManLevel {
         setBackgroundImage( microChip, 950, 800 );
         addPlayers();
         addLevelElements( gameCanvas );
+        addEasterEgg( gameCanvas );
         createDataCoins( gameCanvas );
+    }
+
+    private void addEasterEgg( Canvas gameCanvas ) {
+
+        addCollectable( new Invisible( 30, 30 ) );
     }
 
     @Override
@@ -32,6 +39,7 @@ public final class Level1 extends PacManLevel {
         }
         return false;
     }
+
 
     private void addLevelElements( Canvas gameCanvas ) {
 
@@ -62,18 +70,14 @@ public final class Level1 extends PacManLevel {
         }
 
 
-        addCondensators_y( gameCanvas, 285, 580, 19, 525 );
-        addCondensators_x( gameCanvas, 545, 805, 19, 705 );
-
         final int  end       = 580;
         final byte increment = 19;
 
+        addCondensators_y( gameCanvas, 285, end, increment, 525 );
+        addCondensators_x( gameCanvas, 545, 805, increment, 705 );
+
+
         addLevelElement( gameCanvas, new Condensator( 525 + increment, end + increment ) );
-
-
-        final int end2 = 900;
-
-
     }
 
     private void addCondensators_y( Canvas gameCanvas,

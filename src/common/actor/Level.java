@@ -176,6 +176,9 @@ abstract public class Level extends Observable implements Observer, ILevel {
         addCollectables();
     }
 
+
+    protected abstract boolean isGameFinished();
+
     public List<ControlableActor> getPlayers() {
         return players;
     }

@@ -14,6 +14,11 @@ public class Spielfeld extends Level{
     }
 
     @Override
+    protected boolean isGameFinished() {
+        return false;
+    }
+
+    @Override
     public void createLevel( Canvas gameCanvas ) {
 
     }
