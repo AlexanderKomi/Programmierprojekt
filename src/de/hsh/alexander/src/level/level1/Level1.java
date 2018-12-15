@@ -1,8 +1,6 @@
 package de.hsh.alexander.src.level.level1;
 
 import common.actor.Collectable;
-import common.actor.CollisionCheck;
-import common.actor.LevelElement;
 import common.config.WindowConfig;
 import de.hsh.alexander.src.actor.level_elements.Condensator;
 import de.hsh.alexander.src.actor.level_elements.Fan;
@@ -38,7 +36,7 @@ public final class Level1 extends PacManLevel {
     private void addLevelElements( Canvas gameCanvas ) {
 
         addLevelElement( new Fan( 200, 50 ) );
-        addLevelElement( new Fan( 300, 50 ) );
+        addLevelElement( new Fan( 200, 375, 5 ) );
 
         fillPins( gameCanvas );
         addSMDs( gameCanvas );
@@ -57,30 +55,50 @@ public final class Level1 extends PacManLevel {
 
     private void fillPins( Canvas gameCanvas ) {
 
-        addLevelElement( new Condensator( 200, 600, 1 ) );
+        addLevelElement( gameCanvas, new Condensator( 200, 600, 1 ) );
 
         for ( int i = 350 ; i < 500 ; i += 40 ) {
-            addLevelElement( new Condensator( 700, i, 0 ) );
+            addLevelElement( gameCanvas, new Condensator( 700, i, 0 ) );
         }
 
+
+        addCondensators_y( gameCanvas, 285, 580, 19, 525 );
+        addCondensators_x( gameCanvas, 545, 805, 19, 705 );
 
         final int  end       = 580;
         final byte increment = 19;
 
-        for ( int y = 285 ; y < end ; y += increment ) {
-            addLevelElement( gameCanvas, new Condensator( 525, y ) );
-            addLevelElement( gameCanvas, new Condensator( 525 + increment, y ) );
-        }
         addLevelElement( gameCanvas, new Condensator( 525 + increment, end + increment ) );
+
+
+        final int end2 = 900;
+
+
     }
 
-    private boolean addLevelElement( Canvas gameCanvas, final LevelElement levelElement ) {
-        boolean[] xy = CollisionCheck.isInBounds( levelElement, gameCanvas );
-        if ( xy[ 0 ] && xy[ 1 ] ) {
-            return super.addLevelElement( levelElement );
+    private void addCondensators_y( Canvas gameCanvas,
+                                    final int start,
+                                    final int end,
+                                    final int increment,
+                                    final int x ) {
+        for ( int y = start ; y < end ; y += increment ) {
+            addLevelElement( gameCanvas, new Condensator( x, y ) );
+            addLevelElement( gameCanvas, new Condensator( x + increment, y ) );
         }
-        return false;
     }
+
+    private void addCondensators_x( Canvas gameCanvas,
+                                    final int start,
+                                    final int end,
+                                    final int increment,
+                                    final int y ) {
+        for ( int x = start ; x < end ; x += increment ) {
+            addLevelElement( gameCanvas, new Condensator( x, y ) );
+            addLevelElement( gameCanvas, new Condensator( x + increment, y ) );
+        }
+    }
+
+
 
     private void addPlayers() {
         addPlayer( new PacMan1( 250, 250 ) );

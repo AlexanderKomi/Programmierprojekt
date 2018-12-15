@@ -38,6 +38,14 @@ abstract public class Level extends Observable implements Observer, ILevel {
         }
     }
 
+    protected boolean addLevelElement( Canvas gameCanvas, final LevelElement levelElement ) {
+        boolean[] xy = CollisionCheck.isInBounds( levelElement, gameCanvas );
+        if ( xy[ 0 ] && xy[ 1 ] ) {
+            return addLevelElement( levelElement );
+        }
+        return false;
+    }
+
     @Override
     public synchronized void deleteObservers() {
         this.backgroundImage.deleteObservers();
