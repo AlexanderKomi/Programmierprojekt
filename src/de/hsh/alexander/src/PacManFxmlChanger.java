@@ -4,24 +4,27 @@ import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.updates.UpdateCodes;
 import common.util.Logger;
+import javafx.application.Platform;
 
 import java.util.Observable;
 
-public class PacManFxmlChanger extends FxmlChanger {
+public final class PacManFxmlChanger extends FxmlChanger {
 
     private static final String fxmlPackage = "view/";
 
-    PacManFxmlChanger( FxModul fxModul, String fxmlPath, Observable fxController ) {
+    PacManFxmlChanger( FxModul fxModul, final String fxmlPath, Observable fxController ) {
         super( fxModul, fxmlPackage + fxmlPath, fxController );
     }
 
     @Override
-    public void changeScene( String fxmlLocation, Observable controller ) {
-        super.changeScene( fxmlPackage + fxmlLocation, controller );
+    public void changeScene( final String fxmlLocation, Observable controller ) {
+        Platform.runLater( () -> {
+            super.changeScene( fxmlPackage + fxmlLocation, controller );
+        } );
     }
 
     @Override
-    public void changeFxml( Observable o, String msg ) {
+    public void changeFxml( Observable o, final String msg ) {
         switch (msg) {
             case UpdateCodes.PacMan.startGame:
                 this.changeScene( PacManGame.fxml, o );

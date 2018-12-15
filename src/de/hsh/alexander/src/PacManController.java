@@ -8,7 +8,7 @@ import common.util.Logger;
 import java.util.Observable;
 import java.util.Observer;
 
-public class PacManController extends GameEntryPoint {
+public final class PacManController extends GameEntryPoint {
 
     private final PacManFxmlChanger changer;
     private       PacManGame        game;
@@ -17,7 +17,7 @@ public class PacManController extends GameEntryPoint {
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
-        this.changer = new PacManFxmlChanger( this, PacManMenu.fxml, pacManMenu );
+        changer = new PacManFxmlChanger( this, PacManMenu.fxml, pacManMenu );
     }
 
     /**
@@ -33,8 +33,10 @@ public class PacManController extends GameEntryPoint {
                     break;
                 case UpdateCodes.PacMan.mainMenu:
                     Logger.log( "-------------------MAIN MENU----------------------" );
-                    this.game.delete();
-                    this.game = null;
+                    if ( this.game != null ) {
+                        this.game.delete();
+                        this.game = null;
+                    }
                     changer.changeFxml( pacManMenu, UpdateCodes.PacMan.mainMenu );
                     exitToMainGUI();
                     break;

@@ -10,15 +10,15 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class PacManEndScreen extends Observable implements Initializable {
+public final class PacManEndScreen extends Observable implements Initializable {
 
     public static final String  fxml        = "PacManEndScreen.fxml";
     private             boolean initialized = false;
 
     @FXML
-    public Label player1PointsLabel;
+    private Label player1PointsLabel;
     @FXML
-    public Label player2PointsLabel;
+    private Label player2PointsLabel;
 
 
     @FXML
@@ -39,7 +39,7 @@ public class PacManEndScreen extends Observable implements Initializable {
         Logger.log( this.getClass() + " : initialized" );
     }
 
-    public void afterInitialization( int player1Points, int player2Points ) {
+    void afterInitialization( final int player1Points, final int player2Points ) {
         if ( !initialized ) {
             Logger.log( new IllegalStateException( "Not initialized, but should be." ) );
             return;

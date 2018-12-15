@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.Observable;
 
-public class PacManMenu extends Observable {
+public final class PacManMenu extends Observable {
 
     public static final String fxml = "PacManMenu.fxml";
 

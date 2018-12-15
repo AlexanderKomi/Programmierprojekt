@@ -17,16 +17,12 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class PacManGame extends Observable implements Observer, Initializable {
+public final class PacManGame extends Observable implements Observer, Initializable {
 
     public static final String fxml = "PacManGame.fxml";
     boolean initialized = false;
 
     private PacManLevel currentLevel;
-
-    public PacManGame() {
-        //reset();
-    }
 
     @FXML
     private Canvas gameCanvas;
@@ -71,8 +67,8 @@ public class PacManGame extends Observable implements Observer, Initializable {
             return;
         }
         Platform.runLater( () -> {
-            clearCanvas();
             if ( this.currentLevel != null ) {
+                clearCanvas();
                 this.currentLevel.render( this.gameCanvas, fps );
             }
         } );
@@ -120,7 +116,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
         super.deleteObservers();
     }
 
-    public synchronized void delete() {
+    synchronized void delete() {
         this.deleteObservers();
         this.currentLevel = null;
     }

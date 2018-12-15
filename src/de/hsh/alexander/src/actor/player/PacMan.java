@@ -21,16 +21,16 @@ public class PacMan extends ControlableActor {
 
     private Direction facingDirection = Direction.Left;
 
-    public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) {
+    public PacMan( final String pictureFileName, final HashMap<String, Direction> keyMap ) {
         this( pictureFileName, start_x, start_y, keyMap );
     }
 
-    public PacMan( String pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) {
+    public PacMan( final String pictureFileName, final double x, final double y, final HashMap<String, Direction> keyMap ) {
         super( pictureFileName, x, y, keyMap );
         this.setSpeed( default_speed );
     }
 
-    public PacMan( String[] pictureFileName, HashMap<String, Direction> keyMap ) {
+    public PacMan( final String[] pictureFileName, final HashMap<String, Direction> keyMap ) {
         this( start_x, start_y, keyMap, pictureFileName );
     }
 
@@ -53,17 +53,17 @@ public class PacMan extends ControlableActor {
         this.setSpeed( default_speed );
     }
 
-    public PacMan( HashMap<String, Direction> keyMap, String[] pictureFileName ) {
+    public PacMan( final HashMap<String, Direction> keyMap, final String[] pictureFileName ) {
         this( Arrays.asList( pictureFileName ), start_x, start_y, keyMap );
     }
 
-    public PacMan( HashMap<String, Direction> keyMap, String mustHave, String[] pictureFileName ) {
+    public PacMan( final HashMap<String, Direction> keyMap, final String mustHave, final String[] pictureFileName ) {
         this( start_x, start_y, keyMap, mustHave, pictureFileName );
     }
 
 
     @Override
-    protected double[] calculateDirectedSpeed( Direction direction, double movement_speed ) {
+    protected double[] calculateDirectedSpeed( final Direction direction, final double movement_speed ) {
         double[] xyTuple = new double[ 2 ];
         if ( direction == Direction.Down ) {
             xyTuple[ 0 ] = 0;
@@ -149,15 +149,7 @@ public class PacMan extends ControlableActor {
         return this.points;
     }
 
-    public int getPoints() {
-        return points.get();
-    }
-
     public void addPoint() {
         points.set( points.get() + 1 );
-    }
-
-    public void resetPoints() {
-        this.points.set( 0 );
     }
 }
