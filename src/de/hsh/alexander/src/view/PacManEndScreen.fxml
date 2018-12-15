@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -25,6 +26,7 @@
                 <VBox.margin>
                     <Insets/>
                 </VBox.margin>
+                <Canvas fx:id="player1Canvas" height="32.0" width="32.0"/>
                 <Label text="Spieler 1: ">
                     <font>
                         <Font size="24.0"/>
@@ -42,6 +44,7 @@
                 </Label>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="SOMETIMES">
+                <Canvas fx:id="player2Canvas" height="32.0" width="32.0"/>
                 <Label text="Spieler 2: ">
                     <font>
                         <Font size="24.0"/>

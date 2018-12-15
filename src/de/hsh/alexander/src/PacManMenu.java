@@ -58,10 +58,12 @@ public final class PacManMenu extends Observable implements Initializable {
         }
         Platform.runLater( () -> {
             dataCoinCanvas.getGraphicsContext2D().clearRect( 0, 0, dataCoinCanvas.getWidth(), dataCoinCanvas.getHeight() );
+
+            d.draw( dataCoinCanvas );
+
             player1Canvas.getGraphicsContext2D().clearRect( 0, 0, player1Canvas.getWidth(), player1Canvas.getHeight() );
             player2Canvas.getGraphicsContext2D().clearRect( 0, 0, player2Canvas.getWidth(), player2Canvas.getHeight() );
 
-            d.draw( dataCoinCanvas );
             pacMan1.draw( player1Canvas );
             pacMan2.draw( player2Canvas );
 
@@ -72,7 +74,7 @@ public final class PacManMenu extends Observable implements Initializable {
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
 
-        d = new DataCoin( dataCoinCanvas.getWidth() / 2 - 25, dataCoinCanvas.getHeight() / 2 - 25 );
+        d = new DataCoin( 0, 0, 2 );
         pacMan1 = new PacMan1( 0, 0 );
         pacMan2 = new PacMan2( 0, 0 );
 

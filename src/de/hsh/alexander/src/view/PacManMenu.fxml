@@ -51,7 +51,7 @@
             <padding>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </padding>
-            <Canvas fx:id="dataCoinCanvas" height="100.0" width="100.0"/>
+            <Canvas fx:id="dataCoinCanvas" height="64.0" width="64.0"/>
             <Label text="Sammle als Erster alle Daten von der Festplatte, bevor es der andere Virus tut"
                    textAlignment="CENTER" wrapText="true" VBox.vgrow="NEVER">
                 <font>
@@ -71,9 +71,9 @@
                             <Font size="36.0"/>
                         </font>
                     </Label>
-                    <Separator prefWidth="200.0"/>
                 </children>
             </VBox>
+            <Separator prefWidth="200.0"/>
             <VBox alignment="CENTER" spacing="10.0" VBox.vgrow="SOMETIMES">
                 <children>
                     <Canvas fx:id="player2Canvas" height="32.0" width="32.0"/>

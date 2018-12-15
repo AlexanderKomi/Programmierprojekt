@@ -44,12 +44,6 @@ public final class PacManController extends GameEntryPoint {
                         PacManEndScreen.player2Points = game.getCurrentLevel().getPacMan2Property().get();
                         changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
 
-                        /*
-                        pacManEndScreen.afterInitialization(
-                                game.getCurrentLevel().getPacMan1Property().get(),
-                                game.getCurrentLevel().getPacMan2Property().get()
-                                                         );
-                        */
                         if ( this.game != null ) {
                             this.game.delete();
                             this.game = null;
@@ -90,6 +84,9 @@ public final class PacManController extends GameEntryPoint {
     public void render(int fps) {
         if ( pacManMenu != null ) {
             pacManMenu.render();
+        }
+        if ( pacManEndScreen != null ) {
+            pacManEndScreen.render();
         }
         if ( game != null ) {
             if ( game.initialized ) {
