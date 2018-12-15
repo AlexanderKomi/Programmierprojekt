@@ -3,7 +3,6 @@ package common.actor;
 import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 
-import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -160,12 +159,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         players = new LinkedList<>();
         levelElements = new ArrayList<>();
         collectables = new ArrayList<>();
-        try {
-            createLevel( gameCanvas );
-        }
-        catch ( FileNotFoundException e ) {
-            e.printStackTrace();
-        }
+        createLevel( gameCanvas );
         addCollision();
         addCollectables();
     }

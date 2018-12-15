@@ -38,11 +38,11 @@ abstract public class Drawable extends Observable {
     private       ArrayList<Image> switchingImages = new ArrayList<>();
 
 
-    public Drawable( final String pictureFileName ) {
+    protected Drawable( final String pictureFileName ) {
         this( pictureFileName, 0, 0 );
     }
 
-    public Drawable( final String pictureFileName, final double x, final double y ) {
+    protected Drawable( final String pictureFileName, final double x, final double y ) {
         this.setCurrentImage( loadPicture( pictureFileName ) );
 
         this.setHeight( this.getCurrentImage().getHeight() );
@@ -54,38 +54,42 @@ abstract public class Drawable extends Observable {
         id_counter++;
     }
 
-    public Drawable( final String pictureFile, final String... pictureFilePaths ) {
+    protected Drawable( final String pictureFile, final String... pictureFilePaths ) {
         this( pictureFile, Arrays.asList( pictureFilePaths ), 0, 0, 0 );
     }
 
-    public Drawable( final String[] pictureFilePaths ) {
+    protected Drawable( final String[] pictureFilePaths ) {
         this( 0, 0, 0 );
         this.setSwitchingImages( Arrays.asList( pictureFilePaths ) );
     }
 
-    public Drawable( final List<String> pictureFilePaths ) {
+    protected Drawable( final List<String> pictureFilePaths ) {
         this( pictureFilePaths, 0, 0, 0 );
     }
 
-    public Drawable( final List<String> pictureFilePaths, final int delay ) {
+    protected Drawable( final List<String> pictureFilePaths, final int delay ) {
         this( pictureFilePaths, 0, 0, delay );
     }
 
-    public Drawable( final List<String> pictureFilePaths, final double x, final double y ) {
+    protected Drawable( final List<String> pictureFilePaths, final double x, final double y ) {
         this( pictureFilePaths, x, y, 0 );
     }
 
-    public Drawable( final List<String> pictureFilePaths, final double x, final double y, final int delay ) {
+    protected Drawable( final List<String> pictureFilePaths, final double x, final double y, final int delay ) {
         this( x, y, delay );
         this.setSwitchingImages( pictureFilePaths );
     }
 
-    public Drawable( final double x, final double y, final int delay, final String mustHave, final String... pictureFilePaths ) {
+    protected Drawable( final double x,
+                        final double y,
+                        final int delay,
+                        final String mustHave,
+                        final String... pictureFilePaths ) {
         this( Arrays.asList( pictureFilePaths ), x, y, delay );
         this.addSwitchingImage( mustHave );
     }
 
-    public Drawable( final String mustHave, final List<String> asList, final double x, final double y, final int delay ) {
+    protected Drawable( final String mustHave, final List<String> asList, final double x, final double y, final int delay ) {
         this( asList, x, y, delay );
         this.addSwitchingImage( mustHave );
     }
@@ -98,11 +102,11 @@ abstract public class Drawable extends Observable {
         id_counter++;
     }
 
-    public Drawable( final double x, final double y, final int delay, final String[] pictureFileName ) {
+    protected Drawable( final double x, final double y, final int delay, final String[] pictureFileName ) {
         this( Arrays.asList( pictureFileName ), x, y, delay );
     }
 
-    public Drawable( double x, double y, double scale, String picturePath ) {
+    protected Drawable( double x, double y, double scale, String picturePath ) {
         this( picturePath, x, y );
         this.scaleImage( scale );
     }
@@ -111,17 +115,16 @@ abstract public class Drawable extends Observable {
         if ( fileName == null ) {
             throw new NullPointerException( "Relative path to an image can not be null." );
         }
-        this.name = fileName;
-        if ( !TextureBuffer.contains( fileName ) ) {
-            TextureBuffer.addFile( fileName );
+        else {
+            this.name = fileName;
+            return TextureBuffer.loadImage( fileName );
         }
-        return TextureBuffer.getImage( fileName );
     }
 
     /**
      * Switch switchingImages based on buffer implementation.
      */
-    protected synchronized void switchImages() {
+    protected void switchImages() {
         if ( this.switchingImages.isEmpty() || !this.switchImageAutomatically ) {
             return;
         }

@@ -9,16 +9,16 @@ final class TextureBuffer {
 
     private static final HashMap<String, Image> fileToImage = new HashMap<>();
 
-    static void addFile( final String filepath ) {
+    private static void addFile( final String filepath ) {
         fileToImage.put( filepath,
                          ImageLoader.loadImage( filepath ) );
     }
 
-    static Image getImage( final String filepath ) {
+    private static Image getImage( final String filepath ) {
         return fileToImage.get( filepath );
     }
 
-    static boolean contains( final String fileName ) {
+    private static boolean contains( final String fileName ) {
         return fileToImage.containsKey( fileName );
     }
 
