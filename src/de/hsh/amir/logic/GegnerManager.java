@@ -30,7 +30,7 @@ public class GegnerManager implements Observer {
     public void erstelleGegner() {
         Random random = new Random();
         int zufallsZahl1 = 200 + random.nextInt(800);
-        Gegner gegner = new Gegner("/de/hsh/amir/resources/enemyFigur.png", zufallsZahl1, 1);
+        Gegner gegner = new Gegner("/de/hsh/amir/resources/enemyFigur.png", zufallsZahl1);
         gegner.addObserver(this);
         this.gegnerListe.add(gegner);
     }
@@ -87,7 +87,7 @@ public class GegnerManager implements Observer {
         } else {
             //TODO #4 moving behavior of the enemies must be changed
             for (Gegner gegner : gegnerListe) {
-                gegner.moveDiagonal();
+                gegner.move();
                 if (gegner.getY() >= canvas.getHeight()) {
                     gegner.setY(-30);
                     gegner.setX(zufallsZahl);
