@@ -65,7 +65,7 @@ public final class Java2DEngine extends Observable implements Runnable {
     }
 
     /**
-     * Updates the frames and determines, when a picture is rendered.
+     * Updates the frames and determines, when a full_picture is rendered.
      */
     private void game_loop() {
 

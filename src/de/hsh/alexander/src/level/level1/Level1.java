@@ -40,6 +40,8 @@ public final class Level1 extends PacManLevel {
         addLevelElement( new Fan( 200, 50 ) );
         addLevelElement( new Fan( 500, 50 ) );
         addLevelElement( new Condensator( 500, 500 ) );
+        addLevelElement( new Condensator( 200, 600, 0 ) );
+        addLevelElement( new Condensator( 700, 350, 1 ) );
 
         final int smd_offset = 200;
 

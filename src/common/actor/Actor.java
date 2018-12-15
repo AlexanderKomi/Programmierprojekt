@@ -144,16 +144,16 @@ abstract public class Actor extends Drawable {
     }
 
     public synchronized boolean doesCollide( final Actor other ) {
-        final boolean b = CollisionCheck.doesCollide( this, other ) ||
-                          CollisionCheck.doesCollide( other, this );
+        boolean b = CollisionCheck.doesCollide( this, other ) ||
+                    CollisionCheck.doesCollide( other, this );
         if ( b ) {
-            if ( other instanceof Collectable ) {
-                final Collectable c = (Collectable) other;
-                c.wasCollected( this );
-                return false;
-            }
+            b = collisionModifier( other );
         }
         return b;
+    }
+
+    public synchronized boolean collisionModifier( final Actor other ) {
+        return true;
     }
 
     public void setCollisionActors( final List<Actor> list ) {

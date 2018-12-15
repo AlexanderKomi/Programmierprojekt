@@ -17,7 +17,7 @@ public final class Path {
     public static void main( String[] args ) {
         //standAlone( args );
         Logger.log( "Relative Path : " +
-                    Path.getRessourceFromPath( ResourcePaths.Actor.LevelElements.Condensator.picture ).toExternalForm() );
+                    Path.getRessourceFromPath( ResourcePaths.Actor.LevelElements.Condensator.full_picture ).toExternalForm() );
         //Logger.log( "Dir : " + getExecutionLocation(), Path.getAllFileNames() );
     }
 

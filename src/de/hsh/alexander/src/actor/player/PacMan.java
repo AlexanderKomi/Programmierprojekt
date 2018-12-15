@@ -1,5 +1,7 @@
 package de.hsh.alexander.src.actor.player;
 
+import common.actor.Actor;
+import common.actor.Collectable;
 import common.actor.ControlableActor;
 import common.actor.Direction;
 import common.util.Logger;
@@ -129,6 +131,17 @@ public class PacMan extends ControlableActor {
                 Logger.log( "Facing Direction changed to: " + this.facingDirection );
             }
         }
+    }
+
+    @Override
+    public synchronized boolean collisionModifier( Actor other ) {
+        if ( other instanceof Collectable ) {
+            final Collectable c = (Collectable) other;
+            c.wasCollected( this );
+            return false;
+        }
+
+        return super.collisionModifier( other );
     }
 
     public SimpleIntegerProperty getPointProperty() {

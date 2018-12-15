@@ -55,9 +55,16 @@ public final class ResourcePaths {
             }
 
             public static final class Condensator {
-                static final        String directory = LevelElements.directory + "condensator/";
-                public static final String picture   = directory + "Condensator.png";
+                static final String directory  = LevelElements.directory + "condensator/";
+                static final String fileEnding = ".png";
+                static final String prefix     = "condensator";
+                static final String seperator  = "_";
 
+                public static final String   full_picture = directory + prefix + fileEnding;
+                public static final String[] pictures     = {
+                        directory + prefix + seperator + "1" + fileEnding,
+                        directory + prefix + seperator + "2" + fileEnding,
+                        };
             }
 
             public static final class Fan {
