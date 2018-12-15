@@ -68,7 +68,8 @@ public class AmirGame {
 
 
     /**
-     * Collisionsabfrage
+     * Collisionsabfrage.
+     * Punkntestand wird um 1 erhöht, wenn ein Gegner eingesammelt wird.
      */
     public void collisionGegnerSpieler() {
         ArrayList<Gegner> toRemove = new ArrayList<Gegner>();
@@ -82,7 +83,6 @@ public class AmirGame {
         for (int i = 0; i < toRemove.size(); i++) {
             gegnerManager.remove(toRemove.get(i));
         }
-
 
     }
 

@@ -36,22 +36,25 @@ public class GegnerManager implements Observer {
     }
 
     /**
-     * erstellt minimal einen und maximal fünf Gegner unabhängig
-     * übergebenen Parameter //TODO
+     * erstellt minimal einen und maximal 5 Gegner unabhängig
+     * übergebenen Parameter
      *
-     * @param anzahlGegner
+     * @param anzahlGegner unabhöngig von diesem Parameter werden "max" Gegner erstellt.
      */
     public void erstelleGegner(int anzahlGegner) {
-        if (anzahlGegner <= 1) {
-            erstelleGegner();
-        } else if (anzahlGegner >= 5) {
-            for (int i = 1; i <= 5; i++) {
-                erstelleGegner();
-            }
+        //CHANGE ONLY THIS IF YOU WANT TO CHANGE THE NUMBER OF GEGNER!!!
+        int max = 5;
+
+        if (anzahlGegner <= 0) {
+            max = 1;
+        } else if (anzahlGegner <= max) {
+            max = anzahlGegner;
         } else {
-            for (int i = 1; i <= anzahlGegner; i++) {
-                erstelleGegner();
-            }
+            //Let max be as it is.
+        }
+
+        for (int i = 0; i < max; i++) {
+            erstelleGegner();
         }
     }
 
