@@ -27,7 +27,6 @@ abstract public class Level extends Observable implements Observer, ILevel {
             this.levelElements.forEach(
                     levelElement -> players.forEach(
                             pacMan -> pacMan.addCollidingActor( levelElement ) ) );
-
         }
     }
 
@@ -36,16 +35,13 @@ abstract public class Level extends Observable implements Observer, ILevel {
             this.collectables.forEach(
                     collectable -> players.forEach(
                             player -> player.addCollidingActor( collectable ) ) );
-
         }
     }
 
     @Override
     public void render( Canvas canvas, int fps ) {
         try {
-            synchronized ( backgroundImage ) {
-                backgroundImage.draw( canvas );
-            }
+            this.backgroundImage.draw( canvas );
             this.draw( npcs, canvas );
             this.draw( levelElements, canvas );
             this.draw( collectables, canvas );
@@ -56,16 +52,14 @@ abstract public class Level extends Observable implements Observer, ILevel {
         }
     }
 
-    private synchronized <T extends Actor> void draw( final List<T> list, Canvas canvas ) {
-        synchronized ( list ) {
-            int size = list.size();
-            for ( int i = 0 ; i < size ; i++ ) {
-                final T t = list.get( i );
-                if ( t != null ) {
-                    t.draw( canvas );
-                }
-                size = list.size();
+    private <T extends Actor> void draw( final List<T> list, Canvas canvas ) {
+        int size = list.size();
+        for ( int i = 0 ; i < size ; i++ ) {
+            final T t = list.get( i );
+            if ( t != null ) {
+                t.draw( canvas );
             }
+            size = list.size();
         }
     }
 
@@ -79,15 +73,10 @@ abstract public class Level extends Observable implements Observer, ILevel {
     }
 
 
-    protected synchronized boolean collidesWithPlayer( final Actor d ) {
-        final List<ControlableActor> l = Collections.synchronizedList( getPlayers() );
-        synchronized ( l ) {
-            for ( ControlableActor controlableActor : l ) {
-                synchronized ( controlableActor ) {
-                    if ( controlableActor.doesCollide( d ) ) {
-                        return true;
-                    }
-                }
+    protected boolean collidesWithPlayer( final Actor d ) {
+        for ( ControlableActor controlableActor : getPlayers() ) {
+            if ( controlableActor.doesCollide( d ) ) {
+                return true;
             }
         }
         return false;
@@ -104,7 +93,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return false;
     }
 
-    protected synchronized boolean collected( final Collectable collectable ) {
+    protected boolean collected( final Collectable collectable ) {
         collectable.deleteObservers();
         final List<ControlableActor> players = Collections.synchronizedList( this.players );
         synchronized ( players ) {
@@ -123,12 +112,9 @@ abstract public class Level extends Observable implements Observer, ILevel {
                 size = players.size();
             }
         }
-        final List<Collectable> temp = Collections.synchronizedList( collectables );
-        synchronized ( temp ) {
-            final boolean result = temp.remove( collectable );
-            this.collectables.retainAll( temp );
-            return result;
-        }
+        final boolean result = getCollectables().remove( collectable );
+        this.getCollectables().retainAll( getCollectables() );
+        return result;
     }
 
     protected boolean addCollectable( final Collectable c ) {
@@ -178,14 +164,6 @@ abstract public class Level extends Observable implements Observer, ILevel {
 
     public List<Collectable> getCollectables() {
         return this.collectables;
-    }
-
-    public void setBackgroundImage( BackgroundImage backgroundImage ) {
-        this.backgroundImage = backgroundImage;
-    }
-
-    public void setBackgroundImage( String filepath ) {
-        this.backgroundImage.setCurrentImage( filepath );
     }
 
     protected void setBackgroundImage( final String filepath, final int width, final int height ) {

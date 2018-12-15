@@ -34,14 +34,14 @@ public class CollisionCheck {
      * @author Alexander Komischke
      * @author Kevin Jeske
      */
-    public static boolean[] isInBounds( final double x,
-                                        final double y,
-                                        final double width,
-                                        final double height,
-                                        final double canvas_widht,
-                                        final double canvas_height,
-                                        final double new_x,
-                                        final double new_y ) {
+    static boolean[] isInBounds( final double x,
+                                 final double y,
+                                 final double width,
+                                 final double height,
+                                 final double canvas_widht,
+                                 final double canvas_height,
+                                 final double new_x,
+                                 final double new_y ) {
         boolean[] temp = new boolean[] {
                 false, false
         };
@@ -76,7 +76,7 @@ public class CollisionCheck {
     /**
      * Just a Wrapper.
      * */
-    public static boolean[] isInBounds( final double x, final double y, final double width, final double height, Canvas canvas ) {
+    static boolean[] isInBounds( final double x, final double y, final double width, final double height, Canvas canvas ) {
         return isInBounds( x, y, width, height, canvas.getWidth(), canvas.getHeight(), 0, 0 );
     }
 

@@ -4,9 +4,9 @@ import java.util.List;
 
 public class BackgroundImage extends Drawable {
 
-    public static final String fallbackPath = "/common/gui/xp_background_1280x800.jpg";
+    private static final String fallbackPath = "/common/gui/xp_background_1280x800.jpg";
 
-    public BackgroundImage() {
+    BackgroundImage() {
         super( fallbackPath );
     }
 

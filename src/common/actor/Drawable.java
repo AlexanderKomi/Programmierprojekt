@@ -146,7 +146,7 @@ abstract public class Drawable extends Observable {
         }
     }
 
-    public void scaleImageWidth( double factor ) {
+    protected void scaleImageWidth( double factor ) {
         if ( factor > 0 ) {
             this.width *= factor;
         }
@@ -159,7 +159,7 @@ abstract public class Drawable extends Observable {
         this.imageView.setScaleX( scaleX );
     }
 
-    public void scaleImageHeight( double factor ) {
+    protected void scaleImageHeight( double factor ) {
         if ( factor > 0 ) {
             this.height *= factor;
         }
@@ -171,7 +171,7 @@ abstract public class Drawable extends Observable {
         this.imageView.setScaleY( scaleY );
     }
 
-    public void scaleImage( double factor ) {
+    protected void scaleImage( double factor ) {
         scaleImageHeight( factor );
         scaleImageWidth( factor );
     }
