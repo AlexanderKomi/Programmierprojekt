@@ -7,13 +7,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.*?>
+<?import java.net.URL?>
 <BorderPane maxHeight="800.0" maxWidth="1200.0" minHeight="800.0" minWidth="1200.0" prefHeight="800.0"
             prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <Canvas fx:id="gameCanvas" height="800.0" width="950.0"/>
     </center>
     <left>
-        <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="250.0" spacing="20.0">
+        <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="250.0" spacing="20.0" styleClass="GamePointsBox">
             <children>
                 <Label text="Punkte">
                     <font>
@@ -54,4 +55,8 @@
             </padding>
         </VBox>
     </left>
+    <stylesheets>
+        <URL value="@game.css"/>
+        <URL value="@pointsBox.css"/>
+    </stylesheets>
 </BorderPane>

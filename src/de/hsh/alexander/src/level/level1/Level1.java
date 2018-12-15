@@ -4,6 +4,7 @@ import common.actor.Collectable;
 import common.actor.CollisionCheck;
 import common.actor.LevelElement;
 import common.config.WindowConfig;
+import de.hsh.alexander.src.actor.collectables.DataCoin;
 import de.hsh.alexander.src.actor.level_elements.Condensator;
 import de.hsh.alexander.src.actor.level_elements.Fan;
 import de.hsh.alexander.src.actor.level_elements.SMD;
@@ -23,7 +24,8 @@ public final class Level1 extends PacManLevel {
         setBackgroundImage( microChip, 950, 800 );
         addPlayers();
         addLevelElements( gameCanvas );
-        createDataCoins( gameCanvas );
+        addCollectable( new DataCoin( 650, 500 ) );
+        //createDataCoins( gameCanvas );
     }
 
     @Override

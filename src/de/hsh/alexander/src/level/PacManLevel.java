@@ -33,6 +33,7 @@ abstract public class PacManLevel extends Level {
                                );
         } );
         Logger.log( this.getClass() + ": Resettet Level" );
+        isGameFinished();
     }
 
     public SimpleIntegerProperty getPacMan1Property() {
@@ -79,13 +80,18 @@ abstract public class PacManLevel extends Level {
         }
         this.collected( c );
 
+        if ( !isGameFinished() ) {
+            Logger.log( this.getClass() + ": Still " + this.getCollectables().size() + " to collect." );
+        }
+    }
+
+    private boolean isGameFinished() {
         if ( this.getCollectables().isEmpty() ) {
             this.setChanged();
             this.notifyObservers( gameFinishedMessage );
+            return true;
         }
-        else {
-            Logger.log( this.getClass() + ": Still " + this.getCollectables().size() + " to collect." );
-        }
+        return false;
     }
 
     protected void createDataCoins( Canvas gameCanvas ) {
