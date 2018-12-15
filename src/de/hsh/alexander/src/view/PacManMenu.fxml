@@ -33,7 +33,7 @@
             <Separator prefWidth="200.0"/>
             <VBox alignment="CENTER" spacing="10.0" VBox.vgrow="SOMETIMES">
                 <children>
-                    <Canvas fx:id="player1Canvas" height="100.0" width="100.0"/>
+                    <Canvas fx:id="player1Canvas" height="32.0" width="32.0"/>
                     <Label text="Benutze die Pfeiltasten um deinen Charakter zu steuern und Daten einzusammeln"
                            textAlignment="CENTER" wrapText="true">
                         <font>
@@ -76,7 +76,7 @@
             </VBox>
             <VBox alignment="CENTER" spacing="10.0" VBox.vgrow="SOMETIMES">
                 <children>
-                    <Canvas fx:id="player2Canvas" height="100.0" width="100.0"/>
+                    <Canvas fx:id="player2Canvas" height="32.0" width="32.0"/>
                     <Label text="Benutze die Tasten WASD um deinen Charakter zu steuern und Daten einzusammeln"
                            textAlignment="CENTER" wrapText="true">
                         <font>

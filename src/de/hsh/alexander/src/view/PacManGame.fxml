@@ -23,6 +23,7 @@
                 </Label>
                 <HBox alignment="CENTER" spacing="10.0">
                     <children>
+                        <Canvas fx:id="player1Canvas" height="32.0" width="32.0"/>
                         <Label text="Spieler 1: ">
                             <font>
                                 <Font size="18.0"/>
@@ -37,6 +38,7 @@
                 </HBox>
                 <HBox alignment="CENTER" spacing="10.0">
                     <children>
+                        <Canvas fx:id="player2Canvas" height="32.0" width="32.0"/>
                         <Label text="Spieler 2: ">
                             <font>
                                 <Font size="18.0"/>

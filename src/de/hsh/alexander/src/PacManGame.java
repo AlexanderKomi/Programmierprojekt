@@ -3,6 +3,8 @@ package de.hsh.alexander.src;
 import common.config.WindowConfig;
 import common.updates.UpdateCodes;
 import common.util.Logger;
+import de.hsh.alexander.src.actor.player.PacMan1;
+import de.hsh.alexander.src.actor.player.PacMan2;
 import de.hsh.alexander.src.level.PacManLevel;
 import de.hsh.alexander.src.level.level1.Level1;
 import javafx.application.Platform;
@@ -28,6 +30,16 @@ public final class PacManGame extends Observable implements Observer, Initializa
     private Canvas gameCanvas;
 
     @FXML
+    private Canvas player1Canvas;
+    @FXML
+    private Canvas player2Canvas;
+
+    private PacMan1 pacMan1;
+    private PacMan2 pacMan2;
+
+
+
+    @FXML
     private Label player1Points;
     @FXML
     private Label player2Points;
@@ -38,6 +50,9 @@ public final class PacManGame extends Observable implements Observer, Initializa
         if ( initialized ) {
             return;
         }
+        pacMan1 = new PacMan1( 0, 0 );
+        pacMan2 = new PacMan2( 0, 0 );
+
         initialized = true;
         reset();
         bindLabelsToPoints();
@@ -67,6 +82,12 @@ public final class PacManGame extends Observable implements Observer, Initializa
             return;
         }
         Platform.runLater( () -> {
+            player1Canvas.getGraphicsContext2D().clearRect( 0, 0, player1Canvas.getWidth(), player1Canvas.getHeight() );
+            player2Canvas.getGraphicsContext2D().clearRect( 0, 0, player2Canvas.getWidth(), player2Canvas.getHeight() );
+            pacMan1.draw( player1Canvas );
+            pacMan2.draw( player2Canvas );
+
+
             if ( this.currentLevel != null ) {
                 clearCanvas();
                 this.currentLevel.render( this.gameCanvas, fps );

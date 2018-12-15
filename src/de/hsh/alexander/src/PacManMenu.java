@@ -73,8 +73,8 @@ public final class PacManMenu extends Observable implements Initializable {
     public void initialize( URL location, ResourceBundle resources ) {
 
         d = new DataCoin( dataCoinCanvas.getWidth() / 2 - 25, dataCoinCanvas.getHeight() / 2 - 25 );
-        pacMan1 = new PacMan1( player1Canvas.getWidth() / 2, player1Canvas.getHeight() / 2 );
-        pacMan2 = new PacMan2( player2Canvas.getWidth() / 2, player2Canvas.getHeight() / 2 );
+        pacMan1 = new PacMan1( 0, 0 );
+        pacMan2 = new PacMan2( 0, 0 );
 
         initialized = true;
     }
