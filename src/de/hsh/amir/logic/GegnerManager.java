@@ -57,6 +57,7 @@ public class GegnerManager implements Observer {
 
     /**
      * Bewegt Gegner jedes mal an einer neuen Position.
+     * Bei Level 2 bewegen sich die Figuren diagonal.
      *
      * @param canvas
      */

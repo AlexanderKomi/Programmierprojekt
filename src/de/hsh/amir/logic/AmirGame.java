@@ -36,7 +36,12 @@ public class AmirGame {
         gegnerManager.draw(canvas);
         if (spielGewonnen()) {
             //TODO
+            jumpBackToMainMenu();
         }
+    }
+
+    //TODO
+    private void jumpBackToMainMenu() {
     }
 
     private boolean spielGewonnen() {
