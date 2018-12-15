@@ -32,18 +32,18 @@ public class AmirGame {
             timer = 0;
         }
         collisionGegnerSpieler();
-        //TODO display points on canvas
+        //TODO #1 display points on canvas
         displayPoints();
         gegnerManager.move(canvas);
         clearCanvasForPlayer();
         spielfigur.draw(canvas);
         gegnerManager.draw(canvas);
         if (spielGewonnen()) {
-            //TODO
+            //TODO #2 when Game won, change scene, and jump back to main menu.
         }
     }
 
-    //TODO
+    //TODO #1
     private void displayPoints() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.fillRect(0,0,200,100);

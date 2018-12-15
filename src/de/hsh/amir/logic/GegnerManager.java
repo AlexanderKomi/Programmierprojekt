@@ -82,6 +82,7 @@ public class GegnerManager implements Observer {
                 }
             }
         } else {
+            //TODO #4 moving behavior of the enemies must be changed
             for (Gegner gegner : gegnerListe) {
                 gegner.moveDiagonal();
                 if (gegner.getY() >= canvas.getHeight()) {

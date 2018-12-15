@@ -6,7 +6,6 @@ public class Gegner extends Actor {
 
     private static final double START_X = 200;
     private static final double START_Y = 10;
-    //    private static final int changePictureDelay = 1;
     private static double GEGNER_SPEED = 3;
     private int gegnerTyp;
 
