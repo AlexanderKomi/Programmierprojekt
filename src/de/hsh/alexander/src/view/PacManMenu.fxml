@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.net.URL?>
-<VBox fx:id="basicPane" alignment="CENTER" prefHeight="800" prefWidth="1200" xmlns:fx="http://javafx.com/fxml/1"
-      styleClass="menu">
+<VBox fx:id="basicPane" alignment="CENTER" prefHeight="800" prefWidth="1200" styleClass="menu"
+      xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <TextFlow textAlignment="CENTER">
         <Label text="PacMan">
             <font>
@@ -16,7 +17,7 @@
     </TextFlow>
     <Separator prefWidth="200.0"/>
     <HBox alignment="CENTER" spacing="10.0" VBox.vgrow="SOMETIMES">
-        <VBox alignment="CENTER" prefWidth="400.0" spacing="10.0" HBox.hgrow="NEVER" styleClass="playerBox">
+        <VBox alignment="CENTER" prefWidth="400.0" spacing="10.0" styleClass="playerBox" HBox.hgrow="NEVER">
             <padding>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </padding>
@@ -32,6 +33,7 @@
             <Separator prefWidth="200.0"/>
             <VBox alignment="CENTER" spacing="10.0" VBox.vgrow="SOMETIMES">
                 <children>
+                    <Canvas fx:id="player1Canvas" height="100.0" width="100.0"/>
                     <Label text="Benutze die Pfeiltasten um deinen Charakter zu steuern und Daten einzusammeln"
                            textAlignment="CENTER" wrapText="true">
                         <font>
@@ -45,13 +47,13 @@
             </VBox>
         </VBox>
         <Separator orientation="VERTICAL" prefHeight="200.0"/>
-        <VBox alignment="CENTER" prefWidth="400.0" spacing="10.0" HBox.hgrow="NEVER">
+        <VBox alignment="CENTER" prefWidth="400.0" spacing="10.0" HBox.hgrow="SOMETIMES">
             <padding>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </padding>
-            <Label prefHeight="655.0" prefWidth="475.0"
-                   text="Sammle als erster alle Daten von der Festplatte um zu gewinnen" textAlignment="CENTER"
-                   wrapText="true">
+            <Canvas fx:id="dataCoinCanvas" height="100.0" width="100.0"/>
+            <Label text="Sammle als Erster alle Daten von der Festplatte, bevor es der andere Virus tut"
+                   textAlignment="CENTER" wrapText="true" VBox.vgrow="NEVER">
                 <font>
                     <Font size="44.0"/>
                 </font>
@@ -74,6 +76,7 @@
             </VBox>
             <VBox alignment="CENTER" spacing="10.0" VBox.vgrow="SOMETIMES">
                 <children>
+                    <Canvas fx:id="player2Canvas" height="100.0" width="100.0"/>
                     <Label text="Benutze die Tasten WASD um deinen Charakter zu steuern und Daten einzusammeln"
                            textAlignment="CENTER" wrapText="true">
                         <font>

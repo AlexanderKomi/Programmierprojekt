@@ -88,6 +88,9 @@ public final class PacManController extends GameEntryPoint {
 
     @Override
     public void render(int fps) {
+        if ( pacManMenu != null ) {
+            pacManMenu.render();
+        }
         if ( game != null ) {
             if ( game.initialized ) {
                 game.render( fps );
