@@ -3,7 +3,9 @@ package de.hsh.amir.logic;
 import common.util.Logger;
 import de.hsh.kevin.logic.Score;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 
@@ -30,18 +32,30 @@ public class AmirGame {
             timer = 0;
         }
         collisionGegnerSpieler();
+        //TODO display points on canvas
+        displayPoints();
         gegnerManager.move(canvas);
-        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        clearCanvasForPlayer();
         spielfigur.draw(canvas);
         gegnerManager.draw(canvas);
         if (spielGewonnen()) {
             //TODO
-            jumpBackToMainMenu();
         }
     }
 
     //TODO
-    private void jumpBackToMainMenu() {
+    private void displayPoints() {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.fillRect(0,0,200,100);
+        gc.setTextAlign(TextAlignment.LEFT);
+    }
+
+    /**
+     * 
+     * Radiert die Canvas komplett für den Weg der Spielfigur
+     */
+    private void clearCanvasForPlayer(){
+        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     private boolean spielGewonnen() {
@@ -62,7 +76,6 @@ public class AmirGame {
             if (spielfigur.doesCollide(gegner)) {
                 points.increase();
                 toRemove.add(gegner);
-                Logger.log(this.getClass() + " : bin in collisionGegnerSpiler");
             }
         }
 
