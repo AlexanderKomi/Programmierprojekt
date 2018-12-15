@@ -24,6 +24,10 @@ public class Config {
         diffConfig = enmDifficultyOptions.easy;
     }
     
+    public static void setSoundPreset() {
+        soundConfig = enmSoundOptions.off;
+    }
+    
     public static enmSoundOptions getSoundOption() {
         return soundConfig;
     }
