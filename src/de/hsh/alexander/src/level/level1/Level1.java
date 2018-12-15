@@ -4,7 +4,6 @@ import common.actor.Collectable;
 import common.actor.CollisionCheck;
 import common.actor.LevelElement;
 import common.config.WindowConfig;
-import de.hsh.alexander.src.actor.collectables.DataCoin;
 import de.hsh.alexander.src.actor.level_elements.Condensator;
 import de.hsh.alexander.src.actor.level_elements.Fan;
 import de.hsh.alexander.src.actor.level_elements.SMD;
@@ -17,6 +16,7 @@ import static de.hsh.alexander.src.actor.ResourcePaths.Actor.LevelElements.Backg
 
 public final class Level1 extends PacManLevel {
 
+
     public Level1( Canvas gameCanvas ) {super( gameCanvas );}
 
     @Override
@@ -24,8 +24,7 @@ public final class Level1 extends PacManLevel {
         setBackgroundImage( microChip, 950, 800 );
         addPlayers();
         addLevelElements( gameCanvas );
-        addCollectable( new DataCoin( 650, 500 ) );
-        //createDataCoins( gameCanvas );
+        createDataCoins( gameCanvas );
     }
 
     @Override
@@ -39,9 +38,7 @@ public final class Level1 extends PacManLevel {
     private void addLevelElements( Canvas gameCanvas ) {
 
         addLevelElement( new Fan( 200, 50 ) );
-        addLevelElement( new Fan( 500, 50 ) );
-        addLevelElement( new Condensator( 200, 600, 0 ) );
-        addLevelElement( new Condensator( 700, 350, 1 ) );
+        addLevelElement( new Fan( 300, 50 ) );
 
         fillPins( gameCanvas );
         addSMDs( gameCanvas );
@@ -59,6 +56,14 @@ public final class Level1 extends PacManLevel {
     }
 
     private void fillPins( Canvas gameCanvas ) {
+
+        addLevelElement( new Condensator( 200, 600, 1 ) );
+
+        for ( int i = 350 ; i < 500 ; i += 40 ) {
+            addLevelElement( new Condensator( 700, i, 0 ) );
+        }
+
+
         final int  end       = 580;
         final byte increment = 19;
 

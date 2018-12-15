@@ -15,10 +15,14 @@ public final class PacManEndScreen extends Observable implements Initializable {
     public static final String  fxml        = "PacManEndScreen.fxml";
     private             boolean initialized = false;
 
+    public static int player1Points = 0;
+    public static int player2Points = 0;
+
+
     @FXML
-    private Label player1PointsLabel;
+    public Label player1PointsLabel;
     @FXML
-    private Label player2PointsLabel;
+    public Label player2PointsLabel;
 
 
     @FXML
@@ -37,14 +41,21 @@ public final class PacManEndScreen extends Observable implements Initializable {
     public void initialize( URL location, ResourceBundle resources ) {
         initialized = true;
         Logger.log( this.getClass() + " : initialized" );
+        this.player1PointsLabel.setText( String.valueOf( player1Points ) );
+        this.player2PointsLabel.setText( String.valueOf( player2Points ) );
     }
 
     void afterInitialization( final int player1Points, final int player2Points ) {
         if ( !initialized ) {
-            Logger.log( new IllegalStateException( "Not initialized, but should be." ) );
+            this.player1PointsLabel = new Label( String.valueOf( player1Points ) );
+            this.player2PointsLabel = new Label( String.valueOf( player2Points ) );
+            Logger.log( new IllegalStateException(
+                    "-------> ERROR : " + this.getClass() + ": Not initialized, but should be." ) );
             return;
         }
-        this.player1PointsLabel.setText( String.valueOf( player1Points ) );
-        this.player2PointsLabel.setText( String.valueOf( player2Points ) );
+        else {
+            this.player1PointsLabel.setText( String.valueOf( player1Points ) );
+            this.player2PointsLabel.setText( String.valueOf( player2Points ) );
+        }
     }
 }

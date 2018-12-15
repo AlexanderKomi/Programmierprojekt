@@ -4,6 +4,7 @@ import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import common.util.Logger;
+import javafx.application.Platform;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -33,22 +34,32 @@ public final class PacManController extends GameEntryPoint {
                     break;
                 case UpdateCodes.PacMan.mainMenu:
                     Logger.log( "-------------------MAIN MENU----------------------" );
-                    if ( this.game != null ) {
-                        this.game.delete();
-                        this.game = null;
-                    }
+
                     changer.changeFxml( pacManMenu, UpdateCodes.PacMan.mainMenu );
                     exitToMainGUI();
                     break;
                 case UpdateCodes.PacMan.showEndScreen:
-                    changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
-                    pacManEndScreen.afterInitialization(
-                            game.getCurrentLevel().getPacMan1Property().get(),
-                            game.getCurrentLevel().getPacMan2Property().get()
-                                                       );
+                    Platform.runLater( () -> {
+                        PacManEndScreen.player1Points = game.getCurrentLevel().getPacMan1Property().get();
+                        PacManEndScreen.player2Points = game.getCurrentLevel().getPacMan2Property().get();
+                        changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
+
+                        /*
+                        pacManEndScreen.afterInitialization(
+                                game.getCurrentLevel().getPacMan1Property().get(),
+                                game.getCurrentLevel().getPacMan2Property().get()
+                                                         );
+                        */
+                        if ( this.game != null ) {
+                            this.game.delete();
+                            this.game = null;
+                        }
+                    } );
+
+
                     break;
                 case UpdateCodes.PacMan.repeatGame:
-                    changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
+                    //changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
                     startGame();
                     break;
                 default:

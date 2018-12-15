@@ -7,7 +7,7 @@ import static de.hsh.alexander.src.actor.ResourcePaths.Actor.LevelElements.Fan.p
 public class Fan extends LevelElement {
 
     private static final double default_delay = 3;
-    private static final double scale         = 3;
+    private static final double scale         = 3.4;
 
     public Fan( double x, double y ) {
         super( x, y, pictures );

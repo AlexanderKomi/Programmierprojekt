@@ -110,7 +110,9 @@ abstract public class PacManLevel extends Level {
     protected boolean addCollectable( Collectable c ) {
         if ( !collidesWithPlayer( c ) ) {
             if ( !collidesWithLevelElement( c ) ) {
-                return super.addCollectable( c );
+                if ( !collidesWithCollectable( c ) ) {
+                    return super.addCollectable( c );
+                }
             }
         }
         return false;
