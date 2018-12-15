@@ -36,6 +36,10 @@ public class TIController extends GameEntryPoint {
                 changer.changeGameFxml(o, game);
                 break;
             case UpdateCodes.TunnelInvader.gameOver:
+                if( game != null) {
+                    game.deleteObservers();
+                    game = null;
+                }
                 if ( gameOver != null ) {
                     gameOver.deleteObservers();
                 }

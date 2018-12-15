@@ -29,6 +29,7 @@ public class TIMenuController extends Observable{
     
     public TIMenuController() {
        Config.setDifficulyPreset();
+       Config.setSoundPreset();
     }
     
     
