@@ -13,7 +13,7 @@ abstract public class Actor extends Drawable {
 
 
     final   Movement    movement        = new Movement();
-    private List<Actor> collisionActors = Collections.synchronizedList( new ArrayList<>() );
+    private List<Actor> collisionActors = new ArrayList<>();
 
     public Actor( final String pictureFileName ) {
         this( pictureFileName, 0, 0 );
@@ -120,18 +120,16 @@ abstract public class Actor extends Drawable {
         }
     }
 
-    public boolean doesCollide() {
+    private boolean doesCollide() {
         try {
             final List<Actor> list = Collections.synchronizedList( this.getCollisionActors() );
             synchronized ( list ) {
                 int size = list.size();
                 for ( int i = 0 ; i < size ; i++ ) {
-                    final Actor a = list.get( i );
-                    synchronized ( a ) {
-                        if ( this.doesCollide( a ) ) {
+                    if ( this.doesCollide( list.get( i ) ) ) {
                             return true;
                         }
-                    }
+
                     size = list.size();
                 }
             }
@@ -152,11 +150,11 @@ abstract public class Actor extends Drawable {
         return b;
     }
 
-    public synchronized boolean collisionModifier( final Actor other ) {
+    protected synchronized boolean collisionModifier( final Actor other ) {
         return true;
     }
 
-    public void setCollisionActors( final List<Actor> list ) {
+    void setCollisionActors( final List<Actor> list ) {
         this.collisionActors = list;
     }
 

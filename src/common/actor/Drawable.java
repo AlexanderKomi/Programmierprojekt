@@ -108,6 +108,9 @@ abstract public class Drawable extends Observable {
     }
 
     private Image loadPicture( final String fileName ) {
+        if ( fileName == null ) {
+            throw new NullPointerException( "Relative path to an image can not be null." );
+        }
         this.name = fileName;
         if ( !TextureBuffer.contains( fileName ) ) {
             TextureBuffer.addFile( fileName );

@@ -2,8 +2,8 @@ package de.hsh.alexander.src.level.level1;
 
 import common.actor.Collectable;
 import common.actor.CollisionCheck;
+import common.actor.LevelElement;
 import common.config.WindowConfig;
-import common.util.Logger;
 import de.hsh.alexander.src.actor.level_elements.Condensator;
 import de.hsh.alexander.src.actor.level_elements.Fan;
 import de.hsh.alexander.src.actor.level_elements.SMD;
@@ -24,7 +24,6 @@ public final class Level1 extends PacManLevel {
         addPlayers();
         addLevelElements( gameCanvas );
         createDataCoins( gameCanvas );
-        Logger.log( this.getClass() + ": created Level" );
     }
 
     @Override
@@ -39,20 +38,41 @@ public final class Level1 extends PacManLevel {
 
         addLevelElement( new Fan( 200, 50 ) );
         addLevelElement( new Fan( 500, 50 ) );
-        addLevelElement( new Condensator( 500, 500 ) );
         addLevelElement( new Condensator( 200, 600, 0 ) );
         addLevelElement( new Condensator( 700, 350, 1 ) );
 
+        fillPins( gameCanvas );
+        addSMDs( gameCanvas );
+    }
+
+    private void addSMDs( Canvas gameCanvas ) {
         final int smd_offset = 200;
 
-        for ( int y = 0 ; y < WindowConfig.window_height ; y += smd_offset )
+        for ( int y = 0 ; y < WindowConfig.window_height ; y += smd_offset ) {
             for ( int x = 0 ; x < WindowConfig.window_width ; x += smd_offset ) {
-                SMD       smd = new SMD( x, y );
-                boolean[] xy  = CollisionCheck.isInBounds( smd, gameCanvas );
-                if ( xy[ 0 ] && xy[ 1 ] ) {
-                    addLevelElement( smd );
-                }
+                SMD smd = new SMD( x, y );
+                addLevelElement( gameCanvas, smd );
             }
+        }
+    }
+
+    private void fillPins( Canvas gameCanvas ) {
+        final int  end       = 580;
+        final byte increment = 19;
+
+        for ( int y = 285 ; y < end ; y += increment ) {
+            addLevelElement( gameCanvas, new Condensator( 525, y ) );
+            addLevelElement( gameCanvas, new Condensator( 525 + increment, y ) );
+        }
+        addLevelElement( gameCanvas, new Condensator( 525 + increment, end + increment ) );
+    }
+
+    private boolean addLevelElement( Canvas gameCanvas, final LevelElement levelElement ) {
+        boolean[] xy = CollisionCheck.isInBounds( levelElement, gameCanvas );
+        if ( xy[ 0 ] && xy[ 1 ] ) {
+            return super.addLevelElement( levelElement );
+        }
+        return false;
     }
 
     private void addPlayers() {
