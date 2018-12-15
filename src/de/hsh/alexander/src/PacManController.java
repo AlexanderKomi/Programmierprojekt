@@ -12,10 +12,12 @@ public class PacManController extends GameEntryPoint {
 
     private final PacManFxmlChanger changer;
     private       PacManGame        game;
+    private       PacManEndScreen   pacManEndScreen = new PacManEndScreen();
+    private       PacManMenu        pacManMenu      = new PacManMenu();
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
-        this.changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
+        this.changer = new PacManFxmlChanger( this, PacManMenu.fxml, pacManMenu );
     }
 
     /**
@@ -31,12 +33,12 @@ public class PacManController extends GameEntryPoint {
                     break;
                 case UpdateCodes.PacMan.mainMenu:
                     Logger.log( "-------------------MAIN MENU----------------------" );
-                    this.game.deleteObservers();
+                    this.game.delete();
                     this.game = null;
+                    changer.changeFxml( pacManMenu, UpdateCodes.PacMan.mainMenu );
                     exitToMainGUI();
                     break;
                 case UpdateCodes.PacMan.showEndScreen:
-                    PacManEndScreen pacManEndScreen = new PacManEndScreen();
                     changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
                     pacManEndScreen.afterInitialization(
                             game.getCurrentLevel().getPacMan1Property().get(),
@@ -44,6 +46,7 @@ public class PacManController extends GameEntryPoint {
                                                        );
                     break;
                 case UpdateCodes.PacMan.repeatGame:
+                    changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
                     startGame();
                     break;
                 default:

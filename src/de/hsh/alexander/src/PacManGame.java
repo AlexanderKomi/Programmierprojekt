@@ -114,4 +114,14 @@ public class PacManGame extends Observable implements Observer, Initializable {
         return this.currentLevel;
     }
 
+    @Override
+    public synchronized void deleteObservers() {
+        this.currentLevel.deleteObservers();
+        super.deleteObservers();
+    }
+
+    public synchronized void delete() {
+        this.deleteObservers();
+        this.currentLevel = null;
+    }
 }

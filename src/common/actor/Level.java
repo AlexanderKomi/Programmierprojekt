@@ -39,6 +39,24 @@ abstract public class Level extends Observable implements Observer, ILevel {
     }
 
     @Override
+    public synchronized void deleteObservers() {
+        this.backgroundImage.deleteObservers();
+        for ( Actor npc : this.npcs ) {
+            npc.deleteObservers();
+        }
+        for ( ControlableActor player : this.players ) {
+            player.deleteObservers();
+        }
+        for ( LevelElement levelElement : this.levelElements ) {
+            levelElement.deleteObservers();
+        }
+        for ( Collectable collectable : this.collectables ) {
+            collectable.deleteObservers();
+        }
+        super.deleteObservers();
+    }
+
+    @Override
     public void render( Canvas canvas, int fps ) {
         try {
             this.backgroundImage.draw( canvas );
