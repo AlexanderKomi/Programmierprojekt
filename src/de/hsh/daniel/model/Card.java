@@ -1,39 +1,78 @@
 package de.hsh.daniel.model;
 
+
+import common.actor.Drawable;
 import javafx.scene.image.Image;
 
 
-public class Card {
+public class Card  {
 
-    private int                             id;
-    private Image                           image;
-    private boolean                         cardMatched;
-    private boolean                         cardSelected;
+    private int             id;
+    private Image           image;
+    private Image           cardBack = new Image("de/hsh/daniel/resources/0.png");
+    private boolean         cardMatched = false;
+    private boolean         cardSelected = false;
 
 
-    public Card(Image img, int id) {
-        this.image = img;
-        this.id = id;
+
+     Card(Image img, int id) {
+        setImage(img);
+        setId(id);
     }
 
-    
+
     @Override
     public String toString() {
         return "id: " + this.getId();
     }
 
 
-    public boolean isMatched() {
-        return cardMatched == true;
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        if(obj == null)
+            return false;
+        if(getClass() != obj.getClass())
+            return false;
+        Card other = (Card) obj;
+        if(id != other.id)
+            return false;
+        return true;
     }
 
-    public boolean isCardSelected() {
-        return cardSelected == true;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
     }
 
-    /* -------------------------------- GETTERS & SETTERS -------------------------------- */
+
+    public boolean isCardMatched(Card c1, Card c2) {
+        if(c1.equals(c2)) {
+            setCardMatched(true);
+            //leave cards face up
+        } else {
+            setCardMatched(false);
+            //flip cards back
+        }
+        return false;
+    }
 
 
+/* -------------------------------- GETTERS & SETTERS -------------------------------- */
+
+
+
+    public Image getCardBack() {
+        return cardBack;
+    }
+    public void setCardBack(Image cardBack) {
+        this.cardBack = cardBack;
+    }
 
     public int getId() { return this.id; }
     public void setId(int id) { this.id = id; }
@@ -48,3 +87,4 @@ public class Card {
     public boolean getCardSelected() { return this.cardSelected; }
     public void setCardSelected(boolean cardSelected) { this.cardSelected = cardSelected; }
 }
+
