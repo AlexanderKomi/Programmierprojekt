@@ -19,7 +19,6 @@ public class AmirEntryPoint extends GameEntryPoint {
     private AmirFxmlChanger changer;
     private AmirGameController amirGame;
     private AmirsMainMenuController mainMenuController;
-    boolean initialized = false;
 
     public AmirEntryPoint(Observer o) {
         super(o, WindowConfig.amir_title);
@@ -38,17 +37,17 @@ public class AmirEntryPoint extends GameEntryPoint {
                     changer.changeFxml(this.amirGame, UpdateCodes.Amir.startGame);
                     break;
                 case UpdateCodes.Amir.mainMenu:
-                    //TODO !!!!!!! Buttons do not work after reset!
+                    mainMenuController.switchLabels();
                     changer.changeFxml(mainMenuController, UpdateCodes.Amir.mainMenu);
                     break;
                 case UpdateCodes.DefaultCodes.exitToMainGUI:
+                    AmirsMainMenuController.gameStarted = false;
                     exitToMainGUI();
                     break;
                 default:
                     logParsingError(o, arg);
                     break;
             }
-            initialized = true;
             //this.notifyObservers( message );
         } else {
             logParsingError(o, arg);
@@ -57,10 +56,14 @@ public class AmirEntryPoint extends GameEntryPoint {
 
     @Override
     public void render(int fps) {
-        if (initialized) {
+        if (amirGame != null) {
             Platform.runLater(() -> {
                 amirGame.render(fps);
             });
+        } if(mainMenuController!= null){
+           Platform.runLater(()->{
+               mainMenuController.render(fps);
+           });
         }
     }
 
