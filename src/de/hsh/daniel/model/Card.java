@@ -5,39 +5,30 @@ import javafx.scene.image.Image;
 
 public class Card {
 
-    private int                 id;
-    private Image               image;
-    private boolean             cardMatched;
-    private boolean             cardSelected;
+    private int                             id;
+    private Image                           image;
+    private boolean                         cardMatched;
+    private boolean                         cardSelected;
 
-    public Card(int id) {
-        cardSelected = false;
-        cardMatched = false;
-        setId(id);
+
+    public Card(Image img, int id) {
+        this.image = img;
+        this.id = id;
     }
 
+    
     @Override
     public String toString() {
         return "id: " + this.getId();
     }
 
 
-
-
     public boolean isMatched() {
-        if(cardMatched == true) {
-            return true;
-        } else {
-            return false;
-        }
+        return cardMatched == true;
     }
 
     public boolean isCardSelected() {
-        if(cardSelected == true) {
-            return true;
-        } else {
-            return false;
-        }
+        return cardSelected == true;
     }
 
     /* -------------------------------- GETTERS & SETTERS -------------------------------- */

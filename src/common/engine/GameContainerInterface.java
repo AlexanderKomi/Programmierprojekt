@@ -13,16 +13,11 @@ public interface GameContainerInterface {
     void startContainer( String[] args );
 
     /**
-     * Start the new game. Must be called from the class launching the application!
-     */
-    void startContainer();
-
-    /**
      * Gets called every time a new frame is rendered.
      * Use this to update every frame.
      * @param fps
      */
-    void render( int fps );
+    void render( final int fps );
 
     void update( Observable o, Object arg );
 
@@ -31,10 +26,5 @@ public interface GameContainerInterface {
      */
     void stopContainer();
 
-    //-------------------------------------- GETTER & SETTER --------------------------------------
-
-    boolean isRunning();
-
-    void setRunning( boolean value );
-
+    void setRunning( final boolean value );
 }

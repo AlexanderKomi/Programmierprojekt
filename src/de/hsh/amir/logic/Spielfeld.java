@@ -1,0 +1,37 @@
+package de.hsh.amir.logic;
+
+
+import common.actor.Level;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyEvent;
+
+import java.util.Observable;
+
+public class Spielfeld extends Level{
+
+    public Spielfeld( Canvas gameCanvas ) {
+        super( gameCanvas );
+    }
+
+    @Override
+    protected boolean isGameFinished() {
+        return false;
+    }
+
+    @Override
+    public void createLevel( Canvas gameCanvas ) {
+
+    }
+
+    @Override
+    public void keyboardInput(KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        /**
+         * Abbruchbedingungen
+         */
+    }
+}

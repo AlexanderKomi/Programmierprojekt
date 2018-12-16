@@ -1,43 +1,68 @@
 package de.hsh.alexander.src.actor.player;
 
+import common.actor.Actor;
+import common.actor.Collectable;
 import common.actor.ControlableActor;
 import common.actor.Direction;
-import de.hsh.alexander.src.actor.ResourcePaths;
+import javafx.beans.property.SimpleIntegerProperty;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class PacMan extends ControlableActor {
 
-    private static final double start_x              = 100;
-    private static final double start_y              = 100;
-    private static final int    default_speed        = 10;
-    private static final int    change_picture_delay = 5;
+    private final        SimpleIntegerProperty points               = new SimpleIntegerProperty( -1 );
+    private static final double                start_x              = 100;
+    private static final double                start_y              = 100;
+    private static final int                   default_speed        = 10;
+    private static final int                   change_picture_delay = 5;
 
+    private Direction facingDirection = Direction.Left;
 
-    public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
+    public PacMan( final String pictureFileName, final HashMap<String, Direction> keyMap ) {
         this( pictureFileName, start_x, start_y, keyMap );
     }
 
-    public PacMan( String pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
+    public PacMan( final String pictureFileName, final double x, final double y, final HashMap<String, Direction> keyMap ) {
         super( pictureFileName, x, y, keyMap );
         this.setSpeed( default_speed );
     }
 
-    public PacMan( List<String> pictureFileName, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
+    public PacMan( final String[] pictureFileName, final HashMap<String, Direction> keyMap ) {
+        this( start_x, start_y, keyMap, pictureFileName );
+    }
+
+    public PacMan( List<String> pictureFileName, HashMap<String, Direction> keyMap ) {
         this( pictureFileName, start_x, start_y, keyMap );
     }
 
-    public PacMan( List<String> pictureFileName, double x, double y, HashMap<String, Direction> keyMap )
-            throws FileNotFoundException {
+    public PacMan( List<String> pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) {
         super( pictureFileName, x, y, keyMap, change_picture_delay );
         this.setSpeed( default_speed );
     }
 
+    public PacMan( double x, double y, HashMap<String, Direction> keyMap, String mustHave, String... pictureFileName ) {
+        super( x, y, keyMap, change_picture_delay, mustHave, pictureFileName );
+        this.setSpeed( default_speed );
+    }
+
+    public PacMan( double x, double y, HashMap<String, Direction> keyMap, String[] pictureFileName ) {
+        super( pictureFileName, x, y, keyMap, change_picture_delay );
+        this.setSpeed( default_speed );
+    }
+
+    public PacMan( final HashMap<String, Direction> keyMap, final String[] pictureFileName ) {
+        this( Arrays.asList( pictureFileName ), start_x, start_y, keyMap );
+    }
+
+    public PacMan( final HashMap<String, Direction> keyMap, final String mustHave, final String[] pictureFileName ) {
+        this( start_x, start_y, keyMap, mustHave, pictureFileName );
+    }
+
+
     @Override
-    protected double[] calculateDirectedSpeed( Direction direction, double movement_speed ) {
+    protected double[] calculateDirectedSpeed( final Direction direction, final double movement_speed ) {
         double[] xyTuple = new double[ 2 ];
         if ( direction == Direction.Down ) {
             xyTuple[ 0 ] = 0;
@@ -55,40 +80,69 @@ public class PacMan extends ControlableActor {
             xyTuple[ 0 ] = movement_speed;
             xyTuple[ 1 ] = 0;
         }
+
+        changeFacingDirection( xyTuple );
+
         return xyTuple;
     }
 
-    public static PacMan initPacMan1() throws FileNotFoundException {
-        HashMap<String, Direction> pacMan1KeyMap = new HashMap<>();
-        pacMan1KeyMap.put( "Up", Direction.Up );
-        pacMan1KeyMap.put( "Down", Direction.Down );
-        pacMan1KeyMap.put( "Left", Direction.Left );
-        pacMan1KeyMap.put( "Right", Direction.Right );
-
-        ArrayList<String> images = new ArrayList<>();
-        images.add( ResourcePaths.Actor.Player.PacMan.pacman1Directory + "sprite_pacman1_1.png" );
-        images.add( ResourcePaths.Actor.Player.PacMan.pacman1Directory + "sprite_pacman1_2.png" );
-        images.add( ResourcePaths.Actor.Player.PacMan.pacman1Directory + "sprite_pacman1_3.png" );
-        images.add( ResourcePaths.Actor.Player.PacMan.pacman1Directory + "sprite_pacman1_4.png" );
-
-        return new PacMan( images, pacMan1KeyMap );
-
+    private void changeFacingDirection( final double[] xyTuple ) {
+        if ( xyTuple[ 0 ] > 0 ) {
+            if ( this.facingDirection != Direction.Right ) {
+                this.facingDirection = Direction.Right;
+                if ( this.getScaleX() > 0 ) {
+                    this.scaleImageWidth( -1 );
+                }
+            }
+        }
+        else if ( xyTuple[ 0 ] < 0 ) {
+            if ( this.facingDirection != Direction.Left ) {
+                this.facingDirection = Direction.Left;
+                if ( this.getScaleX() < 0 ) {
+                    this.scaleImageWidth( -1 );
+                }
+            }
+        }
+        else if ( xyTuple[ 1 ] > 0 ) {
+            if ( this.facingDirection != Direction.Down ) {
+                this.facingDirection = Direction.Down;
+                /*
+                if ( this.getScaleY() < 0 ) {
+                    this.scaleImageHeight( -1 );
+                    this.scaleImageWidth( -1 );
+                }
+                */
+            }
+        }
+        else if ( xyTuple[ 1 ] < 0 ) {
+            if ( this.facingDirection != Direction.Up ) {
+                this.facingDirection = Direction.Up;
+                /*
+                if ( this.getScaleY() > 0 ) {
+                    this.scaleImageHeight( -1 );
+                    this.scaleImageWidth( -1 );
+                }
+                */
+            }
+        }
     }
 
-    public static PacMan initPacMan2() throws FileNotFoundException {
-        HashMap<String, Direction> pacMan2KeyMap = new HashMap<>();
-        pacMan2KeyMap.put( "W", Direction.Up );
-        pacMan2KeyMap.put( "S", Direction.Down );
-        pacMan2KeyMap.put( "A", Direction.Left );
-        pacMan2KeyMap.put( "D", Direction.Right );
+    @Override
+    public synchronized boolean collisionModifier( Actor other ) {
+        if ( other instanceof Collectable ) {
+            final Collectable c = (Collectable) other;
+            c.wasCollected( this );
+            return false;
+        }
 
-        ArrayList<String> images = new ArrayList<>();
-        images.add( ResourcePaths.Actor.Player.PacMan.pacman2Directory + "pacman2_0.png" );
-        images.add( ResourcePaths.Actor.Player.PacMan.pacman2Directory + "pacman2_1.png" );
-        images.add( ResourcePaths.Actor.Player.PacMan.pacman2Directory + "pacman2_2.png" );
-        images.add( ResourcePaths.Actor.Player.PacMan.pacman2Directory + "pacman2_3.png" );
+        return super.collisionModifier( other );
+    }
 
+    public SimpleIntegerProperty getPointProperty() {
+        return this.points;
+    }
 
-        return new PacMan( images, 500, 500, pacMan2KeyMap );
+    public void addPoint() {
+        points.set( points.get() + 1 );
     }
 }

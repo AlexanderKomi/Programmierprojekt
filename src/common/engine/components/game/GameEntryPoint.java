@@ -3,7 +3,6 @@ package common.engine.components.game;
 import common.engine.FxModul;
 import common.updates.UpdateCodes;
 
-import java.util.Observable;
 import java.util.Observer;
 
 /***
@@ -33,7 +32,7 @@ public abstract class GameEntryPoint extends FxModul implements IGame {
     @Override
     public boolean equals(Object obj) {
         if ( obj instanceof GameEntryPoint ) {
-            GameEntryPoint g = (GameEntryPoint) obj;
+            final GameEntryPoint g = (GameEntryPoint) obj;
             return this.name.equals(g.name) &&
                     g.getScene().equals(this.getScene());
         }
@@ -45,12 +44,6 @@ public abstract class GameEntryPoint extends FxModul implements IGame {
         this.setChanged();
         super.notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
     }
-
-    public void addObservable(Observable observable) {
-        observable.addObserver(this);
-    }
-
-    public abstract void render(int fps);
 
     // ----------------------------------- GETTER & SETTER  -----------------------------------
 

@@ -2,14 +2,16 @@ package de.hsh.amir;
 
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
-import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
+import common.util.Logger;
+import de.hsh.amir.controller.AmirGameController;
 import de.hsh.amir.controller.AmirsMainMenuController;
+import sun.rmi.runtime.Log;
 
 import java.util.Observable;
 
 /**
- * Created by yy9-mys-u1 on 23.11.18.
+ * TODO maybe for fixation of exitButton
  */
 public class AmirFxmlChanger extends FxmlChanger {
 
@@ -19,14 +21,12 @@ public class AmirFxmlChanger extends FxmlChanger {
 
     @Override
     public void changeFxml(Observable o, String msg) {
-            if (o instanceof AmirsMainMenuController){handle_MainMenu(msg);}
-            else if(false){}
-    }
-
-    private void handle_MainMenu(String msg) {
-        switch (msg){
-            case UpdateCodes.DefaultCodes.exitToMainGUI:
-                ((GameEntryPoint) getFxModul()).exitToMainGUI();
+        if (msg.equals(UpdateCodes.Amir.startGame)) {
+            changeScene(AmirGameController.fxml, o);
+        } else if (msg.equals(UpdateCodes.Amir.mainMenu)) {
+            this.changeScene(AmirsMainMenuController.fxml, o);
+        } else {
+            Logger.log(this.getClass() + ": fxml not found");
         }
     }
 }

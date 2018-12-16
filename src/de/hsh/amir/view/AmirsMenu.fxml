@@ -25,7 +25,7 @@
                <VBox.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </VBox.margin></Button>
-                <Button fx:id="b_5" mnemonicParsing="false" onAction="#exit" prefHeight="50.0" prefWidth="300.0" text="Exit">
+                <Button fx:id="b_5" mnemonicParsing="false" onAction="#exit" prefHeight="50.0" prefWidth="300.0" text="exit">
                <VBox.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </VBox.margin></Button>

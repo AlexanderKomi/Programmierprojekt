@@ -8,7 +8,94 @@ import javafx.scene.canvas.Canvas;
  * @author Kevin Jeske
  * @author Alexander Komischke
  */
-class CollisionCheck {
+public class CollisionCheck {
+
+    /**
+     * Just a Wrapper.
+     */
+    public static boolean[] isInBounds( Drawable a, Canvas canvas ) {
+        return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas );
+    }
+
+
+    /**
+     * Calculates if a rectangle with a tuple of coordinates (x, y) and given width and height,
+     * is positioned in a rectangle canvas_widht and canvas_height.
+     * <p>
+     * The coordinates (new_x, new_y) are an offset to the (x,y) Tuple, not new coordinates!
+     * This implementation is in particullar useful to calculate if a new position oder the next position of the rectangle is
+     * in the greater rectangle.
+     *
+     * @return an boolean Array with index 0 for x coordinate and
+     * * index 1 for y coordinate. When true is written at the corresponding index, it means, that the corresponding
+     * coordinate
+     * * is in bounds.
+     *
+     * @author Alexander Komischke
+     * @author Kevin Jeske
+     */
+    static boolean[] isInBounds( final double x,
+                                 final double y,
+                                 final double width,
+                                 final double height,
+                                 final double canvas_widht,
+                                 final double canvas_height,
+                                 final double new_x,
+                                 final double new_y ) {
+        boolean[] temp = new boolean[] {
+                false, false
+        };
+
+        if ( width > 0 ) {
+            if ( (x + new_x) >= 0 &&
+                 (x + new_x + width) <= canvas_widht ) {
+                temp[ 0 ] = true;
+            }
+        }
+        else if ( width < 0 ) {
+            if ( (x + new_x) >= 0 &&
+                 (x + new_x) <= canvas_widht ) {
+                temp[ 0 ] = true;
+            }
+        }
+        if ( height > 0 ) {
+            if ( (y + new_y) >= 0 &&
+                 (y + new_y + height) <= canvas_height ) {
+                temp[ 1 ] = true;
+            }
+        }
+        else {
+            if ( (y + new_y) >= 0 &&
+                 (y + new_y) <= canvas_height ) {
+                temp[ 1 ] = true;
+            }
+        }
+        return temp;
+    }
+
+    /**
+     * Just a Wrapper.
+     * */
+    static boolean[] isInBounds( final double x, final double y, final double width, final double height, Canvas canvas ) {
+        return isInBounds( x, y, width, height, canvas.getWidth(), canvas.getHeight(), 0, 0 );
+    }
+
+    /**
+     *
+     *
+     * @return an boolean Array with index 0 for x coordinate and
+     *      * index 1 for y coordinate. When true is written at the corresponding index, it means, that the corresponding
+     *      coordinate
+     *      * is in bounds.
+     *
+     * @author Alex
+     * @author Kevin
+     */
+    public static boolean[] isInBounds( Drawable a, Canvas canvas,
+                                        final double new_x,
+                                        final double new_y ) {
+        return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas.getWidth(), canvas.getHeight(), new_x, new_y );
+    }
 
     /**
      * Returns an boolean Array with index 0 equals x coordinate and
@@ -17,20 +104,12 @@ class CollisionCheck {
      * @author Alex
      * @author Kevin
      */
-    public static boolean[] isInBounds( Drawable a, Canvas canvas, double new_x, double new_y ) {
-        boolean[] temp = new boolean[] {
-                false, false
-        };
-
-        if ( (a.getX() + new_x) >= 0 &&
-             (a.getX() + new_x + a.getWidth()) <= canvas.getWidth() ) {
-            temp[ 0 ] = true;
-        }
-        if ( (a.getY() + new_y >= 0) &&
-             (a.getY() + new_y + a.getHeight()) <= canvas.getHeight() ) {
-            temp[ 1 ] = true;
-        }
-        return temp;
+    public static boolean[] isInBounds( Drawable a,
+                                        final double canvas_widht,
+                                        final double canvas_height,
+                                        final double new_x,
+                                        final double new_y ) {
+        return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas_widht, canvas_height, new_x, new_y );
     }
 
     static boolean doesCollide( Drawable a, Drawable b ) {
@@ -48,12 +127,16 @@ class CollisionCheck {
      * @return
      */
     private static boolean checkUpperLeftCorner( Drawable a, Drawable b ) {
-        if ( a.getX() <= b.getX() && a.getX() + a.getWidth() >= b.getX() ) {
-            return a.getY() <= b.getY() && a.getY() + a.getHeight() >= b.getY();
+        return checkUpperLeftCorner( a.getX(), a.getY(), a.getWidth(), a.getHeight(), b.getX(), b.getY() );
+    }
+
+    private static boolean checkUpperLeftCorner( final double a_x, final double a_y, final double a_width, final double a_height,
+                                                 final double b_x, final double b_y ) {
+        if ( a_x <= b_x && a_x + a_width >= b_x ) {
+            return a_y <= b_y && a_y + a_height >= b_y;
         }
         return false;
     }
-
 
     /**
      * Obere Rechte Ecke von b schneidet a

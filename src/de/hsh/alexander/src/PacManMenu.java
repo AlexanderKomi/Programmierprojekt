@@ -3,23 +3,41 @@ package de.hsh.alexander.src;
 
 import common.updates.UpdateCodes;
 import common.util.Logger;
+import de.hsh.alexander.src.actor.collectables.DataCoin;
+import de.hsh.alexander.src.actor.player.PacMan1;
+import de.hsh.alexander.src.actor.player.PacMan2;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
+import java.net.URL;
 import java.util.Observable;
+import java.util.ResourceBundle;
 
-public class PacManMenu extends Observable {
+public final class PacManMenu extends Observable implements Initializable {
 
-    public static final String fxml = "PacManMenu.fxml";
+    public static final String   fxml        = "PacManMenu.fxml";
+    private             boolean  initialized = false;
+    private             DataCoin d;
+    private             PacMan1  pacMan1;
+    private             PacMan2  pacMan2;
 
     @FXML
-    public        VBox     basicPane;
+    public VBox   basicPane;
     @FXML
-    public        Button   backButton;
+    public Canvas dataCoinCanvas;
     @FXML
-    public        Button   okButton;
+    public Canvas player1Canvas;
+    @FXML
+    public Canvas player2Canvas;
+    @FXML
+    public Button backButton;
+    @FXML
+    public Button okButton;
 
 
     public void backButtonPressed( ActionEvent actionEvent ) {
@@ -32,5 +50,34 @@ public class PacManMenu extends Observable {
         Logger.log( "PacManMenu : Ok Button pressed" );
         this.setChanged();
         this.notifyObservers( UpdateCodes.PacMan.startGame );
+    }
+
+    void render() {
+        if ( !initialized ) {
+            return;
+        }
+        Platform.runLater( () -> {
+            dataCoinCanvas.getGraphicsContext2D().clearRect( 0, 0, dataCoinCanvas.getWidth(), dataCoinCanvas.getHeight() );
+
+            d.draw( dataCoinCanvas );
+
+            player1Canvas.getGraphicsContext2D().clearRect( 0, 0, player1Canvas.getWidth(), player1Canvas.getHeight() );
+            player2Canvas.getGraphicsContext2D().clearRect( 0, 0, player2Canvas.getWidth(), player2Canvas.getHeight() );
+
+            pacMan1.draw( player1Canvas );
+            pacMan2.draw( player2Canvas );
+
+        } );
+
+    }
+
+    @Override
+    public void initialize( URL location, ResourceBundle resources ) {
+
+        d = new DataCoin( 0, 0, 2 );
+        pacMan1 = new PacMan1( 0, 0 );
+        pacMan2 = new PacMan2( 0, 0 );
+
+        initialized = true;
     }
 }

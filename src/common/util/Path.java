@@ -1,5 +1,7 @@
 package common.util;
 
+import de.hsh.alexander.src.actor.ResourcePaths;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -10,12 +12,13 @@ import java.util.Arrays;
  *
  * @author Alexander Komischke
  */
-public class Path {
+public final class Path {
 
     public static void main( String[] args ) {
         //standAlone( args );
-
-        Logger.log( "Dir : " + getExecutionLocation(), Path.getAllFileNames() );
+        Logger.log( "Relative Path : " +
+                    Path.getRessourceFromPath( ResourcePaths.Actor.LevelElements.Condensator.full_picture ).toExternalForm() );
+        //Logger.log( "Dir : " + getExecutionLocation(), Path.getAllFileNames() );
     }
 
     public static String[] getAllFileNames() {
@@ -163,6 +166,24 @@ public class Path {
      * @author Alexander Komischke
      */
     public static String getExecutionLocation() {
+
         return getClassLocation( Path.class ).getPath();
+    }
+
+    /**
+     * Gets the execution location of the main, parses if it is a jar, and returns an InputStream of the file.
+     *
+     * @return InputStream Use this to load a file.
+     *
+     * @author Alexander Komischke
+     */
+    public static URL getRessourceFromPath( String filePath ) {
+        URL    result;
+        result = Path.class.getResource( filePath );
+        if ( result == null ) {
+            throw new NullPointerException( "File does not exist : " + filePath );
+        }
+
+        return result;
     }
 }
