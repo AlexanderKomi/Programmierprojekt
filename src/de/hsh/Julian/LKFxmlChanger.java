@@ -4,8 +4,10 @@ import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.engine.components.game.GameEntryPoint;
 import common.util.Logger;
+import de.hsh.Julian.controller.LKEnd;
 import de.hsh.Julian.controller.LKStart;
 import de.hsh.Julian.controller.SpielBildschirm_controller;
+import sun.rmi.runtime.Log;
 
 import java.util.Observable;
 
@@ -24,9 +26,11 @@ public class LKFxmlChanger extends FxmlChanger {
 
     @Override
     public void changeFxml( Observable o, String msg ) {
-        if(o instanceof LKStart){
+
+
             switch (msg){
                 case "b_backtomenu":
+                    Logger.log(this.getClass()+" b_backtomenu_clicked");
                     ((GameEntryPoint) getFxModul()).exitToMainGUI();
                     break;
                 case "b_start":
@@ -34,10 +38,22 @@ public class LKFxmlChanger extends FxmlChanger {
                     changeScene(SpielBildschirm_controller.fxml, c );
                     c.passCanvas();
                     break;
+                case "gameover":
+
+                    LKEnd l = new LKEnd();
+                    changeScene(LKEnd.fxml, l );
+                    //l.passCanvas();
+                    break;
+                case "b_retry":
+                    Logger.log("jo");
+                    SpielBildschirm_controller d = new SpielBildschirm_controller();
+                    changeScene(SpielBildschirm_controller.fxml, d);
+                    d.passCanvas();
+                    break;
                 default:
                     Logger.log( this.getClass().getName() + " default SwitchCase." );
                     break;
             }
-        }
+
     }
 }

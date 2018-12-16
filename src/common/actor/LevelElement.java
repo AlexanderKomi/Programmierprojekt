@@ -1,35 +1,38 @@
 package common.actor;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
-public class LevelElement extends Actor {
+abstract public class LevelElement extends Actor {
 
-    protected LevelElement( String pictureFileName ) throws FileNotFoundException {
+    protected LevelElement( final String pictureFileName ) {
         super( pictureFileName );
     }
 
-    public LevelElement( String pictureFileName, double x, double y ) throws FileNotFoundException {
+    public LevelElement( final String pictureFileName, final double x, final double y ) {
         super( pictureFileName, x, y );
     }
 
-    public LevelElement( String... pictureFilePaths ) throws FileNotFoundException {
+    public LevelElement( final String mustHavePath, final String... pictureFilePaths ) {
+        super( mustHavePath, pictureFilePaths );
+    }
+
+    public LevelElement( final List<String> pictureFilePaths ) {
         super( pictureFilePaths );
     }
 
-    public LevelElement( List<String> pictureFilePaths ) throws FileNotFoundException {
+    public LevelElement( final String[] pictureFilePaths ) {
         super( pictureFilePaths );
     }
 
-    public LevelElement( List<String> pictureFilePaths, double x, double y, int delay ) throws FileNotFoundException {
+    public LevelElement( final List<String> pictureFilePaths, final double x, final double y, final int delay ) {
         super( pictureFilePaths, x, y, delay );
     }
 
-    public LevelElement( double x, double y, String... pictureFilePaths ) throws FileNotFoundException {
+    public LevelElement( final double x, final double y, final String... pictureFilePaths ) {
         super( x, y, 0, pictureFilePaths );
     }
 
-    public LevelElement( double x, double y, int delay, String... pictureFilePaths ) throws FileNotFoundException {
+    public LevelElement( final double x, final double y, final int delay, final String... pictureFilePaths ) {
         super( x, y, delay, pictureFilePaths );
     }
 }

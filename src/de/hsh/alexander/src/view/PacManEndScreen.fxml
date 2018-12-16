@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<Pane xmlns:fx="http://javafx.com/fxml/1" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1">
+<?import javafx.scene.text.*?>
+<Pane prefHeight="800.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1">
     <VBox alignment="CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="10.0">
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
-            <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                <Label text="Vorbei">
+        <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+            <children>
+                <Label text="VORBEI">
                     <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                     </padding>
@@ -17,29 +16,65 @@
                         <Font size="96.0"/>
                     </font>
                 </Label>
-            </HBox>
+            </children>
+        </VBox>
+        <Separator prefWidth="200.0"/>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="SOMETIMES">
                 <VBox.margin>
                     <Insets/>
                 </VBox.margin>
-                <Label text="Spieler 1: "/>
-                <Label fx:id="player1PointsLabel" text="Anzahl"/>
-                <Label text="Punkte"/>
+                <Label text="Spieler 1: ">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="player1PointsLabel" text="Anzahl">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+                <Label text="Punkte">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="SOMETIMES">
-                <Label text="Spieler 2: "/>
-                <Label fx:id="player2PointsLabel" text="Anzahl"/>
-                <Label text="Punkte"/>
+                <Label text="Spieler 2: ">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="player2PointsLabel" text="Anzahl">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+                <Label text="Punkte">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
             </HBox>
         </VBox>
+        <Separator prefWidth="200.0"/>
         <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="SOMETIMES">
+            <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="600.0" spacing="10.0" HBox.hgrow="SOMETIMES">
                 <Button mnemonicParsing="false" onAction="#mainMenuButtonPressed" text="Hautpmenü"/>
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                </padding>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="SOMETIMES">
-                <Button mnemonicParsing="false" onAction="#repeatButtonPressed" text="Nochmal"
-                        HBox.hgrow="SOMETIMES"/>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="600.0" spacing="10.0" HBox.hgrow="SOMETIMES">
+                <Button mnemonicParsing="false" onAction="#repeatButtonPressed" prefHeight="139.0" prefWidth="163.0"
+                        text="Nochmal" textAlignment="CENTER" wrapText="true" HBox.hgrow="SOMETIMES">
+                    <font>
+                        <Font size="36.0"/>
+                    </font>
+                </Button>
             </HBox>
+            <HBox prefHeight="100.0" prefWidth="600.0"/>
         </HBox>
     </VBox>
 </Pane>

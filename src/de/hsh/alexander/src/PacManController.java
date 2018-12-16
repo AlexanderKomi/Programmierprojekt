@@ -11,13 +11,11 @@ import java.util.Observer;
 public class PacManController extends GameEntryPoint {
 
     private final PacManFxmlChanger changer;
-    private final PacManGame game;
+    private       PacManGame        game;
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
-        game = new PacManGame();
-        game.addObserver( this );
-        changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
+        this.changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
     }
 
     /**
@@ -29,13 +27,24 @@ public class PacManController extends GameEntryPoint {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
-                    changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
+                    startGame();
                     break;
                 case UpdateCodes.PacMan.mainMenu:
+                    Logger.log( "-------------------MAIN MENU----------------------" );
+                    this.game.deleteObservers();
+                    this.game = null;
                     exitToMainGUI();
                     break;
                 case UpdateCodes.PacMan.showEndScreen:
-                    changer.changeFxml( new PacManEndScreen(), UpdateCodes.PacMan.showEndScreen );
+                    PacManEndScreen pacManEndScreen = new PacManEndScreen();
+                    changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
+                    pacManEndScreen.afterInitialization(
+                            game.getCurrentLevel().getPacMan1Property().get(),
+                            game.getCurrentLevel().getPacMan2Property().get()
+                                                       );
+                    break;
+                case UpdateCodes.PacMan.repeatGame:
+                    startGame();
                     break;
                 default:
                     logParsingError( o, arg );
@@ -48,6 +57,15 @@ public class PacManController extends GameEntryPoint {
         }
     }
 
+    private void startGame() {
+        if ( this.game != null ) {
+            this.game.deleteObservers();
+        }
+        this.game = new PacManGame();
+        game.addObserver( this );
+        changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
+    }
+
     private static void logParsingError( Observable o, Object arg ) {
         Logger.log( "In PacManController: update : from observable : " + o + " Argument could not be parsed : " + arg );
     }
@@ -55,7 +73,9 @@ public class PacManController extends GameEntryPoint {
     @Override
     public void render(int fps) {
         if ( game != null ) {
-            game.render(fps);
+            if ( game.initialized ) {
+                game.render( fps );
+            }
         }
     }
 

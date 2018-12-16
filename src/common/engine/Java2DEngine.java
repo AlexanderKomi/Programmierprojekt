@@ -11,43 +11,44 @@ import java.util.Observable;
  * @author Alexander Komischke
  * @see GameContainerInterface
  */
-public class Java2DEngine extends Observable implements Runnable {
+public final class Java2DEngine extends Observable implements Runnable {
 
 
     private static final double                 UPDATE_CAP = 1.0 / 60.0;
-    private              Thread                 gameThread;
-    private              GameContainerInterface gameContainer;
-    private              boolean                running    = false;
-    private              int                    fps;
+    private static       Thread                 gameThread;
+    private final        GameContainerInterface gameContainer;
+    private static       boolean                running    = false;
+    static               int                    fps;
 
     /**
      * Must be called before start().
      * <p>
-     * Initializes the AmirsGame Thread, with an instance of this class.
+     * Initializes the Game Thread, with an instance of this class.
      */
-    void init() {
-        this.gameThread = new Thread( this, "Java 2D Engine" );
+    public Java2DEngine( GameContainerInterface container ) {
+        this.gameContainer = container;
+        gameThread = new Thread( this, "Java 2D Engine" );
     }
 
     /**
      * Use configMainMenu once before start.
      * Only starts the gameContainer thread.
      */
-    void start() {
+    final void start() {
         if ( !this.isRunning() ) {
-            this.setRunning( true );
-            if ( !this.gameThread.isInterrupted() ) {
-                this.gameThread.start();
+            running = true;
+            if ( !gameThread.isInterrupted() ) {
+                gameThread.start();
             }
         }
     }
 
     private boolean isRunning() {
-        return this.running;
+        return running;
     }
 
-    void setRunning( boolean running ) {
-        this.running = running;
+    void shutdown() {
+        running = false;
     }
 
     /**
@@ -79,9 +80,9 @@ public class Java2DEngine extends Observable implements Runnable {
 
 
         boolean shouldRender;
-        this.running = true;
+        running = true;
 
-        while ( this.running ) {
+        while ( running ) {
             shouldRender = false;
 
             // Needed for CPU idle time and rendering
@@ -97,7 +98,7 @@ public class Java2DEngine extends Observable implements Runnable {
 
                 if ( frame_time >= 1 ) {
                     frame_time = 0;
-                    this.fps = frames;
+                    fps = frames;
                     frames = 0;
                 }
 
@@ -112,9 +113,9 @@ public class Java2DEngine extends Observable implements Runnable {
      * Interrupts the engine thread.
      */
     private void stop() {
-        if ( this.isRunning() ) {
-            this.setRunning( false );
-            this.gameThread.interrupt();
+        if ( running ) {
+            running = (false);
+            gameThread.interrupt();
         }
     }
 
@@ -127,16 +128,16 @@ public class Java2DEngine extends Observable implements Runnable {
      * @return Returns 1 if a new frame is rendered.<br>
      * Returns 0 when cpu idles.
      */
-    private int render( boolean shouldRender ) {
+    private byte render( final boolean shouldRender ) {
         if ( shouldRender ) {
 
             // START ------------------------ Render gameContainer ------------------------
-            this.gameContainer.render(this.fps);
+            this.gameContainer.render( fps );
             // STOP  ------------------------ Render gameContainer ------------------------
             return 1;
         }
         else {
-            if ( !this.gameThread.isInterrupted() ) {
+            if ( !gameThread.isInterrupted() ) {
                 try {
                     Thread.sleep( 1 ); // CPU Idle
                 }
@@ -146,14 +147,6 @@ public class Java2DEngine extends Observable implements Runnable {
             }
         }
         return 0;
-    }
-
-    int getFps() {
-        return this.fps;
-    }
-
-    <T extends Container> void setGameContainer( T fxgame ) {
-        this.gameContainer = fxgame;
     }
 
 }

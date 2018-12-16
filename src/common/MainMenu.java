@@ -14,13 +14,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
  * @author Alexander Komischke
  */
-public class MainMenu extends common.engine.components.menu.MainMenu implements Initializable {
+public final class MainMenu extends common.engine.components.menu.MainMenu implements Initializable {
 
     @FXML
     public AnchorPane ap_desktop;
@@ -53,8 +52,6 @@ public class MainMenu extends common.engine.components.menu.MainMenu implements 
     public Button b_shutdown;
     @FXML
     public ComboBox<String> cb_credits = new ComboBox<>();
-    private GameContainer gameContainer;
-    private ArrayList<String> gameNames = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -69,35 +66,37 @@ public class MainMenu extends common.engine.components.menu.MainMenu implements 
 
     public void initGameNames() {
         try {
-            AnchorPane p = (AnchorPane) this.vbox.getChildren().get(0);
-            GridPane g = (GridPane) p.getChildren().get(0);
+            bindGamesToButtons( new String[] {
+                    WindowConfig.alexander_title,
+                    WindowConfig.amir_title,
+                    WindowConfig.dennis_title,
+                    WindowConfig.daniel_title,
+                    WindowConfig.kevin_title,
+                    WindowConfig.julian_title
+            } );
 
-            for (int i = 0; i <= 5; i++){
-                VBox tempBox = (VBox) g.getChildren().get(i);
-                String gameName = this.gameNames.get(i);
-
-                ((Text) (tempBox).getChildren().get(1)).setText(gameName); // Set the Text to the game name
-
-                Button b = (Button) tempBox.getChildren().get(0);
-
-                b.setOnAction(buttonEvent -> this.notifyObservers(gameName));
-            }
-
-            HBox shutdownBox = (HBox) this.vbox.getChildren().get(1);
-            Button shutdownButton = (Button) shutdownBox.getChildren().get(0);
-            shutdownButton.setOnAction(shutdownEvent -> this.notifyObservers(UpdateCodes.MainMenu.shutdown));
-        } catch (NullPointerException npe) {
+            HBox   shutdownBox    = (HBox) this.vbox.getChildren().get( 1 );
+            Button shutdownButton = (Button) shutdownBox.getChildren().get( 0 );
+            shutdownButton.setOnAction( shutdownEvent -> this.notifyObservers( UpdateCodes.MainMenu.shutdown ) );
+        }
+        catch ( NullPointerException npe ) {
             npe.printStackTrace();
         }
 
     }
 
-    public void setGameContainer(GameContainer gameContainer) {
-        this.gameContainer = gameContainer;
-    }
+    private void bindGamesToButtons( String[] gameNames ) {
+        AnchorPane p = (AnchorPane) this.vbox.getChildren().get( 0 );
+        GridPane   g = (GridPane) p.getChildren().get( 0 );
 
-    public void setGameNames(ArrayList<String> gameNames) {
-        this.gameNames = gameNames;
+        for ( int i = 0 ; i <= 5 ; i++ ) {
+            String gameName = gameNames[ i ];
+
+            VBox tempBox = (VBox) g.getChildren().get( i );
+            ((Text) (tempBox).getChildren().get( 1 )).setText( gameName ); // Set the Text to the game name
+            Button b = (Button) tempBox.getChildren().get( 0 );
+            b.setOnAction( buttonEvent -> this.notifyObservers( gameName ) );
+        }
     }
 
 }

@@ -7,6 +7,7 @@ import common.util.Logger;
 import common.util.Path;
 import de.hsh.daniel.controller.RAM_MainMenu_controller;
 import de.hsh.daniel.controller.RamGame_controller;
+import javafx.application.Platform;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -41,7 +42,9 @@ public class RAM extends GameEntryPoint {
     @Override
     public void render(int fps) {
         if ( initialized ) {
-            game.render( fps );
+            Platform.runLater( () -> {
+                game.render( fps );
+            } );
         }
     }
 

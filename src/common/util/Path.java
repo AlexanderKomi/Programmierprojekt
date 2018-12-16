@@ -10,7 +10,7 @@ import java.util.Arrays;
  *
  * @author Alexander Komischke
  */
-public class Path {
+public final class Path {
 
     public static void main( String[] args ) {
         //standAlone( args );
@@ -163,6 +163,32 @@ public class Path {
      * @author Alexander Komischke
      */
     public static String getExecutionLocation() {
+
         return getClassLocation( Path.class ).getPath();
+    }
+
+    /**
+     * Gets the execution location of the main, parses if it is a jar, and returns an InputStream of the file.
+     *
+     * @return InputStream Use this to load a file.
+     *
+     * @author Alexander Komischke
+     */
+    public static URL getRessourceFromPath( String filePath ) {
+        URL    result;
+        String execLoc = Path.getExecutionLocation();
+
+        if ( execLoc.endsWith( "jar" ) ) {
+            execLoc = filePath;
+        }
+        else {
+            execLoc += filePath;
+        }
+        result = Path.class.getResource( execLoc );
+        if ( result == null ) {
+            throw new NullPointerException( "File does not exist : " + execLoc );
+        }
+
+        return result;
     }
 }

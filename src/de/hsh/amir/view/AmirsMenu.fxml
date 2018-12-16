@@ -1,42 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<HBox fx:id="hbox_1" prefHeight="800" prefWidth="1200"
-      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      >
-    <children>
-        <VBox fx:id="vbox_1" alignment="CENTER" prefHeight="800.0" prefWidth="1280.0" HBox.hgrow="ALWAYS">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+         <image>
+            <Image url="@../resources/background_before_start.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="titleLabel" alignment="CENTER" graphicTextGap="0.0" layoutX="389.0" layoutY="123.0" prefHeight="154.0" prefWidth="451.0" text="Virus Collector" textAlignment="CENTER" textFill="AQUA">
+         <font>
+            <Font name="System Bold" size="64.0" />
+         </font>
+      </Label>
+        <VBox fx:id="vbox_1" alignment="CENTER" layoutX="463.0" layoutY="331.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="281.0" spacing="10.0">
          <children>
-             <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#button_clicked" prefHeight="50.0"
-                     prefWidth="300.0" text="Start">
+             <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#button_clicked" prefHeight="64.0" prefWidth="200.0" text="Start">
                <VBox.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-               </VBox.margin></Button>
-             <Button fx:id="level1Button" mnemonicParsing="false" onAction="#button_clicked" prefHeight="50.0"
-                     prefWidth="300.0" text="Level1">
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Button>
+             <Button fx:id="level1Button" disable="true" mnemonicParsing="false" onAction="#button_clicked" prefHeight="64.0" prefWidth="200.0" text="Level1">
                <VBox.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-               </VBox.margin></Button>
-             <Button fx:id="level2Button" mnemonicParsing="false" onAction="#button_clicked" prefHeight="50.0"
-                     prefWidth="300.0" text="Level2">
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Button>
+             <Button fx:id="level2Button" mnemonicParsing="false" onAction="#button_clicked" prefHeight="64.0" prefWidth="200.0" text="Level2">
                <VBox.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-               </VBox.margin></Button>
-             <Button fx:id="level3Button" mnemonicParsing="false" onAction="#button_clicked" prefHeight="50.0"
-                     prefWidth="300.0" text="Level3">
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Button>
+             <Button fx:id="level3Button" mnemonicParsing="false" onAction="#button_clicked" prefHeight="64.0" prefWidth="200.0" text="Level3">
                <VBox.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-               </VBox.margin></Button>
-             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#button_clicked" prefHeight="50.0"
-                     prefWidth="300.0" text="Exit">
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Button>
+             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#button_clicked" prefHeight="64.0" prefWidth="200.0" text="Zurück">
                <VBox.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-               </VBox.margin></Button>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Button>
          </children>
         </VBox>
-    </children>
-    <stylesheets>
-    </stylesheets>
-</HBox>
+   </children>
+</AnchorPane>

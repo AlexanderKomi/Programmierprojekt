@@ -2,51 +2,62 @@ package de.hsh.alexander.src.actor.player;
 
 import common.actor.ControlableActor;
 import common.actor.Direction;
+import common.util.Logger;
+import javafx.beans.property.SimpleIntegerProperty;
 
-import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import static de.hsh.alexander.src.actor.ResourcePaths.Actor.Player.PacMan.pacman1Pictures;
-import static de.hsh.alexander.src.actor.ResourcePaths.Actor.Player.PacMan.pacman2Pictures;
-
 public class PacMan extends ControlableActor {
 
-    private static final double start_x              = 100;
-    private static final double start_y              = 100;
-    private static final int    default_speed        = 10;
-    private static final int    change_picture_delay = 5;
+    private final        SimpleIntegerProperty points               = new SimpleIntegerProperty( 0 );
+    private static final double                start_x              = 100;
+    private static final double                start_y              = 100;
+    private static final int                   default_speed        = 10;
+    private static final int                   change_picture_delay = 5;
 
+    private Direction facingDirection = Direction.Left;
 
-    public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
+    public PacMan( String pictureFileName, HashMap<String, Direction> keyMap ) {
         this( pictureFileName, start_x, start_y, keyMap );
     }
 
-    public PacMan( String pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
+    public PacMan( String pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) {
         super( pictureFileName, x, y, keyMap );
         this.setSpeed( default_speed );
     }
 
-    public PacMan( List<String> pictureFileName, HashMap<String, Direction> keyMap ) throws FileNotFoundException {
+    public PacMan( String[] pictureFileName, HashMap<String, Direction> keyMap ) {
+        this( start_x, start_y, keyMap, pictureFileName );
+    }
+
+    public PacMan( List<String> pictureFileName, HashMap<String, Direction> keyMap ) {
         this( pictureFileName, start_x, start_y, keyMap );
     }
 
-    public PacMan( List<String> pictureFileName, double x, double y, HashMap<String, Direction> keyMap )
-            throws FileNotFoundException {
+    public PacMan( List<String> pictureFileName, double x, double y, HashMap<String, Direction> keyMap ) {
         super( pictureFileName, x, y, keyMap, change_picture_delay );
         this.setSpeed( default_speed );
     }
 
-    public PacMan( double x, double y, HashMap<String, Direction> keyMap, String... pictureFileName )
-            throws FileNotFoundException {
-        super( x, y, keyMap, change_picture_delay, pictureFileName );
+    public PacMan( double x, double y, HashMap<String, Direction> keyMap, String mustHave, String... pictureFileName ) {
+        super( x, y, keyMap, change_picture_delay, mustHave, pictureFileName );
         this.setSpeed( default_speed );
     }
 
-    public PacMan( HashMap<String, Direction> keyMap, String... pictureFileName ) throws FileNotFoundException {
-        this( start_x, start_y, keyMap, pictureFileName );
+    public PacMan( double x, double y, HashMap<String, Direction> keyMap, String[] pictureFileName ) {
+        super( pictureFileName, x, y, keyMap, change_picture_delay );
+        this.setSpeed( default_speed );
     }
 
+    public PacMan( HashMap<String, Direction> keyMap, String[] pictureFileName ) {
+        this( Arrays.asList( pictureFileName ), start_x, start_y, keyMap );
+    }
+
+    public PacMan( HashMap<String, Direction> keyMap, String mustHave, String[] pictureFileName ) {
+        this( start_x, start_y, keyMap, mustHave, pictureFileName );
+    }
 
 
     @Override
@@ -68,27 +79,71 @@ public class PacMan extends ControlableActor {
             xyTuple[ 0 ] = movement_speed;
             xyTuple[ 1 ] = 0;
         }
+
+        changeFacingDirection( xyTuple );
+
         return xyTuple;
     }
 
-    public static PacMan initPacMan1() throws FileNotFoundException {
-        HashMap<String, Direction> pacMan1KeyMap = new HashMap<>();
-        pacMan1KeyMap.put( "Up", Direction.Up );
-        pacMan1KeyMap.put( "Down", Direction.Down );
-        pacMan1KeyMap.put( "Left", Direction.Left );
-        pacMan1KeyMap.put( "Right", Direction.Right );
-
-        return new PacMan( pacMan1KeyMap, pacman1Pictures );
-
+    private void changeFacingDirection( final double[] xyTuple ) {
+        if ( xyTuple[ 0 ] > 0 ) {
+            if ( this.facingDirection != Direction.Right ) {
+                this.facingDirection = Direction.Right;
+                if ( this.getScaleX() > 0 ) {
+                    this.scaleImageWidth( -1 );
+                }
+                Logger.log( "This : " + this.getX() + ", " + this.getWidth() );
+                Logger.log( "Facing Direction changed to: " + this.facingDirection );
+            }
+        }
+        else if ( xyTuple[ 0 ] < 0 ) {
+            if ( this.facingDirection != Direction.Left ) {
+                this.facingDirection = Direction.Left;
+                if ( this.getScaleX() < 0 ) {
+                    this.scaleImageWidth( -1 );
+                }
+                Logger.log( "Facing Direction changed to: " + this.facingDirection );
+            }
+        }
+        else if ( xyTuple[ 1 ] > 0 ) {
+            if ( this.facingDirection != Direction.Down ) {
+                this.facingDirection = Direction.Down;
+                /*
+                if ( this.getScaleY() < 0 ) {
+                    //this.scaleImageHeight( -1 );
+                    //this.scaleImageWidth( -1 );
+                }
+                */
+                Logger.log( "Facing Direction changed to: " + this.facingDirection );
+            }
+        }
+        else if ( xyTuple[ 1 ] < 0 ) {
+            if ( this.facingDirection != Direction.Up ) {
+                this.facingDirection = Direction.Up;
+                /*
+                if ( this.getScaleY() > 0 ) {
+                    //this.scaleImageHeight( -1 );
+                    //this.scaleImageWidth( -1 );
+                }
+                */
+                Logger.log( "Facing Direction changed to: " + this.facingDirection );
+            }
+        }
     }
 
-    public static PacMan initPacMan2() throws FileNotFoundException {
-        HashMap<String, Direction> pacMan2KeyMap = new HashMap<>();
-        pacMan2KeyMap.put( "W", Direction.Up );
-        pacMan2KeyMap.put( "S", Direction.Down );
-        pacMan2KeyMap.put( "A", Direction.Left );
-        pacMan2KeyMap.put( "D", Direction.Right );
+    public SimpleIntegerProperty getPointProperty() {
+        return this.points;
+    }
 
-        return new PacMan( 500, 500, pacMan2KeyMap, pacman2Pictures );
+    public int getPoints() {
+        return points.get();
+    }
+
+    public void addPoint() {
+        points.set( points.get() + 1 );
+    }
+
+    public void resetPoints() {
+        this.points.set( 0 );
     }
 }

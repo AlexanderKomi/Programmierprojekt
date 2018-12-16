@@ -1,24 +1,31 @@
 package common.actor;
 
+import common.util.ImageLoader;
 import javafx.scene.image.Image;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 
-public final class TextureBuffer {
+final class TextureBuffer {
 
     private static final HashMap<String, Image> fileToImage = new HashMap<>();
 
-    static void addFile( String filepath ) throws FileNotFoundException {
-        fileToImage.put( filepath, new Image( new FileInputStream( filepath ) ) );
+    static void addFile( final String filepath ) {
+        fileToImage.put( filepath,
+                         ImageLoader.loadImage( filepath ) );
     }
 
-    static Image getImage( String filepath ) {
+    static Image getImage( final String filepath ) {
         return fileToImage.get( filepath );
     }
 
-    public static boolean contains( String fileName ) {
+    static boolean contains( final String fileName ) {
         return fileToImage.containsKey( fileName );
+    }
+
+    static Image loadImage( final String fileName ) {
+        if ( !TextureBuffer.contains( fileName ) ) {
+            TextureBuffer.addFile( fileName );
+        }
+        return TextureBuffer.getImage( fileName );
     }
 }

@@ -1,29 +1,26 @@
 package de.hsh.daniel.model;
 
-import common.actor.Actor;
 import javafx.scene.image.Image;
 
 
-public class Card extends Actor {
+public class Card {
 
-    private int                 id;
-    private Image               image;
-    private boolean             cardMatched;
-    private boolean             cardSelected;
+    private int                             id;
+    private Image                           image;
+    private boolean                         cardMatched;
+    private boolean                         cardSelected;
 
-    public Card(int id) {
-        super();
-        cardSelected = false;
-        cardMatched = false;
-        setId(id);
+
+    public Card(Image img, int id) {
+        this.image = img;
+        this.id = id;
     }
 
+    
     @Override
     public String toString() {
         return "id: " + this.getId();
     }
-
-
 
 
     public boolean isMatched() {

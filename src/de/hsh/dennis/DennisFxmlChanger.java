@@ -4,9 +4,12 @@ import common.config.WindowConfig;
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.engine.components.game.GameEntryPoint;
+import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.dennis.controller.*;
+import de.hsh.dennis.model.GameModel;
 import de.hsh.dennis.model.KeyLayout;
+import de.hsh.dennis.model.NpcLogic.Config;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -54,24 +57,32 @@ public class DennisFxmlChanger extends FxmlChanger {
                 Logger.log("handle_LevelMenu_controller: b_easy erreicht");
                 changeScene("view/level.fxml", levelController);
                 levelController.passCanvas();
+                setChanged();
+                notifyObservers(Config.Level.Difficulty.EASY);
                 break;
 
             case "b_medium":
                 Logger.log("handle_LevelMenu_controller: b_medium erreicht");
                 changeScene("view/level.fxml", levelController);
                 levelController.passCanvas();
+                setChanged();
+                notifyObservers(Config.Level.Difficulty.MEDIUM);
                 break;
 
             case "b_hard":
                 Logger.log("handle_LevelMenu_controller: b_hard erreicht");
                 changeScene("view/level.fxml", levelController);
                 levelController.passCanvas();
+                setChanged();
+                notifyObservers(Config.Level.Difficulty.HARD);
                 break;
 
             case "b_nightmare":
                 Logger.log("handle_LevelMenu_controller: b_nightmare erreicht");
                 changeScene("view/level.fxml", levelController);
                 levelController.passCanvas();
+                setChanged();
+                notifyObservers(Config.Level.Difficulty.NIGHTMARE);
                 break;
 
             case "b_back":
@@ -89,7 +100,8 @@ public class DennisFxmlChanger extends FxmlChanger {
             case "b_replay":
                 Logger.log("handle_BreakMenu_controller: b_replay erreicht");
                 breakStage.close();
-                //TODO: implement restarting current level
+                setChanged();
+                notifyObservers(UpdateCodes.Dennis.replay);
                 break;
 
             case "b_main_menu":
@@ -156,7 +168,38 @@ public class DennisFxmlChanger extends FxmlChanger {
             handle_MainMenu_controller(msg);
         } else if (o instanceof Tutorial_controller) {
             handle_Tutorial_controller(msg);
+        } else if (o instanceof GameModel) {
+            handle_GameModel((GameModel) o, msg);
+        } else if (o instanceof EndScreen_controller) {
+            handle_EndScreen_controller(msg);
         }
+    }
+
+    private void handle_EndScreen_controller(String msg) {
+        switch (msg) {
+            case "b_replay":
+                setChanged();
+                notifyObservers(UpdateCodes.Dennis.replay);
+                break;
+            case "b_main_menu":
+                changeScene("view/mainMenu.fxml", new MainMenu_controller());
+                break;
+        }
+    }
+
+    private void handle_GameModel(GameModel gm, String msg) {
+        String endTitle = "Score";
+        switch (msg) {
+            case UpdateCodes.Dennis.gameLost:
+                endTitle = "YOU LOSE!";
+                break;
+            case UpdateCodes.Dennis.gameWon:
+                endTitle = "YOU Win!";
+                break;
+        }
+        EndScreen_controller c = new EndScreen_controller();
+        changeScene("view/endScreen.fxml", c);
+        c.changeToEndScreen(endTitle);
     }
 
     private void openBreakMenu() {

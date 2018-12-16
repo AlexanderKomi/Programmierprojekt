@@ -1,23 +1,56 @@
 package de.hsh.alexander.src.level;
 
+import common.actor.Actor;
 import common.actor.Collectable;
 import common.actor.Level;
+import common.actor.LevelElement;
 import common.util.Logger;
+import de.hsh.alexander.src.actor.collectables.DataCoin;
+import de.hsh.alexander.src.actor.player.PacMan;
+import de.hsh.alexander.src.actor.player.PacMan1;
+import de.hsh.alexander.src.actor.player.PacMan2;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
-import java.io.FileNotFoundException;
 import java.util.Observable;
 
 abstract public class PacManLevel extends Level {
 
     public static final String gameFinishedMessage = "PacMan : Game finished";
 
-    PacManLevel() throws FileNotFoundException {
+    protected PacManLevel( Canvas gameCanvas ) {
+        super( gameCanvas );
     }
 
     @Override
-    public void createLevel() throws FileNotFoundException {
+    public void reset( Canvas gameCanvas ) {
+        super.reset( gameCanvas );
+        gameCanvas.setOnMouseClicked( clickEvent -> {
+            double x = clickEvent.getX();
+            double y = clickEvent.getY();
+            Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
+            this.addCollectable(
+                    new DataCoin( x, y )
+                               );
+        } );
+        Logger.log( this.getClass() + ": Resettet Level" );
+    }
 
+    public SimpleIntegerProperty getPacMan1Property() {
+        return getPlayers().stream()
+                           .filter( player -> player instanceof PacMan )
+                           .map( player -> (PacMan) player )
+                           .filter( pacman -> pacman instanceof PacMan1 )
+                           .map( PacMan::getPointProperty ).findFirst().get();
+    }
+
+    public SimpleIntegerProperty getPacMan2Property() {
+        return getPlayers().stream()
+                           .filter( player -> player instanceof PacMan )
+                           .map( player -> (PacMan) player )
+                           .filter( pacman -> pacman instanceof PacMan2 )
+                           .map( PacMan::getPointProperty ).findFirst().get();
     }
 
     @Override
@@ -28,25 +61,47 @@ abstract public class PacManLevel extends Level {
     @Override
     public void update( Observable o, Object arg ) {
         if ( o instanceof Collectable ) {
-            Collectable c = (Collectable) o;
-            if ( arg instanceof String ) {
-                if ( arg.equals( Collectable.collected ) ) {
-                    Logger.log( "Collected : " + c + "\n" +
-                                "By : " + c.getCollector() );
-                    this.collected( c );
-                    if ( this.getCollectables().isEmpty() ) {
-                        Logger.log( this.getClass() + ": Collect every collectable, so game finished screen should be shown" );
-                        this.setChanged();
-                        this.notifyObservers( gameFinishedMessage );
-                    }
-                    else {
-                        Logger.log( this.getClass() + ": Still " + this.getCollectables().size() + " to collect." );
+            final Collectable c = (Collectable) o;
+            synchronized ( c ) {
+                if ( arg instanceof String ) {
+                    if ( arg.equals( Collectable.collected ) ) {
+                        coinCollected( c );
                     }
                 }
             }
+
         }
         else {
             Logger.log( this.getClass() + ": unknown observable=" + o + " , arg=" + arg );
         }
+    }
+
+    private void coinCollected( final Collectable c ) {
+        synchronized ( c ) {
+            final Actor a = c.getCollector();
+            if ( a instanceof PacMan ) {
+                final PacMan p = (PacMan) a;
+                p.addPoint();
+            }
+            this.collected( c );
+
+        }
+        if ( this.getCollectables().isEmpty() ) {
+            this.setChanged();
+            this.notifyObservers( gameFinishedMessage );
+        }
+        else {
+            Logger.log( this.getClass() + ": Still " + this.getCollectables().size() + " to collect." );
+        }
+    }
+
+    @Override
+    protected boolean addLevelElement( LevelElement levelElement ) {
+        if ( !collidesWithPlayer( levelElement ) ) {
+            if ( !collidesWithLevelElement( levelElement ) ) {
+                return super.addLevelElement( levelElement );
+            }
+        }
+        return false;
     }
 }

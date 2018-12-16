@@ -2,22 +2,16 @@ package de.hsh.alexander.src.actor.level_elements;
 
 import common.actor.LevelElement;
 
-import java.io.FileNotFoundException;
-import java.util.List;
-
 import static de.hsh.alexander.src.actor.ResourcePaths.Actor.LevelElements.SMD.pictures;
 
 public class SMD extends LevelElement {
 
-    protected SMD() throws FileNotFoundException {
-        super( pictures );
-    }
+    private static final int    default_delay = 30;
+    private static final double scale         = 1.2;
 
-    public SMD( double x, double y ) throws FileNotFoundException {
+    public SMD( double x, double y ) {
         super( x, y, pictures );
-    }
-
-    protected SMD( List<String> pictureFilePaths, double x, double y, int delay ) throws FileNotFoundException {
-        super( pictureFilePaths, x, y, delay );
+        this.setSwitchingDelay( default_delay );
+        this.scaleImage( scale );
     }
 }

@@ -2,7 +2,7 @@ package de.hsh.daniel.model;
 
 import common.util.Logger;
 
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,22 +13,38 @@ import java.util.Collections;
  */
 public class Board  {
 
-    private GridPane            gridPane     = new GridPane();
-//    private Scene               scene        = new Scene(gridPane, 1200,800);
-    private ArrayList<Card>     cardList     = new ArrayList<Card>();
+    private ArrayList<Card>         cardList     = new ArrayList<>();
+    private ramImgLoader            imgLoader    = new ramImgLoader();
+    private ArrayList<Image>        imgList      = new ArrayList<>();
+    private static final String     imgLocation  = "de/hsh/daniel/images/";
 
     //TODO: Get number of pairs from MenuButton
     private int numberOfPairs;
 
+    public Board(){
 
-    public void intiCardsNew(int numberOfPairs) {
+    }
+
+
+    public ArrayList<Card> initCards(int numberOfPairs) {
+        imgLoader.imgToList();
+        imgList = imgLoader.getImgList();
         for (int i = 0; i<numberOfPairs; i++){
-            cardList.add(i, new Card(i));
-            cardList.add((i+1), new Card(i));
-
+            Card c1 = new Card(imgList.get(i), i);
+            Card c2 = new Card(imgList.get(i), i);
+            cardList.add(i, c1);
+            cardList.add((i+1), c2);
         }
         Logger.log(cardList.toString());
+
+        for(Card c : cardList) {
+            for (int i = 1; i < imgList.size(); i++) {
+                c.setImage(imgList.get(i));
+            }
+        }
         Collections.shuffle(cardList);
+        Logger.log(cardList);
+        return cardList;
     }
 }
 

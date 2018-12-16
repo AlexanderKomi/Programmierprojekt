@@ -5,7 +5,7 @@ import java.util.Observer;
 
 public interface IGame extends Observer {
 
-    void render(int fps);
+    void render( final int fps );
 
     void exitToMainGUI();
 
