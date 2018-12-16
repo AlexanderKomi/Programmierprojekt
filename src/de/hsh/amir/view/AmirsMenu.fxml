@@ -16,7 +16,7 @@
             <Image url="@../resources/background_before_start.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" graphicTextGap="0.0" layoutX="389.0" layoutY="123.0" prefHeight="154.0" prefWidth="451.0" text="Virus Collector" textAlignment="CENTER" textFill="AQUA">
+      <Label fx:id="titleLabel" alignment="CENTER" graphicTextGap="0.0" layoutX="389.0" layoutY="123.0" prefHeight="154.0" prefWidth="451.0" text="Virus Collector" textAlignment="CENTER" textFill="AQUA">
          <font>
             <Font name="System Bold" size="64.0" />
          </font>
