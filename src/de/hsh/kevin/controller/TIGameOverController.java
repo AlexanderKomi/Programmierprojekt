@@ -9,6 +9,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+
+/**
+ * Erstellt den GameOverScreen
+ * @author Kevin
+ *
+ */
 public class TIGameOverController extends GameMenu {
 
     public static AnchorPane gameOverPane;
@@ -28,31 +34,50 @@ public class TIGameOverController extends GameMenu {
     @FXML
     public Label lbl_score;
 
+    /**
+     * Erstellt das GameOverMenü mit Angabe der Scores
+     * @param score
+     */
     public TIGameOverController(Score score) {
-	this.score = score;
+        this.score = score;
     }
 
+    /**
+     * Setzt das Label des Scores
+     */
     public void setScore() {
-	Platform.runLater(() -> lbl_score.setText("Score: " + score.getScore()));
+        Platform.runLater(() -> lbl_score.setText("Score: " + score.getScore()));
     }
 
+    /**
+     * Durch Buttonklick kehrt ins Menü zurück
+     * @param event
+     */
     @FXML
     void menuPressed(ActionEvent event) {
-	this.setChanged();
-	this.notifyObservers(UpdateCodes.TunnelInvader.gameMenu);
+        this.setChanged();
+        this.notifyObservers(UpdateCodes.TunnelInvader.gameMenu);
     }
 
+    /**
+     * Durch Buttonklick startet das Spiel erneut
+     * @param event
+     */
     @FXML
     void nochamalPressed(ActionEvent event) {
-	this.setChanged();
-	this.notifyObservers(UpdateCodes.TunnelInvader.playGame);
+        this.setChanged();
+        this.notifyObservers(UpdateCodes.TunnelInvader.playGame);
     }
 
+    /**
+     * Durch Buttonklick kehrt ins Hauptmenü der Sammlung zurück
+     * @param event
+     */
     @FXML
     void sammlungPressed(ActionEvent event) {
-	this.setChanged();
-	this.notifyObservers(UpdateCodes.TunnelInvader.gameMenu);
-	this.notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
+        this.setChanged();
+        this.notifyObservers(UpdateCodes.TunnelInvader.gameMenu);
+        this.notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
     }
 
 }

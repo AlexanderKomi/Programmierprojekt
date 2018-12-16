@@ -30,33 +30,38 @@ public class GegnerManager implements Observer {
     public void erstelleGegner() {
         Random random = new Random();
         int zufallsZahl1 = 200 + random.nextInt(800);
-        Gegner gegner = new Gegner("/de/hsh/amir/resources/enemyFigur.png", zufallsZahl1, 1);
+        Gegner gegner = new Gegner("/de/hsh/amir/resources/enemyFigur.png", zufallsZahl1);
         gegner.addObserver(this);
         this.gegnerListe.add(gegner);
     }
 
     /**
-     * erstellt minimal einen und maximal fünf Gegner unabhängig
-     * übergebenen Parameter //TODO
+     * erstellt minimal einen und maximal 5 Gegner unabhängig
+     * übergebenen Parameter
      *
-     * @param anzahlGegner
+     * @param anzahlGegner unabhöngig von diesem Parameter werden "max" Gegner erstellt.
      */
     public void erstelleGegner(int anzahlGegner) {
-        if (anzahlGegner <= 1) {
-            erstelleGegner();
-        } else if (anzahlGegner >= 5) {
-            for (int i = 1; i <= 5; i++) {
-                erstelleGegner();
-            }
+        //CHANGE ONLY THIS IF YOU WANT TO CHANGE THE NUMBER OF GEGNER!!!
+        int max = 5;
+
+        if (anzahlGegner <= 0) {
+            max = 1;
+        } else if (anzahlGegner <= max) {
+            max = anzahlGegner;
         } else {
-            for (int i = 1; i <= anzahlGegner; i++) {
-                erstelleGegner();
-            }
+            //Let max be as it is.
+        }
+
+        for (int i = 0; i < max; i++) {
+            erstelleGegner();
         }
     }
 
     /**
      * Bewegt Gegner jedes mal an einer neuen Position.
+     * Bei Level 2 bewegen sich die Figuren schneller.
+     * Bei Level 3 bewegen sich die Figuren schneller und auch teilweise diagonal.
      *
      * @param canvas
      */
@@ -74,15 +79,19 @@ public class GegnerManager implements Observer {
             }
         } else if (levelNumber == 2) {
             for (Gegner gegner : gegnerListe) {
-                gegner.moveDiagonal();
+                gegner.move();
                 if (gegner.getY() >= canvas.getHeight()) {
                     gegner.setY(-30);
                     gegner.setX(zufallsZahl);
                 }
             }
-        } else {
+        } else if (levelNumber == 3){
             for (Gegner gegner : gegnerListe) {
-                gegner.moveDiagonal();
+                if(gegnerListe.indexOf(gegner)%2==0){
+                    gegner.move();
+                } else {
+                    gegner.moveDiagonal();
+                }
                 if (gegner.getY() >= canvas.getHeight()) {
                     gegner.setY(-30);
                     gegner.setX(zufallsZahl);

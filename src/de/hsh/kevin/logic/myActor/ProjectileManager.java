@@ -6,19 +6,36 @@ import javafx.scene.canvas.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Verwaltet Projektile
+ * @author Kevin
+ *
+ */
 public class ProjectileManager {
 
     private ArrayList<Projectile> projectile;
     private long lastProjectileSpawn;
 
+    /**
+     * Erstellt den ProjektilManager ohne Projektile
+     */
     public ProjectileManager() {
         projectile = new ArrayList<>();
     }
 
+    /**
+     * Liefert alle Projektile
+     * @return
+     */
     public List<Projectile> getProjectiles() {
         return projectile;
     }
 
+    /**
+     * Erstellt ein neues Projektil bei dem Spieler
+     * @param playerPos Position des Players wo Projektil erstellt werden soll
+     * @param offset zur Position des Players
+     */
     public void createProjectile(double[] playerPos, double offset) {
 
         long curMillis = System.currentTimeMillis();
@@ -29,6 +46,9 @@ public class ProjectileManager {
         }
     }
 
+    /**
+     * Bewegt alle Pakete
+     */
     public void move() {
         ArrayList<Projectile> toRemove = new ArrayList<>();
 
@@ -49,12 +69,20 @@ public class ProjectileManager {
         }
     }
 
+    /**
+     * Zeichnet alle Pakete aufs Canvas
+     * @param canvas
+     */
     public void draw(Canvas canvas) {
         for (Projectile p : projectile) {
             p.draw(canvas);
         }
     }
 
+    /**
+     * Entfernt ein Paket
+     * @param p zu entfernendes Paket
+     */
     public void remove(Projectile p) {
         projectile.remove(p);
     }

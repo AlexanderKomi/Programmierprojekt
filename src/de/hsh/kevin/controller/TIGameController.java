@@ -5,12 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.Observable;
@@ -21,6 +18,12 @@ import de.hsh.kevin.logic.GameField;
 import de.hsh.kevin.logic.Score;
 import de.hsh.kevin.logic.Config;
 
+/**
+ * Erstellt SpielController
+ * 
+ * @author Kevin
+ *
+ */
 public class TIGameController extends Observable implements Initializable {
 
     public static final String fxml = "TIGame.fxml";
@@ -42,16 +45,29 @@ public class TIGameController extends Observable implements Initializable {
     @FXML
     public Label lbl_score;
 
+    /**
+     * Erstellt den SpielController mit einem Score
+     * 
+     * @param score
+     */
     public TIGameController(Score score) {
         this.score = score;
     }
 
+    /**
+     * Button zum Testen des GameOverScreens (derzeit deaktiviert)
+     * 
+     * @param event
+     */
     @FXML
     void scorePressed(ActionEvent event) {
         this.setChanged();
         this.notifyObservers(UpdateCodes.TunnelInvader.gameOver);
     }
 
+    /**
+     * Initialisiert den Controller und das Spiel
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (initialized) {
@@ -66,7 +82,7 @@ public class TIGameController extends Observable implements Initializable {
         gameField = new GameField(this.gameCanvas, score);
 
         gameField.clearCanvas(gameCanvas);
-        
+
         this.gameCanvas.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE || keyEvent.getCode() == KeyCode.NUMPAD0) {
                 this.gameField.activateProjectileSpawn();
@@ -91,6 +107,11 @@ public class TIGameController extends Observable implements Initializable {
         initialized = true;
     }
 
+    /**
+     * Führt die nächste Spieliteration aus
+     * 
+     * @param fps
+     */
     public void render(int fps) {
         if (!initialized) {
             return;
@@ -103,6 +124,9 @@ public class TIGameController extends Observable implements Initializable {
         updateLbl_score();
     }
 
+    /**
+     * Prüft ob das Spiel verloren wurde
+     */
     private void checkGameOver() {
         if (!gameOver && this.gameField.getLeben() <= 0) {
             gameOver = true;
@@ -112,10 +136,16 @@ public class TIGameController extends Observable implements Initializable {
 
     }
 
+    /**
+     * Ändert den Text des Leben Labels
+     */
     private void updateLbl_leben() {
         Platform.runLater(() -> lbl_leben.setText("Leben: " + gameField.getLeben()));
     }
 
+    /**
+     * Ändert den Text des Score Labels
+     */
     private void updateLbl_score() {
         Platform.runLater(() -> lbl_score.setText("Score: " + gameField.getScore()));
     }

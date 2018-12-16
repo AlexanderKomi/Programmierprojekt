@@ -55,7 +55,7 @@ public class AmirsMainMenuController extends Observable {
             level3Button.setDisable(false);
             LEVEL_NUMBER = 2;
         } else if (id.equals("level3Button")) {
-            setGegnerSpeed(2.5*GEGNER_SPEED);
+            setGegnerSpeed(2*GEGNER_SPEED);
             level1Button.setDisable(false);
             level2Button.setDisable(false);
             level3Button.setDisable(true);

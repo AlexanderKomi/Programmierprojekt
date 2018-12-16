@@ -9,6 +9,12 @@ import javafx.scene.canvas.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Verwaltet Pakete
+ * 
+ * @author Kevin
+ *
+ */
 public class PaketManager {
 
     private ArrayList<Paket> pakete;
@@ -17,6 +23,18 @@ public class PaketManager {
     private Score score;
     private Leben leben;
 
+    /**
+     * Erstellt einen PaketManager
+     * 
+     * @param width
+     *            des Spielbereichs
+     * @param height
+     *            des Spielbereichs
+     * @param score
+     *            Object des Spiels
+     * @param leben
+     *            Object des Spiels
+     */
     public PaketManager(double width, double height, Score score, Leben leben) {
         pakete = new ArrayList<>();
         this.width = width;
@@ -25,6 +43,11 @@ public class PaketManager {
         this.leben = leben;
     }
 
+    /**
+     * Liefert alle Pakete zurück
+     * 
+     * @return alle Pakete
+     */
     public List<Paket> getPakete() {
         return pakete;
     }
@@ -45,6 +68,14 @@ public class PaketManager {
         createNewPaket(chance, 1);
     }
 
+    /**
+     * Erstellt Anzahl von Paketen mit Charnce Good:Bad Pakete
+     * 
+     * @param chance
+     *            zum erstellen eines GoodPakets
+     * @param anzahl
+     *            der zu erstellenden Pakete
+     */
     public void createNewPaket(double chance, int anzahl) {
         double rand = 0;
 
@@ -63,14 +94,27 @@ public class PaketManager {
 
     }
 
+    /**
+     * Erstellt ein BadPaket an Position (0,0)
+     * 
+     * @return erstelltes Paket
+     */
     public Paket createBadPaket() {
         return PaketFactory.getBadPaket(0, 0);
     }
 
+    /**
+     * Erstellt ein GoodPaket an Position (0,0)
+     * 
+     * @return erstelltes Paket
+     */
     public Paket createGoodPaket() {
         return PaketFactory.getGoodPaket(0, 0);
     }
 
+    /**
+     * Bewegt alle Pakete
+     */
     public void move() {
         ArrayList<Paket> toRemove = new ArrayList<>();
 
@@ -93,12 +137,22 @@ public class PaketManager {
         }
     }
 
+    /**
+     * Zeichenet alle Pakete aufs Canvas
+     * 
+     * @param canvas
+     */
     public void draw(Canvas canvas) {
         for (Paket p : pakete) {
             p.draw(canvas, 0, 0);
         }
     }
 
+    /**
+     * Sucht freie Position für übergebenes Paket
+     * 
+     * @param paket
+     */
     private void setOnFreeLocation(Paket paket) {
         double randX = -1;
         boolean free = false;
@@ -128,6 +182,12 @@ public class PaketManager {
         } while (!free);
     }
 
+    /**
+     * Löscht das übergebene Paket
+     * 
+     * @param p
+     *            zu löschende Paket
+     */
     public void remove(Paket p) {
         pakete.remove(p);
     }

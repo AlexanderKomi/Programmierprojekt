@@ -2,25 +2,38 @@ package de.hsh.kevin.logic;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import java.io.File;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
+/**
+ * Läd alle Sounds des Spiels und erlaubt es diese abzuspielen
+ * @author Kevin
+ *
+ */
 public class Sound {
 
     private static HashMap<enmSounds, Media> sounds;
     private static MediaPlayer mediaPlayer;
-    private static final String path = "src\\de\\hsh\\kevin\\res\\sounds\\";
+    private static final String path = Config.resLocation + "sounds/";
     private static final double soundVolume = 0.5;
 
     static {
-        if (Config.getSoundOption() == enmSoundOptions.on && sounds == null) {
+        if (sounds == null) {
             sounds = new HashMap<>();
-            sounds.put(enmSounds.collision, new Media(new File(path + "collision.mp3").toURI().toString()));
-            sounds.put(enmSounds.badPaketIgnored, new Media(new File(path + "bad_paket.mp3").toURI().toString()));
-            sounds.put(enmSounds.hit, new Media(new File(path + "hit.mp3").toURI().toString()));
+            try {
+                sounds.put(enmSounds.collision, new Media(Sound.class.getResource(path + "collision.mp3").toURI().toString()));
+                sounds.put(enmSounds.badPaketIgnored, new Media(Sound.class.getResource(path + "bad_paket.mp3").toURI().toString()));
+                sounds.put(enmSounds.hit, new Media(Sound.class.getResource(path + "hit.mp3").toURI().toString()));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }            
         }
     }
 
+    /**
+     * Spiel den Sound ab
+     * @param sound Option des abzuspielenden Sounds
+     */
     public static void playSound(enmSounds sound) {
         if (Config.getSoundOption() == enmSoundOptions.off) {
             return;
