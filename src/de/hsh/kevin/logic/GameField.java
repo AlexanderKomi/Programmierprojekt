@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 import common.actor.Direction;
-import common.util.Logger;
 import de.hsh.kevin.logic.myActor.Paket;
 import de.hsh.kevin.logic.myActor.PaketManager;
 import de.hsh.kevin.logic.myActor.PlayerCharacter;
@@ -18,6 +17,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
+/**
+ * Verwaltet Spiellogik
+ * 
+ * @author Kevin
+ *
+ */
 public class GameField {
     private double width;
     private double height;
@@ -32,10 +37,28 @@ public class GameField {
     private int spawnDelayBuffer = 0;
     private boolean projectileSpawning;
 
+    /**
+     * Erstellt Spiel
+     * 
+     * @param canvas
+     *            auf welchem Spiel stattfindet
+     * @param score
+     *            Object des Spiels
+     */
     public GameField(Canvas canvas, Score score) {
         this(Config.getDifficultyOption(), canvas, score);
     }
 
+    /**
+     * Erstellt Spiel
+     * 
+     * @param difficulty
+     *            Schwierigkeit des Spiels
+     * @param canvas
+     *            auf welchem Spiel stattfindet
+     * @param score
+     *            Object des Spiels
+     */
     public GameField(enmDifficultyOptions difficulty, Canvas canvas, Score score) {
         width = canvas.getWidth();
         height = canvas.getHeight();
@@ -50,24 +73,44 @@ public class GameField {
         initPlayer(canvas);
     }
 
+    /**
+     * Setzt den Score
+     * 
+     * @param score
+     */
     public void setScore(Score score) {
         this.score = score;
     }
 
+    /**
+     * Liefert Anzahl aktueller Leben
+     * 
+     * @return anzahl Leben
+     */
     public int getLeben() {
         return leben.getLeben();
     }
 
+    /**
+     * Liefert aktuellen Score
+     * 
+     * @return
+     */
     public int getScore() {
         return score.getScore();
     }
 
+    /**
+     * Initialisiert Player
+     * 
+     * @param canvas
+     */
     private void initPlayer(Canvas canvas) {
         HashMap<String, Direction> playerKeyMap = new HashMap<>();
         playerKeyMap.put("A", Direction.Left);
         playerKeyMap.put("D", Direction.Right);
 
-        // Easteregg Steuerung invertiert 
+        // Easteregg Steuerung invertiert
         playerKeyMap.put("Left", Direction.Right);
         playerKeyMap.put("Right", Direction.Left);
 
@@ -85,10 +128,18 @@ public class GameField {
         player = p;
     }
 
+    /**
+     * Liefert PlayerCharacter
+     * 
+     * @return
+     */
     public PlayerCharacter getPlayer() {
         return player;
     }
 
+    /**
+     * Erstellt Pakete, wenn spawnDelay vergangen
+     */
     public void spawnPakete() {
         if (spawnDelayBuffer == 0) {
             spawnDelayBuffer = spawnDelay;
@@ -102,32 +153,55 @@ public class GameField {
         spawnDelayBuffer--;
     }
 
+    /**
+     * Aktiviert Spawnen von Projectilen (Schusstaste ist gedrückt)
+     */
     public void activateProjectileSpawn() {
         projectileSpawning = true;
     }
 
+    /**
+     * Deaktiviert Spawnen von Projectilen (Schusstaste ist nicht mehr gedrückt)
+     */
     public void deactivateProjectileSpawn() {
         projectileSpawning = false;
     }
 
+    /**
+     * Spawnt Projectile
+     */
     public void spawnProjectile() {
         if (projectileSpawning) {
             projectileManager.createProjectile(player.getPos(), player.getWidth() / 4);
         }
     }
 
+    /**
+     * Ändert Player in Firing Modus
+     */
     public void setPlayerFiring() {
         player.switchFiring();
     }
 
+    /**
+     * Änder Player in Idle Modus
+     */
     public void setPlayerIdle() {
         player.switchIdle();
     }
 
+    /**
+     * Bewegt Player
+     * 
+     * @param keyEvent
+     */
     public void movePlayer(KeyEvent keyEvent) {
         this.player.move(keyEvent);
     }
 
+    /**
+     * Bewegt Pakete und Projectile
+     */
     public void moveAll() {
         Thread t1 = new Thread(new Runnable() {
             public void run() {
@@ -153,6 +227,11 @@ public class GameField {
 
     }
 
+    /**
+     * Zeichnet alles aufs Canvas
+     * 
+     * @param canvas
+     */
     public void draw(Canvas canvas) {
         clearCanvas(canvas);
         player.draw(canvas);
@@ -160,6 +239,11 @@ public class GameField {
         projectileManager.draw(canvas);
     }
 
+    /**
+     * Führt die nächste Spieliteration aus
+     * 
+     * @param canvas
+     */
     public void game(Canvas canvas) {
         collision();
         moveAll();
@@ -167,18 +251,29 @@ public class GameField {
         spawnProjectile();
         draw(canvas);
     }
-    
+
+    /**
+     * Übermalt das Canvas
+     * 
+     * @param canvas
+     */
     public void clearCanvas(Canvas canvas) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.rgb(100, 100, 100));
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
+    /**
+     * Prüft Collision Player - Pakete und Pakete - Projektile
+     */
     private void collision() {
         collisionProjectilePaket();
         collisionPlayerPaket();
     }
 
+    /**
+     * Prüft Collision Player - Pakete und spielt Sound bei Collision
+     */
     private void collisionPlayerPaket() {
         ArrayList<Paket> toRemove = new ArrayList<>();
 
@@ -195,6 +290,9 @@ public class GameField {
         }
     }
 
+    /**
+     * Prüft Collision - Paket Prokectile und spielt Sound bei Collision
+     */
     private void collisionProjectilePaket() {
         ArrayList<Paket> toRemovePakete = new ArrayList<>();
         ArrayList<Projectile> toRemoveProjectiles = new ArrayList<>();
