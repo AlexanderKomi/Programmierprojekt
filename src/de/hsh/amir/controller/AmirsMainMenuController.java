@@ -2,10 +2,12 @@ package de.hsh.amir.controller;
 
 import common.updates.UpdateCodes;
 import de.hsh.amir.logic.Gegner;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.util.Observable;
@@ -33,6 +35,10 @@ public class AmirsMainMenuController extends Observable {
 
     @FXML
     private Button exitButton;
+
+    @FXML
+    private Label titleLabel;
+
 
     @FXML
     void button_clicked(ActionEvent event) {
@@ -65,9 +71,12 @@ public class AmirsMainMenuController extends Observable {
         }
     }
 
+    public void changeLabel(String newLabel){
+        Platform.runLater(() -> titleLabel.setText(newLabel));
+    }
+
     /**
      * Setzt Gegnergeschwindigkeit global auf den übergebenen Wert.
-     *
      * @param speed
      */
     private void setGegnerSpeed(double speed) {

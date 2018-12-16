@@ -16,56 +16,55 @@ import java.util.Observer;
  */
 public class AmirEntryPoint extends GameEntryPoint {
 
-    private AmirFxmlChanger    changer;
+    private AmirFxmlChanger changer;
     private AmirGameController amirGame;
+    private AmirsMainMenuController mainMenuController;
     boolean initialized = false;
 
-    public AmirEntryPoint(Observer o ) {
+    public AmirEntryPoint(Observer o) {
         super(o, WindowConfig.amir_title);
         this.amirGame = new AmirGameController();
-        changer = new AmirFxmlChanger( this, AmirsMainMenuController.fxml, new AmirsMainMenuController() );
+        this.mainMenuController = new AmirsMainMenuController();
+        changer = new AmirFxmlChanger(this, AmirsMainMenuController.fxml, mainMenuController);
     }
 
 
     @Override
-    public void update(Observable o, Object arg ) {
-        if ( arg instanceof String ) {
+    public void update(Observable o, Object arg) {
+        if (arg instanceof String) {
             String message = (String) arg;
-            switch ( message ) {
+            switch (message) {
                 case UpdateCodes.Amir.startGame:
-                    changer.changeFxml( this.amirGame, UpdateCodes.Amir.startGame );
+                    changer.changeFxml(this.amirGame, UpdateCodes.Amir.startGame);
                     break;
                 case UpdateCodes.Amir.mainMenu:
-                    changer.changeFxml( new AmirsMainMenuController(), AmirsMainMenuController.fxml );
+                    //TODO !!!!!!! Buttons do not work after reset!
+                    changer.changeFxml(mainMenuController, UpdateCodes.Amir.mainMenu);
                     break;
                 case UpdateCodes.DefaultCodes.exitToMainGUI:
                     exitToMainGUI();
                     break;
-                case UpdateCodes.DefaultCodes.exitToMainGUI:
-                    changer.changeFxml(o, message);
-                    break;
                 default:
-                    logParsingError( o, arg );
+                    logParsingError(o, arg);
                     break;
             }
             initialized = true;
             //this.notifyObservers( message );
-        }
-        else {
-            logParsingError( o, arg );
+        } else {
+            logParsingError(o, arg);
         }
     }
 
     @Override
     public void render(int fps) {
-        if ( initialized ) {
-            Platform.runLater( () -> {
-                amirGame.render( fps );
-            } );
+        if (initialized) {
+            Platform.runLater(() -> {
+                amirGame.render(fps);
+            });
         }
     }
 
-    private static void logParsingError(Observable o, Object arg ) {
-        Logger.log("AmirEntryPoint: update : from observable : " + o + " Argument could not be parsed : " + arg );
+    private static void logParsingError(Observable o, Object arg) {
+        Logger.log("AmirEntryPoint: update : from observable : " + o + " Argument could not be parsed : " + arg);
     }
 }
