@@ -29,7 +29,7 @@ public final class Level1 extends PacManLevel {
 
     private void addEasterEgg( Canvas gameCanvas ) {
 
-        addCollectable( new Invisible( 30, 30 ) );
+        addCollectable( new Invisible( 300, 300 ) );
     }
 
     @Override

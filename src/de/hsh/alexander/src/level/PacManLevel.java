@@ -4,6 +4,7 @@ import common.actor.*;
 import common.config.WindowConfig;
 import common.util.Logger;
 import de.hsh.alexander.src.actor.collectables.DataCoin;
+import de.hsh.alexander.src.actor.collectables.Invisible;
 import de.hsh.alexander.src.actor.player.PacMan;
 import de.hsh.alexander.src.actor.player.PacMan1;
 import de.hsh.alexander.src.actor.player.PacMan2;
@@ -70,6 +71,10 @@ abstract public class PacManLevel extends Level {
                     coinCollected( c );
                 }
             }
+            if ( c instanceof Invisible ) {
+                Invisible i = (Invisible) c;
+                Logger.log( "PacManLevel : invisible collected : " );
+            }
         }
         else {
             Logger.log( this.getClass() + ": unknown observable=" + o + " , arg=" + arg );
@@ -87,7 +92,7 @@ abstract public class PacManLevel extends Level {
         this.collected( c );
 
         if ( !isGameFinished() ) {
-            Logger.log( this.getClass() + ": Still " + this.getCollectables().size() + " to collect." );
+            //Logger.log( this.getClass() + ": Still " + this.getCollectables().size() + " to collect." );
         }
     }
 

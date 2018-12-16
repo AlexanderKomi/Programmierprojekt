@@ -4,7 +4,6 @@ import common.actor.Actor;
 import common.actor.Collectable;
 import common.actor.ControlableActor;
 import common.actor.Direction;
-import common.util.Logger;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.Arrays;
@@ -94,8 +93,6 @@ public class PacMan extends ControlableActor {
                 if ( this.getScaleX() > 0 ) {
                     this.scaleImageWidth( -1 );
                 }
-                Logger.log( "This : " + this.getX() + ", " + this.getWidth() );
-                Logger.log( "Facing Direction changed to: " + this.facingDirection );
             }
         }
         else if ( xyTuple[ 0 ] < 0 ) {
@@ -104,7 +101,6 @@ public class PacMan extends ControlableActor {
                 if ( this.getScaleX() < 0 ) {
                     this.scaleImageWidth( -1 );
                 }
-                Logger.log( "Facing Direction changed to: " + this.facingDirection );
             }
         }
         else if ( xyTuple[ 1 ] > 0 ) {
@@ -116,7 +112,6 @@ public class PacMan extends ControlableActor {
                     this.scaleImageWidth( -1 );
                 }
                 */
-                Logger.log( "Facing Direction changed to: " + this.facingDirection );
             }
         }
         else if ( xyTuple[ 1 ] < 0 ) {
@@ -128,8 +123,6 @@ public class PacMan extends ControlableActor {
                     this.scaleImageWidth( -1 );
                 }
                 */
-
-                Logger.log( "Facing Direction changed to: " + this.facingDirection );
             }
         }
     }
