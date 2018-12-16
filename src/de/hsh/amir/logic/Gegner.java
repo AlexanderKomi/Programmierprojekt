@@ -16,7 +16,7 @@ public class Gegner extends Actor {
     }
 
     public void moveDiagonal() {
-        setPos(this.getX() + GEGNER_SPEED / 2, this.getY() + GEGNER_SPEED);
+        setPos(this.getX() + GEGNER_SPEED / 4, this.getY() + GEGNER_SPEED);
     }
 
     /**

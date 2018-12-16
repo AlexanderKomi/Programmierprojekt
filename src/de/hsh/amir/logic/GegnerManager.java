@@ -60,7 +60,8 @@ public class GegnerManager implements Observer {
 
     /**
      * Bewegt Gegner jedes mal an einer neuen Position.
-     * Bei Level 2 bewegen sich die Figuren diagonal.
+     * Bei Level 2 bewegen sich die Figuren schneller.
+     * Bei Level 3 bewegen sich die Figuren schneller und auch teilweise diagonal.
      *
      * @param canvas
      */
@@ -78,16 +79,19 @@ public class GegnerManager implements Observer {
             }
         } else if (levelNumber == 2) {
             for (Gegner gegner : gegnerListe) {
-                gegner.moveDiagonal();
+                gegner.move();
                 if (gegner.getY() >= canvas.getHeight()) {
                     gegner.setY(-30);
                     gegner.setX(zufallsZahl);
                 }
             }
-        } else {
-            //TODO #4 moving behavior of the enemies must be changed
+        } else if (levelNumber == 3){
             for (Gegner gegner : gegnerListe) {
-                gegner.move();
+                if(gegnerListe.indexOf(gegner)%2==0){
+                    gegner.move();
+                } else {
+                    gegner.moveDiagonal();
+                }
                 if (gegner.getY() >= canvas.getHeight()) {
                     gegner.setY(-30);
                     gegner.setX(zufallsZahl);
