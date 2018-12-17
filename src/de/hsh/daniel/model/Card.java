@@ -3,6 +3,7 @@ package de.hsh.daniel.model;
 
 import common.actor.Drawable;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 public class Card  {
@@ -18,6 +19,7 @@ public class Card  {
      Card(Image img, int id) {
         setImage(img);
         setId(id);
+
     }
 
 
