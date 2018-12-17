@@ -74,9 +74,12 @@ public class EndScreen_controller extends Observable implements Initializable {
         if (!initialized) {
 
             tf_score.setText("0");
-            tf_score.textProperty().bind(GameModel.score_string);
 
             Logger.log("initializing DONE");
         }
+    }
+
+    public void setScore(int i) {
+        tf_score.setText(Integer.toString(i));
     }
 }

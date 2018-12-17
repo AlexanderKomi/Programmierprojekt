@@ -8,7 +8,6 @@ import de.hsh.dennis.model.NpcLogic.actors.Npc;
 import de.hsh.dennis.model.NpcLogic.actors.Package;
 import de.hsh.dennis.model.audio.AudioAnalyser;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -34,7 +33,8 @@ public class NpcHandler {
     private int scoreChange = 0;
     private int healthChange = 0;
 
-    private int pointValue = 10;
+    private int pointValue = 1;
+    private double spawnDelay = 0d;
 
 
     public NpcHandler(Canvas canvas) {
@@ -73,7 +73,7 @@ public class NpcHandler {
         }
     }
 
-    public void loadNpcs(Config.Level.Difficulty dif) {
+    public void loadNpcs(SkinConfig.Level.Difficulty dif) {
 
         Npc[] temp = npcIO.loadLevel(dif);
 
@@ -82,7 +82,7 @@ public class NpcHandler {
         spawnArray = temp;
     }
 
-    public void generateNpcs(String pathToMp3) {
+    public void generateNpcs(String pathToMp3, double speed) {
 
 
         aa.loadSound(pathToMp3);
@@ -92,28 +92,32 @@ public class NpcHandler {
         List<Npc> temp = new ArrayList<>();
 
         for (Double d : tempTimes) {
+            if (d >= spawnDelay) {
+                try {
+                    NPCEnums.Spawn direction;
+                    int dirTemp = RandomInt.randInt(1, 2);
+                    if (dirTemp == 1) {
+                        direction = NPCEnums.Spawn.RIGHT;
+                    } else {
+                        direction = NPCEnums.Spawn.LEFT;
+                    }
 
-            try {
-                NPCEnums.Spawn direction;
-                int dirTemp = RandomInt.randInt(1, 2);
-                if (dirTemp == 1){direction = NPCEnums.Spawn.RIGHT;}else{direction = NPCEnums.Spawn.LEFT;}
-
-                switch (RandomInt.randInt(1, 3)){
-                    case 1:
-                        temp.add(new Package(direction, (double) d));
-                        break;
-                    case 2:
-                        temp.add(new Bot(direction, (double) d));
-                        break;
-                    case 3:
-                        temp.add(new Hacker(direction, (double) d));
-                        break;
+                    switch (RandomInt.randInt(1, 3)) {
+                        case 1:
+                            temp.add(new Package(direction, d, speed));
+                            break;
+                        case 2:
+                            temp.add(new Bot(direction, d, speed));
+                            break;
+                        case 3:
+                            temp.add(new Hacker(direction, d, speed));
+                            break;
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
         }
-
         //converting
         spawnArray = new Npc[temp.size()];
         for (int i = 0; i < spawnArray.length; i++) {
@@ -160,7 +164,6 @@ public class NpcHandler {
                         healthChange -= pointValue;
                         break;
                     default:
-                        punish();
                         Logger.log(this.getClass() + "Switching in removeNpcs : default.");
 
                 }
@@ -174,10 +177,6 @@ public class NpcHandler {
 
     }
 
-    private void punish() {
-        canvas.getGraphicsContext2D().setFill(Color.RED);
-        canvas.getGraphicsContext2D().fillRect(0,0, canvas.getWidth(), canvas.getHeight());
-    }
 
 
     public void hitNpc(Npc npc) {
@@ -200,7 +199,7 @@ public class NpcHandler {
     public int getHealthChange() {
         int temp = healthChange;
         healthChange = 0;
-        return temp;
+        return (temp * 10);
     }
 
     public static void drawNpcs() {
@@ -222,6 +221,15 @@ public class NpcHandler {
             }
             removeNpcs();
         }
+    }
+
+    public AudioAnalyser getAudioAnalyzer() {
+        return aa;
+    }
+
+    public void setDelaysBetweenSpawns(double delay) {
+
+        getAudioAnalyzer().setSpawnDelay(delay);
     }
 
     /*

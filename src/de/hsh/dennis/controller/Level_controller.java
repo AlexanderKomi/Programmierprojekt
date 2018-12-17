@@ -1,5 +1,6 @@
 package de.hsh.dennis.controller;
 
+import common.config.WindowConfig;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.dennis.model.GameModel;
@@ -18,8 +19,8 @@ import java.util.ResourceBundle;
 public class Level_controller extends Observable implements Initializable {
 
     private static boolean initialized = false;
-    private static double canvasX = 1200;
-    private static double canvasY = 700;
+    private static double canvasX = WindowConfig.window_width;
+    private static double canvasY = WindowConfig.window_height - 100;
 
     @FXML
     private HBox hbox_1;

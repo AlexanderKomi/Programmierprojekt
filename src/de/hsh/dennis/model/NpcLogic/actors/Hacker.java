@@ -1,6 +1,6 @@
 package de.hsh.dennis.model.NpcLogic.actors;
 
-import de.hsh.dennis.model.NpcLogic.Config;
+import de.hsh.dennis.model.NpcLogic.SkinConfig;
 import de.hsh.dennis.model.NpcLogic.NPCEnums;
 
 import java.io.FileNotFoundException;
@@ -13,16 +13,16 @@ public class Hacker extends Npc {
 
     public Hacker(NPCEnums.Spawn spawnType) throws FileNotFoundException {
         super(pictureFileName, spawnType, NPCEnums.NpcType.HACKER);
-        setCurrentImage(Config.Hacker.skin_standard);
+        setCurrentImage(SkinConfig.Hacker.skin_standard);
     }
 
     public Hacker(NPCEnums.Spawn spawnType, double spawnTime) throws FileNotFoundException {
         super(pictureFileName, spawnType, NPCEnums.NpcType.HACKER, spawnTime, defaultSpeed);
-        setCurrentImage(Config.Hacker.skin_standard);
+        setCurrentImage(SkinConfig.Hacker.skin_standard);
     }
 
     public Hacker(NPCEnums.Spawn spawnType, double spawnTime, double speed) throws FileNotFoundException {
         super(pictureFileName, spawnType, NPCEnums.NpcType.HACKER, spawnTime, speed);
-        setCurrentImage(Config.Hacker.skin_standard);
+        setCurrentImage(SkinConfig.Hacker.skin_standard);
     }
 }

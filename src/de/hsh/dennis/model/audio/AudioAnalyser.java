@@ -10,11 +10,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static de.hsh.dennis.model.audio.AudioConfig.DelayBetweenSpawns._default;
+
 
 public class AudioAnalyser {
 
     private BeatDetector detector;
     private File audioFile;
+
+    private double sensitivity = 0.05d;
+
+
+    private double spawnDelay = _default;
 
     public AudioAnalyser() {
         detector = new BeatDetector();
@@ -39,16 +46,22 @@ public class AudioAnalyser {
 
 
             try {
+
                 Beat[] beats = BeatDetector.detectBeats(audioFile, BeatDetector.AudioType.MP3);
 
                 List<Double> spawnTimes = new ArrayList<>();
 
 
                 for(Beat b : beats){
-                    if(b.energy >= 0.4){
-                        spawnTimes.add(b.timeMs / 1000d);
+                    if(b.energy >= sensitivity){
+                        if(spawnTimes.size() >= 1) {
+                            if (spawnTimes.get(spawnTimes.size() - 1) != null && ((b.timeMs / 1000d) - spawnTimes.get(spawnTimes.size() - 1)) >= spawnDelay) {
+                                spawnTimes.add(b.timeMs / 1000d);
+                            }
+                        }else{spawnTimes.add(b.timeMs / 1000d);}
                     }
                 }
+                Logger.log("detected " + spawnTimes.size() + " usable beats in " + audioFile.getName());
                 return spawnTimes;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -61,5 +74,8 @@ public class AudioAnalyser {
     }
 
 
+    public void setSpawnDelay(double spawnDelay) {
+        this.spawnDelay = spawnDelay;
+    }
 
 }
