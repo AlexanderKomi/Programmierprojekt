@@ -1,6 +1,5 @@
 package de.hsh.alexander.src;
 
-import common.actor.Level;
 import common.config.WindowConfig;
 import common.updates.UpdateCodes;
 import common.util.Logger;
@@ -9,6 +8,7 @@ import de.hsh.alexander.src.level.PacManLevel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -21,7 +21,7 @@ public class PacManGame extends Observable implements Observer, Initializable {
     public static final String fxml = "PacManGame.fxml";
     boolean initialized = false;
 
-    private Level currentLevel;
+    private PacManLevel currentLevel;
 
     public PacManGame() {
         reset();
@@ -29,6 +29,12 @@ public class PacManGame extends Observable implements Observer, Initializable {
 
     @FXML
     private Canvas gameCanvas;
+
+    @FXML
+    private Label player1Points;
+    @FXML
+    private Label player2Points;
+
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
@@ -74,10 +80,10 @@ public class PacManGame extends Observable implements Observer, Initializable {
 
         this.currentLevel = new Level1();
         this.currentLevel.reset();
+
         this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
         this.gameCanvas.setOnKeyPressed( e -> {
             this.currentLevel.keyboardInput( e );
-            Logger.log( "Key pressed" );
         } ); // Only fires, when traversable
         this.gameCanvas.setOnKeyReleased( this.currentLevel::keyboardInput ); // Only fires, when traversable
 

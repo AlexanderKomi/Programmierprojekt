@@ -30,11 +30,11 @@ abstract public class ControlableActor extends Actor {
         this.movement.setKeyMap( keymap );
     }
 
-    protected ControlableActor( double x, double y, HashMap<String, Direction> keymap, int delay, String... pictureFileNames ) {
-        super( Arrays.asList( pictureFileNames ), x, y, delay );
+    protected ControlableActor( double x, double y, HashMap<String, Direction> keymap, int delay,
+                                String mustHave, String... pictureFileNames ) {
+        super( mustHave, Arrays.asList( pictureFileNames ), x, y, delay );
         this.movement.setKeyMap( keymap );
     }
-
 
 
     /**

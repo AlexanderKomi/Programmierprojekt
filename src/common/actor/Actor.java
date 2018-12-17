@@ -61,8 +61,8 @@ abstract public class Actor extends Drawable {
         this.collisionActors = collisionActors;
     }
 
-    public Actor( double x, double y, int delay, HashSet<Actor> collisionActors, String... pictureFilePaths ) {
-        super( x, y, delay, pictureFilePaths );
+    public Actor( double x, double y, int delay, HashSet<Actor> collisionActors, String mustHave, String... pictureFilePaths ) {
+        super( x, y, delay, mustHave, pictureFilePaths );
         this.collisionActors = collisionActors;
     }
 
@@ -74,8 +74,16 @@ abstract public class Actor extends Drawable {
         super( pictureFilePaths, x, y, delay );
     }
 
-    public Actor( double x, double y, int delay, String... pictureFilePaths ) {
-        super( x, y, delay, pictureFilePaths );
+    public Actor( double x, double y, int delay, String mustHave, String... pictureFilePaths ) {
+        super( x, y, delay, mustHave, pictureFilePaths );
+    }
+
+    public Actor( String mustHave, List<String> asList, double x, double y, int delay ) {
+        super( mustHave, asList, x, y, delay );
+    }
+
+    public Actor( double x, double y, int delay, String[] pictureFileName ) {
+        super( x, y, delay, pictureFileName );
     }
 
     @Override

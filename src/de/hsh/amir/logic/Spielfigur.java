@@ -22,7 +22,8 @@ public class Spielfigur extends ControlableActor{
         super(pictureFileName, x, y, keymap, delay);
     }
 
-    protected Spielfigur(double x, double y, HashMap<String, Direction> keymap, int delay, String... pictureFileNames) throws FileNotFoundException {
-        super(x, y, keymap, delay, pictureFileNames);
+    protected Spielfigur( double x, double y, HashMap<String, Direction> keymap, int delay,
+                          String mustHave, String... pictureFileNames ) throws FileNotFoundException {
+        super( x, y, keymap, delay, mustHave, pictureFileNames );
     }
 }

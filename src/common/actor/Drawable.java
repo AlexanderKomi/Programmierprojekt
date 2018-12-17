@@ -51,11 +51,7 @@ abstract public class Drawable extends Observable {
     }
 
     public Drawable( String pictureFile, String... pictureFilePaths ) {
-        this( 0, 0, 0 );
-        ArrayList<String> temp = new ArrayList<>();
-        temp.add( pictureFile );
-        temp.addAll( Arrays.asList( pictureFilePaths ) );
-        this.setSwitchingImages( temp );
+        this( pictureFile, Arrays.asList( pictureFilePaths ), 0, 0, 0 );
     }
 
     public Drawable( String[] pictureFilePaths ) {
@@ -76,15 +72,15 @@ abstract public class Drawable extends Observable {
     }
 
     public Drawable( List<String> pictureFilePaths, double x, double y, int delay ) {
-        this.setPos( x, y );
+        this( x, y, delay );
         this.setSwitchingImages( pictureFilePaths );
-        this.switchingDelay = delay;
         this.id = id_counter;
         id_counter++;
     }
 
-    public Drawable( double x, double y, int delay, String... pictureFilePaths ) {
+    public Drawable( double x, double y, int delay, String mustHave, String... pictureFilePaths ) {
         this( Arrays.asList( pictureFilePaths ), x, y, delay );
+        this.addSwitchingImage( mustHave );
     }
 
     public Drawable( Drawable d ) {
@@ -94,6 +90,21 @@ abstract public class Drawable extends Observable {
         this.height = d.getHeight();
         this.width = d.getWidth();
         this.id = d.id;
+    }
+
+    public Drawable( String mustHave, List<String> asList, double x, double y, int delay ) {
+        this( asList, x, y, delay );
+        this.addSwitchingImage( mustHave );
+    }
+
+    private Drawable( double x, double y, int delay ) {
+        this.setX( x );
+        this.setY( y );
+        this.setSwitchingDelay( delay );
+    }
+
+    public Drawable( double x, double y, int delay, String[] pictureFileName ) {
+        this( Arrays.asList( pictureFileName ), x, y, delay );
     }
 
     private Image loadPicture( String fileName ) {
@@ -369,6 +380,10 @@ abstract public class Drawable extends Observable {
 
     public void setSwitchingImages( LinkedList<Image> switchingImages ) {
         this.switchingImages.addAll( switchingImages );
+    }
+
+    public void addSwitchingImage( String imagePath ) {
+        this.getSwitchingImages().add( this.loadPicture( imagePath ) );
     }
 
     public void setSwitchingImages( List<String> imagePaths ) {
