@@ -8,22 +8,37 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ImageLoader {
+public final class ImageLoader {
 
-    public static Image loadImage( String relativeFilePath ) {
-        InputStream u = ImageLoader.class.getResourceAsStream( relativeFilePath );
-        if ( u == null ) {
-            throw new NullPointerException( "Image does not exist : " + relativeFilePath );
-        }
-        BufferedImage i = null;
+    public static Image loadImage( final String relativeFilePath ) {
+
+        InputStream u = null;
         try {
-            i = ImageIO.read( u );
+            u = getInputStream( relativeFilePath );
+        }
+        catch ( NullPointerException npe ) {
+            npe.printStackTrace();
+        }
+        assert u != null;
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read( u );
         }
         catch ( IOException e ) {
             e.printStackTrace();
         }
-        assert i != null;
-        return SwingFXUtils.toFXImage( i, null );
+        assert image != null;
+        return SwingFXUtils.toFXImage( image, null );
+    }
+
+    public static InputStream getInputStream( String relativePath ) throws NullPointerException {
+        InputStream inputStream = ImageLoader.class.getResourceAsStream( relativePath );
+        if ( inputStream == null ) {
+            throw new NullPointerException( "File does not exist : " + relativePath );
+        }
+        else {
+            return inputStream;
+        }
     }
 
 }

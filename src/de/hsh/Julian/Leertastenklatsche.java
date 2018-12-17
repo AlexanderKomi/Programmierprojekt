@@ -2,16 +2,17 @@ package de.hsh.Julian;
 
 import common.config.WindowConfig;
 import common.util.Logger;
+import common.util.PlaySound;
 import de.hsh.dennis.model.NpcLogic.SpawnTimer;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Leertastenklatsche implements Observer {
+public class Leertastenklatsche extends Observable implements Observer {
 
 
     static final String     location = "/de/hsh/Julian/";
@@ -19,48 +20,40 @@ public class Leertastenklatsche implements Observer {
 
     private int score = 0;
     private int leben=3;
-
+    private boolean gamedone=false;
     private      TheDude           thedude;
     private      ArrayList<Enemy>  enemyList       = new ArrayList<>();
 
     public Leertastenklatsche() {
-        try {
-            initGame();
-        }
-        catch ( FileNotFoundException e ) {
-            e.printStackTrace();
-        }
+        initGame();
     }
 
-    private void initGame() throws FileNotFoundException {
+    private void initGame() {
         thedude = new TheDude( WindowConfig.window_width / 2 -75,
-                               WindowConfig.window_height * 0.4
+                               WindowConfig.window_height * 0.73
         );
         thedude.setSpeed( 0 );
     }
 
     void render( Canvas gc ) {
         createNewEnemies();
-        enemyList.forEach( enemy -> {
-            enemy.draw( gc );
-        } );
         updateEnemies();
-        thedude.draw( gc );
-        renderScore( gc );
+        Platform.runLater( () -> {
+            renderScore( gc );
+            enemyList.forEach( enemy -> {
+                enemy.draw( gc );
+            } );
+            thedude.draw( gc );
+        } );
     }
 
     private void createNewEnemies() {
-        if ( timer.elabsedTime() > 2.0d-score/75.0 ) {
+        if ( timer.elabsedTime() > 2.0d-score/50.0 ) {
             timer.resetTimer();
-            try {
-                Enemy e = Enemy.createEnemy();
-                e.addObserver( this );
-                thedude.addCollidingActor( e );
-                enemyList.add( e );
-            }
-            catch ( FileNotFoundException e ) {
-                e.printStackTrace();
-            }
+            Enemy e = Enemy.createEnemy();
+            e.addObserver( this );
+            thedude.addCollidingActor( e );
+            enemyList.add( e );
         }
     }
 
@@ -68,11 +61,9 @@ public class Leertastenklatsche implements Observer {
         for ( Enemy enemy : enemyList ) {
             if ( enemy.getX() > WindowConfig.window_width / 2 ) {
                 enemy.setPos( enemy.getX() - 1.0 - score / 10.0, enemy.getY() );
-                enemy.rotate( 0 );
             }
             else {
                 enemy.setPos( enemy.getX() + 1 + score / 10.0, enemy.getY() );
-                enemy.rotate( 0 );
             }
         }
     }
@@ -87,26 +78,32 @@ public class Leertastenklatsche implements Observer {
     }
 
     void parseInput( String code ) {
-        if ( code.equals( "LEFT" ) ) {
-            if ( !thedude.turnedleft ) {
-                thedude.swapImage();
-                thedude.turnedleft = true;
-            }
-        }
-        else if ( code.equals( "RIGHT" ) ) {
-            if ( thedude.turnedleft ) {
-                thedude.swapImage();
-                thedude.turnedleft = false;
-            }
+        switch ( code ) {
+            case "LEFT":
+                if ( !thedude.turnedleft ) {
+                    thedude.swapImage();
+                    thedude.turnedleft = true;
+                }
+                break;
+            case "RIGHT":
+                if ( thedude.turnedleft ) {
+                    thedude.swapImage();
+                    thedude.turnedleft = false;
+                }
+                break;
+            //EASTEREGG ;-))
+            case "SPACE":
+                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\cat.wav" );
+                break;
         }
     }
 
     @Override
     public void update( Observable o, Object arg ) {
-        if ( o instanceof Enemy ) {
+        if ( o instanceof Enemy && !gamedone ) {
             Enemy e = (Enemy) o;
             for ( Enemy enemy : this.enemyList ) {
-                Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
+                //Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
                 if ( enemy.id == e.id ) {
                     this.thedude.getCollisionActors().remove( enemy );
                     enemyList.remove( enemy );
@@ -114,23 +111,39 @@ public class Leertastenklatsche implements Observer {
                     if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
                         if ( thedude.turnedleft ) {
                             score++;
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
                         }
-                        else
+                        else{
                             leben--;
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\hit.wav");
+                            gameOver();
+                        }
                     }
                     else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
                         if ( !thedude.turnedleft ) {
                             score++;
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
                         }
-                        else
+                        else {
                             leben--;
+                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\hit.wav");
+                            gameOver();
+                        }
                     }
                     return;
                 }
             }
         }
     }
+    private void gameOver(){
 
+        if ( leben <= 0 && !gamedone ) {
+            gamedone=true;
+            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\noo.wav");
+            setChanged();
+            notifyObservers("gameover");
+        }
+    }
     public int getScore() {
         return score;
     }

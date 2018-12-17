@@ -1,5 +1,10 @@
 package de.hsh.kevin.logic;
 
+/**
+ * Einstellungen des Spiels
+ * @author Kevin
+ *
+ */
 public class Config {
 
     public static final String resLocation =  "/de/hsh/kevin/res/";
@@ -11,6 +16,9 @@ public class Config {
     private static enmSoundOptions soundConfig = enmSoundOptions.off;
     private static enmDifficultyOptions diffConfig = enmDifficultyOptions.easy;
 
+    /**
+     * Ändert die Soundoption von on zu off und umgekehrt
+     */
     public static void switchSound() {
         if (soundConfig == enmSoundOptions.off) {
             soundConfig = enmSoundOptions.on;
@@ -20,14 +28,31 @@ public class Config {
 
     }
 
+    /**
+     * Setzt perset für die Schwierigkeit
+     */
     public static void setDifficulyPreset() {
         diffConfig = enmDifficultyOptions.easy;
     }
     
+    /**
+     * Setzt preset für den Sound
+     */
+    public static void setSoundPreset() {
+        soundConfig = enmSoundOptions.off;
+    }
+    
+    /**
+     * Liefert aktuelle SoundOption
+     * @return aktuelle SoundOption
+     */
     public static enmSoundOptions getSoundOption() {
         return soundConfig;
     }
 
+    /**
+     * Wechselt zur nächsten Schwierigkeit
+     */
     public static void switchDifficulty() {
         if (diffConfig == enmDifficultyOptions.easy) {
             diffConfig = enmDifficultyOptions.normal;
@@ -39,10 +64,18 @@ public class Config {
 
     }
 
+    /**
+     * Liefert aktuelle Schwierigkeit
+     * @return aktuelle Schwierigkeit
+     */
     public static enmDifficultyOptions getDifficultyOption() {
         return diffConfig;
     }
 
+    /**
+     * Liefert Faktor für aktuelle Schwierigkeit, mit easy als Standard und andere mit höherem Wert
+     * @return
+     */
     public static double getDifficultyFactor() {
         switch (diffConfig) {
         case easy:
@@ -56,6 +89,10 @@ public class Config {
         }
     }
 
+    /**
+     * Liefert Faktor für die Leben je nach Schwierigkeit, mit easy als Standard und andere mit niedrigem Wert
+     * @return
+     */
     public static double getLifeFactor() {
         switch (diffConfig) {
         case easy:

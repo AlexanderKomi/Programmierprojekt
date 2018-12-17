@@ -1,9 +1,8 @@
 package de.hsh.daniel.controller;
 
+import common.config.WindowConfig;
 import common.util.Logger;
-import de.hsh.daniel.model.Board;
-import de.hsh.daniel.model.Card;
-import de.hsh.daniel.model.Game;
+import de.hsh.daniel.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -14,38 +13,73 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-/** This is the game fxml-controller started */
+/**
+ * This is the game fxml-controller started
+ */
 public class RamGame_controller extends Observable implements Initializable {
 
-    public static final String          fxml        = "view/RAMGame.fxml";
-    private             Game            game        = new Game();
+    public static final String fxml = "view/RAMGame.fxml";
+    private Game game = new Game();
+    private boolean initialized = false;
     @FXML
-    private             Canvas          gameCanvas  = new Canvas();
-    //GraphicsContext gc = gameCanvas.getGraphicsContext2D();
+    private Canvas gameCanvas;
 
-
-
-
-    public void render( int fps ) {
+    public void render(int fps) {
         //Logger.log( "render" );
-        game.render( gameCanvas, fps );
-        GraphicsContext gc = gameCanvas.getGraphicsContext2D();
-        Board board = new Board();
-        board.initCards(4);
-
-        Image img = new Image("de/hsh/daniel/images/1.png");
-        gc.drawImage(img, 10,10,20,20);
+        game.render(gameCanvas, fps);
 
 
     }
 
     @Override
-    public void initialize( URL location, ResourceBundle resources ) {
-        Logger.log( this.getClass() + ": initialized" );
-        gameCanvas.setFocusTraversable( true );
+    public void initialize(URL location, ResourceBundle resources) {
+        Logger.log(this.getClass() + ": initialized");
+        gameCanvas.setFocusTraversable(true);
+
+        GraphicsContext gc          = gameCanvas.getGraphicsContext2D();
+        Board           board       = BoardFactory.initBoard(BoardFactory.getBoardPairs());
+        Image           cardBack    = new Image("de/hsh/daniel/resources/0.png");
+
+        double          gridW       = (double)(board.getNumberOfPairs() / 2);
+        double          gridH       = 4;
+        int             imgCount    = 0;
+        int             backCount   = 0;
+        int             xStart      = 10;
+        int             yStart      = 10;
+        double          imgSize        = (double)(WindowConfig.window_height / 4) - 20;
+        double          offset      = (WindowConfig.window_width / gridW);
+        double          spacing     = (offset - imgSize);
+
+
+        //TODO: Implement set cardback transparent/invisible on click
+
+            /*
+            Draws card images
+         */
+        for (int j = 0; j < gridH; j++) {
+            for (int k = 0; k < gridW; k++, xStart += (imgSize + spacing), imgCount++) {
+                gc.drawImage(board.getCardList().get(imgCount).getImage(), xStart, yStart, imgSize, imgSize);
+            }
+            yStart += imgSize + 20;
+            xStart = 10;
+        }
+
+
+        /*
+            Draws card backside over card image
+         */
+        for (int j = 0; j < gridH; j++) {
+            for (int k = 0; k < gridW; k++, xStart += (imgSize + spacing), backCount++) {
+                gc.drawImage(cardBack, xStart, yStart, imgSize, imgSize);
+            }
+            yStart += imgSize + 20;
+            xStart = 10;
+        }
 
 
 
+
+        initialized = true;
     }
 }
 

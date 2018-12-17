@@ -3,23 +3,34 @@ package common.actor;
 import common.util.ImageLoader;
 import javafx.scene.image.Image;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 final class TextureBuffer {
 
     private static final HashMap<String, Image> fileToImage = new HashMap<>();
 
-    static void addFile( String filepath ) throws FileNotFoundException {
-        fileToImage.put( filepath,
-                         ImageLoader.loadImage( filepath ) );
+    private static void addFile( final String filepath ) {
+        try {
+            fileToImage.put( filepath,
+                             ImageLoader.loadImage( filepath ) );
+        }
+        catch ( NullPointerException npe ) {
+            npe.printStackTrace();
+        }
     }
 
-    static Image getImage( String filepath ) {
+    private static Image getImage( final String filepath ) {
         return fileToImage.get( filepath );
     }
 
-    static boolean contains( String fileName ) {
+    private static boolean contains( final String fileName ) {
         return fileToImage.containsKey( fileName );
+    }
+
+    static Image loadImage( final String fileName ) {
+        if ( !TextureBuffer.contains( fileName ) ) {
+            TextureBuffer.addFile( fileName );
+        }
+        return TextureBuffer.getImage( fileName );
     }
 }

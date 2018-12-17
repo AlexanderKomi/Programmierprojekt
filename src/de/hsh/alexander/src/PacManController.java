@@ -4,20 +4,21 @@ import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import common.util.Logger;
+import javafx.application.Platform;
 
 import java.util.Observable;
 import java.util.Observer;
 
-public class PacManController extends GameEntryPoint {
+public final class PacManController extends GameEntryPoint {
 
     private final PacManFxmlChanger changer;
     private       PacManGame        game;
+    private       PacManEndScreen   pacManEndScreen = new PacManEndScreen();
+    private       PacManMenu        pacManMenu      = new PacManMenu();
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
-        this.game = new PacManGame();
-        game.addObserver( this );
-        changer = new PacManFxmlChanger( this, PacManMenu.fxml, new PacManMenu() );
+        changer = new PacManFxmlChanger( this, PacManMenu.fxml, pacManMenu );
     }
 
     /**
@@ -29,22 +30,31 @@ public class PacManController extends GameEntryPoint {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.PacMan.startGame:
-                    this.game = new PacManGame();
-                    game.addObserver( this );
-                    changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
+                    startGame();
                     break;
                 case UpdateCodes.PacMan.mainMenu:
-                    this.game = new PacManGame();
-                    game.addObserver( this );
-                    changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
+                    Logger.log( "-------------------MAIN MENU----------------------" );
+
+                    changer.changeFxml( pacManMenu, UpdateCodes.PacMan.mainMenu );
                     exitToMainGUI();
                     break;
                 case UpdateCodes.PacMan.showEndScreen:
-                    changer.changeFxml( new PacManEndScreen(), UpdateCodes.PacMan.showEndScreen );
+                    Platform.runLater( () -> {
+                        PacManEndScreen.player1Points = game.getCurrentLevel().getPacMan1Property().get();
+                        PacManEndScreen.player2Points = game.getCurrentLevel().getPacMan2Property().get();
+                        changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
+
+                        if ( this.game != null ) {
+                            this.game.delete();
+                            this.game = null;
+                        }
+                    } );
+
+
                     break;
                 case UpdateCodes.PacMan.repeatGame:
-                    this.game = new PacManGame();
-                    changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
+                    //changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
+                    startGame();
                     break;
                 default:
                     logParsingError( o, arg );
@@ -57,12 +67,27 @@ public class PacManController extends GameEntryPoint {
         }
     }
 
+    private void startGame() {
+        if ( this.game != null ) {
+            this.game.deleteObservers();
+        }
+        this.game = new PacManGame();
+        game.addObserver( this );
+        changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
+    }
+
     private static void logParsingError( Observable o, Object arg ) {
         Logger.log( "In PacManController: update : from observable : " + o + " Argument could not be parsed : " + arg );
     }
 
     @Override
     public void render(int fps) {
+        if ( pacManMenu != null ) {
+            pacManMenu.render();
+        }
+        if ( pacManEndScreen != null ) {
+            pacManEndScreen.render();
+        }
         if ( game != null ) {
             if ( game.initialized ) {
                 game.render( fps );

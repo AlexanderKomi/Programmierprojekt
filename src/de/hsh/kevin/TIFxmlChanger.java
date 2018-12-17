@@ -14,10 +14,16 @@ public class TIFxmlChanger extends FxmlChanger {
 
     private static final String fxmlPackage = "res/";
 
+    /**
+     * Erstellt den FXMLChanger zum wechseln der Scenes
+     */
     public TIFxmlChanger(FxModul fxModul, String fxmlPath, Observable fxController) {
         super(fxModul, fxmlPackage + fxmlPath, fxController);
     }
 
+    /**
+     * Ändert die Scene zum Hauptmenü oder Spielmenü
+     */
     @Override
     public void changeFxml(Observable o, String msg) {
         if (o instanceof TIMenuController) {
@@ -38,10 +44,20 @@ public class TIFxmlChanger extends FxmlChanger {
         }
     }
 
+    /**
+     * Ändert die Scene zum SpielScreen
+     * @param o
+     * @param game
+     */
     public void changeGameFxml(Observable o, TIGameController game) {
         changeScene(fxmlPackage + TIGameController.fxml, game);
     }
 
+    /**
+     * Ändert die Scene zum GameOverScreen
+     * @param o
+     * @param gameOver
+     */
     public void changeGameOverFxml(Observable o, TIGameOverController gameOver) {
         changeScene(fxmlPackage + TIGameOverController.fxml, gameOver);
     }

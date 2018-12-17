@@ -1,7 +1,6 @@
 package common.engine.components.game;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
@@ -9,23 +8,15 @@ public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
     public GameEntryPoints() {
     }
 
-    public GameEntryPoints( GameEntryPoint gameEntryPoint ) {
-        this.add( gameEntryPoint );
-    }
-
-    public GameEntryPoints( Collection<GameEntryPoint> collection ) {
-        this.addAll(collection);
-    }
-
     public GameEntryPoints( GameEntryPoint... gameEntryPoints ) {
         this.addAll( gameEntryPoints );
     }
 
-    public void addAll( GameEntryPoint... g ) {
+    private void addAll( GameEntryPoint... g ) {
         Collections.addAll( this, g );
     }
 
-    public GameEntryPoint get( String name ) {
+    public GameEntryPoint get( final String name ) {
         for ( GameEntryPoint g : this ) {
             if (g.getName().equals(name)) {
                 return g;
@@ -35,10 +26,10 @@ public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean contains( final Object o ) {
         if ( o instanceof GameEntryPoint ) {
-            GameEntryPoint g        = (GameEntryPoint) o;
-            String         gameName = g.getName();
+            final GameEntryPoint g        = (GameEntryPoint) o;
+            final String         gameName = g.getName();
             for ( GameEntryPoint gameEntryPoint : this ) {
                 if ( gameEntryPoint.getName().equals( gameName ) ) {
                     return true;
@@ -51,7 +42,7 @@ public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
         return false;
     }
 
-    public boolean contains(String gameName) {
+    public boolean contains( final String gameName ) {
         for ( GameEntryPoint g : this ) {
             if (g.getName().equals(gameName)) {
                 return true;
@@ -60,7 +51,7 @@ public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
         return false;
     }
 
-    public void render(int fps) {
+    public void render( final int fps ) {
         this.forEach( game -> game.render( fps ) );
     }
 
@@ -69,7 +60,7 @@ public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
     }
 
     public ArrayList<String> getNames() {
-        ArrayList<String> temp = new ArrayList<>();
+        final ArrayList<String> temp = new ArrayList<>();
         this.forEach(game -> temp.add(game.getName()));
         return temp;
     }

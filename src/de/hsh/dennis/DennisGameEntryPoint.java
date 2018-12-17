@@ -9,6 +9,7 @@ import de.hsh.dennis.controller.MainMenu_controller;
 import de.hsh.dennis.model.GameModel;
 import de.hsh.dennis.model.KeyLayout;
 import de.hsh.dennis.model.NpcLogic.Config;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 
@@ -35,7 +36,9 @@ public class DennisGameEntryPoint extends GameEntryPoint {
     public void render(int fps) {
         if(gm.fps == -1){gm.setFps(fps);}
         if (rendering) {
-            gm.act();
+            Platform.runLater( () -> {
+                gm.act();
+            } );
         }
     }
 

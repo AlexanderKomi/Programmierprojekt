@@ -4,29 +4,29 @@ import java.util.List;
 
 public class BackgroundImage extends Drawable {
 
-    public static final String fallbackPath = "/common/gui/xp_background_1280x800.jpg";
+    private static final String fallbackPath = "/common/gui/xp_background_1280x800.jpg";
 
-    public BackgroundImage() {
+    BackgroundImage() {
         super( fallbackPath );
     }
 
-    public BackgroundImage( String pictureFileName ) {
+    public BackgroundImage( final String pictureFileName ) {
         super( pictureFileName );
     }
 
-    public BackgroundImage( String pictureFile, String... pictureFilePaths ) {
+    public BackgroundImage( final String pictureFile, final String... pictureFilePaths ) {
         super( pictureFile, pictureFilePaths );
     }
 
-    public BackgroundImage( List<String> pictureFilePaths ) {
+    public BackgroundImage( final List<String> pictureFilePaths ) {
         super( pictureFilePaths );
     }
 
-    public BackgroundImage( List<String> pictureFilePaths, int delay ) {
+    public BackgroundImage( final List<String> pictureFilePaths, final int delay ) {
         super( pictureFilePaths, delay );
     }
 
-    public BackgroundImage( int delay, String... pictureFilePaths ) {
+    public BackgroundImage( final int delay, final String... pictureFilePaths ) {
         super( 0, 0, delay, pictureFilePaths );
     }
 }
