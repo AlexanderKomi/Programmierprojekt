@@ -224,4 +224,27 @@ public class NpcHandler {
         }
     }
 
+    /*
+    public void reset() {
+        npcLimit = 100;
+        time = new SpawnTimer();
+        npcIO = new NpcIO();
+        aa = new AudioAnalyser();
+
+        spawnArray = null;
+        spawnIterator = 0;
+        npcList.clear();
+        npcsToRemove.clear();
+        npcsToHit.clear();
+
+        scoreChange = 0;
+        healthChange = 0;
+
+        pointValue = 10;
+    }
+
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+    */
 }

@@ -70,18 +70,43 @@ public class GameModel extends Observable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        reset();
     }
 
     public void reset(){
-        score = score_init;
-        health = health_init;
-        ai = false;
-        musicStart = true;
-        ap=null;
-        canvas = null;
+        //Score & Health
+        health_init = 100;
+        score_init = 0;
+        StringProperty health_string = new SimpleStringProperty("100");
+        score_string = new SimpleStringProperty("0");
+
+        //GAME STATES
+        gameLost = false;
+        difficulty = Config.Level.Difficulty.EASY;
+
+        //Objects
         npcHandler = null;
+        try {
+            player = new Player();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        clearCanvas();
+        npcList.clear();
+        //animation timing values
+        animationDelay = 0.1; //animation delay in seconds
+        skinResetTimer = 0;
+        reset = false;
+        // don't touch fps!
+
+        //Audio Stuff
+        musicStart = true;
+        ap  = null;
+        audioTimer = null;
+        audioDelay = 8.35;
+
+        ai = false;
+        acting = false;
     }
 
     public void act() {
@@ -226,6 +251,7 @@ public class GameModel extends Observable {
     public void setCanvas(Canvas canvas) {
         this.canvas = canvas;
         gc = this.canvas.getGraphicsContext2D();
+        npcHandler = new NpcHandler(canvas);
     }
 
     private void checkEnd() {
@@ -233,6 +259,7 @@ public class GameModel extends Observable {
             if (health == 0) {
                 acting = false;
                 ap.pause();
+                clearCanvas();
                 Logger.log("1");
                 setChanged();
                 notifyObservers(UpdateCodes.Dennis.gameLost);
@@ -240,6 +267,7 @@ public class GameModel extends Observable {
             } else if (npcHandler.isEndReached() && score > 0) {
                 acting = false;
                 ap.pause();
+                clearCanvas();
                 Logger.log("2");
                 setChanged();
                 notifyObservers(UpdateCodes.Dennis.gameWon);
@@ -247,6 +275,7 @@ public class GameModel extends Observable {
             } else if(npcHandler.isEndReached() && score <= 0){
                 acting = false;
                 ap.pause();
+                clearCanvas();
                 Logger.log("3");
                 setChanged();
                 notifyObservers(UpdateCodes.Dennis.gameLost);
