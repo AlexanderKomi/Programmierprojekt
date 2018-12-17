@@ -1,8 +1,12 @@
 package de.hsh.daniel.model;
 
 
+import common.actor.BackgroundImage;
+import common.actor.Drawable;
+import common.config.WindowConfig;
 import common.util.Logger;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -16,18 +20,21 @@ import java.util.List;
  * Class represents Gameboard where Cards are laid out
  */
 
-public class Board {
+public class Board  {
 
     private ArrayList<Card> cardList = new ArrayList<>();
     private ArrayList<Image> imgList = new ArrayList<>();
     private ImageView       cardView = new ImageView();
     private static final String imgLocation = "de/hsh/daniel/resources/";
-    //TODO: Get number of pairs from MenuButton
     private int numberOfPairs = 0;
 
 
     public void turnCard(int id) {
-       cardView.setImage(getCardList().get(id).getImage());
+       if(id == (-1)){
+           cardView.setImage(cardList.get(1).getCardBack());
+       } else {
+        cardView.setImage(getCardList().get(id).getImage());
+        }
     }
 
     public ArrayList<Image> imgToList() {

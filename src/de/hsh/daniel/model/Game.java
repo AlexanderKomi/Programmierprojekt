@@ -15,15 +15,17 @@ import javafx.scene.input.MouseEvent;
  */
 public class Game {
 
-    private GraphicsContext gc;
+
     @FXML
-    private Canvas gameCanvas;
+    private Canvas          gameCanvas;
+
 
 
     public void render(Canvas gameCanvas, int fps) {
+
     }
-
-    //TODO: GET NUMBER OF PAIRS FROM BUTTON AND PARSE TO METHOD
-
 }
+
+
+
 

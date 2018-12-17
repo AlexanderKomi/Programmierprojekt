@@ -1,37 +1,51 @@
 package de.hsh.daniel.model;
 
-import common.util.Logger;
 
-import java.util.ArrayList;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Grid {
 
-    private static final int[]                   gridSize        = new int[2];
-    private static final ArrayList<Integer>      gridValuesX     = new ArrayList<>();
-    private static final ArrayList<Integer>      gridValuesY     = new ArrayList<>();
+    public static void drawGrid(GraphicsContext gc, Board board, double gridW, double gridH, double imgSize, int numberOfPairs) {
+        int xStart;
+        int yStart = 10;
+        int spacing ;
+        int imgCount = 0;
 
 
-    public static int[] setupGridSize( int numberOfPairs) {
-        int cards = numberOfPairs*2;
+        if (numberOfPairs == 6) {
+            xStart = 300;
+            spacing = 40;
+            for (int j = 0; j < gridH; j++) {
+                for (int k = 0; k < gridW; k++, xStart += (imgSize + spacing), imgCount++) {
+                    gc.drawImage(board.getCardList().get(imgCount).getImage(), xStart, yStart, imgSize, imgSize);
+                }
+                yStart += imgSize + 20;
+                xStart = 300;
+            }
 
-        return gridSize;
-    }
+        } else if( numberOfPairs == 8) {
+            xStart = 200;
+            spacing = 40;
+            for (int j = 0; j < gridH; j++) {
+                for (int k = 0; k < gridW; k++, xStart += (imgSize + spacing), imgCount++) {
+                    gc.drawImage(board.getCardList().get(imgCount).getImage(), xStart, yStart, imgSize, imgSize);
+                }
+                yStart += imgSize + 20;
+                xStart = 200;
 
-    public static ArrayList<Integer> getGridValuesX() {
-        int x = 10;
-        for (int i = 0; i < gridSize[0] ; i++, x+=10) {
-            gridValuesX.add(x);
+            }
+            } else {
+            xStart = 30;
+            spacing = 40;
+            for (int j = 0; j < gridH; j++) {
+                for (int k = 0; k < gridW; k++, xStart += (imgSize + spacing), imgCount++) {
+                    gc.drawImage(board.getCardList().get(imgCount).getImage(), xStart, yStart, imgSize, imgSize);
+                }
+                yStart += imgSize + 20;
+                xStart = 30;
+            }
+
         }
-        return gridValuesX;
     }
-
-    public static ArrayList<Integer> getGridValuesY () {
-        int y = 20;
-        for(int i = 0; i < gridSize[1]; i++, y+=20) {
-            gridValuesY.add(y);
-        }
-        return gridValuesY;
-    }
-
 
 }
