@@ -1,9 +1,11 @@
 package common.actor;
 
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 import java.util.*;
 
@@ -33,6 +35,7 @@ abstract public class Drawable extends Observable {
     private boolean switchImageAutomatically = true;
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
+    private int     rotation                 = 360;
 
     private final ImageView        imageView       = new ImageView();
     private       ArrayList<Image> switchingImages = new ArrayList<>();
@@ -176,8 +179,9 @@ abstract public class Drawable extends Observable {
         scaleImageWidth( factor );
     }
 
-    public void rotate( double degree ) {
-        this.imageView.setRotate( this.imageView.getRotate() + degree );
+    protected void rotate( final double degree ) {
+        this.rotation += this.imageView.getRotate() + degree;
+        this.imageView.setRotate( rotation );
     }
 
     // ---------------------------------- START DRAW ----------------------------------
@@ -213,9 +217,21 @@ abstract public class Drawable extends Observable {
         this.setPos( in_bounds_pos );
         this.setPos( beforeDrawing( old_pos, in_bounds_pos ) ); // Maybe reset ? :)
         switchImages();
+        //Image temp =  applyRotation() ;
+        //this.setCurrentImage(temp);
         canvas.getGraphicsContext2D().drawImage( this.getCurrentImage(),
                                                  this.x, this.y, this.width, this.height
                                                );
+    }
+
+    /**
+     * Applies rotating to the current Image, before drawing.
+     */
+    private Image applyRotation() {
+        //this.imageView.setRotate( this.rotation );
+        SnapshotParameters snapshotParameters = new SnapshotParameters();
+        snapshotParameters.setFill( Color.TRANSPARENT );
+        return this.imageView.snapshot( snapshotParameters, null );
     }
 
     public void draw( GraphicsContext gc ) {
