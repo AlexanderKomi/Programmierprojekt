@@ -1,11 +1,10 @@
 package common.actor;
 
-import javafx.scene.SnapshotParameters;
+import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 import java.util.*;
 
@@ -35,7 +34,8 @@ abstract public class Drawable extends Observable {
     private boolean switchImageAutomatically = true;
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
-    private int     rotation                 = 360;
+    private int     rotation                 = 0;
+    private boolean doRotation               = false;
 
     private final ImageView        imageView       = new ImageView();
     private       ArrayList<Image> switchingImages = new ArrayList<>();
@@ -182,6 +182,7 @@ abstract public class Drawable extends Observable {
     protected void rotate( final double degree ) {
         this.rotation += this.imageView.getRotate() + degree;
         this.imageView.setRotate( rotation );
+        doRotation = true;
     }
 
     // ---------------------------------- START DRAW ----------------------------------
@@ -217,7 +218,7 @@ abstract public class Drawable extends Observable {
         this.setPos( in_bounds_pos );
         this.setPos( beforeDrawing( old_pos, in_bounds_pos ) ); // Maybe reset ? :)
         switchImages();
-        //Image temp =  applyRotation() ;
+        applyRotation();
         //this.setCurrentImage(temp);
         canvas.getGraphicsContext2D().drawImage( this.getCurrentImage(),
                                                  this.x, this.y, this.width, this.height
@@ -227,11 +228,15 @@ abstract public class Drawable extends Observable {
     /**
      * Applies rotating to the current Image, before drawing.
      */
-    private Image applyRotation() {
-        //this.imageView.setRotate( this.rotation );
-        SnapshotParameters snapshotParameters = new SnapshotParameters();
-        snapshotParameters.setFill( Color.TRANSPARENT );
-        return this.imageView.snapshot( snapshotParameters, null );
+    private void applyRotation() {
+        if ( doRotation ) {
+            Logger.log( "Drawable : rotation=" + this.rotation );
+            this.imageView.setRotate( this.imageView.getRotate() + this.rotation );
+            doRotation = false;
+        }
+        //SnapshotParameters snapshotParameters = new SnapshotParameters();
+        //snapshotParameters.setFill( Color.TRANSPARENT );
+        //return this.imageView.snapshot( snapshotParameters, null );
     }
 
     public void draw( GraphicsContext gc ) {
