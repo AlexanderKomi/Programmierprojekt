@@ -1,5 +1,6 @@
 package de.hsh.amir.logic;
 
+import common.util.AudioPlayer;
 import de.hsh.kevin.logic.Score;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
@@ -17,6 +18,8 @@ public class AmirGame {
     public AmirGame(Canvas canvas, Score points) {
         this.points = points;
         this.canvas = canvas;
+
+
     }
 
     public void initializePlayer() {
@@ -37,6 +40,11 @@ public class AmirGame {
         gegnerManager.draw(canvas);
     }
 
+    private void playSound() {
+        AudioPlayer.MusicPlayer.loadFile(this.getClass().getResource("../resources/clickSound.mp3").getPath());
+        AudioPlayer.MusicPlayer.play();
+    }
+
     /**
      * Radiert die Canvas komplett für den Weg der Spielfigur
      */
@@ -53,6 +61,9 @@ public class AmirGame {
         for (Gegner gegner : gegnerManager.getGegnerListe()) {
             if (spielfigur.doesCollide(gegner)) {
                 points.increase();
+
+                playSound();
+
                 toRemove.add(gegner);
             }
         }
