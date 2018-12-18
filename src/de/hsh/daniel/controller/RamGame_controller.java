@@ -13,59 +13,38 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
+import static de.hsh.daniel.model.Board.numberOfPairs;
+
 /**
  * This is the game fxml-controller started
  */
 public class RamGame_controller extends Observable implements Initializable {
 
     public static final String fxml = "view/RAMGame.fxml";
-    private Game game = new Game();
+    private Game game;
     private boolean initialized = false;
 
     @FXML
     private Canvas gameCanvas;
 
     public void render(int fps) {
-        //Logger.log( "render" );
-        game.render(gameCanvas, fps);
-
-
+        if(game != null){
+            if(initialized) {
+                gameCanvas.getGraphicsContext2D().clearRect(0,0,WindowConfig.window_width, WindowConfig.window_height);
+                game.render(gameCanvas, fps);
+            }
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         Logger.log(this.getClass() + ": initialized");
         gameCanvas.setFocusTraversable(true);
-
-        GraphicsContext gc = gameCanvas.getGraphicsContext2D();
-        Board board = BoardFactory.initBoard(BoardFactory.getBoardPairs());
-        Image cardBack = new Image("de/hsh/daniel/resources/0.png");
-
-        double gridW = (double) (board.getNumberOfPairs() / 2);
-        double gridH = 4;
-        int backCount = 0;
-        double imgSize = (double) (WindowConfig.window_height / 4) - 20;
-
-
-        //TODO: Implement set cardback transparent/invisible on click
-
-
-        //Draws card images
-        if (board.getNumberOfPairs() == 6) {
-            Grid.drawGrid(gc, board, gridW, gridH, imgSize, board.getNumberOfPairs());
-        } else if (board.getNumberOfPairs() == 8) {
-            Grid.drawGrid(gc, board, gridW, gridH, imgSize, board.getNumberOfPairs());
-
-        } else if (board.getNumberOfPairs() == 10) {
-            Grid.drawGrid(gc, board, gridW, gridH, imgSize, board.getNumberOfPairs());
-        }
-
-
+        game = new Game();
+        game.initialize(gameCanvas);
         initialized = true;
-
-
 /*
-
             //Draws card backside over card image
 
 
