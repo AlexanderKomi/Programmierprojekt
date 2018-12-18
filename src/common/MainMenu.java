@@ -85,17 +85,19 @@ public final class MainMenu extends common.engine.components.menu.MainMenu imple
 
     }
 
-    private void bindGamesToButtons( String[] gameNames ) {
-        AnchorPane p = (AnchorPane) this.vbox.getChildren().get( 0 );
-        GridPane   g = (GridPane) p.getChildren().get( 0 );
+    private void bindGamesToButtons( final String[] gameNames ) {
+        final AnchorPane anchorPane = (AnchorPane) this.vbox.getChildren().get( 0 );
+        final GridPane   gridPane   = (GridPane) anchorPane.getChildren().get( 0 );
 
         for ( int i = 0 ; i <= 5 ; i++ ) {
-            String gameName = gameNames[ i ];
+            final String gameName = gameNames[ i ];
+            final VBox   tempBox  = (VBox) gridPane.getChildren().get( i );
 
-            VBox tempBox = (VBox) g.getChildren().get( i );
-            ((Text) (tempBox).getChildren().get( 1 )).setText( gameName ); // Set the Text to the game name
-            Button b = (Button) tempBox.getChildren().get( 0 );
-            b.setOnAction( buttonEvent -> this.notifyObservers( gameName ) );
+            Text text = ((Text) (tempBox).getChildren().get( 1 ));
+            text.setText( gameName ); // Set the Text to the game name
+
+            Button button = (Button) tempBox.getChildren().get( 0 );
+            button.setOnAction( buttonEvent -> this.notifyObservers( gameName ) );
         }
     }
 
