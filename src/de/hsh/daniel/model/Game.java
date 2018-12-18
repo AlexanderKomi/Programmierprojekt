@@ -22,9 +22,6 @@ public class Game {
     public void render(Canvas gameCanvas, int fps) {
 
         double              gridW       = (double) (Board.numberOfPairs / 2);
-        Card i = board.getCardList().get(0);
-        i.setPos(10, 10);
-        i.draw(gameCanvas);
         Grid.drawGrid(gameCanvas, board, gridW, gridH, imgSize, Board.numberOfPairs);
     }
 

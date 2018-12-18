@@ -21,6 +21,8 @@ public class Grid {
                 for (int k = 0; k < gridW; k++, xStart += (imgSize + spacing), imgCount++) {
                     Card i = board.getCardList().get(imgCount);
                     i.setPos(xStart, yStart);
+                    i.setWidth(imgSize);
+                    i.setHeight(imgSize);
                     i.draw(canvas);
                 }
                 yStart += imgSize + 20;
@@ -35,7 +37,11 @@ public class Grid {
                     Card i = board.getCardList().get(imgCount);
                     //gc.drawImage(i, xStart, yStart, imgSize, imgSize);
                     i.setPos(xStart, yStart);
+                    i.setWidth(imgSize);
+                    i.setHeight(imgSize);
+
                     i.draw(canvas);
+
                 }
                 yStart += imgSize + 20;
                 xStart = 200;
@@ -49,6 +55,9 @@ public class Grid {
                     Card i = board.getCardList().get(imgCount);
                     //gc.drawImage(i, xStart, yStart, imgSize, imgSize);
                     i.setPos(xStart, yStart);
+                    i.setWidth(imgSize);
+                    i.setHeight(imgSize);
+
                     i.draw(canvas);
                 }
                 yStart += imgSize + 20;

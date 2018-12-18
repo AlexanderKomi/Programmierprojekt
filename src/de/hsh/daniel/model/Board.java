@@ -1,8 +1,16 @@
 package de.hsh.daniel.model;
 
 
+import common.actor.Level;
+import common.util.Logger;
+import de.hsh.alexander.src.actor.collectables.DataCoin;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Observable;
 
 
 /**
@@ -12,7 +20,7 @@ import java.util.Collections;
 public class Board  {
 
     private                 ArrayList<Card>         cardList        = new ArrayList<>();
-    public static int                                     numberOfPairs   = 0;
+    public static int                               numberOfPairs   = 0;
 
     Board() {
         initCards(numberOfPairs);
@@ -28,12 +36,13 @@ public class Board  {
         Collections.shuffle(cardList);
     }
 
+
+
     /* -------------------- GETTER & SETTER -------------------- */
 
 
     public ArrayList<Card> getCardList() {
         return cardList;
     }
-
 }
 
