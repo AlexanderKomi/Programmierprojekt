@@ -431,6 +431,8 @@ abstract public class Drawable extends Observable {
 
     public void setCurrentImage( final String filePath ) {
         this.imageView.setImage( loadPicture( filePath ) );
+        this.setHeight( this.getCurrentImage().getHeight() );
+        this.setWidth( this.getCurrentImage().getWidth() );
     }
 
     public ArrayList<Image> getSwitchingImages() {

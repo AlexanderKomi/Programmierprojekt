@@ -3,22 +3,27 @@ package de.hsh.daniel.model;
 
 import common.actor.Actor;
 import common.util.Logger;
-import de.hsh.alexander.src.actor.collectables.DataCoin;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 
 public class Card extends Actor {
 
-    private final int pair_id;
-    private boolean cardMatched = false;
-    private boolean cardSelected = false;
-    private String pictureFileName;
+    // START: DEBUG CARDBACK
+    private static final boolean DEBUG_DONT_SHOW_CARDBACK = false;
+    // END: DEBUG CARDBACK
 
-    Card(String pictureFileName, int pair_id) {
-        super(pictureFileName);
+
+    private final int     pair_id;
+    private final String  pictureFileName;
+    private       boolean cardMatched  = false;
+    private       boolean cardSelected = false;
+
+    Card( String pictureFileName, int pair_id ) {
+        super( pictureFileName );
         this.pictureFileName = pictureFileName;
-        this.setCurrentImage(Resources.cardback);
+        if ( !DEBUG_DONT_SHOW_CARDBACK ) {
+            this.setCurrentImage( Resources.cardback );
+        }
         this.pair_id = pair_id;
     }
 
@@ -26,19 +31,8 @@ public class Card extends Actor {
         double x = clickEvent.getX();
         double y = clickEvent.getY();
         Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
-        this.setCurrentImage(pictureFileName);
-
+        this.setCurrentImage( pictureFileName );
     }
-
-   /* Card(String pictureFileName, int pair_id) {
-        super(pictureFileName);
-        this.setSwitchImageAutomatically(false);
-        this.addSwitchingImage(Resources.cardback);
-        this.setCurrentImage(Resources.cardback);
-        this.pair_id = pair_id;
-    }
-*/
-
 
     @Override
     public String toString() {
@@ -47,34 +41,30 @@ public class Card extends Actor {
 
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+    public boolean equals( Object obj ) {
+        if ( this == obj ) { return true; }
+        if ( obj == null ) { return false; }
+        if ( getClass() != obj.getClass() ) { return false; }
         Card other = (Card) obj;
-        if (pair_id != other.pair_id)
-            return false;
-        return true;
+        return pair_id == other.pair_id;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = prime * result + pair_id;
         return result;
     }
 
 
-    public boolean isCardMatched(Card c1, Card c2) {
-        if (c1.equals(c2)) {
-            setCardMatched(true);
+    public boolean isCardMatched( Card c1, Card c2 ) {
+        if ( c1.equals( c2 ) ) {
+            setCardMatched( true );
             //leave cards face up
-        } else {
-            setCardMatched(false);
+        }
+        else {
+            setCardMatched( false );
             //flip cards back
         }
         return false;
@@ -92,7 +82,7 @@ public class Card extends Actor {
         return this.cardMatched;
     }
 
-    public void setCardMatched(boolean cardMatched) {
+    public void setCardMatched( boolean cardMatched ) {
         this.cardMatched = cardMatched;
     }
 
@@ -100,7 +90,7 @@ public class Card extends Actor {
         return this.cardSelected;
     }
 
-    public void setCardSelected(boolean cardSelected) {
+    public void setCardSelected( boolean cardSelected ) {
         this.cardSelected = cardSelected;
     }
 
