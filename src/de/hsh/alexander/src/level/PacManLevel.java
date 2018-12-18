@@ -5,6 +5,8 @@ import common.config.WindowConfig;
 import common.util.Logger;
 import de.hsh.alexander.src.actor.collectables.DataCoin;
 import de.hsh.alexander.src.actor.collectables.Invisible;
+import de.hsh.alexander.src.actor.level_elements.Condensator;
+import de.hsh.alexander.src.actor.level_elements.SMD;
 import de.hsh.alexander.src.actor.player.PacMan;
 import de.hsh.alexander.src.actor.player.PacMan1;
 import de.hsh.alexander.src.actor.player.PacMan2;
@@ -16,6 +18,9 @@ import javafx.scene.input.MouseEvent;
 import java.util.Observable;
 
 abstract public class PacManLevel extends Level {
+
+    protected static final int background_width  = 950;
+    protected static final int background_height = 950;
 
     public static final String gameFinishedMessage = "PacMan : Game finished";
 
@@ -113,6 +118,68 @@ abstract public class PacManLevel extends Level {
                 if ( xy[ 0 ] && xy[ 1 ] ) {
                     boolean created = addCollectable( d );
                 }
+            }
+        }
+    }
+
+    protected void addEasterEgg( Canvas gameCanvas, final int x, final int y ) {
+        addCollectable( new Invisible( x, y ) );
+    }
+
+    protected void addPlayers( final int pacMan1_x, final int pacMan1_y, final int pacMan2_x, final int pacMan2_y ) {
+        addPlayer( new PacMan1( pacMan1_x, pacMan1_y ) );
+        addPlayer( new PacMan2( pacMan2_x, pacMan2_y ) );
+    }
+
+    protected void fillPins( Canvas gameCanvas ) {
+
+        addLevelElement( gameCanvas, new Condensator( 200, 600, 1 ) );
+
+        for ( int i = 350 ; i < 500 ; i += 40 ) {
+            addLevelElement( gameCanvas, new Condensator( 700, i, 0 ) );
+        }
+
+
+        final int  end       = 580;
+        final byte increment = 19;
+
+        addCondensators_y( gameCanvas, 285, end, increment, 525 );
+        addCondensators_x( gameCanvas, 545, 805, increment, 705 );
+
+
+        addLevelElement( gameCanvas, new Condensator( 525 + increment, end + increment ) );
+    }
+
+
+    private void addCondensators_y( Canvas gameCanvas,
+                                    final int start,
+                                    final int end,
+                                    final int increment,
+                                    final int x ) {
+        for ( int y = start ; y < end ; y += increment ) {
+            addLevelElement( gameCanvas, new Condensator( x, y ) );
+            addLevelElement( gameCanvas, new Condensator( x + increment, y ) );
+        }
+    }
+
+    private void addCondensators_x( Canvas gameCanvas,
+                                    final int start,
+                                    final int end,
+                                    final int increment,
+                                    final int y ) {
+        for ( int x = start ; x < end ; x += increment ) {
+            addLevelElement( gameCanvas, new Condensator( x, y ) );
+            addLevelElement( gameCanvas, new Condensator( x + increment, y ) );
+        }
+    }
+
+
+    protected void addSMDs( Canvas gameCanvas, final int smd_offset ) {
+
+        for ( int y = 0 ; y < WindowConfig.window_height ; y += smd_offset ) {
+            for ( int x = 0 ; x < WindowConfig.window_width ; x += smd_offset ) {
+                SMD smd = new SMD( x, y );
+                addLevelElement( gameCanvas, smd );
             }
         }
     }
