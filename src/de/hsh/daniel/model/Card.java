@@ -2,7 +2,10 @@ package de.hsh.daniel.model;
 
 
 import common.actor.Actor;
+import common.util.Logger;
+import de.hsh.alexander.src.actor.collectables.DataCoin;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 
 
 public class Card extends Actor {
@@ -10,15 +13,31 @@ public class Card extends Actor {
     private final int pair_id;
     private boolean cardMatched = false;
     private boolean cardSelected = false;
+    private String pictureFileName;
 
     Card(String pictureFileName, int pair_id) {
+        super(pictureFileName);
+        this.pictureFileName = pictureFileName;
+        this.setCurrentImage(Resources.cardback);
+        this.pair_id = pair_id;
+    }
+
+    public void onMouseClick( final MouseEvent clickEvent ) {
+        double x = clickEvent.getX();
+        double y = clickEvent.getY();
+        Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
+        this.setCurrentImage(pictureFileName);
+
+    }
+
+   /* Card(String pictureFileName, int pair_id) {
         super(pictureFileName);
         this.setSwitchImageAutomatically(false);
         this.addSwitchingImage(Resources.cardback);
         this.setCurrentImage(Resources.cardback);
         this.pair_id = pair_id;
     }
-
+*/
 
 
     @Override
@@ -84,5 +103,6 @@ public class Card extends Actor {
     public void setCardSelected(boolean cardSelected) {
         this.cardSelected = cardSelected;
     }
+
 }
 
