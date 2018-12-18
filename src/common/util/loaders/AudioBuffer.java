@@ -5,7 +5,7 @@ import javafx.scene.media.Media;
 import java.io.File;
 import java.util.HashMap;
 
-public class AudioBuffer {
+public final class AudioBuffer {
 
     private static final HashMap<String, Media> fileToMedia = new HashMap<>();
 

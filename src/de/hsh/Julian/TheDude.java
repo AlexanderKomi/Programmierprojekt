@@ -3,7 +3,7 @@ package de.hsh.Julian;
 import common.actor.Actor;
 import common.actor.Collectable;
 
-class TheDude extends Actor {
+final class TheDude extends Actor {
 
     private static final String firstImage  = Leertastenklatsche.location + "thedude.png";
     private static final String secondImage = Leertastenklatsche.location + "thedude_turned.png";

@@ -106,24 +106,11 @@ public class PacMan extends ControlableActor {
         if ( xyTuple[ 1 ] > 0 ) {
             if ( this.facingDirection != Direction.Down ) {
                 this.facingDirection = Direction.Down;
-                if ( this.getScaleY() < 0 ) {
-                    //this.scaleImageHeight( -1 );
-                    //this.scaleImageWidth( -1 );
-
-                }
-                //this.rotate( 45 );
             }
         }
         else if ( xyTuple[ 1 ] < 0 ) {
             if ( this.facingDirection != Direction.Up ) {
                 this.facingDirection = Direction.Up;
-                /*
-                if ( this.getScaleY() > 0 ) {
-                    this.scaleImageHeight( -1 );
-                    this.scaleImageWidth( -1 );
-                }
-                */
-                this.rotate( -45 );
             }
         }
     }

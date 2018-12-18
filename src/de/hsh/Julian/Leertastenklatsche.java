@@ -15,8 +15,8 @@ import java.util.Observer;
 public class Leertastenklatsche extends Observable implements Observer {
 
 
-    static final String     location = "/de/hsh/Julian/";
-    private      SpawnTimer timer    = new SpawnTimer();
+    static final         String     location = "/de/hsh/Julian/";
+    private static final SpawnTimer timer    = new SpawnTimer();
 
     private int              score     = 0;
     private int              leben     = 3;
@@ -36,23 +36,24 @@ public class Leertastenklatsche extends Observable implements Observer {
     }
 
     void render( Canvas gc ) {
-        if ( !gamedone ) {
-            createNewEnemies();
-            updateEnemies();
-            Platform.runLater( () -> {
-                renderScore( gc );
-                enemyList.forEach( enemy -> {
-                    enemy.draw( gc );
-                } );
-                thedude.draw( gc );
-            } );
+        if ( gamedone ) {
+            return;
         }
+        createNewEnemies();
+        updateEnemies();
+        Platform.runLater( () -> {
+            renderScore( gc );
+            enemyList.forEach( enemy -> {
+                enemy.draw( gc );
+            } );
+            thedude.draw( gc );
+        } );
     }
 
     private void createNewEnemies() {
         if ( timer.elabsedTime() > 2.0d - score / 50 ) {
             timer.resetTimer();
-            Enemy e = Enemy.createEnemy();
+            final Enemy e = Enemy.createEnemy();
             e.addObserver( this );
             thedude.addCollidingActor( e );
             enemyList.add( e );
@@ -79,7 +80,7 @@ public class Leertastenklatsche extends Observable implements Observer {
         gc.strokeText( pointsText, 360, 36 );
     }
 
-    void parseInput( String code ) {
+    void parseInput( final String code ) {
         switch ( code ) {
             case "LEFT":
                 if ( !thedude.turnedleft ) {
@@ -110,15 +111,15 @@ public class Leertastenklatsche extends Observable implements Observer {
             Enemy e = (Enemy) o;
             for ( Enemy enemy : this.enemyList ) {
                 if ( enemy.id == e.id ) {
-                    Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
+                    //Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
+
                     e.deleteObservers();
                     enemy.deleteObservers();
 
                     this.thedude.getCollisionActors().remove( enemy );
-
                     enemyList.remove( enemy );
 
-                    Logger.log( this.getClass() + ": Found enemy with same id" );
+                    //Logger.log( this.getClass() + ": Found enemy with same id" );
                     if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
                         if ( thedude.turnedleft ) {
                             score++;

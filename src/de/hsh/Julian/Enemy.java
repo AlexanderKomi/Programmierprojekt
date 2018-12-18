@@ -3,12 +3,12 @@ package de.hsh.Julian;
 import common.actor.Collectable;
 import common.config.WindowConfig;
 
-public class Enemy extends Collectable {
+final class Enemy extends Collectable {
 
-    public static final String imageLocation = Leertastenklatsche.location + "enemyvirus.png";
-    public static final String imageLocation2 = Leertastenklatsche.location + "enemyvirus_turned.png";
+    private static final String imageLocation  = Leertastenklatsche.location + "enemyvirus.png";
+    private static final String imageLocation2 = Leertastenklatsche.location + "enemyvirus_turned.png";
 
-    public Enemy( String imagePath ) {
+    private Enemy( final String imagePath ) {
         super( imagePath );
     }
 

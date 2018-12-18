@@ -1,6 +1,5 @@
 package common.actor;
 
-import common.util.Logger;
 import common.util.loaders.TextureBuffer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -190,12 +189,6 @@ abstract public class Drawable extends Observable {
         scaleImageWidth( factor );
     }
 
-    protected void rotate( final double degree ) {
-        this.rotation += this.imageView.getRotate() + degree;
-        this.imageView.setRotate( rotation );
-        doRotation = true;
-    }
-
     // ---------------------------------- START DRAW ----------------------------------
 
     public void draw( Canvas canvas ) {
@@ -229,25 +222,10 @@ abstract public class Drawable extends Observable {
         this.setPos( in_bounds_pos );
         this.setPos( beforeDrawing( old_pos, in_bounds_pos ) ); // Maybe reset ? :)
         switchImages();
-        applyRotation();
         //this.setCurrentImage(temp);
         canvas.getGraphicsContext2D().drawImage( this.getCurrentImage(),
                                                  this.x, this.y, this.width, this.height
                                                );
-    }
-
-    /**
-     * Applies rotating to the current Image, before drawing.
-     */
-    private void applyRotation() {
-        if ( doRotation ) {
-            Logger.log( "Drawable : rotation=" + this.rotation );
-            this.imageView.setRotate( this.imageView.getRotate() + this.rotation );
-            doRotation = false;
-        }
-        //SnapshotParameters snapshotParameters = new SnapshotParameters();
-        //snapshotParameters.setFill( Color.TRANSPARENT );
-        //return this.imageView.snapshot( snapshotParameters, null );
     }
 
     public void draw( GraphicsContext gc ) {
