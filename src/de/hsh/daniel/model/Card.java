@@ -1,45 +1,42 @@
 package de.hsh.daniel.model;
 
 
-import common.actor.Drawable;
+import common.actor.Actor;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 
-public class Card  {
+public class Card extends Actor {
 
-    private int             id;
-    private Image           image;
-    private Image           cardBack = new Image("de/hsh/daniel/resources/0.png");
-    private boolean         cardMatched = false;
-    private boolean         cardSelected = false;
+    private final int pair_id;
+    private boolean cardMatched = false;
+    private boolean cardSelected = false;
 
-
-
-     Card(Image img, int id) {
-        setImage(img);
-        setId(id);
-
+    Card(String pictureFileName, int pair_id) {
+        super(pictureFileName);
+        this.setSwitchImageAutomatically(false);
+        this.addSwitchingImage(Resources.cardback);
+        this.setCurrentImage(Resources.cardback);
+        this.pair_id = pair_id;
     }
+
 
 
     @Override
     public String toString() {
-        return "id: " + this.getId();
+        return "pair_id: " + this.getPair_id();
     }
-
 
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj)
+        if (this == obj)
             return true;
-        if(obj == null)
+        if (obj == null)
             return false;
-        if(getClass() != obj.getClass())
+        if (getClass() != obj.getClass())
             return false;
         Card other = (Card) obj;
-        if(id != other.id)
+        if (pair_id != other.pair_id)
             return false;
         return true;
     }
@@ -48,13 +45,13 @@ public class Card  {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + pair_id;
         return result;
     }
 
 
     public boolean isCardMatched(Card c1, Card c2) {
-        if(c1.equals(c2)) {
+        if (c1.equals(c2)) {
             setCardMatched(true);
             //leave cards face up
         } else {
@@ -65,28 +62,27 @@ public class Card  {
     }
 
 
-/* -------------------------------- GETTERS & SETTERS -------------------------------- */
+    /* -------------------------------- GETTERS & SETTERS -------------------------------- */
 
 
-
-    public Image getCardBack() {
-        return cardBack;
-    }
-    public void setCardBack(Image cardBack) {
-        this.cardBack = cardBack;
+    public int getPair_id() {
+        return this.pair_id;
     }
 
-    public int getId() { return this.id; }
-    public void setId(int id) { this.id = id; }
+    public boolean getCardMatched() {
+        return this.cardMatched;
+    }
 
+    public void setCardMatched(boolean cardMatched) {
+        this.cardMatched = cardMatched;
+    }
 
-    public Image getImage() { return this.image; }
-    public void setImage(Image image) {this.image = image; }
+    public boolean getCardSelected() {
+        return this.cardSelected;
+    }
 
-    public boolean getCardMatched() { return this.cardMatched; }
-    public void setCardMatched(boolean cardMatched) { this.cardMatched = cardMatched; }
-
-    public boolean getCardSelected() { return this.cardSelected; }
-    public void setCardSelected(boolean cardSelected) { this.cardSelected = cardSelected; }
+    public void setCardSelected(boolean cardSelected) {
+        this.cardSelected = cardSelected;
+    }
 }
 
