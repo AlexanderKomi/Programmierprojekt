@@ -82,10 +82,9 @@ public final class PacManGame extends Observable implements Observer, Initializa
             return;
         }
         Platform.runLater( () -> {
-            player1Canvas.getGraphicsContext2D().clearRect( 0, 0, player1Canvas.getWidth(), player1Canvas.getHeight() );
-            player2Canvas.getGraphicsContext2D().clearRect( 0, 0, player2Canvas.getWidth(), player2Canvas.getHeight() );
-            pacMan1.draw( player1Canvas );
-            pacMan2.draw( player2Canvas );
+            //PacManMenu.test( player1Canvas, player2Canvas, pacMan1, pacMan2 );
+            PacManMenu.clearAndDraw( pacMan1, player1Canvas );
+            PacManMenu.clearAndDraw( pacMan2, player2Canvas );
 
 
             if ( this.currentLevel != null ) {
