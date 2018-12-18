@@ -8,7 +8,7 @@ import de.hsh.dennis.controller.LevelMenu_controller;
 import de.hsh.dennis.controller.MainMenu_controller;
 import de.hsh.dennis.model.GameModel;
 import de.hsh.dennis.model.KeyLayout;
-import de.hsh.dennis.model.NpcLogic.Config;
+import de.hsh.dennis.model.NpcLogic.SkinConfig;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
@@ -22,7 +22,7 @@ public class DennisGameEntryPoint extends GameEntryPoint {
     private DennisFxmlChanger changer;
     private GameModel gm;
     private boolean rendering = false;
-    private Config.Level.Difficulty lastGameMode;
+    private SkinConfig.Level.Difficulty lastGameMode;
 
 
     public DennisGameEntryPoint(Observer o) {
@@ -34,6 +34,7 @@ public class DennisGameEntryPoint extends GameEntryPoint {
 
     @Override
     public void render(int fps) {
+        if(gm.getFps() != fps){gm.setFps(fps);}
         if (rendering) {
             Platform.runLater( () -> {
                 gm.act();
@@ -44,9 +45,9 @@ public class DennisGameEntryPoint extends GameEntryPoint {
     @Override
     public void update(Observable o, Object arg) {
 
-        if(arg instanceof Config.Level.Difficulty){
-            lastGameMode = (Config.Level.Difficulty) arg;
-            gm.setDifficulty((Config.Level.Difficulty)arg);
+        if(arg instanceof SkinConfig.Level.Difficulty){
+            lastGameMode = (SkinConfig.Level.Difficulty) arg;
+            gm.setDifficulty((SkinConfig.Level.Difficulty)arg);
         }
 
         if (o instanceof GameModel) {
@@ -55,18 +56,15 @@ public class DennisGameEntryPoint extends GameEntryPoint {
                     case UpdateCodes.Dennis.gameLost:
                         Logger.log("!!! YOU LOSE !!!");
                         rendering = false;
-                        gm.reset();
                         changer.changeFxml(o, (String) arg);
-
+                        gm.reset();
                         break;
+
                     case UpdateCodes.Dennis.gameWon:
                         Logger.log("!!! YOU WIN !!!");
                         rendering = false;
-                        gm.reset();
                         changer.changeFxml(o, (String) arg);
-
-
-
+                        gm.reset();
                         break;
                 }
             }

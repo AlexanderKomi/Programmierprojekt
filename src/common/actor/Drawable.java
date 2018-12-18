@@ -1,5 +1,6 @@
 package common.actor;
 
+import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -31,8 +32,13 @@ abstract public class Drawable extends Observable {
     private int     switchingBuffer          = 0;
     private double  switchingDelay           = 0;
     private boolean switchImageAutomatically = true;
+    private boolean oneTimeAnimation         = false;
+
+
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
+    private int     rotation                 = 0;
+    private boolean doRotation               = false;
 
     private final ImageView        imageView       = new ImageView();
     private       ArrayList<Image> switchingImages = new ArrayList<>();
@@ -121,10 +127,16 @@ abstract public class Drawable extends Observable {
         }
     }
 
+    protected void triggerOneTimeAnimation() {
+        if ( oneTimeAnimation ) {
+
+        }
+    }
+
     /**
      * Switch switchingImages based on buffer implementation.
      */
-    protected void switchImages() {
+    private void switchImages() {
         if ( this.switchingImages.isEmpty() || !this.switchImageAutomatically ) {
             return;
         }
@@ -135,7 +147,7 @@ abstract public class Drawable extends Observable {
         switchToNextImage();
     }
 
-    public void switchToNextImage() {
+    protected void switchToNextImage() {
         this.switchingBuffer = 0;
         final int index = this.switchingImages.indexOf( this.getCurrentImage() );
         if ( index < this.switchingImages.size() - 1 ) {
@@ -143,6 +155,7 @@ abstract public class Drawable extends Observable {
         }
         else {
             this.setCurrentImage( this.switchingImages.get( 0 ) );
+            this.oneTimeAnimation = false;
         }
     }
 
@@ -176,8 +189,10 @@ abstract public class Drawable extends Observable {
         scaleImageWidth( factor );
     }
 
-    public void rotate( double degree ) {
-        this.imageView.setRotate( this.imageView.getRotate() + degree );
+    protected void rotate( final double degree ) {
+        this.rotation += this.imageView.getRotate() + degree;
+        this.imageView.setRotate( rotation );
+        doRotation = true;
     }
 
     // ---------------------------------- START DRAW ----------------------------------
@@ -213,9 +228,25 @@ abstract public class Drawable extends Observable {
         this.setPos( in_bounds_pos );
         this.setPos( beforeDrawing( old_pos, in_bounds_pos ) ); // Maybe reset ? :)
         switchImages();
+        applyRotation();
+        //this.setCurrentImage(temp);
         canvas.getGraphicsContext2D().drawImage( this.getCurrentImage(),
                                                  this.x, this.y, this.width, this.height
                                                );
+    }
+
+    /**
+     * Applies rotating to the current Image, before drawing.
+     */
+    private void applyRotation() {
+        if ( doRotation ) {
+            Logger.log( "Drawable : rotation=" + this.rotation );
+            this.imageView.setRotate( this.imageView.getRotate() + this.rotation );
+            doRotation = false;
+        }
+        //SnapshotParameters snapshotParameters = new SnapshotParameters();
+        //snapshotParameters.setFill( Color.TRANSPARENT );
+        //return this.imageView.snapshot( snapshotParameters, null );
     }
 
     public void draw( GraphicsContext gc ) {

@@ -1,10 +1,13 @@
 package de.hsh.daniel.model;
 
+import common.config.WindowConfig;
+import common.util.Logger;
+import de.hsh.daniel.controller.RamGame_controller;
+import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
-import java.awt.*;
+import javafx.scene.input.MouseEvent;
 
 
 /**
@@ -12,7 +15,17 @@ import java.awt.*;
  */
 public class Game {
 
-    public void render( Canvas gameCanvas, int fps ) {
+
+    @FXML
+    private Canvas          gameCanvas;
+
+
+
+    public void render(Canvas gameCanvas, int fps) {
 
     }
 }
+
+
+
+

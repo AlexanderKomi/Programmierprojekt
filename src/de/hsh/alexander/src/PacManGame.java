@@ -5,8 +5,8 @@ import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.alexander.src.actor.player.PacMan1;
 import de.hsh.alexander.src.actor.player.PacMan2;
+import de.hsh.alexander.src.level.Level1;
 import de.hsh.alexander.src.level.PacManLevel;
-import de.hsh.alexander.src.level.level1.Level1;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -82,10 +82,9 @@ public final class PacManGame extends Observable implements Observer, Initializa
             return;
         }
         Platform.runLater( () -> {
-            player1Canvas.getGraphicsContext2D().clearRect( 0, 0, player1Canvas.getWidth(), player1Canvas.getHeight() );
-            player2Canvas.getGraphicsContext2D().clearRect( 0, 0, player2Canvas.getWidth(), player2Canvas.getHeight() );
-            pacMan1.draw( player1Canvas );
-            pacMan2.draw( player2Canvas );
+            //PacManMenu.test( player1Canvas, player2Canvas, pacMan1, pacMan2 );
+            PacManMenu.clearAndDraw( pacMan1, player1Canvas );
+            PacManMenu.clearAndDraw( pacMan2, player2Canvas );
 
 
             if ( this.currentLevel != null ) {

@@ -1,6 +1,7 @@
 package de.hsh.Julian;
 
 import common.actor.Actor;
+import common.actor.Collectable;
 
 class TheDude extends Actor {
 
@@ -20,5 +21,20 @@ class TheDude extends Actor {
         else {
             this.setCurrentImage( firstImage );
         }
+    }
+
+    /**
+     * I have no idea what im doing.
+     * - Alexander Komischke.
+     */
+    @Override
+    public synchronized boolean collisionModifier( Actor other ) {
+        if ( other instanceof Collectable ) {
+            final Collectable c = (Collectable) other;
+            c.wasCollected( this );
+            return false;
+        }
+
+        return super.collisionModifier( other );
     }
 }

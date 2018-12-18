@@ -165,17 +165,24 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return this.levelElements.add( levelElement );
     }
 
-    public void reset( Canvas gameCanvas ) {
+    private void initializeMembers() {
         backgroundImage = new BackgroundImage();
         npcs = new ArrayList<>();
         players = new LinkedList<>();
         levelElements = new ArrayList<>();
         collectables = new ArrayList<>();
+    }
+
+    public void reset( Canvas gameCanvas ) {
+        initializeMembers();
         createLevel( gameCanvas );
+        combineResources();
+    }
+
+    protected void combineResources() {
         addCollision();
         addCollectables();
     }
-
 
     protected abstract boolean isGameFinished();
 
