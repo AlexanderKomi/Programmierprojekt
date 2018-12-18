@@ -3,7 +3,6 @@ package de.hsh.dennis.model;
 import common.actor.Direction;
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import common.util.loaders.MusicPlayer;
 import de.hsh.dennis.model.KeyLayout.Movement.Custom;
 import de.hsh.dennis.model.NpcLogic.NPCEnums;
 import de.hsh.dennis.model.NpcLogic.NpcHandler;
@@ -119,7 +118,7 @@ public class GameModel extends Observable {
 
             if (musicStart && audioTimer.getCurrentTimeStamp() >= audioDelay) {
                 musicStart = false;
-                MusicPlayer.play();
+                AudioPlayer.MusicPlayer.play();
             }
 
 
@@ -154,21 +153,27 @@ public class GameModel extends Observable {
             case EASY:
                 npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._easy);
                 npcHandler.generateNpcs( ressourcePath + AudioConfig.Mp3Paths.easy, AudioConfig.MovingSpeeds._easy );
-                MusicPlayer.playFile( this.getClass().getResource( relativeRessource + AudioConfig.Mp3Paths.easy ).getPath() );
+                AudioPlayer.MusicPlayer.playFile( this.getClass()
+                                                      .getResource( relativeRessource + AudioConfig.Mp3Paths.easy )
+                                                      .getPath() );
                 audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._easy);
                 break;
 
             case MEDIUM:
                 npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._medium);
                 npcHandler.generateNpcs( ressourcePath + AudioConfig.Mp3Paths.medium, AudioConfig.MovingSpeeds._medium );
-                MusicPlayer.playFile( this.getClass().getResource( relativeRessource + AudioConfig.Mp3Paths.medium ).getPath() );
+                AudioPlayer.MusicPlayer.playFile( this.getClass()
+                                                      .getResource( relativeRessource + AudioConfig.Mp3Paths.medium )
+                                                      .getPath() );
                 audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._medium);
                 break;
 
             case HARD:
                 npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._hard);
                 npcHandler.generateNpcs( ressourcePath + AudioConfig.Mp3Paths.hard, AudioConfig.MovingSpeeds._hard );
-                MusicPlayer.playFile( this.getClass().getResource( relativeRessource + AudioConfig.Mp3Paths.hard ).getPath() );
+                AudioPlayer.MusicPlayer.playFile( this.getClass()
+                                                      .getResource( relativeRessource + AudioConfig.Mp3Paths.hard )
+                                                      .getPath() );
                 audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._hard);
                 break;
 
@@ -176,9 +181,9 @@ public class GameModel extends Observable {
                 npcHandler.getAudioAnalyzer().setSensitivity(0.0d);
                 npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._nightmare);
                 npcHandler.generateNpcs( ressourcePath + AudioConfig.Mp3Paths.nightmare, AudioConfig.MovingSpeeds._nightmare );
-                MusicPlayer.playFile( this.getClass()
-                                          .getResource( relativeRessource + AudioConfig.Mp3Paths.nightmare )
-                                          .getPath() );
+                AudioPlayer.MusicPlayer.playFile( this.getClass()
+                                                      .getResource( relativeRessource + AudioConfig.Mp3Paths.nightmare )
+                                                      .getPath() );
                 audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._nightmare);
                 npcHandler.getAudioAnalyzer().resetSensitivity();
                 break;
@@ -423,7 +428,7 @@ public class GameModel extends Observable {
         if (ai) {
             if (health == 0) {
                 acting = false;
-                MusicPlayer.pause();
+                AudioPlayer.MusicPlayer.pause();
                 clearCanvas();
                 Logger.log("1");
                 setChanged();
@@ -431,7 +436,7 @@ public class GameModel extends Observable {
 
             } else if (npcHandler.isEndReached() && score > 0) {
                 acting = false;
-                MusicPlayer.pause();
+                AudioPlayer.MusicPlayer.pause();
                 clearCanvas();
                 Logger.log("2");
                 setChanged();
@@ -439,7 +444,7 @@ public class GameModel extends Observable {
 
             } else if (npcHandler.isEndReached() && score <= 0) {
                 acting = false;
-                MusicPlayer.pause();
+                AudioPlayer.MusicPlayer.pause();
                 clearCanvas();
                 Logger.log("3");
                 setChanged();

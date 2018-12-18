@@ -3,12 +3,12 @@ package common;
 import common.engine.FXGameContainer;
 import common.engine.components.game.GameEntryPoints;
 import common.updates.Updater;
-import common.util.loaders.MusicPlayer;
 import de.hsh.Julian.LKEntryPoint;
 import de.hsh.alexander.src.PacManController;
 import de.hsh.amir.AmirEntryPoint;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGameEntryPoint;
+import de.hsh.dennis.model.AudioPlayer;
 import de.hsh.kevin.controller.TIController;
 import javafx.fxml.FXMLLoader;
 
@@ -73,7 +73,7 @@ public class GameContainer extends FXGameContainer {
 
     @Override
     protected void beforeStoppingContainer() {
-        MusicPlayer.shutdown();
+        AudioPlayer.MusicPlayer.shutdown();
     }
 
 
