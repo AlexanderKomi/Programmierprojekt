@@ -100,39 +100,45 @@ public class Leertastenklatsche extends Observable implements Observer {
 
     @Override
     public void update( Observable o, Object arg ) {
-        if ( o instanceof Enemy && !gamedone ) {
-            Enemy e = (Enemy) o;
-            for ( Enemy enemy : this.enemyList ) {
-                //Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
-                if ( enemy.id == e.id ) {
-                    this.thedude.getCollisionActors().remove( enemy );
-                    enemyList.remove( enemy );
-                    Logger.log( this.getClass() + ": Found enemy with same id" );
-                    if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
-                        if ( thedude.turnedleft ) {
-                            score++;
-                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
+        if ( !gamedone ) {
+
+            if ( o instanceof Enemy ) {
+                Enemy e = (Enemy) o;
+                for ( Enemy enemy : this.enemyList ) {
+                    if ( enemy.id == e.id ) {
+                        Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
+                        this.thedude.getCollisionActors().remove( enemy );
+                        enemyList.remove( enemy );
+                        Logger.log( this.getClass() + ": Found enemy with same id" );
+                        if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
+                            if ( thedude.turnedleft ) {
+                                score++;
+                                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
+                            }
+                            else {
+                                leben--;
+                                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
+                                gameOver();
+                            }
                         }
-                        else{
-                            leben--;
-                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\hit.wav");
-                            gameOver();
+                        else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
+                            if ( !thedude.turnedleft ) {
+                                score++;
+                                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
+                            }
+                            else {
+                                leben--;
+                                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
+                                gameOver();
+                            }
                         }
+                        return;
                     }
-                    else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
-                        if ( !thedude.turnedleft ) {
-                            score++;
-                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
-                        }
-                        else {
-                            leben--;
-                            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\hit.wav");
-                            gameOver();
-                        }
-                    }
-                    return;
                 }
             }
+        }
+        else {
+            Logger.log( this.getClass() + ": Game should be done, but event is still fired." );
         }
     }
     private void gameOver(){
