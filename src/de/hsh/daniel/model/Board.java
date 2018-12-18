@@ -1,6 +1,7 @@
 package de.hsh.daniel.model;
 
 
+import common.config.WindowConfig;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;
@@ -10,26 +11,35 @@ import java.util.Collections;
 /**
  * Class represents Gameboard where Cards are laid out
  */
-public class Board  {
+public class Board {
 
-    private       ArrayList<Card> cardList      = new ArrayList<>();
-    public static int             numberOfPairs = 0; // These are set externally from the menu.
+    public static int numberOfPairs = 0; // These are set externally from the menu.
 
-    Board() { initCards( numberOfPairs );}
+    private static final double gridH   = 4;
+    private static final int    spacing = 40;
+    private static final double imgSize = (double) (WindowConfig.window_height / 4) - (double) spacing / 2;
 
-    private void initCards(final int numberOfPairs) {
-        for (int i = 0; i < numberOfPairs; i++) {
-            Card c1 = new Card(Resources.cardImages[i], i);
-            Card c2 = new Card(Resources.cardImages[i], i);
-            cardList.add(c1);
-            cardList.add(c2);
-        }
-        Collections.shuffle(cardList);
+    private static double          gridW;
+    private        ArrayList<Card> cardList = new ArrayList<>();
+
+    Board() {
+        gridW = (double) (Board.numberOfPairs / 2);
+        initCards( numberOfPairs );
+        createGrid();
     }
 
-    static void drawGrid( Canvas canvas, Board board, double gridW, double gridH, double imgSize, int numberOfPairs ) {
+    private void initCards( final int numberOfPairs ) {
+        for ( int i = 0 ; i < numberOfPairs ; i++ ) {
+            Card c1 = new Card( Resources.cardImages[ i ], i );
+            Card c2 = new Card( Resources.cardImages[ i ], i );
+            cardList.add( c1 );
+            cardList.add( c2 );
+        }
+        Collections.shuffle( cardList );
+    }
 
-        int spacing = 40;
+    void createGrid() {
+
         int xStart;
         int xStartReset;
 
@@ -46,51 +56,38 @@ public class Board  {
             xStart = 30;
             xStartReset = 30;
         }
-        int imgCount = iterate( board, canvas, xStart, xStartReset, spacing, imgSize, gridW, gridH );
+        int imgCount = iterate( xStart, xStartReset, gridW );
     }
 
-    private static int iterate( Board board,
-                                Canvas canvas,
-                                int xStart,
-                                final int xStartReset,
-                                final int spacing,
-                                final double imgSize,
-                                final double gridW,
-                                final double gridH ) {
+    private int iterate(
+            int xStart,
+            final int xStartReset,
+            final double gridW ) {
         int yStart   = 10;
         int imgCount = 0;
 
-        for ( int j = 0 ; j < gridH ; j++ ) {
+        for ( int j = 0 ; j < Board.gridH ; j++ ) {
             for ( int k = 0 ; k < gridW ; k++ ) {
-                drawCard( board, canvas, xStart, yStart, imgCount, imgSize );
-                xStart += (imgSize + spacing);
+
+                Card i = this.cardList.get( imgCount );
+                i.setPos( xStart, yStart );
+                i.setWidth( Board.imgSize );
+                i.setHeight( Board.imgSize );
+
+                xStart += (Board.imgSize + Board.spacing);
                 imgCount++;
             }
-            yStart += imgSize + spacing / 2;
+            yStart += Board.imgSize + Board.spacing / 2;
             xStart = xStartReset;
         }
         return imgCount;
     }
 
-    private static void drawCard(
-            Board board,
-            Canvas canvas,
-            final int xStart,
-            final int yStart,
-            final int imgCount,
-            double imgSize ) {
-        Card i = board.getCardList().get( imgCount );
-        i.setPos( xStart, yStart );
-        i.setWidth( imgSize );
-        i.setHeight( imgSize );
-        i.draw( canvas );
+    public void draw( Canvas canvas ) {
+        this.cardList.forEach( card -> card.draw( canvas ) );
     }
 
     /* -------------------- GETTER & SETTER -------------------- */
 
-
-    public ArrayList<Card> getCardList() {
-        return cardList;
-    }
 }
 

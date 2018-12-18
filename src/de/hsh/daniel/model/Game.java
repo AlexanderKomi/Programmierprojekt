@@ -1,6 +1,6 @@
 package de.hsh.daniel.model;
 
-import common.config.WindowConfig;
+import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 
 
@@ -10,18 +10,17 @@ import javafx.scene.canvas.Canvas;
 public class Game {
 
     private Board  board;
-    private double imgSize = (double) (WindowConfig.window_height / 4) - 20;
-    private double gridH   = 4;
-    private double gridW;
 
     public void render(Canvas gameCanvas, int fps) {
-        double              gridW       = (double) (Board.numberOfPairs / 2);
-        Board.drawGrid( gameCanvas, board, gridW, gridH, imgSize, Board.numberOfPairs );
+        board.draw( gameCanvas );
     }
 
     public void initialize(Canvas gameCanvas) {
+        gameCanvas.setOnMouseClicked( e -> {
+            Logger.log( this.getClass() + ": Clicked at (" + e.getX() + ", " + e.getY() + ")" );
+        } );
         board = new Board();
-
+        board.createGrid();
         //TODO: Implement set cardback transparent/invisible on click
     }
 }

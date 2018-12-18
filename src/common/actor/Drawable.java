@@ -389,6 +389,11 @@ abstract public class Drawable extends Observable {
         this.width = width;
     }
 
+    public void setSize( double size ) {
+        this.width = size;
+        this.height = size;
+    }
+
     public String getName() {
         return name;
     }
