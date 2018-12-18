@@ -18,7 +18,7 @@ public class AudioAnalyser {
     private BeatDetector detector;
     private File audioFile;
 
-    private double sensitivity = 0.05d;
+    private double sensitivity = 0.0d;
 
 
     private double spawnDelay = _default;
