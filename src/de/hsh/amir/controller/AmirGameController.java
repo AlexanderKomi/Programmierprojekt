@@ -34,7 +34,7 @@ public class AmirGameController extends Observable implements Initializable {
                 updatePointsLabel();
                 if(spielGewonnen()){
                     this.setChanged();
-                    this.notifyObservers(UpdateCodes.Amir.repeatGame);
+                    this.notifyObservers(UpdateCodes.Amir.showEndScreen);
                 }
             }
         }

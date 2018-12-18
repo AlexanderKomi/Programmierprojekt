@@ -21,7 +21,7 @@ public class AmirEntryPoint extends GameEntryPoint {
 
     public AmirEntryPoint(Observer o) {
         super(o, WindowConfig.amir_title);
-        this.amirGame = new AmirGameController();
+        //this.amirGame = new AmirGameController();
         changer = new AmirFxmlChanger(this, AmirsMainMenuController.fxml, new AmirsMainMenuController());
     }
 
@@ -32,13 +32,18 @@ public class AmirEntryPoint extends GameEntryPoint {
             String message = (String) arg;
             switch (message) {
                 case UpdateCodes.Amir.startGame:
+                    this.amirGame = new AmirGameController();
                     changer.changeFxml(this.amirGame, UpdateCodes.Amir.startGame);
                     break;
                 case UpdateCodes.Amir.mainMenu:
                     changer.changeFxml(new AmirsMainMenuController(), UpdateCodes.Amir.mainMenu);
                     break;
-                case UpdateCodes.Amir.repeatGame:
-                    changer.changeFxml(new AmirsMainMenuController(), UpdateCodes.Amir.repeatGame);
+                case UpdateCodes.Amir.showEndScreen:
+                    if(amirGame!= null) {
+                        amirGame.deleteObservers();
+                        amirGame = null;
+                    }
+                    changer.changeFxml(new AmirsMainMenuController(), UpdateCodes.Amir.showEndScreen);
                     break;
                 case UpdateCodes.DefaultCodes.exitToMainGUI:
                     AmirsMainMenuController.gameStarted = false;
