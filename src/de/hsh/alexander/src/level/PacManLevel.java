@@ -73,7 +73,7 @@ abstract public class PacManLevel extends Level {
             }
             if ( c instanceof Invisible ) {
                 Invisible i = (Invisible) c;
-                Logger.log( "PacManLevel : invisible collected : " );
+                Logger.log( "PacManLevel : invisible collected : " + i );
             }
         }
         else {
