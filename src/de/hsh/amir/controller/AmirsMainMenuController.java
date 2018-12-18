@@ -1,6 +1,7 @@
 package de.hsh.amir.controller;
 
 import common.updates.UpdateCodes;
+import common.util.Logger;
 import de.hsh.amir.logic.Gegner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,18 +60,21 @@ public class AmirsMainMenuController extends Observable {
             level2Button.setDisable(false);
             level3Button.setDisable(false);
             LEVEL_NUMBER = 1;
+            Logger.log(id);
         } else if (id.equals("level2Button")) {
             setGegnerSpeed(2 * GEGNER_SPEED);
             level1Button.setDisable(false);
             level2Button.setDisable(true);
             level3Button.setDisable(false);
             LEVEL_NUMBER = 2;
+            Logger.log(id);
         } else if (id.equals("level3Button")) {
             setGegnerSpeed(2 * GEGNER_SPEED);
             level1Button.setDisable(false);
             level2Button.setDisable(false);
             level3Button.setDisable(true);
             LEVEL_NUMBER = 3;
+            Logger.log(id);
         } else {
             this.notifyObservers(id);
         }
