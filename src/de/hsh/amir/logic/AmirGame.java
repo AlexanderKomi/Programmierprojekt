@@ -1,14 +1,8 @@
 package de.hsh.amir.logic;
 
-import common.util.Logger;
 import de.hsh.kevin.logic.Score;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 

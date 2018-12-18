@@ -37,8 +37,10 @@ public class AmirEntryPoint extends GameEntryPoint {
                     changer.changeFxml(this.amirGame, UpdateCodes.Amir.startGame);
                     break;
                 case UpdateCodes.Amir.mainMenu:
-                    mainMenuController.switchLabels();
                     changer.changeFxml(mainMenuController, UpdateCodes.Amir.mainMenu);
+                    break;
+                case UpdateCodes.Amir.repeatGame:
+                    changer.changeFxml(mainMenuController, UpdateCodes.Amir.repeatGame);
                     break;
                 case UpdateCodes.DefaultCodes.exitToMainGUI:
                     AmirsMainMenuController.gameStarted = false;
@@ -60,10 +62,6 @@ public class AmirEntryPoint extends GameEntryPoint {
             Platform.runLater(() -> {
                 amirGame.render(fps);
             });
-        } if(mainMenuController!= null){
-           Platform.runLater(()->{
-               mainMenuController.render(fps);
-           });
         }
     }
 

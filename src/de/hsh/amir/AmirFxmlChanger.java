@@ -25,7 +25,9 @@ public class AmirFxmlChanger extends FxmlChanger {
             changeScene(AmirGameController.fxml, o);
         } else if (msg.equals(UpdateCodes.Amir.mainMenu)) {
             this.changeScene(AmirsMainMenuController.fxml, o);
-        } else {
+        } else if (msg.equals(UpdateCodes.Amir.repeatGame)) {
+            this.changeScene(AmirsMainMenuController.fxmlGameOver, o);
+        }  else {
             Logger.log(this.getClass() + ": fxml not found");
         }
     }

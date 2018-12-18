@@ -2,7 +2,6 @@ package de.hsh.amir.controller;
 
 import common.updates.UpdateCodes;
 import de.hsh.amir.logic.Gegner;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,9 +14,10 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class AmirsMainMenuController extends Observable implements Initializable {
+public class AmirsMainMenuController extends Observable {
 
     public static final String fxml = "view/AmirsMenu.fxml";
+    public static final String fxmlGameOver = "view/AmirsMenuGameOver.fxml";
     public static final int GEGNER_SPEED = 3;
     public static int LEVEL_NUMBER = 1;
     private boolean initialized = false;
@@ -76,30 +76,30 @@ public class AmirsMainMenuController extends Observable implements Initializable
         }
     }
 
-    private void changeLabel(String newLabel) {
-        if (!initialized) {
-            return;
-        }
-        Platform.runLater(() -> titleLabel.setText(newLabel));
-    }
-
-    /**
-     * Wann muss gameStarted auf true gesetzt werden?
-     */
-    public void switchLabels() {
-        if (AmirsMainMenuController.gameStarted) {
-            changeLabel("Virus Collector");
-        } else {
-            changeLabel("Gewonnen!");
-        }
-    }
-
-    public void render(final int fps) {
-        if (!initialized) {
-            return;
-        }
-        switchLabels();
-    }
+//    private void changeLabel(String newLabel) {
+//        if (!initialized) {
+//            return;
+//        }
+//        Platform.runLater(() -> titleLabel.setText(newLabel));
+//    }
+//
+//    /**
+//     * Wann muss gameStarted auf true gesetzt werden?
+//     */
+//    public void switchLabels() {
+//        if (AmirsMainMenuController.gameStarted) {
+//            changeLabel("Virus Collector");
+//        } else {
+//            changeLabel("Gewonnen!");
+//        }
+//    }
+//
+//    public void render(final int fps) {
+//        if (!initialized) {
+//            return;
+//        }
+//        switchLabels();
+//    }
 
     /**
      * Setzt Gegnergeschwindigkeit global auf den übergebenen Wert.
@@ -114,9 +114,9 @@ public class AmirsMainMenuController extends Observable implements Initializable
         return ((Node) event.getSource()).getId();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initialized = true;
-        gameStarted = true;
-    }
+//    @Override
+//    public void initialize(URL location, ResourceBundle resources) {
+//        initialized = true;
+//        gameStarted = true;
+//    }
 }

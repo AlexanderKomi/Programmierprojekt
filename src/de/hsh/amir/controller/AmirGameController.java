@@ -8,9 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
-
-import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
@@ -34,10 +31,10 @@ public class AmirGameController extends Observable implements Initializable {
         if (initialized) {
             if (game != null) {
                 game.render(fps);
-                updateLabel();
+                updatePointsLabel();
                 if(spielGewonnen()){
                     this.setChanged();
-                    this.notifyObservers(UpdateCodes.Amir.mainMenu);
+                    this.notifyObservers(UpdateCodes.Amir.repeatGame);
                 }
             }
         }
@@ -59,13 +56,13 @@ public class AmirGameController extends Observable implements Initializable {
 
     private boolean spielGewonnen() {
         int punkte = points.getScore();
-        if (punkte >= 10) {
+        if (punkte >= 4) {
             return true;
         }
         return false;
     }
 
-    private void updateLabel() {
+    private void updatePointsLabel() {
         Platform.runLater(() -> pointsLabel.setText("Points: " + points.getScore()));
     }
 }
