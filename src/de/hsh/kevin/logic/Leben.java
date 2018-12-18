@@ -9,7 +9,7 @@ public class Leben {
     private int leben;
     
     /**
-     * Erstellt das Objekt mit der Aktuellen anzahl Leben, die in Config.getLife() liefert
+     * Erstellt das Objekt mit der Aktuellen anzahl Leben, die in SkinConfig.getLife() liefert
      */
     public Leben() {
 	leben = (int) Config.getLife();

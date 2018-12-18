@@ -9,7 +9,7 @@ import common.util.Logger;
 import de.hsh.dennis.controller.*;
 import de.hsh.dennis.model.GameModel;
 import de.hsh.dennis.model.KeyLayout;
-import de.hsh.dennis.model.NpcLogic.Config;
+import de.hsh.dennis.model.NpcLogic.SkinConfig;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -58,7 +58,7 @@ public class DennisFxmlChanger extends FxmlChanger {
                 changeScene("view/level.fxml", levelController);
                 levelController.passCanvas();
                 setChanged();
-                notifyObservers(Config.Level.Difficulty.EASY);
+                notifyObservers(SkinConfig.Level.Difficulty.EASY);
                 break;
 
             case "b_medium":
@@ -66,7 +66,7 @@ public class DennisFxmlChanger extends FxmlChanger {
                 changeScene("view/level.fxml", levelController);
                 levelController.passCanvas();
                 setChanged();
-                notifyObservers(Config.Level.Difficulty.MEDIUM);
+                notifyObservers(SkinConfig.Level.Difficulty.MEDIUM);
                 break;
 
             case "b_hard":
@@ -74,7 +74,7 @@ public class DennisFxmlChanger extends FxmlChanger {
                 changeScene("view/level.fxml", levelController);
                 levelController.passCanvas();
                 setChanged();
-                notifyObservers(Config.Level.Difficulty.HARD);
+                notifyObservers(SkinConfig.Level.Difficulty.HARD);
                 break;
 
             case "b_nightmare":
@@ -82,7 +82,7 @@ public class DennisFxmlChanger extends FxmlChanger {
                 changeScene("view/level.fxml", levelController);
                 levelController.passCanvas();
                 setChanged();
-                notifyObservers(Config.Level.Difficulty.NIGHTMARE);
+                notifyObservers(SkinConfig.Level.Difficulty.NIGHTMARE);
                 break;
 
             case "b_back":
@@ -199,6 +199,7 @@ public class DennisFxmlChanger extends FxmlChanger {
         }
         EndScreen_controller c = new EndScreen_controller();
         changeScene("view/endScreen.fxml", c);
+        c.setScore(gm.getScore());
         c.changeToEndScreen(endTitle);
     }
 

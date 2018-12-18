@@ -3,7 +3,7 @@ package de.hsh.dennis.model.NpcLogic.actors;
 import common.actor.Actor;
 import common.config.WindowConfig;
 import common.util.Logger;
-import de.hsh.dennis.model.NpcLogic.Config;
+import de.hsh.dennis.model.NpcLogic.SkinConfig;
 import de.hsh.dennis.model.NpcLogic.NPCEnums;
 import javafx.scene.image.Image;
 
@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 public abstract class Npc extends Actor implements Comparable {
 
     private double spawnTime;
-    private double speed = Config.Level.speed;
+    private double speed = SkinConfig.Level.speed;
     private NPCEnums.Spawn spawnType;
     private NPCEnums.NpcType npcType;
 
@@ -23,16 +23,16 @@ public abstract class Npc extends Actor implements Comparable {
 
         switch (type) {
             case PACKAGE:
-                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Package.skin_standard.getWidth());
-                setPosY(Config.Player.posY);
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - SkinConfig.Package.skin_standard.getWidth());
+                setPosY(SkinConfig.Player.posY);
                 break;
             case BOT:
-                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Bot.skin_standard.getWidth());
-                setPosY(Config.Player.posY + (Config.Player.skin_standard.getHeight() * 0.2));
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - SkinConfig.Bot.skin_standard.getWidth());
+                setPosY(SkinConfig.Player.posY + (SkinConfig.Player.skin_standard.getHeight() * 0.2));
                 break;
             case HACKER:
-                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Hacker.skin_standard.getWidth());
-                setPosY(Config.Player.posY + Config.Player.skin_standard.getHeight() - Config.Hacker.skin_standard.getHeight());
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - SkinConfig.Hacker.skin_standard.getWidth());
+                setPosY(SkinConfig.Player.posY + SkinConfig.Player.skin_standard.getHeight() - SkinConfig.Hacker.skin_standard.getHeight());
                 break;
 
             default:
@@ -50,16 +50,16 @@ public abstract class Npc extends Actor implements Comparable {
 
         switch (type) {
             case PACKAGE:
-                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Package.skin_standard.getWidth());
-                setPosY(Config.Player.posY);
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - SkinConfig.Package.skin_standard.getWidth());
+                setPosY(SkinConfig.Player.posY);
                 break;
             case BOT:
-                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Bot.skin_standard.getWidth());
-                setPosY(Config.Player.posY + (Config.Player.skin_standard.getHeight() * 0.2));
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - SkinConfig.Bot.skin_standard.getWidth());
+                setPosY(SkinConfig.Player.posY + (SkinConfig.Player.skin_standard.getHeight() * 0.2));
                 break;
             case HACKER:
-                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - Config.Hacker.skin_standard.getWidth());
-                setPosY(Config.Player.posY + Config.Player.skin_standard.getHeight() - Config.Hacker.skin_standard.getHeight());
+                setPosX((spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width : 0 - SkinConfig.Hacker.skin_standard.getWidth());
+                setPosY(SkinConfig.Player.posY + SkinConfig.Player.skin_standard.getHeight() - SkinConfig.Hacker.skin_standard.getHeight());
                 break;
 
             default:
