@@ -91,13 +91,13 @@ public abstract class FXGameContainer extends Container implements Observer {
      */
     @Override
     public void stopContainer() {
-        beforStopingContainer();
+        beforeStoppingContainer();
         this.setRunning( false );
         this.getEngine().shutdown();
         Platform.exit();
     }
 
-    protected abstract void beforStopingContainer();
+    protected abstract void beforeStoppingContainer();
 
     private Stage getStage() {
         return this.stage;
