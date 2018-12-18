@@ -47,7 +47,10 @@ public class AudioPlayer {
 
         public static void shutdown(){
             stop();
-            player.close();
+            if (player != null){
+
+                player.close();
+            }
             Logger.log("MusikPlayer and dependencies finaly shut down !!!");
         }
 
