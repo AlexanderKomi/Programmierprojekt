@@ -51,11 +51,14 @@ public class LKEntryPoint extends GameEntryPoint {
 
     public void render(int fps) {
         if(renderable) {
-            Platform.runLater( () -> {
-                gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
+            if ( lk != null ) {
 
-            } );
-            lk.render( this.canvas );
+                Platform.runLater( () -> {
+                    gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
+
+                } );
+                lk.render( this.canvas );
+            }
         }
     }
 
@@ -63,13 +66,13 @@ public class LKEntryPoint extends GameEntryPoint {
     public void update(Observable o, Object arg) {
         if (arg instanceof Canvas) {
             this.canvas = (Canvas) arg;
-
             initAfterCanvasPass();
         }
         else if ( arg instanceof String ) {
             String message = (String) arg;
             if ( message.equals( "b_backtomenu" ) ) {
-
+                renderable = false;
+                lk = null;
                 changer.changeScene(LKStart.fxml, new LKStart());
                 exitToMainGUI();
             }

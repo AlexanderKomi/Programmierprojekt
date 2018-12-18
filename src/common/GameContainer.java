@@ -3,6 +3,7 @@ package common;
 import common.engine.FXGameContainer;
 import common.engine.components.game.GameEntryPoints;
 import common.updates.Updater;
+import common.util.AudioPlayer;
 import de.hsh.Julian.LKEntryPoint;
 import de.hsh.alexander.src.PacManController;
 import de.hsh.amir.AmirEntryPoint;
@@ -23,6 +24,7 @@ public class GameContainer extends FXGameContainer {
     public void update( Observable observable, Object arg ) {
         Updater.update( observable, arg, this );
     }
+
 
     @Override
     public GameEntryPoints createGames( Observer container ) {
@@ -66,6 +68,12 @@ public class GameContainer extends FXGameContainer {
             this.getGameEntryPoints().render( fps );
         }
     }
+
+    @Override
+    protected void beforStopingContainer() {
+        AudioPlayer.MusicPlayer.shutdown();
+    }
+
 
     @Override
     public String toString() {

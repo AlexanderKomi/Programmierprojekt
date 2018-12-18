@@ -18,37 +18,39 @@ public class Leertastenklatsche extends Observable implements Observer {
     static final String     location = "/de/hsh/Julian/";
     private      SpawnTimer timer    = new SpawnTimer();
 
-    private int score = 0;
-    private int leben=3;
-    private boolean gamedone=false;
-    private      TheDude           thedude;
-    private      ArrayList<Enemy>  enemyList       = new ArrayList<>();
+    private int              score     = 0;
+    private int              leben     = 3;
+    private boolean          gamedone  = false;
+    private TheDude          thedude;
+    private ArrayList<Enemy> enemyList = new ArrayList<>();
 
     public Leertastenklatsche() {
         initGame();
     }
 
     private void initGame() {
-        thedude = new TheDude( WindowConfig.window_width / 2 -75,
+        thedude = new TheDude( WindowConfig.window_width / 2 - 75,
                                WindowConfig.window_height * 0.73
         );
         thedude.setSpeed( 0 );
     }
 
     void render( Canvas gc ) {
-        createNewEnemies();
-        updateEnemies();
-        Platform.runLater( () -> {
-            renderScore( gc );
-            enemyList.forEach( enemy -> {
-                enemy.draw( gc );
+        if ( !gamedone ) {
+            createNewEnemies();
+            updateEnemies();
+            Platform.runLater( () -> {
+                renderScore( gc );
+                enemyList.forEach( enemy -> {
+                    enemy.draw( gc );
+                } );
+                thedude.draw( gc );
             } );
-            thedude.draw( gc );
-        } );
+        }
     }
 
     private void createNewEnemies() {
-        if ( timer.elabsedTime() > 2.0d-score/50.0 ) {
+        if ( timer.elabsedTime() > 2.0d - score / 50 ) {
             timer.resetTimer();
             Enemy e = Enemy.createEnemy();
             e.addObserver( this );
@@ -60,17 +62,17 @@ public class Leertastenklatsche extends Observable implements Observer {
     private void updateEnemies() {
         for ( Enemy enemy : enemyList ) {
             if ( enemy.getX() > WindowConfig.window_width / 2 ) {
-                enemy.setPos( enemy.getX() - 1.0 - score / 10.0, enemy.getY() );
+                enemy.setPos( enemy.getX() - 1.0 - score / Math.sqrt( score + 1 ), enemy.getY() );
             }
             else {
-                enemy.setPos( enemy.getX() + 1 + score / 10.0, enemy.getY() );
+                enemy.setPos( enemy.getX() + 1 + score / Math.sqrt( score + 1 ), enemy.getY() );
             }
         }
     }
 
     private void renderScore( Canvas canvas ) {
         GraphicsContext gc         = canvas.getGraphicsContext2D();
-        String          pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (score)+"\nVerbleibende Leben: "+ (leben);
+        String          pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (score) + "\nVerbleibende Leben: " + (leben);
         //Logger.log(getClass()+" Score: "+score);
 
         gc.fillText( pointsText, 360, 36 );
@@ -100,56 +102,70 @@ public class Leertastenklatsche extends Observable implements Observer {
 
     @Override
     public void update( Observable o, Object arg ) {
-        if ( !gamedone ) {
+        if ( gamedone ) {
+            Logger.log( this.getClass() + ": Game should be done, but event is still fired. : " + o + ", " + arg );
+            return;
+        }
+        if ( o instanceof Enemy ) {
+            Enemy e = (Enemy) o;
+            for ( Enemy enemy : this.enemyList ) {
+                if ( enemy.id == e.id ) {
+                    Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
+                    e.deleteObservers();
+                    enemy.deleteObservers();
 
-            if ( o instanceof Enemy ) {
-                Enemy e = (Enemy) o;
-                for ( Enemy enemy : this.enemyList ) {
-                    if ( enemy.id == e.id ) {
-                        Logger.log( this.getClass() + ": Searched id : " + e.id + " Enemy id : " + enemy.id );
-                        this.thedude.getCollisionActors().remove( enemy );
-                        enemyList.remove( enemy );
-                        Logger.log( this.getClass() + ": Found enemy with same id" );
-                        if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
-                            if ( thedude.turnedleft ) {
-                                score++;
-                                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
-                            }
-                            else {
-                                leben--;
-                                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
-                                gameOver();
-                            }
+                    this.thedude.getCollisionActors().remove( enemy );
+
+                    enemyList.remove( enemy );
+
+                    Logger.log( this.getClass() + ": Found enemy with same id" );
+                    if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
+                        if ( thedude.turnedleft ) {
+                            score++;
+                            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
                         }
-                        else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
-                            if ( !thedude.turnedleft ) {
-                                score++;
-                                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
-                            }
-                            else {
-                                leben--;
-                                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
-                                gameOver();
-                            }
+                        else {
+                            leben--;
+                            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
+                            gameOver();
                         }
-                        return;
                     }
+                    else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
+                        if ( !thedude.turnedleft ) {
+                            score++;
+                            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
+                        }
+                        else {
+                            leben--;
+                            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
+                            gameOver();
+                        }
+                    }
+                    enemy = null;
+                    e = null;
+
+                    return;
                 }
             }
         }
-        else {
-            Logger.log( this.getClass() + ": Game should be done, but event is still fired." );
-        }
+
+
     }
-    private void gameOver(){
+
+    private void gameOver() {
 
         if ( leben <= 0 && !gamedone ) {
-            gamedone=true;
-            PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\noo.wav");
+            gamedone = true;
+            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\noo.wav" );
+            for ( Enemy e : this.enemyList ) {
+                e.deleteObservers();
+            }
+            this.enemyList.removeAll( this.enemyList );
             setChanged();
-            notifyObservers("gameover");
+            notifyObservers( "gameover" );
         }
     }
+
     public int getScore() {
         return score;
     }
