@@ -1,6 +1,7 @@
 package de.hsh.alexander.src;
 
 
+import common.actor.Drawable;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.alexander.src.actor.collectables.DataCoin;
@@ -57,18 +58,19 @@ public final class PacManMenu extends Observable implements Initializable {
             return;
         }
         Platform.runLater( () -> {
-            dataCoinCanvas.getGraphicsContext2D().clearRect( 0, 0, dataCoinCanvas.getWidth(), dataCoinCanvas.getHeight() );
-
-            d.draw( dataCoinCanvas );
-
-            player1Canvas.getGraphicsContext2D().clearRect( 0, 0, player1Canvas.getWidth(), player1Canvas.getHeight() );
-            player2Canvas.getGraphicsContext2D().clearRect( 0, 0, player2Canvas.getWidth(), player2Canvas.getHeight() );
-
-            pacMan1.draw( player1Canvas );
-            pacMan2.draw( player2Canvas );
-
+            clearAndDraw( pacMan1, player1Canvas );
+            clearAndDraw( pacMan2, player2Canvas );
+            clearAndDraw( d, dataCoinCanvas );
         } );
+    }
 
+    static void clearAndDraw( Drawable p, Canvas canvas ) {
+        clearCanvas( canvas );
+        p.draw( canvas );
+    }
+
+    private static void clearCanvas( Canvas canvas ) {
+        canvas.getGraphicsContext2D().clearRect( 0, 0, canvas.getWidth(), canvas.getHeight() );
     }
 
     @Override
