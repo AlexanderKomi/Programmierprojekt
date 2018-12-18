@@ -41,7 +41,6 @@ public final class ImageLoader {
     }
 
     static BufferedInputStream getBufferedInputStream( String relativePath ) throws NullPointerException {
-        BufferedInputStream bis = null;
         try {
             return new BufferedInputStream( new FileInputStream( new File( relativePath ) ) );
         }
