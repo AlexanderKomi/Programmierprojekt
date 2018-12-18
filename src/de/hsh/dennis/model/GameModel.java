@@ -172,10 +172,12 @@ public class GameModel extends Observable {
                 break;
 
             case NIGHTMARE:
+                npcHandler.getAudioAnalyzer().setSensitivity(0.0d);
                 npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._nightmare);
                 npcHandler.generateNpcs("/de/hsh/dennis/resources/audioFiles/" + AudioConfig.Mp3Paths.nightmare, AudioConfig.MovingSpeeds._nightmare);
                 MusicPlayer.loadFile(this.getClass().getResource("../resources/audioFiles/" + AudioConfig.Mp3Paths.nightmare).getPath());
                 audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._nightmare);
+                npcHandler.getAudioAnalyzer().resetSensitivity();
                 break;
 
             case CUSTOM:

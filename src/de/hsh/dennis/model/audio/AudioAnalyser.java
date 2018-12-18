@@ -18,7 +18,9 @@ public class AudioAnalyser {
     private BeatDetector detector;
     private File audioFile;
 
-    private double sensitivity = 0.0d;
+
+    private double sensitivityFixed = 0.2d;
+    private double sensitivity = 0.2d;
 
 
     private double spawnDelay = _default;
@@ -73,6 +75,13 @@ public class AudioAnalyser {
         return new ArrayList<>();
     }
 
+    public void setSensitivity(double sensitivity) {
+        this.sensitivity = sensitivity;
+    }
+
+    public void resetSensitivity(){
+        this.sensitivity = sensitivityFixed;
+    }
 
     public void setSpawnDelay(double spawnDelay) {
         this.spawnDelay = spawnDelay;
