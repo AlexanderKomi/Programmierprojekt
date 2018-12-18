@@ -21,4 +21,9 @@ class TheDude extends Actor {
             this.setCurrentImage( firstImage );
         }
     }
+
+    @Override
+    protected synchronized boolean collisionModifier( Actor other ) {
+        return super.collisionModifier( other );
+    }
 }

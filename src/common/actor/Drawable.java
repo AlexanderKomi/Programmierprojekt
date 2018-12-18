@@ -32,6 +32,9 @@ abstract public class Drawable extends Observable {
     private int     switchingBuffer          = 0;
     private double  switchingDelay           = 0;
     private boolean switchImageAutomatically = true;
+    private boolean oneTimeAnimation         = false;
+
+
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
     private int     rotation                 = 0;
@@ -124,10 +127,16 @@ abstract public class Drawable extends Observable {
         }
     }
 
+    protected void triggerOneTimeAnimation() {
+        if ( oneTimeAnimation ) {
+
+        }
+    }
+
     /**
      * Switch switchingImages based on buffer implementation.
      */
-    protected void switchImages() {
+    private void switchImages() {
         if ( this.switchingImages.isEmpty() || !this.switchImageAutomatically ) {
             return;
         }
@@ -138,7 +147,7 @@ abstract public class Drawable extends Observable {
         switchToNextImage();
     }
 
-    public void switchToNextImage() {
+    protected void switchToNextImage() {
         this.switchingBuffer = 0;
         final int index = this.switchingImages.indexOf( this.getCurrentImage() );
         if ( index < this.switchingImages.size() - 1 ) {
@@ -146,6 +155,7 @@ abstract public class Drawable extends Observable {
         }
         else {
             this.setCurrentImage( this.switchingImages.get( 0 ) );
+            this.oneTimeAnimation = false;
         }
     }
 
