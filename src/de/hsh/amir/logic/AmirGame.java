@@ -40,6 +40,9 @@ public class AmirGame {
         gegnerManager.draw(canvas);
     }
 
+    /**
+     *
+     */
     private void playSound() {
         AudioPlayer.MusicPlayer.loadFile(this.getClass().getResource("../resources/clickSound.mp3").getPath());
         AudioPlayer.MusicPlayer.play();

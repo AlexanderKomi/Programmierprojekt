@@ -46,7 +46,11 @@ public class AmirEntryPoint extends GameEntryPoint {
                     changer.changeFxml(new AmirsMainMenuController(), UpdateCodes.Amir.showEndScreen);
                     break;
                 case UpdateCodes.DefaultCodes.exitToMainGUI:
-                    AmirsMainMenuController.gameStarted = false;
+                    if(amirGame!= null) {
+                        amirGame.deleteObservers();
+                        amirGame = null;
+                    }
+                    changer.changeFxml(new AmirsMainMenuController(), UpdateCodes.Amir.mainMenu);
                     exitToMainGUI();
                     break;
                 default:

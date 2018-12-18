@@ -53,6 +53,7 @@ public class AmirsMainMenuController extends Observable {
         if (id.equals("startGameButton")) {
             this.notifyObservers(UpdateCodes.Amir.startGame);
         } else if (id.equals("exitButton")) {
+            //this.notifyObservers(UpdateCodes.Amir.mainMenu);
             this.notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
         } else if (id.equals("level1Button")) {
             setGegnerSpeed(GEGNER_SPEED);
