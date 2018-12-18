@@ -12,9 +12,9 @@
    <children>
       <VBox alignment="CENTER" blendMode="DARKEN" cache="true" depthTest="DISABLE" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" translateX="300.0" translateY="320.0">
          <children>
-            <Button id="twelvePairs" fx:id="twelvePairs" mnemonicParsing="false" onAction="#button_click" scaleX="2.0" scaleY="2.0" text="12 Pairs" translateY="-51.0" />
-            <Button id="sixteenPairs" fx:id="sixteenPairs" mnemonicParsing="false" onAction="#button_click" scaleX="2.0" scaleY="2.0" text="16 Pairs" translateY="-19.0" />
-            <Button id="twentyPairs" fx:id="twentyPairs" mnemonicParsing="false" onAction="#button_click" scaleX="2.0" scaleY="2.0" text="20 Pairs" translateY="15.0" />
+            <Button id="sixPairs" fx:id="sixPairs" mnemonicParsing="false" onAction="#button_click" scaleX="2.0" scaleY="2.0" text="12 Pairs" translateY="-51.0" />
+            <Button id="eightPairs" fx:id="eightPairs" mnemonicParsing="false" onAction="#button_click" scaleX="2.0" scaleY="2.0" text="16 Pairs" translateY="-19.0" />
+            <Button id="tenPairs" fx:id="tenPairs" mnemonicParsing="false" onAction="#button_click" scaleX="2.0" scaleY="2.0" text="20 Pairs" translateY="15.0" />
          </children>
       </VBox>
       <Label fx:id="t_title" prefHeight="73.0" prefWidth="547.0" text="Random Access Memory" textAlignment="CENTER" translateX="250.0" translateY="100.0">

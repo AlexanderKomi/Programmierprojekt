@@ -2,7 +2,7 @@ package de.hsh.daniel.controller;
 
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import de.hsh.daniel.model.BoardFactory;
+import de.hsh.daniel.model.Board;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -34,31 +34,28 @@ public class RAM_MainMenu_controller extends Observable {
         switch (id) {
             case "b_play":
                 setChanged();
-                if(BoardFactory.getBoardPairs() != 0 ) {
-                    int pairs = BoardFactory.getBoardPairs();
-                    BoardFactory.setBoardPairs(pairs);
-                } else {
-                    BoardFactory.setBoardPairs(6);
+                if(Board.numberOfPairs == 0){
+                    Board.numberOfPairs = 6;
                 }
                 notifyObservers(UpdateCodes.RAM.startGame);
                 break;
 
-            case "twelvePairs":
+            case "sixPairs":
+                setChanged();
+                Board.numberOfPairs = 6;
                 notifyObservers(UpdateCodes.RAM.fieldSize);
-                BoardFactory.setBoardPairs(6);
-                notifyObservers(UpdateCodes.RAM.startGame);
                 break;
 
-            case "sixteenPairs":
+            case "eightPairs":
                 setChanged();
+                Board.numberOfPairs = 8;
                 notifyObservers(UpdateCodes.RAM.fieldSize);
-                BoardFactory.setBoardPairs(8);
                 break;
 
-            case "twentyPairs":
+            case "tenPairs":
                 setChanged();
+                Board.numberOfPairs = 10;
                 notifyObservers(UpdateCodes.RAM.fieldSize);
-                BoardFactory.setBoardPairs(10);
                 break;
 
             case "b_back":

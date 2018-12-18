@@ -28,10 +28,13 @@ public class RAM extends GameEntryPoint {
     public void update( Observable o, Object arg ) {
         if ( arg instanceof String ) {
             String message = (String) arg;
+
             Logger.log( this.getClass() + ": arg = " + message );
+
             if ( message.equals( UpdateCodes.RAM.startGame ) ) {
+
                 game = new RamGame_controller();
-                changer.changeFxml( game, (String) arg );
+                changer.changeFxml( game, message );
                 initialized = true;
             }
         }else{
@@ -42,10 +45,13 @@ public class RAM extends GameEntryPoint {
     @Override
     public void render(int fps) {
         if ( initialized ) {
-            Platform.runLater( () -> {
-                game.render( fps );
-            } );
+            if (game != null) {
+                Platform.runLater( () -> {
+                    game.render( fps );
+                } );
+            }
         }
+
     }
 
 }
