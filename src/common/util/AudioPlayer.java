@@ -13,11 +13,11 @@ public class AudioPlayer {
 
     public static class MusicPlayer {
 
-        private Player player;
-        Thread musikThreat;
-        private File file;
+        private static Player player;
+        static Thread musikThreat;
+        private static File file;
 
-        public void play() {
+        public static void play() {
             if(musikThreat.isAlive()){musikThreat.stop();}
             if(file == null || musikThreat == null){
                 Logger.log("no file to play detected. Please load a .mp3 first.");
@@ -27,17 +27,17 @@ public class AudioPlayer {
             musikThreat.start();
         }
 
-        public void pause() {
+        public static void pause() {
             Logger.log("music paused");
             musikThreat.suspend();
         }
 
-        public void resume() {
+        public static void resume() {
             Logger.log("music playing again");
             musikThreat.resume();
         }
 
-        public void stop(){
+        public static void stop(){
             if(musikThreat != null){
                 musikThreat.stop();
                 musikThreat = null;
@@ -45,13 +45,13 @@ public class AudioPlayer {
             if(file != null){file = null;}
         }
 
-        public void shutdown(){
+        public static void shutdown(){
             stop();
             player.close();
             Logger.log("MusikPlayer and dependencies finaly shut down !!!");
         }
 
-        public void loadFile(String path) {
+        public static void loadFile(String path) {
 
             file = new File(path);
             try {
