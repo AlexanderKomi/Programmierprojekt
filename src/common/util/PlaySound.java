@@ -1,30 +1,25 @@
 package common.util;
 
+import common.util.loaders.AudioBuffer;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
-import java.io.File;
+import javafx.util.Duration;
 
 public class PlaySound {
 
     private static String      musicFile = null;
     private static MediaPlayer mediaPlayer;
-    private static Media       sound;
 
     public static void playSound(String path){
-        if(musicFile==null||!musicFile.equals(path)) { //Perfomance-Kniff
+        if ( musicFile == null || !musicFile.equals( path ) ) { //Perfomance-Kniff
             musicFile = path;
-            sound = new Media( new File( musicFile ).toURI().toString() );
-            mediaPlayer = new MediaPlayer(sound);
-        }
-        mediaPlayer.play();
-    }
-
-    public static void playSound2( String relativePath ) {
-        if ( musicFile == null || !musicFile.equals( relativePath ) ) { //Perfomance-Kniff
-            musicFile = relativePath;
-            Media sound = new Media( PlaySound.class.getResource( relativePath ).toExternalForm() );
+            Media sound = AudioBuffer.loadMedia( musicFile );
             mediaPlayer = new MediaPlayer( sound );
+            mediaPlayer.setAutoPlay( false );
+            mediaPlayer.setOnEndOfMedia( () -> {
+                mediaPlayer.stop();
+                mediaPlayer.seek( Duration.ZERO );
+            } );
         }
         mediaPlayer.play();
     }

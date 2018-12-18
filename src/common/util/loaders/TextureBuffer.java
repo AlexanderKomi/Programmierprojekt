@@ -8,10 +8,10 @@ public final class TextureBuffer {
 
     private static final HashMap<String, Image> fileToImage = new HashMap<>();
 
-    private static void addFile( final String filepath ) {
+    private static void addFile( final String filePath ) {
         try {
-            fileToImage.put( filepath,
-                             ImageLoader.loadImage( filepath ) );
+            fileToImage.put( filePath,
+                             ImageLoader.loadImage( filePath ) );
         }
         catch ( NullPointerException npe ) {
             npe.printStackTrace();
