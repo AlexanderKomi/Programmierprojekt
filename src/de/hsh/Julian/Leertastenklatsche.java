@@ -36,15 +36,17 @@ public class Leertastenklatsche extends Observable implements Observer {
     }
 
     void render( Canvas gc ) {
-        createNewEnemies();
-        updateEnemies();
-        Platform.runLater( () -> {
-            renderScore( gc );
-            enemyList.forEach( enemy -> {
-                enemy.draw( gc );
+        if ( !gamedone ) {
+            createNewEnemies();
+            updateEnemies();
+            Platform.runLater( () -> {
+                renderScore( gc );
+                enemyList.forEach( enemy -> {
+                    enemy.draw( gc );
+                } );
+                thedude.draw( gc );
             } );
-            thedude.draw( gc );
-        } );
+        }
     }
 
     private void createNewEnemies() {
