@@ -2,6 +2,7 @@ package de.hsh.daniel.model;
 
 
 import common.config.WindowConfig;
+import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;
@@ -83,8 +84,15 @@ public class Board {
         return imgCount;
     }
 
+    void onMouseClick( final double x, final double y ) {
+        Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
+        Logger.log( this.getClass() + ": TODO : Find the corresponding card, to the given x,y Tuple" );
+    }
+
     public void draw( Canvas canvas ) {
-        this.cardList.forEach( card -> card.draw( canvas ) );
+        for ( Card card : this.cardList ) {
+            card.draw( canvas );
+        }
     }
 
     /* -------------------- GETTER & SETTER -------------------- */

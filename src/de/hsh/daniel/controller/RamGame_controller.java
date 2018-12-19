@@ -37,9 +37,6 @@ public class RamGame_controller extends Observable implements Initializable {
         Logger.log(this.getClass() + ": initialized");
 
         gameCanvas.setFocusTraversable(true);
-        gameCanvas.setOnMouseClicked( e -> {
-            Logger.log( this.getClass() + ": Clicked at (" + e.getX() + ", " + e.getY() + ")" );
-        } );
         game = new Game();
         game.initialize(gameCanvas);
         initialized = true;

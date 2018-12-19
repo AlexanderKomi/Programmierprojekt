@@ -3,7 +3,6 @@ package de.hsh.daniel.model;
 
 import common.actor.Actor;
 import common.util.Logger;
-import javafx.scene.input.MouseEvent;
 
 
 public class Card extends Actor {
@@ -27,9 +26,7 @@ public class Card extends Actor {
         this.pair_id = pair_id;
     }
 
-    public void onMouseClick( final MouseEvent clickEvent ) {
-        double x = clickEvent.getX();
-        double y = clickEvent.getY();
+    public void onMouseClick( double x, double y ) {
         Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
         this.setCurrentImage( pictureFileName );
     }
