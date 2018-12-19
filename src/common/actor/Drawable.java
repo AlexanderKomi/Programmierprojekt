@@ -191,23 +191,23 @@ abstract public class Drawable extends Observable {
 
     // ---------------------------------- START DRAW ----------------------------------
 
-    public void draw( Canvas canvas ) {
+    public synchronized void draw( Canvas canvas ) {
         draw( canvas, 0, 0 );
     }
 
-    public void draw( Canvas canvas, double[] offset_pos ) {
+    public synchronized void draw( Canvas canvas, double[] offset_pos ) {
         draw( canvas, offset_pos[ 0 ], offset_pos[ 1 ] );
     }
 
-    public void draw( Canvas canvas, double offset_to_new_x, double offset_to_new_y ) {
+    public synchronized void draw( Canvas canvas, double offset_to_new_x, double offset_to_new_y ) {
         draw( canvas, canvas.getWidth(), canvas.getHeight(), offset_to_new_x, offset_to_new_y );
     }
 
-    public void draw( Canvas canvas,
-                      double canvas_width,
-                      double canvas_height,
-                      double offset_to_new_x,
-                      double offset_to_new_y ) {
+    public synchronized void draw( Canvas canvas,
+                                   double canvas_width,
+                                   double canvas_height,
+                                   double offset_to_new_x,
+                                   double offset_to_new_y ) {
 
         boolean[] isInBounds = CollisionCheck.isInBounds( this.getX(),
                                                           this.getY(),
@@ -228,7 +228,7 @@ abstract public class Drawable extends Observable {
                                                );
     }
 
-    public void draw( GraphicsContext gc ) {
+    public synchronized void draw( GraphicsContext gc ) {
         gc.drawImage( this.getCurrentImage(), this.x, this.y, this.width, this.height );
     }
 
@@ -242,7 +242,7 @@ abstract public class Drawable extends Observable {
      *
      * @return Returns the new position of the Drawable.
      */
-    protected double[] beforeDrawing( double[] current_pos, double[] new_pos ) {
+    protected synchronized double[] beforeDrawing( double[] current_pos, double[] new_pos ) {
         return new_pos;
     }
 

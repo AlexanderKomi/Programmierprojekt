@@ -65,7 +65,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
     }
 
     @Override
-    public void render( Canvas canvas, int fps ) {
+    public synchronized void render( Canvas canvas, int fps ) {
         try {
             this.backgroundImage.draw( canvas );
             this.draw( npcs, canvas );
@@ -78,7 +78,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         }
     }
 
-    private <T extends Actor> void draw( final List<T> list, Canvas canvas ) {
+    private synchronized <T extends Actor> void draw( final List<T> list, Canvas canvas ) {
         int size = list.size();
         for ( int i = 0 ; i < size ; i++ ) {
             final T t = list.get( i );
