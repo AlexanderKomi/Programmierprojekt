@@ -41,7 +41,7 @@ public class AmirGame {
     }
 
     /**
-     *
+     * Spielt einen Sound ab.
      */
     private void playSound() {
         AudioPlayer.MusicPlayer.loadFile(this.getClass().getResource("../resources/clickSound.mp3").getPath());
@@ -64,9 +64,7 @@ public class AmirGame {
         for (Gegner gegner : gegnerManager.getGegnerListe()) {
             if (spielfigur.doesCollide(gegner)) {
                 points.increase();
-
                 playSound();
-
                 toRemove.add(gegner);
             }
         }

@@ -20,7 +20,7 @@ public class Gegner extends Actor {
     }
 
     /**
-     * setzt Gegnergeschwindigkeit GLOBAL!!! auf den übergebenen Wert.
+     * Setzt Gegnergeschwindigkeit GLOBAL!!! auf den übergebenen Wert.
      *
      * @param speed
      */
