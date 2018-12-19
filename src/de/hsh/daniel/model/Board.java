@@ -87,6 +87,10 @@ public class Board {
     void onMouseClick( final double x, final double y ) {
         Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
         Logger.log( this.getClass() + ": TODO : Find the corresponding card, to the given x,y Tuple" );
+        for ( Card card : this.cardList ) {
+            double[] pos = card.getPos();
+
+        }
     }
 
     public void draw( Canvas canvas ) {

@@ -117,6 +117,15 @@ public class CollisionCheck {
                || checkLowerLeftCorner( a, b );
     }
 
+    static boolean doesCollide( final double a_x, final double a_y, final double a_width, final double a_height,
+                                final double b_x, final double b_y, final double b_width, final double b_height ) {
+        return checkUpperLeftCorner( a_x, a_y, a_width, a_height, b_x, b_y ) ||
+               checkUpperRightCorner( a_x, a_y, a_width, a_height, b_x, b_y, b_width ) ||
+               checkLowerRightCorner( a_x, a_y, a_width, a_height, b_x, b_y, b_width, b_height ) ||
+               checkLowerLeftCorner( a_x, a_y, a_width, a_height, b_x, b_y, b_width, b_height )
+
+                ;
+    }
 
     /**
      * Obere Linke Ecke von b schneidet a
@@ -147,8 +156,13 @@ public class CollisionCheck {
      * @return
      */
     private static boolean checkUpperRightCorner( Drawable a, Drawable b ) {
-        if ( a.getX() <= b.getX() + b.getWidth() && a.getX() + a.getWidth() >= b.getX() + b.getWidth() ) {
-            return a.getY() <= b.getY() && a.getY() + a.getHeight() >= b.getY();
+        return checkUpperRightCorner( a.getX(), a.getY(), a.getWidth(), a.getHeight(), b.getX(), b.getY(), b.getWidth() );
+    }
+
+    private static boolean checkUpperRightCorner( final double a_x, final double a_y, final double a_width, final double a_height,
+                                                  final double b_x, final double b_y, final double b_width ) {
+        if ( a_x <= b_x + b_width && a_x + a_width >= b_x + b_width ) {
+            return a_y <= b_y && a_y + a_height >= b_y;
         }
         return false;
     }
@@ -162,11 +176,30 @@ public class CollisionCheck {
      * @return
      */
     private static boolean checkLowerRightCorner( Drawable a, Drawable b ) {
-        if ( a.getX() <= b.getX() + b.getWidth() && a.getX() + a.getWidth() >= b.getX() + b.getWidth() ) {
-            return a.getY() <= b.getY() + b.getHeight() && a.getY() + a.getHeight() >= b.getY() + b.getHeight();
+        return checkLowerRightCorner( a.getX(),
+                                      a.getY(),
+                                      a.getWidth(),
+                                      a.getHeight(),
+                                      b.getX(),
+                                      b.getY(),
+                                      b.getWidth(),
+                                      b.getHeight() );
+    }
+
+    private static boolean checkLowerRightCorner( final double a_x,
+                                                  final double a_y,
+                                                  final double a_width,
+                                                  final double a_height,
+                                                  final double b_x,
+                                                  final double b_y,
+                                                  final double b_width,
+                                                  final double b_height ) {
+        if ( a_x <= b_x + b_width && a_x + a_width >= b_x + b_width ) {
+            return a_y <= b_y + b_height && a_y + a_height >= b_y + b_height;
         }
         return false;
     }
+
 
     /**
      * Untere Linke Ecke von b schneidet a
@@ -177,10 +210,30 @@ public class CollisionCheck {
      * @return
      */
     private static boolean checkLowerLeftCorner( Drawable a, Drawable b ) {
-        if ( a.getX() <= b.getX() && a.getX() + a.getWidth() >= b.getX() ) {
-            return a.getY() <= b.getY() + b.getHeight() && a.getY() + a.getHeight() >= b.getY() + b.getHeight();
+        return checkLowerLeftCorner( a.getX(),
+                                     a.getY(),
+                                     a.getWidth(),
+                                     a.getHeight(),
+                                     b.getX(),
+                                     b.getY(),
+                                     b.getWidth(),
+                                     b.getHeight() );
+    }
+
+    private static boolean checkLowerLeftCorner( final double a_x,
+                                                 final double a_y,
+                                                 final double a_width,
+                                                 final double a_height,
+                                                 final double b_x,
+                                                 final double b_y,
+                                                 final double b_width,
+                                                 final double b_height ) {
+        if ( a_x <= b_x && a_x + a_width >= b_x ) {
+            return a_y <= b_y + b_height && a_y + a_height >= b_y + b_height;
         }
         return false;
     }
+
+
 
 }
