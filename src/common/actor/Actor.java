@@ -1,5 +1,7 @@
 package common.actor;
 
+import common.util.PlaySound;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
@@ -11,7 +13,8 @@ import java.util.List;
  */
 abstract public class Actor extends Drawable {
 
-
+    private double      soundDelay      = 0;
+    private double      soundBuffer     = 0;
     final   Movement    movement        = new Movement();
     private List<Actor> collisionActors = new ArrayList<>();
 
@@ -154,11 +157,40 @@ abstract public class Actor extends Drawable {
         return true;
     }
 
+    protected synchronized void playSound( final String filePath ) {
+        Thread t = new Thread( new Runnable() {
+            boolean finished = false;
+
+            @Override
+            public void run() {
+                if ( !finished ) {
+                    if ( soundDelay < soundBuffer ) {
+                        PlaySound.playSound( filePath );
+                        soundBuffer = 0;
+                        finished = true;
+                    }
+                    else {
+                        soundBuffer++;
+                    }
+                }
+            }
+        } );
+        t.start();
+        try {
+            if ( !t.isInterrupted() ) {
+                t.join();
+            }
+        }
+        catch ( InterruptedException e ) {
+            e.printStackTrace();
+        }
+    }
+
+    // ----------------------------------- GETTER AND SETTER -----------------------------------
     void setCollisionActors( final List<Actor> list ) {
         this.collisionActors = list;
     }
 
-    // ----------------------------------- GETTER AND SETTER -----------------------------------
     public void setSpeed( double speed ) {
         this.movement.setVelocity( speed );
     }
@@ -178,4 +210,7 @@ abstract public class Actor extends Drawable {
         return false;
     }
 
+    public void setSoundDelay( double soundDelay ) {
+        this.soundDelay = soundDelay;
+    }
 }
