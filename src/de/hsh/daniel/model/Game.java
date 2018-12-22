@@ -17,7 +17,7 @@ public class Game {
     public void initialize(Canvas gameCanvas) {
         board = new Board();
         gameCanvas.setOnMouseClicked( e -> {
-            board.onMouseClick( e.getX(), e.getY() );
+            board.onMouseClick( e.getX(), e.getY());
         } );
         //TODO: Implement set cardback transparent/invisible on click
     }
