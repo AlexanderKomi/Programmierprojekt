@@ -3,12 +3,13 @@ package de.hsh.daniel.model;
 
 import common.actor.Actor;
 import common.util.Logger;
+import javafx.scene.image.Image;
 
 
 public class Card extends Actor {
 
     // START: DEBUG CARDBACK
-    private static final boolean DEBUG_DONT_SHOW_CARDBACK = false;
+    private /*static final */ boolean DEBUG_DONT_SHOW_CARDBACK = false;
     // END: DEBUG CARDBACK
 
 
@@ -26,10 +27,10 @@ public class Card extends Actor {
         this.pair_id = pair_id;
     }
 
-    public void onMouseClick( double x, double y ) {
+/*    public void onMouseClick( double x, double y, double imgSize, double[] pos ) {
         Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
-        this.setCurrentImage( pictureFileName );
-    }
+        this.setPos(pos);
+    }*/
 
     @Override
     public String toString() {
@@ -58,11 +59,14 @@ public class Card extends Actor {
     public boolean isCardMatched( Card c1, Card c2 ) {
         if ( c1.equals( c2 ) ) {
             setCardMatched( true );
-            //leave cards face up
+            c1.setCurrentImage(this.pictureFileName);
+            c2.setCurrentImage(this.pictureFileName);
         }
         else {
             setCardMatched( false );
-            //flip cards back
+            c1.setCurrentImage(Resources.cardback);
+            c2.setCurrentImage(Resources.cardback);
+
         }
         return false;
     }
@@ -74,6 +78,11 @@ public class Card extends Actor {
     public int getPair_id() {
         return this.pair_id;
     }
+
+    public String getPictureFileName() { return this.pictureFileName;}
+
+    public void setDebugDontShowCardback(boolean bool) {
+        this.DEBUG_DONT_SHOW_CARDBACK = bool;}
 
     public boolean getCardMatched() {
         return this.cardMatched;
@@ -90,6 +99,5 @@ public class Card extends Actor {
     public void setCardSelected( boolean cardSelected ) {
         this.cardSelected = cardSelected;
     }
-
 }
 

@@ -1,18 +1,12 @@
 package de.hsh.daniel.model;
 
 
-import common.actor.Actor;
 import common.actor.CollisionCheck;
 import common.config.WindowConfig;
 import common.util.Logger;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.MouseEvent;
-import sun.rmi.runtime.Log;
 
-import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -94,21 +88,20 @@ public class Board {
         Logger.log(this.getClass() + ": Clicked at : (" + x + ", " + y + ")");
         Logger.log(this.getClass() + ": TODO : Find the corresponding card, to the given x,y Tuple");
         for (Card card : this.cardList) {
-
             double[] pos = card.getPos();
             Logger.log("posX: " + pos[0] + " posY: " + pos[1]);
             //TODO: Check if click is in bounds of card
-            if (CollisionCheck.isInBounds(card, imgSize, imgSize, x, y) ==
-                    CollisionCheck.isInBounds(card, imgSize, imgSize, pos[0], pos[1])) {
+            if (CollisionCheck.doesCollide(x, y, Board.imgSize, Board.imgSize, pos[0], pos[1], 0, 0)) {
                 Logger.log("Card hit!");
+                card.setHeight(Board.imgSize);
+                card.setWidth(Board.imgSize);
+                card.setCurrentImage( card.getPictureFileName());
             } else {
                 Logger.log("Missed!");
             }
-
         }
-
-
     }
+
 
     public void draw(Canvas canvas) {
         for (Card card : this.cardList) {
