@@ -1,11 +1,18 @@
 package de.hsh.daniel.model;
 
 
+import common.actor.Actor;
+import common.actor.CollisionCheck;
 import common.config.WindowConfig;
 import common.util.Logger;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.MouseEvent;
+import sun.rmi.runtime.Log;
 
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -16,27 +23,27 @@ public class Board {
 
     public static int numberOfPairs = 0; // These are set externally from the menu.
 
-    private static final double gridH   = 4;
-    private static final int    spacing = 40;
+    private static final double gridH = 4;
+    private static final int spacing = 40;
     private static final double imgSize = (double) (WindowConfig.window_height / 4) - (double) spacing / 2;
 
-    private static double          gridW;
-    private        ArrayList<Card> cardList = new ArrayList<>();
+    private static double gridW;
+    private ArrayList<Card> cardList = new ArrayList<>();
 
     Board() {
         gridW = (double) (Board.numberOfPairs / 2);
-        initCards( numberOfPairs );
+        initCards(numberOfPairs);
         createGrid();
     }
 
-    private void initCards( final int numberOfPairs ) {
-        for ( int i = 0 ; i < numberOfPairs ; i++ ) {
-            Card c1 = new Card( Resources.cardImages[ i ], i );
-            Card c2 = new Card( Resources.cardImages[ i ], i );
-            cardList.add( c1 );
-            cardList.add( c2 );
+    private void initCards(final int numberOfPairs) {
+        for (int i = 0; i < numberOfPairs; i++) {
+            Card c1 = new Card(Resources.cardImages[i], i);
+            Card c2 = new Card(Resources.cardImages[i], i);
+            cardList.add(c1);
+            cardList.add(c2);
         }
-        Collections.shuffle( cardList );
+        Collections.shuffle(cardList);
     }
 
     void createGrid() {
@@ -44,36 +51,34 @@ public class Board {
         int xStart;
         int xStartReset;
 
-        if ( numberOfPairs == 6 ) {
+        if (numberOfPairs == 6) {
             xStart = 300;
             xStartReset = 300;
 
-        }
-        else if ( numberOfPairs == 8 ) {
+        } else if (numberOfPairs == 8) {
             xStart = 200;
             xStartReset = 200;
-        }
-        else {
+        } else {
             xStart = 30;
             xStartReset = 30;
         }
-        int imgCount = iterate( xStart, xStartReset, gridW );
+        int imgCount = iterate(xStart, xStartReset, gridW);
     }
 
     private int iterate(
             int xStart,
             final int xStartReset,
-            final double gridW ) {
-        int yStart   = 10;
+            final double gridW) {
+        int yStart = 10;
         int imgCount = 0;
 
-        for ( int j = 0 ; j < Board.gridH ; j++ ) {
-            for ( int k = 0 ; k < gridW ; k++ ) {
+        for (int j = 0; j < Board.gridH; j++) {
+            for (int k = 0; k < gridW; k++) {
 
-                Card i = this.cardList.get( imgCount );
-                i.setPos( xStart, yStart );
-                i.setWidth( Board.imgSize );
-                i.setHeight( Board.imgSize );
+                Card i = this.cardList.get(imgCount);
+                i.setPos(xStart, yStart);
+                i.setWidth(Board.imgSize);
+                i.setHeight(Board.imgSize);
 
                 xStart += (Board.imgSize + Board.spacing);
                 imgCount++;
@@ -84,22 +89,37 @@ public class Board {
         return imgCount;
     }
 
-    void onMouseClick( final double x, final double y ) {
-        Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
-        Logger.log( this.getClass() + ": TODO : Find the corresponding card, to the given x,y Tuple" );
-        for ( Card card : this.cardList ) {
+
+    void onMouseClick(final double x, final double y) {
+        Logger.log(this.getClass() + ": Clicked at : (" + x + ", " + y + ")");
+        Logger.log(this.getClass() + ": TODO : Find the corresponding card, to the given x,y Tuple");
+        for (Card card : this.cardList) {
+
             double[] pos = card.getPos();
+            Logger.log("posX: " + pos[0] + " posY: " + pos[1]);
+            //TODO: Check if click is in bounds of card
+            if (CollisionCheck.isInBounds(card, imgSize, imgSize, x, y) ==
+                    CollisionCheck.isInBounds(card, imgSize, imgSize, pos[0], pos[1])) {
+                Logger.log("Card hit!");
+            } else {
+                Logger.log("Missed!");
+            }
 
         }
+
+
     }
 
-    public void draw( Canvas canvas ) {
-        for ( Card card : this.cardList ) {
-            card.draw( canvas );
+    public void draw(Canvas canvas) {
+        for (Card card : this.cardList) {
+            card.draw(canvas);
         }
     }
 
     /* -------------------- GETTER & SETTER -------------------- */
 
+
 }
+
+
 
