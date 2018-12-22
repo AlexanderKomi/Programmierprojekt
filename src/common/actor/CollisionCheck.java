@@ -1,7 +1,7 @@
 package common.actor;
 
-import common.util.Logger;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Bounds checking for collision.
@@ -111,6 +111,16 @@ public class CollisionCheck {
     static boolean doesCollide(Drawable a, Drawable b) {
         return checkUpperLeftCorner(a, b) || checkUpperRightCorner(a, b) || checkLowerRightCorner(a, b)
                 || checkLowerLeftCorner(a, b);
+    }
+
+    public static boolean doesCollide( Drawable a, MouseEvent b ) {
+        return doesCollide( a.getX(), a.getY(), a.getWidth(), a.getHeight(),
+                            b.getX(), b.getY(), 0, 0 );
+    }
+
+    public static boolean doesCollide( Drawable a, double mouse_x, double mouse_y ) {
+        return doesCollide( a.getX(), a.getY(), a.getWidth(), a.getHeight(),
+                            mouse_x, mouse_y, 0, 0 );
     }
 
     public static boolean doesCollide(final double a_x, final double a_y, final double a_width, final double a_height,
