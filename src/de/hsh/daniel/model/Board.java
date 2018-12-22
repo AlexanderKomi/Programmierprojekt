@@ -90,12 +90,17 @@ public class Board {
         for (Card card : this.cardList) {
             double[] pos = card.getPos();
             Logger.log("posX: " + pos[0] + " posY: " + pos[1]);
+            boolean mouseClickOnCard = CollisionCheck.doesCollide( card, x, y );
             //TODO: Check if click is in bounds of card
-            if (CollisionCheck.doesCollide(x, y, Board.imgSize, Board.imgSize, pos[0], pos[1], 0, 0)) {
+            if ( mouseClickOnCard ) {
                 Logger.log("Card hit!");
-                card.setHeight(Board.imgSize);
-                card.setWidth(Board.imgSize);
+                double[] backupPos    = card.getPos();
+                double   backupWidth  = card.getWidth();
+                double   backupHeight = card.getHeight();
                 card.setCurrentImage( card.getPictureFileName());
+                card.setPos( backupPos );
+                card.setWidth( backupWidth );
+                card.setHeight( backupHeight );
             } else {
                 Logger.log("Missed!");
             }
