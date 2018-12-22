@@ -16,6 +16,9 @@ public class Card extends Actor {
     private       boolean cardMatched  = false;
     private       boolean cardSelected = false;
 
+    private boolean turned = true;
+
+
     Card( String pictureFileName, int pair_id ) {
         super( pictureFileName );
         this.pictureFileName = pictureFileName;
@@ -24,11 +27,6 @@ public class Card extends Actor {
         }
         this.pair_id = pair_id;
     }
-
-/*    public void onMouseClick( double x, double y, double imgSize, double[] pos ) {
-        Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
-        this.setPos(pos);
-    }*/
 
     @Override
     public String toString() {
@@ -73,7 +71,14 @@ public class Card extends Actor {
         double[] backupPos    = this.getPos();
         double   backupWidth  = this.getWidth();
         double   backupHeight = this.getHeight();
-        this.setCurrentImage( this.getPictureFileName() );
+        if ( turned ) {
+            this.setCurrentImage( this.getPictureFileName() );
+            turned = false;
+        }
+        else {
+            this.setCurrentImage( Resources.cardback );
+            turned = true;
+        }
         this.setPos( backupPos );
         this.setWidth( backupWidth );
         this.setHeight( backupHeight );

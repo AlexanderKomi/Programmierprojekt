@@ -39,7 +39,7 @@ public class Board {
         Collections.shuffle(cardList);
     }
 
-    void createGrid() {
+    private void createGrid() {
 
         int xStart;
         int xStartReset;
