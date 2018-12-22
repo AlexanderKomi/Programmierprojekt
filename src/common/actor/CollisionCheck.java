@@ -118,7 +118,7 @@ public class CollisionCheck {
                             b.getX(), b.getY(), 0, 0 );
     }
 
-    public static boolean doesCollide( Drawable a, double mouse_x, double mouse_y ) {
+    public static boolean doesCollide( Drawable a, final double mouse_x, final double mouse_y ) {
         return doesCollide( a.getX(), a.getY(), a.getWidth(), a.getHeight(),
                             mouse_x, mouse_y, 0, 0 );
     }

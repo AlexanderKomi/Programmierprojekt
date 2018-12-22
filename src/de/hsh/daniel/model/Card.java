@@ -2,8 +2,6 @@ package de.hsh.daniel.model;
 
 
 import common.actor.Actor;
-import common.util.Logger;
-import javafx.scene.image.Image;
 
 
 public class Card extends Actor {
@@ -71,6 +69,15 @@ public class Card extends Actor {
         return false;
     }
 
+    public void turn() {
+        double[] backupPos    = this.getPos();
+        double   backupWidth  = this.getWidth();
+        double   backupHeight = this.getHeight();
+        this.setCurrentImage( this.getPictureFileName() );
+        this.setPos( backupPos );
+        this.setWidth( backupWidth );
+        this.setHeight( backupHeight );
+    }
 
     /* -------------------------------- GETTERS & SETTERS -------------------------------- */
 

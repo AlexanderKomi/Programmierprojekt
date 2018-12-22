@@ -3,7 +3,6 @@ package de.hsh.daniel.model;
 
 import common.actor.CollisionCheck;
 import common.config.WindowConfig;
-import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;
@@ -84,25 +83,16 @@ public class Board {
     }
 
 
-    void onMouseClick(final double x, final double y) {
-        Logger.log(this.getClass() + ": Clicked at : (" + x + ", " + y + ")");
-        Logger.log(this.getClass() + ": TODO : Find the corresponding card, to the given x,y Tuple");
+    void onMouseClick( final double mouse_x, final double mouse_y ) {
+        //Logger.log(this.getClass() + ": Clicked at : (" + mouse_x + ", " + mouse_y + ")");
+
         for (Card card : this.cardList) {
-            double[] pos = card.getPos();
-            Logger.log("posX: " + pos[0] + " posY: " + pos[1]);
-            boolean mouseClickOnCard = CollisionCheck.doesCollide( card, x, y );
-            //TODO: Check if click is in bounds of card
-            if ( mouseClickOnCard ) {
-                Logger.log("Card hit!");
-                double[] backupPos    = card.getPos();
-                double   backupWidth  = card.getWidth();
-                double   backupHeight = card.getHeight();
-                card.setCurrentImage( card.getPictureFileName());
-                card.setPos( backupPos );
-                card.setWidth( backupWidth );
-                card.setHeight( backupHeight );
-            } else {
-                Logger.log("Missed!");
+
+            boolean isMouseClickOnCard = CollisionCheck.doesCollide( card, mouse_x, mouse_y );
+
+            if ( isMouseClickOnCard ) {
+                card.turn();
+                return; // No more need to check if another card has been clicked :)
             }
         }
     }
