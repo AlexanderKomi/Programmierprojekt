@@ -21,6 +21,7 @@ public class Leertastenklatsche extends Observable implements Observer {
     private int              score     = 0;
     private int              leben     = 3;
     private boolean          gamedone  = false;
+    boolean horrorWasActivated = false;
     private TheDude          thedude;
     private ArrayList<Enemy> enemyList = new ArrayList<>();
 
@@ -51,7 +52,7 @@ public class Leertastenklatsche extends Observable implements Observer {
     }
 
     private void createNewEnemies() {
-        if ( timer.elabsedTime() > 2.0d - score / 50 ) {
+        if ( timer.elabsedTime() > 2.0d - score / 50.0 ) {
             timer.resetTimer();
             final Enemy e = Enemy.createEnemy();
             e.addObserver( this );
@@ -73,11 +74,25 @@ public class Leertastenklatsche extends Observable implements Observer {
 
     private void renderScore( Canvas canvas ) {
         GraphicsContext gc         = canvas.getGraphicsContext2D();
-        String          pointsText = "LEERTASTENKLATSCHE\nGegner abgewehrt: " + (score) + "\nVerbleibende Leben: " + (leben);
-        //Logger.log(getClass()+" Score: "+score);
+        String          pointsText;
+        if(score<=100) {
+            pointsText    ="LEERTASTENKLATSCHE\nGegner abgewehrt: " + (score) + "\nVerbleibende Leben: " + (leben);
+            //Logger.log(getClass()+" Score: "+score);
 
-        gc.fillText( pointsText, 360, 36 );
-        gc.strokeText( pointsText, 360, 36 );
+            gc.fillText(pointsText, 360, 36);
+            gc.strokeText(pointsText, 360, 36);
+        }
+        else{
+            if(!horrorWasActivated)
+                leben = 100;
+            horrorWasActivated=true;
+            pointsText = "HORRORMODUS SCORE" + (score) + "\nKLATSCH KLATSCH KLATSCH Leben: " + (leben);
+            //Logger.log(getClass()+" Score: "+score);
+
+            gc.fillText( pointsText, 360, 36);
+            gc.strokeText( pointsText, 360, 36 );
+
+        }
     }
 
     void parseInput( final String code ) {
