@@ -1,5 +1,6 @@
 package common.actor;
 
+import common.util.Logger;
 import common.util.PlaySound;
 
 import java.util.ArrayList;
@@ -189,6 +190,22 @@ abstract public class Actor extends Drawable {
     // ----------------------------------- GETTER AND SETTER -----------------------------------
     void setCollisionActors( final List<Actor> list ) {
         this.collisionActors = list;
+    }
+
+    void removeCollisionActor( Collectable collectable ) {
+        final List<Actor> l = Collections.synchronizedList( this.getCollisionActors() );
+        synchronized ( l ) {
+            boolean b = l.remove( collectable );
+            if ( !b ) {
+                onRemove( collectable );
+                Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
+            }
+        }
+        this.setCollisionActors( l );
+    }
+
+    protected void onRemove( Collectable collectable ) {
+
     }
 
     public void setSpeed( double speed ) {

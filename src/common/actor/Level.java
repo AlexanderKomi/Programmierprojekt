@@ -1,6 +1,5 @@
 package common.actor;
 
-import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 
 import java.util.*;
@@ -126,15 +125,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
             int size = players.size();
             for ( int i = 0 ; i < size ; i++ ) {
                 final ControlableActor c = players.get( i );
-                final List<Actor>      l = Collections.synchronizedList( c.getCollisionActors() );
-                synchronized ( l ) {
-                    boolean b = l.remove( collectable );
-                    if ( !b ) {
-                        Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
-                    }
-                }
-                c.setCollisionActors( l );
-
+                c.removeCollisionActor( collectable );
                 size = players.size();
             }
         }
