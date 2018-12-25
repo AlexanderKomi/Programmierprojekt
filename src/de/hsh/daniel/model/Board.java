@@ -69,10 +69,10 @@ public class Board {
             xStart = 30;
             xStartReset = 30;
         }
-        iterate( xStart, xStartReset, gridW );
+        adjustCardPositions( xStart, xStartReset, gridW );
     }
 
-    private int iterate( int xStart, final int xStartReset, final double gridW ) {
+    private void adjustCardPositions( int xStart, final int xStartReset, final double gridW ) {
         int yStart   = 10;
         int imgCount = 0;
 
@@ -90,14 +90,6 @@ public class Board {
             yStart += Board.imgSize + Board.spacing / 2;
             xStart = xStartReset;
         }
-        return imgCount;
-    }
-
-    /**
-     * Checks if Cards objects are not null
-     */
-    private boolean cardsEmpty() {
-        return c1 == null || c2 == null;
     }
 
     void onMouseClick( final double mouse_x, final double mouse_y ) {
@@ -110,20 +102,22 @@ public class Board {
             /*
             Checks if card is clicked and not selected, then turns that card
              */
-            if ( isMouseClickOnCard && cardCount == 0 && !card.isCardMatched() ) {
-                c1 = card;
-                ++cardCount;
-            }
-            else if ( isMouseClickOnCard && cardCount == 1 ) {
-                c2 = card;
-            }
-
-            if ( isMouseClickOnCard && !card.isCardMatched() ) {
-                if ( c1 != null && c2 == null ) {
-                    c1.turn();
+            if ( isMouseClickOnCard ) {
+                if ( cardCount == 0 && !card.isCardMatched() ) {
+                    c1 = card;
+                    ++cardCount;
                 }
-                else if ( c1 != null ) {
-                    c2.turn();
+                else if ( cardCount == 1 ) {
+                    c2 = card;
+                }
+
+                if ( !card.isCardMatched() ) {
+                    if ( c1 != null && c2 == null ) {
+                        c1.turn();
+                    }
+                    else if ( c1 != null ) {
+                        c2.turn();
+                    }
                 }
             }
         }
@@ -131,12 +125,12 @@ public class Board {
         /*
         If two cards selected then cards are checked if they match
          */
-        if ( !this.cardsEmpty() ) {
-            this.checkMatch();
-        }
+        this.checkMatch();
     }
 
-
+    /**
+     * Checks if two cards match and resets cards after check
+     */
     private boolean checkMatch() {
         return checkMatch( this.getC1(), this.getC2() );
     }
@@ -145,6 +139,11 @@ public class Board {
      * Checks if two cards match and resets cards after check
      */
     private boolean checkMatch( Card c1, Card c2 ) {
+        if ( c1 == null || c2 == null ) {
+            Logger.log( "Cards are empty." );
+            return false;
+        }
+
         if ( c1.equals( c2 ) ) {
             Logger.log( "CARDS MATCH" );
             lockCards();

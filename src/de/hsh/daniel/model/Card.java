@@ -56,7 +56,6 @@ public class Card extends Actor {
     void turn() {
 
         PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
-        double[] backupPos    = this.getPos();
         double   backupWidth  = this.getWidth();
         double   backupHeight = this.getHeight();
 
@@ -71,7 +70,6 @@ public class Card extends Actor {
         else {
             Logger.log( "CARD ALREADY FACEUP" );
         }
-        this.setPos( backupPos );
         this.setWidth( backupWidth );
         this.setHeight( backupHeight );
     }
