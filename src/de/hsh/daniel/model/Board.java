@@ -4,6 +4,7 @@ package de.hsh.daniel.model;
 import common.actor.CollisionCheck;
 import common.config.WindowConfig;
 import common.util.Logger;
+import common.util.PlaySound;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;
@@ -35,7 +36,9 @@ public class Board {
         createGrid();
     }
 
-
+    /*
+    Initializes cards with number of pairs fetched from menu button
+     */
     private void initCards(final int numberOfPairs) {
         for (int i = 0; i < numberOfPairs; i++) {
             Card c1 = new Card(Resources.cardImages[i], i);
@@ -45,7 +48,9 @@ public class Board {
         }
         Collections.shuffle(cardList);
     }
-
+    /*
+    Created card grid
+     */
     private void createGrid() {
 
         int xStart;
@@ -65,10 +70,7 @@ public class Board {
         int imgCount = iterate(xStart, xStartReset, gridW);
     }
 
-    private int iterate(
-            int xStart,
-            final int xStartReset,
-            final double gridW) {
+    private int iterate(int xStart, final int xStartReset, final double gridW) {
         int yStart = 10;
         int imgCount = 0;
 
@@ -88,6 +90,10 @@ public class Board {
         }
         return imgCount;
     }
+
+    /*
+    Checks if Cards objects are not null
+     */
     public boolean cardsEmpty() {
         if (c1 == null && c2 == null) {
             return true;
@@ -132,6 +138,8 @@ public class Board {
     Changes image of card
      */
     public void turn(Card card) {
+
+        PlaySound.playSound("src\\de\\hsh\\Julian\\wav\\collision.wav");
         double[] backupPos = card.getPos();
         double backupWidth = card.getWidth();
         double backupHeight = card.getHeight();
@@ -144,11 +152,11 @@ public class Board {
             card.setTurned(true);
         } else {
             Logger.log("CARD ALREADY FACEUP");
-            return;
         }
         card.setPos(backupPos);
         card.setWidth(backupWidth);
         card.setHeight(backupHeight);
+
     }
 
     /*
@@ -177,6 +185,9 @@ public class Board {
     public void lockCards() {
         c1.setCardMatched(true);
         c2.setCardMatched(true);
+    }
+    public void lock(Card card) {
+        card.setCardMatched(true);
     }
 
     /*
