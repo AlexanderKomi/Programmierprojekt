@@ -8,10 +8,13 @@ import static de.hsh.daniel.model.Board.numberOfPairs;
 
 final class BoardUtilities {
 
+    private BoardUtilities() {}
+
     /**
      * Initializes cards with number of pairs fetched from menu button
      */
-    static void initCards( final int numberOfPairs, ArrayList<Card> cardList ) {
+    static ArrayList<Card> initCards( final int numberOfPairs ) {
+        ArrayList<Card> cardList = new ArrayList<>();
         for ( int i = 0 ; i < numberOfPairs ; i++ ) {
             Card c1 = new Card( Resources.cardImages[ i ], i );
             Card c2 = new Card( Resources.cardImages[ i ], i );
@@ -19,12 +22,13 @@ final class BoardUtilities {
             cardList.add( c2 );
         }
         Collections.shuffle( cardList );
+        return createGrid( cardList );
     }
 
     /**
      * Created card grid
      */
-    static void createGrid( ArrayList<Card> cardList ) {
+    private static ArrayList<Card> createGrid( final ArrayList<Card> cardList ) {
 
         int xStart;
         int xStartReset;
@@ -42,10 +46,13 @@ final class BoardUtilities {
             xStart = 30;
             xStartReset = 30;
         }
-        adjustCardPositions( cardList, xStart, xStartReset, gridW );
+        return adjustCardPositions( cardList, xStart, xStartReset, gridW );
     }
 
-    private static void adjustCardPositions( ArrayList<Card> cardList, int xStart, final int xStartReset, final double gridW ) {
+    private static ArrayList<Card> adjustCardPositions( final ArrayList<Card> cardList,
+                                                        int xStart,
+                                                        final int xStartReset,
+                                                        final double gridW ) {
         int yStart   = 10;
         int imgCount = 0;
 
@@ -63,6 +70,7 @@ final class BoardUtilities {
             yStart += Board.imgSize + Board.spacing / 2;
             xStart = xStartReset;
         }
+        return cardList;
     }
 
 }

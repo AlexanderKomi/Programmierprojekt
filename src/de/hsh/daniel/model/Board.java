@@ -12,25 +12,24 @@ import java.util.ArrayList;
 /**
  * Class represents Gameboard where Cards are laid out
  */
-public final class Board {
+public class Board {
 
-    public static int numberOfPairs = 0; // These are set externally from the menu.
+    public static byte numberOfPairs = 0; // These are set externally from the menu.
 
     private Card c1        = null;
     private Card c2        = null;
-    private int  cardCount = 0;
+    private byte cardCount = 0;
 
-    static final double gridH   = 4;
+    static final byte   gridH   = 4;
     static final int    spacing = 40;
     static final double imgSize = (double) (WindowConfig.window_height / 4) - (double) spacing / 2;
 
-    static         double          gridW;
-    private        ArrayList<Card> cardList = new ArrayList<>();
+    static        int             gridW;
+    private final ArrayList<Card> cardList;
 
     Board() {
-        gridW = (double) (Board.numberOfPairs / 2);
-        BoardUtilities.initCards( numberOfPairs, this.cardList );
-        BoardUtilities.createGrid( this.cardList );
+        gridW = (Board.numberOfPairs / 2);
+        cardList = BoardUtilities.initCards( numberOfPairs );
     }
 
     void onMouseClick( final double mouse_x, final double mouse_y ) {
@@ -72,14 +71,6 @@ public final class Board {
      * If two cards selected then cards are checked if they match
      */
     private boolean checkMatch() {
-        return checkMatch( this.getC1(), this.getC2() );
-    }
-
-    /**
-     * Checks if two cards match and resets cards after check
-     * If two cards selected then cards are checked if they match
-     */
-    private boolean checkMatch( Card c1, Card c2 ) {
         if ( c1 == null || c2 == null ) {
             Logger.log( "Cards are empty." );
             return false;
@@ -151,15 +142,6 @@ public final class Board {
     }
 
     /* -------------------- GETTER & SETTER -------------------- */
-
-
-    public Card getC1() {
-        return c1;
-    }
-
-    public Card getC2() {
-        return c2;
-    }
 }
 
 

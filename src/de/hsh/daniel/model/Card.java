@@ -8,14 +8,11 @@ import common.util.PlaySound;
 
 public class Card extends Actor {
 
-    // START: DEBUG CARDBACK
-    private /*static final */ boolean DEBUG_DONT_SHOW_CARDBACK = false;
-    // END: DEBUG CARDBACK
 
-
-    private final int     pair_id;
-    private final String  pictureFileName;
-    private       boolean cardMatched  = false;
+    private static final String  cardClickedSoundFilePath = "src\\de\\hsh\\Julian\\wav\\collision.wav";
+    private final        int     pair_id;
+    private final        String  pictureFileName;
+    private              boolean cardMatched              = false;
 
 
     private boolean turned = true;
@@ -24,9 +21,7 @@ public class Card extends Actor {
     Card( String pictureFileName, int pair_id ) {
         super( pictureFileName );
         this.pictureFileName = pictureFileName;
-        if ( !DEBUG_DONT_SHOW_CARDBACK ) {
-            this.setCurrentImage( Resources.cardback );
-        }
+        this.setCurrentImage( Resources.cardback );
         this.pair_id = pair_id;
     }
 
@@ -55,9 +50,9 @@ public class Card extends Actor {
 
     void turn() {
 
-        PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
-        double   backupWidth  = this.getWidth();
-        double   backupHeight = this.getHeight();
+        PlaySound.playSound( cardClickedSoundFilePath );
+        final double backupWidth  = this.getWidth();
+        final double backupHeight = this.getHeight();
 
         if ( this.isTurned() ) {
             this.setCurrentImage( this.getPictureFileName() );
