@@ -87,6 +87,7 @@ public class Leertastenklatsche extends Observable implements Observer {
                 leben = 100;
             horrorWasActivated=true;
             pointsText = "HORRORMODUS SCORE" + (score) + "\nKLATSCH KLATSCH KLATSCH Leben: " + (leben);
+            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\horror.wav" );
             //Logger.log(getClass()+" Score: "+score);
 
             gc.fillText( pointsText, 360, 36);
