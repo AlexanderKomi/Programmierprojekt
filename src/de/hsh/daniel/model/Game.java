@@ -1,5 +1,6 @@
 package de.hsh.daniel.model;
 
+import de.hsh.daniel.model.board.GUIBoard;
 import javafx.scene.canvas.Canvas;
 
 

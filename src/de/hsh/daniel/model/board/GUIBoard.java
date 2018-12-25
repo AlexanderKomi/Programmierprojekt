@@ -1,10 +1,11 @@
-package de.hsh.daniel.model;
+package de.hsh.daniel.model.board;
 
 import common.actor.CollisionCheck;
 import common.config.WindowConfig;
+import de.hsh.daniel.model.Card;
 import javafx.scene.canvas.Canvas;
 
-final class GUIBoard extends Board {
+public final class GUIBoard extends Board {
 
 
     private static final byte   gridH   = 4;
@@ -12,10 +13,10 @@ final class GUIBoard extends Board {
     private static final double imgSize = (double) (WindowConfig.window_height / 4) - (double) spacing / 2;
     private static       int    gridW;
 
-    GUIBoard() {
+    public GUIBoard() {
         super();
         gridW = (Board.numberOfPairs / 2);
-        this.cardList = BoardUtilities.createGrid(
+        cardList = BoardUtilities.createGrid(
                 cardList,
                 numberOfPairs,
                 gridW,
@@ -27,8 +28,8 @@ final class GUIBoard extends Board {
     /**
      * A mouse click happened to the board.
      */
-    void onMouseClick( final double mouse_x, final double mouse_y ) {
-        for ( Card card : this.cardList ) {
+    public void onMouseClick( final double mouse_x, final double mouse_y ) {
+        for ( Card card : cardList ) {
             if ( CollisionCheck.doesCollide( card, mouse_x, mouse_y ) ) {
                 onClickedCard( card );
             }
@@ -43,7 +44,7 @@ final class GUIBoard extends Board {
     }
 
     public void draw( Canvas canvas ) {
-        for ( Card card : this.cardList ) {
+        for ( Card card : cardList ) {
             card.draw( canvas );
         }
     }

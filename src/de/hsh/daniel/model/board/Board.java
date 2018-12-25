@@ -1,7 +1,8 @@
-package de.hsh.daniel.model;
+package de.hsh.daniel.model.board;
 
 
 import common.util.Logger;
+import de.hsh.daniel.model.Card;
 
 import java.util.ArrayList;
 
@@ -13,10 +14,10 @@ public class Board {
 
     public static byte numberOfPairs = 0; // These are set externally from the menu.
 
-    private Card    c1               = null;
-    private Card    c2               = null;
-    private boolean firstCardClicked = false;
-    ArrayList<Card> cardList;
+    private static Card            c1               = null;
+    private static Card            c2               = null;
+    private static boolean         firstCardClicked = false;
+    static         ArrayList<Card> cardList;
 
 
     Board() {

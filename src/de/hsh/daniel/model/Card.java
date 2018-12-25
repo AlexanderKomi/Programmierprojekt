@@ -18,7 +18,7 @@ public class Card extends Actor {
     private boolean turned = true;
 
 
-    Card( String pictureFileName, int pair_id ) {
+    public Card( String pictureFileName, int pair_id ) {
         super( pictureFileName );
         this.pictureFileName = pictureFileName;
         this.setCurrentImage( Resources.cardback );
@@ -48,7 +48,7 @@ public class Card extends Actor {
         return result;
     }
 
-    void turn() {
+    public void turn() {
 
         PlaySound.playSound( cardClickedSoundFilePath );
         final double backupWidth  = this.getWidth();

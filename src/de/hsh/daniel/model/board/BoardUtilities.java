@@ -1,4 +1,7 @@
-package de.hsh.daniel.model;
+package de.hsh.daniel.model.board;
+
+import de.hsh.daniel.model.Card;
+import de.hsh.daniel.model.Resources;
 
 import java.util.ArrayList;
 import java.util.Collections;
