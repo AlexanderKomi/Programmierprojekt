@@ -159,6 +159,8 @@ abstract public class Actor extends Drawable {
     }
 
     protected synchronized void playSound( final String filePath ) {
+        //PlaySound p = new PlaySound();
+        //p.play( filePath );
         PlaySound.playSound( filePath );
     }
 
@@ -167,7 +169,7 @@ abstract public class Actor extends Drawable {
         this.collisionActors = list;
     }
 
-    void removeCollisionActor( Collectable collectable ) {
+    public void removeCollisionActor( Collectable collectable ) {
         final List<Actor> l = Collections.synchronizedList( this.getCollisionActors() );
         synchronized ( l ) {
             boolean b = l.remove( collectable );

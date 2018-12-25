@@ -132,29 +132,29 @@ public class Leertastenklatsche extends Observable implements Observer {
                     e.deleteObservers();
                     enemy.deleteObservers();
 
-                    this.thedude.getCollisionActors().remove( enemy );
+                    this.thedude.removeCollisionActor( enemy );
                     enemyList.remove( enemy );
 
                     //Logger.log( this.getClass() + ": Found enemy with same id" );
                     if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
                         if ( thedude.turnedleft ) {
                             score++;
-                            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
+                            PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
                         }
                         else {
                             leben--;
-                            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
+                            PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
                             gameOver();
                         }
                     }
                     else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
                         if ( !thedude.turnedleft ) {
                             score++;
-                            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
+                            PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
                         }
                         else {
                             leben--;
-                            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
+                            PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
                             gameOver();
                         }
                     }

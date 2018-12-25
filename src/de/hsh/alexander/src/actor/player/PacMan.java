@@ -4,7 +4,7 @@ import common.actor.Actor;
 import common.actor.Collectable;
 import common.actor.ControlableActor;
 import common.actor.Direction;
-import common.util.Logger;
+import de.hsh.alexander.src.actor.ResourcePaths;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.Arrays;
@@ -127,8 +127,7 @@ public class PacMan extends ControlableActor {
     }
 
     protected synchronized void playSound() {
-        Logger.log( PacMan.class + ": Sound should be player" );
-        super.playSound( "src/de/hsh/dennis/resources/audioFiles/sound1.mp3" );
+        super.playSound( ResourcePaths.Actor.Player.PacMan.pacManSound );
     }
 
     @Override
