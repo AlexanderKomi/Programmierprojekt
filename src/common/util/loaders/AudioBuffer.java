@@ -22,7 +22,9 @@ public final class AudioBuffer {
     }
 
     private static Media newMedia( final String fileName ) {
-        return new Media( new File( fileName ).toURI().toString() );
+        //String path = AudioBuffer.class.getResource( fileName ).getPath(); // new way
+        String path = new File( fileName ).toURI().toString(); // Old way of getting a file
+        return new Media( path );
     }
 
     private static boolean contains( final String fileName ) {

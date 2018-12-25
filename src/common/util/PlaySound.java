@@ -21,6 +21,10 @@ public class PlaySound {
                 mediaPlayer.seek( Duration.ZERO );
             } );
         }
+        if ( mediaPlayer.getCurrentTime().lessThan( mediaPlayer.getTotalDuration() ) ) {
+            mediaPlayer.stop();
+            mediaPlayer.seek( Duration.ZERO );
+        }
         mediaPlayer.play();
     }
 }

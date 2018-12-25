@@ -159,32 +159,7 @@ abstract public class Actor extends Drawable {
     }
 
     protected synchronized void playSound( final String filePath ) {
-        Thread t = new Thread( new Runnable() {
-            boolean finished = false;
-
-            @Override
-            public void run() {
-                if ( !finished ) {
-                    if ( soundDelay < soundBuffer ) {
-                        PlaySound.playSound( filePath );
-                        soundBuffer = 0;
-                        finished = true;
-                    }
-                    else {
-                        soundBuffer++;
-                    }
-                }
-            }
-        } );
-        t.start();
-        try {
-            if ( !t.isInterrupted() ) {
-                t.join();
-            }
-        }
-        catch ( InterruptedException e ) {
-            e.printStackTrace();
-        }
+        PlaySound.playSound( filePath );
     }
 
     // ----------------------------------- GETTER AND SETTER -----------------------------------
@@ -197,8 +172,10 @@ abstract public class Actor extends Drawable {
         synchronized ( l ) {
             boolean b = l.remove( collectable );
             if ( !b ) {
-                onRemove( collectable );
                 Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
+            }
+            else {
+                onRemove( collectable );
             }
         }
         this.setCollisionActors( l );

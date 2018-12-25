@@ -4,6 +4,7 @@ import common.actor.Actor;
 import common.actor.Collectable;
 import common.actor.ControlableActor;
 import common.actor.Direction;
+import common.util.Logger;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.Arrays;
@@ -126,6 +127,7 @@ public class PacMan extends ControlableActor {
     }
 
     protected synchronized void playSound() {
+        Logger.log( PacMan.class + ": Sound should be player" );
         super.playSound( "src/de/hsh/dennis/resources/audioFiles/sound1.mp3" );
     }
 
@@ -138,6 +140,12 @@ public class PacMan extends ControlableActor {
         }
 
         return super.collisionModifier( other );
+    }
+
+    @Override
+    protected void onRemove( Collectable collectable ) {
+        playSound();
+        super.onRemove( collectable );
     }
 
     public SimpleIntegerProperty getPointProperty() {
