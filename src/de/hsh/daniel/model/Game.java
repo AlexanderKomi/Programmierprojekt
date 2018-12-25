@@ -1,6 +1,5 @@
 package de.hsh.daniel.model;
 
-import common.util.PlaySound;
 import javafx.scene.canvas.Canvas;
 
 
@@ -22,7 +21,7 @@ public class Game {
         } while((board.getC2() != null));
     }
 
-    /*
+    /**
     Sets up Board on canvas and creates two Player objects
      */
     public void initialize(Canvas gameCanvas) {
@@ -31,15 +30,7 @@ public class Game {
         p2 = new Player();
 
         gameCanvas.setOnMouseClicked(e -> {
-
             board.onMouseClick(e.getX(), e.getY());
-
-            /*
-            If two cards selected then cards are checked if they match
-             */
-            if (!board.cardsEmpty()) {
-                board.checkMatch(board.getC1(), board.getC2());
-            }
         });
 
 

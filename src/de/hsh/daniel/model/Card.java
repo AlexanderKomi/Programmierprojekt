@@ -3,6 +3,7 @@ package de.hsh.daniel.model;
 
 import common.actor.Actor;
 import common.util.Logger;
+import common.util.PlaySound;
 
 
 public class Card extends Actor {
@@ -52,7 +53,28 @@ public class Card extends Actor {
         return result;
     }
 
+    void turn() {
 
+        PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
+        double[] backupPos    = this.getPos();
+        double   backupWidth  = this.getWidth();
+        double   backupHeight = this.getHeight();
+
+        if ( this.isTurned() ) {
+            this.setCurrentImage( this.getPictureFileName() );
+            this.setTurned( false );
+        }
+        else if ( !this.isTurned() ) {
+            this.setCurrentImage( Resources.cardback );
+            this.setTurned( true );
+        }
+        else {
+            Logger.log( "CARD ALREADY FACEUP" );
+        }
+        this.setPos( backupPos );
+        this.setWidth( backupWidth );
+        this.setHeight( backupHeight );
+    }
 
 
     /* -------------------------------- GETTERS & SETTERS -------------------------------- */
