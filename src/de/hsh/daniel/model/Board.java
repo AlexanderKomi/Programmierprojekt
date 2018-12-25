@@ -3,6 +3,7 @@ package de.hsh.daniel.model;
 
 import common.actor.CollisionCheck;
 import common.config.WindowConfig;
+import common.util.Logger;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;
@@ -16,6 +17,11 @@ public class Board {
 
     public static int numberOfPairs = 0; // These are set externally from the menu.
 
+
+    public Card c1 = null;
+    public Card c2 = null;
+    private int cardCount = 0;
+
     private static final double gridH = 4;
     private static final int spacing = 40;
     private static final double imgSize = (double) (WindowConfig.window_height / 4) - (double) spacing / 2;
@@ -28,6 +34,7 @@ public class Board {
         initCards(numberOfPairs);
         createGrid();
     }
+
 
     private void initCards(final int numberOfPairs) {
         for (int i = 0; i < numberOfPairs; i++) {
@@ -81,19 +88,125 @@ public class Board {
         }
         return imgCount;
     }
+    public boolean cardsEmpty() {
+        if (c1 == null && c2 == null) {
+            return true;
+        } else if (c1 == null || c2 == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    void onMouseClick(final double mouse_x, final double mouse_y) {
 
-    void onMouseClick( final double mouse_x, final double mouse_y ) {
         //Logger.log(this.getClass() + ": Clicked at : (" + mouse_x + ", " + mouse_y + ")");
-
         for (Card card : this.cardList) {
 
-            boolean isMouseClickOnCard = CollisionCheck.doesCollide( card, mouse_x, mouse_y );
+            boolean isMouseClickOnCard = CollisionCheck.doesCollide(card, mouse_x, mouse_y);
 
-            if ( isMouseClickOnCard ) {
-                card.turn();
-                return; // No more need to check if another card has been clicked :)
+            /*
+            Checks if card is clicked and not selected, then turns that card
+             */
+            if(isMouseClickOnCard && cardCount == 0 && !card.isCardMatched()) {
+                c1 = card;
+                ++cardCount;
+            } else if(isMouseClickOnCard && cardCount == 1) {
+                c2 = card;
             }
+
+            if (isMouseClickOnCard && !card.isCardMatched()) {
+                if (c1 != null && c2 == null) {
+                    turn(c1);
+                    return;
+                } else if (isMouseClickOnCard && c1 != null && c2 != null) {
+                    turn(c2);
+                    return;
+                }
+                //return; // No more need to check if another card has been clicked :)
+            }
+        }
+    }
+
+    /*
+    Changes image of card
+     */
+    public void turn(Card card) {
+        double[] backupPos = card.getPos();
+        double backupWidth = card.getWidth();
+        double backupHeight = card.getHeight();
+
+        if (card.isTurned()) {
+            card.setCurrentImage(card.getPictureFileName());
+            card.setTurned(false);
+        } else if (!card.isTurned()) {
+            card.setCurrentImage(Resources.cardback);
+            card.setTurned(true);
+        } else {
+            Logger.log("CARD ALREADY FACEUP");
+            return;
+        }
+        card.setPos(backupPos);
+        card.setWidth(backupWidth);
+        card.setHeight(backupHeight);
+    }
+
+    /*
+    Checks if two cards match and resets cards after check
+     */
+    public boolean checkMatch(Card c1, Card c2) {
+        if (c1.equals(c2)) {
+
+            Logger.log("CARDS MATCH");
+            lockCards();
+            nullCards();
+            return true;
+
+        } else {
+            Logger.log("CARDS DON'T MATCH");
+            delay(2);
+            turnBackCards();
+            nullCards();
+            return false;
+        }
+
+    }
+    /*
+    Locks matched cards so that they can not be turned anymore
+     */
+    public void lockCards() {
+        c1.setCardMatched(true);
+        c2.setCardMatched(true);
+    }
+
+    /*
+    Turns both selected cards facedown again
+     */
+    public void turnBackCards() {
+        turn(c1);
+        turn(c2);
+    }
+
+    /*
+    Sets cards to null
+     */
+    public void nullCards() {
+        c1 = null;
+        c2 = null;
+        cardCount = 0;
+    }
+
+    /*
+    Delays time for given amount
+    @param
+        is converted from sec. to ms.
+     */
+    public void delay(int time) {
+        time = (time * 1000);
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
         }
     }
 
@@ -104,9 +217,21 @@ public class Board {
         }
     }
 
+
+    public void drawCard(Canvas canvas, Card card){
+        card.draw(canvas);
+    }
+
     /* -------------------- GETTER & SETTER -------------------- */
 
 
+    public Card getC1() {
+        return c1;
+    }
+
+    public Card getC2() {
+        return c2;
+    }
 }
 
 

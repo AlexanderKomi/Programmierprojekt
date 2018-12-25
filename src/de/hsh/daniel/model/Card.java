@@ -2,6 +2,7 @@ package de.hsh.daniel.model;
 
 
 import common.actor.Actor;
+import common.util.Logger;
 
 
 public class Card extends Actor {
@@ -14,7 +15,7 @@ public class Card extends Actor {
     private final int     pair_id;
     private final String  pictureFileName;
     private       boolean cardMatched  = false;
-    private       boolean cardSelected = false;
+
 
     private boolean turned = true;
 
@@ -52,37 +53,7 @@ public class Card extends Actor {
     }
 
 
-    public boolean isCardMatched( Card c1, Card c2 ) {
-        if ( c1.equals( c2 ) ) {
-            setCardMatched( true );
-            c1.setCurrentImage(this.pictureFileName);
-            c2.setCurrentImage(this.pictureFileName);
-        }
-        else {
-            setCardMatched( false );
-            c1.setCurrentImage(Resources.cardback);
-            c2.setCurrentImage(Resources.cardback);
 
-        }
-        return false;
-    }
-
-    public void turn() {
-        double[] backupPos    = this.getPos();
-        double   backupWidth  = this.getWidth();
-        double   backupHeight = this.getHeight();
-        if ( turned ) {
-            this.setCurrentImage( this.getPictureFileName() );
-            turned = false;
-        }
-        else {
-            this.setCurrentImage( Resources.cardback );
-            turned = true;
-        }
-        this.setPos( backupPos );
-        this.setWidth( backupWidth );
-        this.setHeight( backupHeight );
-    }
 
     /* -------------------------------- GETTERS & SETTERS -------------------------------- */
 
@@ -93,10 +64,8 @@ public class Card extends Actor {
 
     public String getPictureFileName() { return this.pictureFileName;}
 
-    public void setDebugDontShowCardback(boolean bool) {
-        this.DEBUG_DONT_SHOW_CARDBACK = bool;}
 
-    public boolean getCardMatched() {
+    public boolean isCardMatched() {
         return this.cardMatched;
     }
 
@@ -104,12 +73,13 @@ public class Card extends Actor {
         this.cardMatched = cardMatched;
     }
 
-    public boolean getCardSelected() {
-        return this.cardSelected;
+    public boolean isTurned() {
+        return turned;
     }
 
-    public void setCardSelected( boolean cardSelected ) {
-        this.cardSelected = cardSelected;
+    public void setTurned(boolean turned) {
+        this.turned = turned;
     }
+
 }
 

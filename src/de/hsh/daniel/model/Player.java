@@ -7,7 +7,8 @@ public class Player {
     private String name;
     private int points;
     private boolean myTurn;
-    private int playerCount;
+    private static int playerCount = 0;
+
 
     public Player () {
         ++playerCount;
@@ -18,10 +19,11 @@ public class Player {
     /*TODO: Implement check if players is in line
     */
 
-    public boolean isMyTurn() {
-        return myTurn = false;
-    }
 
+
+    /*
+    Adds one point to points
+     */
     public void incrementPoints() { points++;}
 
 
@@ -37,11 +39,14 @@ public class Player {
     }
 
 
-
+    public Player getActivePlayer() { return this; }
     public int getPoints() {
         return this.points;
     }
 
+    public void setTurn() {this.myTurn = true; }
+    public boolean isMyTurn() { return myTurn;
+    }
 
 }
 
