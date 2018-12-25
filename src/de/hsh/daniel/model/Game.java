@@ -12,6 +12,7 @@ public class Game {
     private Player p1;
     private Player p2;
 
+    //TODO: Tried to draw second card if selected but does not work
     public void render(Canvas gameCanvas, final int fps) {
         board.draw(gameCanvas);
         if(board.getC2() != null){
@@ -32,7 +33,9 @@ public class Game {
         gameCanvas.setOnMouseClicked(e -> {
 
             board.onMouseClick(e.getX(), e.getY());
-
+            /*
+            If two cards selected then cards are checked if they match
+             */
             if (!board.cardsEmpty()) {
                 boolean match = board.checkMatch(board.getC1(), board.getC2());
                 if (!match) {
