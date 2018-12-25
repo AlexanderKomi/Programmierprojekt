@@ -16,9 +16,9 @@ public class Board {
 
     public static byte numberOfPairs = 0; // These are set externally from the menu.
 
-    private Card c1        = null;
-    private Card c2        = null;
-    private byte cardCount = 0;
+    private Card    c1               = null;
+    private Card    c2               = null;
+    private boolean firstCardClicked = false;
 
     static final byte   gridH   = 4;
     static final int    spacing = 40;
@@ -32,28 +32,30 @@ public class Board {
         cardList = BoardUtilities.initCards( numberOfPairs );
     }
 
+    /**
+     * A mouse click happened to the board.
+     */
     void onMouseClick( final double mouse_x, final double mouse_y ) {
-
         for ( Card card : this.cardList ) {
-            boolean isMouseClickOnCard = CollisionCheck.doesCollide( card, mouse_x, mouse_y );
-            if ( isMouseClickOnCard ) {
+            if ( CollisionCheck.doesCollide( card, mouse_x, mouse_y ) ) {
                 onClickedCard( card );
+                this.checkMatch();
             }
         }
-
-        this.checkMatch();
     }
 
     /**
      * Checks if card is clicked and not selected, then turns that card
      */
     private void onClickedCard( Card card ) {
-        if ( cardCount == 0 && !card.isCardMatched() ) {
-            c1 = card;
-            ++cardCount;
-        }
-        else if ( cardCount == 1 ) {
-            c2 = card;
+        if ( !card.isCardMatched() ) {
+            if ( !firstCardClicked ) {
+                c1 = card;
+                firstCardClicked = true;
+            }
+            else {
+                c2 = card;
+            }
         }
 
         if ( !card.isCardMatched() ) {
@@ -70,26 +72,22 @@ public class Board {
      * Checks if two cards match and resets cards after check
      * If two cards selected then cards are checked if they match
      */
-    private boolean checkMatch() {
+    private void checkMatch() {
         if ( c1 == null || c2 == null ) {
             Logger.log( "Cards are empty." );
-            return false;
+            return;
         }
 
         if ( c1.equals( c2 ) ) {
             Logger.log( "CARDS MATCH" );
             setCardsMatched();
-            nullCards();
-            return true;
-
         }
         else {
             Logger.log( "CARDS DON'T MATCH" );
-            delay( 1 );
+            delay( 2 );
             turnBackCards();
-            nullCards();
-            return false;
         }
+        nullCards();
 
     }
 
@@ -115,7 +113,7 @@ public class Board {
     private void nullCards() {
         c1 = null;
         c2 = null;
-        cardCount = 0;
+        firstCardClicked = false;
     }
 
     /**
