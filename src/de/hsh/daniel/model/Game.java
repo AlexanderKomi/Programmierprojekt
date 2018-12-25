@@ -8,9 +8,9 @@ import javafx.scene.canvas.Canvas;
  */
 public final class Game {
 
-    private Board board;
-    private Player p1;
-    private Player p2;
+    private GUIBoard board;
+    private Player   p1;
+    private Player   p2;
 
     public final void render( Canvas gameCanvas, final int fps ) {
         board.draw(gameCanvas);
@@ -20,7 +20,7 @@ public final class Game {
     Sets up Board on canvas and creates two Player objects
      */
     public final void initialize( Canvas gameCanvas ) {
-        board = new Board();
+        board = new GUIBoard();
         p1 = new Player();
         p2 = new Player();
 

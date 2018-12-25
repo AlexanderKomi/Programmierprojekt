@@ -23,7 +23,7 @@ public class RamGame_controller extends Observable implements Initializable {
     @FXML
     private Canvas gameCanvas;
 
-    public void render(int fps) {
+    public void render( final int fps ) {
         if(game != null){
             if(initialized) {
                 gameCanvas.getGraphicsContext2D().clearRect(0,0,WindowConfig.window_width, WindowConfig.window_height);

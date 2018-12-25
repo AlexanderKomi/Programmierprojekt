@@ -3,9 +3,6 @@ package de.hsh.daniel.model;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static de.hsh.daniel.model.Board.gridW;
-import static de.hsh.daniel.model.Board.numberOfPairs;
-
 final class BoardUtilities {
 
     private BoardUtilities() {}
@@ -22,13 +19,18 @@ final class BoardUtilities {
             cardList.add( c2 );
         }
         Collections.shuffle( cardList );
-        return createGrid( cardList );
+        return cardList;
     }
 
     /**
      * Created card grid
      */
-    private static ArrayList<Card> createGrid( final ArrayList<Card> cardList ) {
+    static ArrayList<Card> createGrid( final ArrayList<Card> cardList,
+                                       final byte numberOfPairs,
+                                       final double gridW,
+                                       final double gridH,
+                                       final double imgSize,
+                                       final double spacing ) {
 
         int xStart;
         int xStartReset;
@@ -46,31 +48,54 @@ final class BoardUtilities {
             xStart = 30;
             xStartReset = 30;
         }
-        return adjustCardPositions( cardList, xStart, xStartReset, gridW );
+        return adjustCardPositions( cardList, xStart, xStartReset, gridW,
+                                    gridH,
+                                    imgSize,
+                                    spacing );
     }
 
-    private static ArrayList<Card> adjustCardPositions( final ArrayList<Card> cardList,
-                                                        int xStart,
-                                                        final int xStartReset,
-                                                        final double gridW ) {
+    private static ArrayList<Card> adjustCardPositions(
+            final ArrayList<Card> cardList,
+            int xStart,
+            final int xStartReset,
+            final double gridW,
+            final double gridH,
+            final double imgSize,
+            final double spacing
+                                                      ) {
         int yStart   = 10;
         int imgCount = 0;
 
-        for ( int j = 0 ; j < Board.gridH ; j++ ) {
+        for ( int j = 0 ; j < gridH ; j++ ) {
             for ( int k = 0 ; k < gridW ; k++ ) {
 
                 Card i = cardList.get( imgCount );
                 i.setPos( xStart, yStart );
-                i.setWidth( Board.imgSize );
-                i.setHeight( Board.imgSize );
+                i.setWidth( imgSize );
+                i.setHeight( imgSize );
 
-                xStart += (Board.imgSize + Board.spacing);
+                xStart += (imgSize + spacing);
                 imgCount++;
             }
-            yStart += Board.imgSize + Board.spacing / 2;
+            yStart += imgSize + spacing / 2;
             xStart = xStartReset;
         }
         return cardList;
+    }
+
+    /**
+     * Delays time for given amount
+     *
+     * @param time
+     *         is converted from sec. to ms.
+     */
+    static void delay( final int time ) {
+        try {
+            Thread.sleep( time * 1000 );
+        }
+        catch ( InterruptedException e1 ) {
+            e1.printStackTrace();
+        }
     }
 
 }
