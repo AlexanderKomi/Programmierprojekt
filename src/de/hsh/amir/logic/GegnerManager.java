@@ -1,5 +1,6 @@
 package de.hsh.amir.logic;
 
+import common.util.Logger;
 import de.hsh.amir.controller.AmirsMainMenuController;
 import de.hsh.kevin.logic.Score;
 import javafx.scene.canvas.Canvas;
@@ -27,6 +28,9 @@ public class GegnerManager implements Observer {
         }
     }
 
+    /**
+     * Erstellt einen Gegner und setzt ihn an eine zufällig x-Position
+     */
     public void erstelleGegner() {
         Random random = new Random();
         int zufallsZahl1 = 200 + random.nextInt(800);
@@ -36,7 +40,7 @@ public class GegnerManager implements Observer {
     }
 
     /**
-     * erstellt minimal einen und maximal 5 Gegner unabhängig
+     * Erstellt minimal einen und maximal fünf Gegner UNABHÄNGIG!!! vom
      * übergebenen Parameter
      *
      * @param anzahlGegner unabhöngig von diesem Parameter werden "max" Gegner erstellt.
