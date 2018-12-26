@@ -52,7 +52,7 @@ public class GegnerManager implements Observer {
      * @param anzahlGegner unabhöngig von diesem Parameter werden "max" Gegner erstellt.
      */
     public void erstelleGegner(int anzahlGegner) {
-        //CHANGE ONLY THIS IF YOU WANT TO CHANGE THE NUMBER OF GEGNER!!!
+        //CHANGE THIS ONLY IF YOU WANT TO CHANGE THE NUMBER OF GEGNER-OBJECTS!!!
         int max = 5;
 
         if (anzahlGegner <= 0) {
@@ -71,7 +71,7 @@ public class GegnerManager implements Observer {
     /**
      * Bewegt Gegner jedes mal an einer neuen Position.
      * Bei Level 2 bewegen sich die Figuren schneller.
-     * Bei Level 3 bewegen sich die Figuren schneller und auch teilweise diagonal.
+     * Bei Level 3 bewegen sich die Figuren schneller und teilweise diagonal.
      *
      * @param canvas
      */
