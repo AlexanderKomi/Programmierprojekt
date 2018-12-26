@@ -11,6 +11,8 @@ import java.util.Observer;
 import java.util.Random;
 
 public class GegnerManager implements Observer {
+    public static final int SPIELFELD_BREITE = 1200;
+    public static final int RAND_ABSCHNITT = 200;
     private ArrayList<Gegner> gegnerListe = new ArrayList<Gegner>();
     private Score points;
 
@@ -21,7 +23,11 @@ public class GegnerManager implements Observer {
         return gegnerListe;
     }
 
-
+    /**
+     * Zeichnet jede Gegnerfigur auf die Canvas.
+     *
+     * @param canvas
+     */
     public void draw(Canvas canvas) {
         for (Gegner g : gegnerListe) {
             g.draw(canvas);
@@ -29,12 +35,12 @@ public class GegnerManager implements Observer {
     }
 
     /**
-     * Erstellt einen Gegner und setzt ihn an eine zufällig x-Position
+     * Erstellt einen Gegner und setzt ihn an eine zufällig x-Position.
      */
     public void erstelleGegner() {
         Random random = new Random();
-        int zufallsZahl1 = 200 + random.nextInt(800);
-        Gegner gegner = new Gegner("/de/hsh/amir/resources/enemyFigur.png", zufallsZahl1);
+        int zufallsZahl = RAND_ABSCHNITT + random.nextInt(SPIELFELD_BREITE - 2 * RAND_ABSCHNITT);
+        Gegner gegner = new Gegner("/de/hsh/amir/resources/enemyFigur.png", zufallsZahl);
         gegner.addObserver(this);
         this.gegnerListe.add(gegner);
     }
@@ -71,7 +77,7 @@ public class GegnerManager implements Observer {
      */
     public void move(Canvas canvas) {
         Random random = new Random();
-        int zufallsZahl = 200 + random.nextInt(800);
+        int zufallsZahl = RAND_ABSCHNITT + random.nextInt(SPIELFELD_BREITE - 2 * RAND_ABSCHNITT);
         int levelNumber = AmirsMainMenuController.LEVEL_NUMBER;
         if (levelNumber == 1) {
             for (Gegner gegner : gegnerListe) {
@@ -89,9 +95,9 @@ public class GegnerManager implements Observer {
                     gegner.setX(zufallsZahl);
                 }
             }
-        } else if (levelNumber == 3){
+        } else if (levelNumber == 3) {
             for (Gegner gegner : gegnerListe) {
-                if(gegnerListe.indexOf(gegner)%2==0){
+                if (gegnerListe.indexOf(gegner) % 2 == 0) {
                     gegner.move();
                 } else {
                     gegner.moveDiagonal();
