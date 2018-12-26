@@ -12,9 +12,10 @@ public final class ResourcePaths {
             static final String directory = actorFolderPath + "player/";
 
             public static final class PacMan {
-                static final String pacman1Directory = Player.directory + "pacman1/";
-                static final String file_prefix      = "pacman";
-                static final String file_type        = ".png";
+                static final        String pacman1Directory = Player.directory + "pacman1/";
+                static final        String file_prefix      = "pacman";
+                static final        String file_type        = ".png";
+                public static final String pacManSound      = "src/de/hsh/alexander/sounds/pacman_chomp.wav";
 
                 public static final String[] pacman1Pictures  = {
                         pacman1Directory + file_prefix + "1_0" + file_type,

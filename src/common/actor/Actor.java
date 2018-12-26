@@ -1,5 +1,8 @@
 package common.actor;
 
+import common.util.Logger;
+import common.util.PlaySound;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
@@ -11,7 +14,8 @@ import java.util.List;
  */
 abstract public class Actor extends Drawable {
 
-
+    private double      soundDelay      = 0;
+    private double      soundBuffer     = 0;
     final   Movement    movement        = new Movement();
     private List<Actor> collisionActors = new ArrayList<>();
 
@@ -154,11 +158,35 @@ abstract public class Actor extends Drawable {
         return true;
     }
 
+    protected synchronized void playSound( final String filePath ) {
+        //PlaySound p = new PlaySound();
+        //p.play( filePath );
+        PlaySound.playSound( filePath );
+    }
+
+    // ----------------------------------- GETTER AND SETTER -----------------------------------
     void setCollisionActors( final List<Actor> list ) {
         this.collisionActors = list;
     }
 
-    // ----------------------------------- GETTER AND SETTER -----------------------------------
+    public void removeCollisionActor( Collectable collectable ) {
+        final List<Actor> l = Collections.synchronizedList( this.getCollisionActors() );
+        synchronized ( l ) {
+            boolean b = l.remove( collectable );
+            if ( !b ) {
+                Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
+            }
+            else {
+                onRemove( collectable );
+            }
+        }
+        this.setCollisionActors( l );
+    }
+
+    protected void onRemove( Collectable collectable ) {
+
+    }
+
     public void setSpeed( double speed ) {
         this.movement.setVelocity( speed );
     }
@@ -178,4 +206,7 @@ abstract public class Actor extends Drawable {
         return false;
     }
 
+    public void setSoundDelay( double soundDelay ) {
+        this.soundDelay = soundDelay;
+    }
 }

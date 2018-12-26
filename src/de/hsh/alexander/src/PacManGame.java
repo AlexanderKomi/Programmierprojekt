@@ -77,7 +77,7 @@ public final class PacManGame extends Observable implements Observer, Initializa
         }
     }
 
-    void render( final int fps ) {
+    synchronized void render( final int fps ) {
         if ( !initialized ) {
             return;
         }

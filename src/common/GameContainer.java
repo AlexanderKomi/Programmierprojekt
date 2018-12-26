@@ -3,12 +3,12 @@ package common;
 import common.engine.FXGameContainer;
 import common.engine.components.game.GameEntryPoints;
 import common.updates.Updater;
-import common.util.AudioPlayer;
 import de.hsh.Julian.LKEntryPoint;
 import de.hsh.alexander.src.PacManController;
 import de.hsh.amir.AmirEntryPoint;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGameEntryPoint;
+import de.hsh.dennis.model.AudioPlayer;
 import de.hsh.kevin.controller.TIController;
 import javafx.fxml.FXMLLoader;
 
@@ -19,6 +19,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class GameContainer extends FXGameContainer {
+
+    private static final String mainMenuFXMLPath = "gui/P3_Gui.fxml";
 
     @Override
     public void update( Observable observable, Object arg ) {
@@ -43,7 +45,7 @@ public class GameContainer extends FXGameContainer {
     protected common.MainMenu configMainMenu(ArrayList<String> games) {
         common.MainMenu mainMenu = new MainMenu();
         try {
-            URL  location = getClass().getResource( "gui/P3_Gui.fxml" );
+            URL location = getClass().getResource( mainMenuFXMLPath );
             mainMenu.vbox = FXMLLoader.load( location );
             mainMenu.setMenuPane(mainMenu.vbox);
         }
@@ -70,7 +72,7 @@ public class GameContainer extends FXGameContainer {
     }
 
     @Override
-    protected void beforStopingContainer() {
+    protected void beforeStoppingContainer() {
         AudioPlayer.MusicPlayer.shutdown();
     }
 

@@ -4,9 +4,9 @@ import common.actor.Direction;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.dennis.model.KeyLayout.Movement.Custom;
-import de.hsh.dennis.model.NpcLogic.SkinConfig;
 import de.hsh.dennis.model.NpcLogic.NPCEnums;
 import de.hsh.dennis.model.NpcLogic.NpcHandler;
+import de.hsh.dennis.model.NpcLogic.SkinConfig;
 import de.hsh.dennis.model.NpcLogic.SpawnTimer;
 import de.hsh.dennis.model.NpcLogic.actors.Npc;
 import de.hsh.dennis.model.NpcLogic.actors.Player;
@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import static common.util.AudioPlayer.MusicPlayer;
 
 public class GameModel extends Observable {
 
@@ -119,7 +118,7 @@ public class GameModel extends Observable {
 
             if (musicStart && audioTimer.getCurrentTimeStamp() >= audioDelay) {
                 musicStart = false;
-                MusicPlayer.play();
+                AudioPlayer.MusicPlayer.play();
             }
 
 
@@ -148,34 +147,45 @@ public class GameModel extends Observable {
 
         }
         audioTimer = new SpawnTimer();
-
+        final String ressourcePath     = "/de/hsh/dennis/resources/audioFiles/";
+        final String relativeRessource = "../resources/audioFiles/";
         switch (difficulty) {
             case EASY:
                 npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._easy);
-                npcHandler.generateNpcs("/de/hsh/dennis/resources/audioFiles/" + AudioConfig.Mp3Paths.easy, AudioConfig.MovingSpeeds._easy);
-                MusicPlayer.loadFile(this.getClass().getResource("../resources/audioFiles/" + AudioConfig.Mp3Paths.easy).getPath());
+                npcHandler.generateNpcs( ressourcePath + AudioConfig.Mp3Paths.easy, AudioConfig.MovingSpeeds._easy );
+                AudioPlayer.MusicPlayer.playFile( this.getClass()
+                                                      .getResource( relativeRessource + AudioConfig.Mp3Paths.easy )
+                                                      .getPath() );
                 audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._easy);
                 break;
 
             case MEDIUM:
                 npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._medium);
-                npcHandler.generateNpcs("/de/hsh/dennis/resources/audioFiles/" + AudioConfig.Mp3Paths.medium, AudioConfig.MovingSpeeds._medium);
-                MusicPlayer.loadFile(this.getClass().getResource("../resources/audioFiles/" + AudioConfig.Mp3Paths.medium).getPath());
+                npcHandler.generateNpcs( ressourcePath + AudioConfig.Mp3Paths.medium, AudioConfig.MovingSpeeds._medium );
+                AudioPlayer.MusicPlayer.playFile( this.getClass()
+                                                      .getResource( relativeRessource + AudioConfig.Mp3Paths.medium )
+                                                      .getPath() );
                 audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._medium);
                 break;
 
             case HARD:
                 npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._hard);
-                npcHandler.generateNpcs("/de/hsh/dennis/resources/audioFiles/" + AudioConfig.Mp3Paths.hard, AudioConfig.MovingSpeeds._hard);
-                MusicPlayer.loadFile(this.getClass().getResource("../resources/audioFiles/" + AudioConfig.Mp3Paths.hard).getPath());
+                npcHandler.generateNpcs( ressourcePath + AudioConfig.Mp3Paths.hard, AudioConfig.MovingSpeeds._hard );
+                AudioPlayer.MusicPlayer.playFile( this.getClass()
+                                                      .getResource( relativeRessource + AudioConfig.Mp3Paths.hard )
+                                                      .getPath() );
                 audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._hard);
                 break;
 
             case NIGHTMARE:
+                npcHandler.getAudioAnalyzer().setSensitivity(0.0d);
                 npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._nightmare);
-                npcHandler.generateNpcs("/de/hsh/dennis/resources/audioFiles/" + AudioConfig.Mp3Paths.nightmare, AudioConfig.MovingSpeeds._nightmare);
-                MusicPlayer.loadFile(this.getClass().getResource("../resources/audioFiles/" + AudioConfig.Mp3Paths.nightmare).getPath());
+                npcHandler.generateNpcs( ressourcePath + AudioConfig.Mp3Paths.nightmare, AudioConfig.MovingSpeeds._nightmare );
+                AudioPlayer.MusicPlayer.playFile( this.getClass()
+                                                      .getResource( relativeRessource + AudioConfig.Mp3Paths.nightmare )
+                                                      .getPath() );
                 audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._nightmare);
+                npcHandler.getAudioAnalyzer().resetSensitivity();
                 break;
 
             case CUSTOM:
@@ -418,7 +428,7 @@ public class GameModel extends Observable {
         if (ai) {
             if (health == 0) {
                 acting = false;
-                MusicPlayer.pause();
+                AudioPlayer.MusicPlayer.pause();
                 clearCanvas();
                 Logger.log("1");
                 setChanged();
@@ -426,7 +436,7 @@ public class GameModel extends Observable {
 
             } else if (npcHandler.isEndReached() && score > 0) {
                 acting = false;
-                MusicPlayer.pause();
+                AudioPlayer.MusicPlayer.pause();
                 clearCanvas();
                 Logger.log("2");
                 setChanged();
@@ -434,7 +444,7 @@ public class GameModel extends Observable {
 
             } else if (npcHandler.isEndReached() && score <= 0) {
                 acting = false;
-                MusicPlayer.pause();
+                AudioPlayer.MusicPlayer.pause();
                 clearCanvas();
                 Logger.log("3");
                 setChanged();

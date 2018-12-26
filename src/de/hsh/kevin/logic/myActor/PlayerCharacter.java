@@ -2,7 +2,7 @@ package de.hsh.kevin.logic.myActor;
 
 import common.actor.ControlableActor;
 import common.actor.Direction;
-import common.util.ImageLoader;
+import common.util.loaders.ImageLoader;
 import javafx.scene.image.Image;
 
 import java.io.FileNotFoundException;

@@ -43,7 +43,7 @@ public class RAM extends GameEntryPoint {
     }
 
     @Override
-    public void render(int fps) {
+    public void render( final int fps ) {
         if ( initialized ) {
             if (game != null) {
                 Platform.runLater( () -> {

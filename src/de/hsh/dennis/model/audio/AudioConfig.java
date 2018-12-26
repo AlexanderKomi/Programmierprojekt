@@ -23,7 +23,7 @@ public class AudioConfig {
 
         public static double _hard = 0.2d;
 
-        public static double _nightmare = 0.2d;
+        public static double _nightmare = 0.0d;
     }
 
     public static class MovingSpeeds{

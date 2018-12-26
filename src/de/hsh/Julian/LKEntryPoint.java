@@ -17,7 +17,7 @@ import java.util.Observer;
 //
 //
 
-public class LKEntryPoint extends GameEntryPoint {
+public final class LKEntryPoint extends GameEntryPoint {
 
     private final LKFxmlChanger      changer;
     private       boolean            renderable = false;
@@ -25,9 +25,9 @@ public class LKEntryPoint extends GameEntryPoint {
     private       Canvas             canvas;
     private       Leertastenklatsche lk;
 
-    public LKEntryPoint(Observer o) {
+    public LKEntryPoint( Observer o ) {
         super( o, WindowConfig.julian_title );
-        changer = new LKFxmlChanger(this, LKStart.fxml, new LKStart());
+        changer = new LKFxmlChanger( this, LKStart.fxml, new LKStart() );
     }
 
     //Getting the input and realizing when stopping input
@@ -40,31 +40,28 @@ public class LKEntryPoint extends GameEntryPoint {
     }
 
     private void initializeGraphicsContext() {
-        Font theFont = Font.font("Helvetica", FontWeight.BOLD, 36);
+        Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 36 );
         gc = canvas.getGraphicsContext2D();
-        gc.setFont(theFont);
-        gc.setFill(Color.BLACK);
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(1);
+        gc.setFont( theFont );
+        gc.setFill( Color.BLACK );
+        gc.setStroke( Color.BLACK );
+        gc.setLineWidth( 1 );
     }
 
 
-    public void render(int fps) {
-        if(renderable) {
-            if ( lk != null ) {
-
-                Platform.runLater( () -> {
-                    gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
-
-                } );
-                lk.render( this.canvas );
-            }
+    public void render( final int fps ) {
+        if ( !renderable || lk == null ) {
+            return;
         }
+        Platform.runLater( () -> {
+            gc.clearRect( 0, 0, WindowConfig.window_width, WindowConfig.window_height );
+        } );
+        lk.render( this.canvas );
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (arg instanceof Canvas) {
+    public void update( Observable o, Object arg ) {
+        if ( arg instanceof Canvas ) {
             this.canvas = (Canvas) arg;
             initAfterCanvasPass();
         }
@@ -73,25 +70,26 @@ public class LKEntryPoint extends GameEntryPoint {
             if ( message.equals( "b_backtomenu" ) ) {
                 renderable = false;
                 lk = null;
-                changer.changeScene(LKStart.fxml, new LKStart());
+                changer.changeScene( LKStart.fxml, new LKStart() );
                 exitToMainGUI();
             }
             /*else if(message.equals("b_retry")){
                 changer.changeScene(SpielBildschirm_controller.fxml, new SpielBildschirm_controller());
-            }*/else{
-                Logger.log((String) arg);
+            }*/
+            else {
+                Logger.log( (String) arg );
                 changer.changeFxml( o, (String) arg );
             }
-           // Logger.log( this.getClass() + " : update : " + message );
+            // Logger.log( this.getClass() + " : update : " + message );
         }
         else {
-            changer.changeFxml(o, (String) arg);
+            changer.changeFxml( o, (String) arg );
         }
     }
 
     private void initAfterCanvasPass() {
         this.lk = new Leertastenklatsche();
-        lk.addObserver(this);
+        lk.addObserver( this );
         initializeGraphicsContext();
         addKeyListener();
         renderable = true;

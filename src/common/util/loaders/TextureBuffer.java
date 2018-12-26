@@ -1,18 +1,17 @@
-package common.actor;
+package common.util.loaders;
 
-import common.util.ImageLoader;
 import javafx.scene.image.Image;
 
 import java.util.HashMap;
 
-final class TextureBuffer {
+public final class TextureBuffer {
 
     private static final HashMap<String, Image> fileToImage = new HashMap<>();
 
-    private static void addFile( final String filepath ) {
+    private static void addFile( final String filePath ) {
         try {
-            fileToImage.put( filepath,
-                             ImageLoader.loadImage( filepath ) );
+            fileToImage.put( filePath,
+                             ImageLoader.loadImage( filePath ) );
         }
         catch ( NullPointerException npe ) {
             npe.printStackTrace();
@@ -27,7 +26,7 @@ final class TextureBuffer {
         return fileToImage.containsKey( fileName );
     }
 
-    static Image loadImage( final String fileName ) {
+    public static Image loadImage( final String fileName ) {
         if ( !TextureBuffer.contains( fileName ) ) {
             TextureBuffer.addFile( fileName );
         }

@@ -51,8 +51,8 @@ public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
         return false;
     }
 
-    public void render( final int fps ) {
-        this.stream().parallel().forEach( game -> game.render( fps ) );
+    public synchronized void render( final int fps ) {
+        this.forEach( game -> game.render( fps ) );
     }
 
     public GameEntryPoints[] toArray() {

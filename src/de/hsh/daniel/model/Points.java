@@ -1,5 +1,5 @@
 package de.hsh.daniel.model;
-
+@Deprecated
 public class Points {
 
     private int points;
@@ -7,6 +7,8 @@ public class Points {
     private Player playTwo;
 
     public void increment() { points++;}
+
+
 
 
 

@@ -2,11 +2,12 @@ package de.hsh.daniel.controller;
 
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import de.hsh.daniel.model.Board;
+import de.hsh.daniel.model.board.Board;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+
 import java.util.Observable;
 
 public class RAM_MainMenu_controller extends Observable {

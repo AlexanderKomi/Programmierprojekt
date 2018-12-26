@@ -7,15 +7,24 @@ public class Player {
     private String name;
     private int points;
     private boolean myTurn;
+    private static int playerCount = 0;
 
-    public Player (String name) {
-        setName(name);
+
+    public Player () {
+        ++playerCount;
+        points = 0;
+        setName("P"+playerCount);
     }
 
     /*TODO: Implement check if players is in line
-    public boolean isMyTurn() {
-        return myTurn = false;
-    }
+    */
+
+
+
+    /*
+    Adds one point to points
+     */
+    public void incrementPoints() { points++;}
 
 
 
@@ -25,21 +34,19 @@ public class Player {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
 
-
+    public Player getActivePlayer() { return this; }
     public int getPoints() {
-        return points;
+        return this.points;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setTurn() {this.myTurn = true; }
+    public boolean isMyTurn() { return myTurn;
     }
-
 
 }
 
