@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 public class AmirGameController extends Observable implements Initializable {
 
     public static final String fxml = "view/AmirGame.fxml";
+    public static final int WINNING_POINTS = 10;
     private AmirGame game;
     private Score points;
     private boolean initialized = false;
@@ -56,7 +57,7 @@ public class AmirGameController extends Observable implements Initializable {
 
     private boolean spielGewonnen() {
         int punkte = points.getScore();
-        if (punkte >= 4) {
+        if (punkte >= WINNING_POINTS) {
             return true;
         }
         return false;
