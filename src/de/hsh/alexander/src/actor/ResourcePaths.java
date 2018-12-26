@@ -3,6 +3,7 @@ package de.hsh.alexander.src.actor;
 public final class ResourcePaths {
 
     private static final String resourceFolderPath = "/de/hsh/alexander/res/";
+    private static final String soundDirectory     = "src/de/hsh/alexander/sounds/";
 
     public static final class Actor {
 
@@ -15,7 +16,7 @@ public final class ResourcePaths {
                 static final        String pacman1Directory = Player.directory + "pacman1/";
                 static final        String file_prefix      = "pacman";
                 static final        String file_type        = ".png";
-                public static final String pacManSound      = "src/de/hsh/alexander/sounds/pacman_chomp.wav";
+                public static final String pacManSound      = soundDirectory + "pacman_chomp.wav";
 
                 public static final String[] pacman1Pictures  = {
                         pacman1Directory + file_prefix + "1_0" + file_type,
@@ -86,9 +87,8 @@ public final class ResourcePaths {
         public static final class Collectables {
             static final String directory = actorFolderPath + "collectables/";
 
-            public static final String invisiblePicture = directory + "Empty.png";
-
             public static final class DataCoin {
+
                 static final        String   data_coin_dir    = Collectables.directory + "data_coin/";
                 static final        String   file_prefix      = "data_coin_";
                 static final        String   file_type        = ".png";
@@ -106,6 +106,12 @@ public final class ResourcePaths {
                         data_coin_dir + file_prefix + "10" + file_type,
                         data_coin_dir + file_prefix + "11" + file_type
                 };
+            }
+
+            public static final class Invisible {
+
+                public static final String invisiblePicture = directory + "Empty.png";
+                public static final String invisibleSound   = soundDirectory + "pacman_eatghost.wav";
             }
         }
 
