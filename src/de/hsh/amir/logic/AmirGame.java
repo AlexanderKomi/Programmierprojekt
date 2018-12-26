@@ -18,16 +18,14 @@ public class AmirGame {
     public AmirGame(Canvas canvas, Score points) {
         this.points = points;
         this.canvas = canvas;
-
-
     }
 
-    public void initializePlayer() {
+    private void initializePlayer() {
         this.spielfigur = new Spielfigur();
         spielfigur.setPos(canvas.getWidth() / 2, canvas.getHeight() - 100);
     }
 
-    public void render(int fps) {
+    public void render( final int fps ) {
         timer++;
         if (timer == 120) {
             gegnerManager.erstelleGegner(4);
@@ -35,31 +33,23 @@ public class AmirGame {
         }
         collisionGegnerSpieler();
         gegnerManager.move(canvas);
-        clearCanvasForPlayer();
-        spielfigur.draw(canvas);
-        gegnerManager.draw(canvas);
+        draw();
     }
 
     /**
      * Spielt einen Sound ab.
      */
-    private void playSound() {
-        AudioPlayer.MusicPlayer.loadFile(this.getClass().getResource("../resources/clickSound.mp3").getPath());
+    private static void playSound() {
+        AudioPlayer.MusicPlayer.loadFile( AmirGame.class.getResource( "../resources/clickSound.mp3" ).getPath() );
         AudioPlayer.MusicPlayer.play();
     }
 
-    /**
-     * Radiert die Canvas komplett für den Weg der Spielfigur
-     */
-    private void clearCanvasForPlayer() {
-        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    }
 
     /**
      * Collisionsabfrage.
      * Punkntestand wird um 1 erhöht, wenn ein Gegner eingesammelt wird.
      */
-    public void collisionGegnerSpieler() {
+    private void collisionGegnerSpieler() {
         ArrayList<Gegner> toRemove = new ArrayList<Gegner>();
         for (Gegner gegner : gegnerManager.getGegnerListe()) {
             if (spielfigur.doesCollide(gegner)) {
@@ -69,8 +59,8 @@ public class AmirGame {
             }
         }
 
-        for (int i = 0; i < toRemove.size(); i++) {
-            gegnerManager.remove(toRemove.get(i));
+        for ( Gegner gegner : toRemove ) {
+            gegnerManager.remove( gegner );
         }
 
     }
@@ -87,5 +77,18 @@ public class AmirGame {
 
     public void onKeyPressed(KeyEvent event) {
         this.spielfigur.move(event);
+    }
+
+    private void draw() {
+        clearCanvasForPlayer();
+        spielfigur.draw( canvas );
+        gegnerManager.draw( canvas );
+    }
+
+    /**
+     * Radiert die Canvas komplett für den Weg der Spielfigur
+     */
+    private void clearCanvasForPlayer() {
+        canvas.getGraphicsContext2D().clearRect( 0, 0, canvas.getWidth(), canvas.getHeight() );
     }
 }

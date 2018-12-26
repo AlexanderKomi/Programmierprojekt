@@ -3,11 +3,8 @@ package de.hsh.amir.logic;
 
 import common.actor.ControlableActor;
 import common.actor.Direction;
-import javafx.scene.image.Image;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.List;
 
 public class Spielfigur extends ControlableActor {
 
@@ -18,7 +15,7 @@ public class Spielfigur extends ControlableActor {
     private static final HashMap<String, Direction> playerKeyMap = createPlayerKeymap();
 
 
-    protected Spielfigur() {
+    Spielfigur() {
         super(spielFigurBildpfad, startX, startY, playerKeyMap);
         this.setSpeed(defaultSpeed);
     }
