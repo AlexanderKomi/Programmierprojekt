@@ -15,14 +15,14 @@ public class Board {
 
     public static byte numberOfPairs = 0; // These are set externally from the menu.
 
-    private static Card c1 = null;
-    private static Card c2 = null;
-    private static boolean firstCardClicked = false;
-    static ArrayList<Card> cardList;
-    private static Player p1;
-    private static Player p2;
-    private static Player winner;
-    private static int matchCount = 0;
+    private static Card            c1               = null;
+    static         Card            c2               = null;
+    private static boolean         firstCardClicked = false;
+    static         ArrayList<Card> cardList;
+    private static Player          p1;
+    private static Player          p2;
+    private static Player          winner;
+    private static int             matchCount       = 0;
 
 
     Board() {
@@ -68,12 +68,8 @@ public class Board {
             setCardsMatched();
             matchCount++;
 
-
             givePoints();
-
             nullCards();
-            return;
-
 
         } else {
             Logger.log("CARDS DON'T MATCH");
@@ -87,9 +83,7 @@ public class Board {
                 p1.setTurn(true);
                 Logger.log("IT'S P1s TURN! NOW");
             }
-            return;
-
-            /*BoardUtilities.delay(2);
+            /*
             turnBackCards();
             nullCards();*/
         }
@@ -97,7 +91,7 @@ public class Board {
 
     }
 
-    public Player getWinner() {
+    private void getWinner() {
         winner = new Player();
         if(p1.getPoints() > p2.getPoints()) {
             winner = p1;
@@ -108,7 +102,6 @@ public class Board {
             winner.setName("BOTH");
         }
         Logger.log("P1: " + p1.getPoints() + "P2:" +p2.getPoints());
-        return winner;
     }
     /**
      * Locks matched cards so that they can not be turned anymore
@@ -118,37 +111,25 @@ public class Board {
         c2.setCardMatched(true);
     }
 
-
     /**
      * Turns both selected cards facedown again
      */
-    public void turnBackCards() {
+    void turnBackCards() {
         c1.turn();
         c2.turn();
-
-
+        BoardUtilities.delay( 2 );
     }
 
     /**
      * Sets cards to null
      */
-    public void nullCards() {
+    void nullCards() {
         c1 = null;
         c2 = null;
         firstCardClicked = false;
     }
 
-
-    public Card getC1() {
-        return this.c1;
-    }
-
-    public Card getC2() {
-        return this.c2;
-    }
-
-
-    public void givePoints() {
+    private void givePoints() {
         if (p1.isMyTurn()) {
             p1.incrementPoints();
             Logger.log("P1 points: " + p1.getPoints() + "\n ");

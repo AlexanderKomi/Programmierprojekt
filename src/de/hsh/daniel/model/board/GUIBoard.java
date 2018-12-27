@@ -11,11 +11,10 @@ public final class GUIBoard extends Board {
     private static final byte   gridH   = 4;
     private static final int    spacing = 40;
     private static final double imgSize = (double) (WindowConfig.window_height / 4) - (double) spacing / 2;
-    private static       int    gridW;
 
     public GUIBoard() {
         super();
-        gridW = (Board.numberOfPairs / 2);
+        int gridW = (Board.numberOfPairs / 2);
         cardList = BoardUtilities.createGrid(
                 cardList,
                 numberOfPairs,
@@ -47,6 +46,11 @@ public final class GUIBoard extends Board {
     public void draw( Canvas canvas ) {
         for ( Card card : cardList ) {
             card.draw( canvas );
+        }
+
+        if ( c2 != null && !c2.isCardMatched() ) {
+            this.turnBackCards();
+            this.nullCards();
         }
     }
 }

@@ -1,7 +1,9 @@
 package de.hsh.daniel.model.board;
 
+import common.util.Logger;
 import de.hsh.daniel.model.Card;
 import de.hsh.daniel.model.Resources;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,12 +95,16 @@ public final class BoardUtilities {
      *         is converted from sec. to ms.
      */
     public static void delay( final int time ) {
-        try {
-            Thread.sleep( time * 1000 );
-        }
-        catch ( InterruptedException e1 ) {
-            e1.printStackTrace();
-        }
+        Platform.runLater( () -> {
+            Logger.log( "DELAY USED" );
+            try {
+                Thread.sleep( time * 1000 );
+            }
+            catch ( InterruptedException e ) {
+                e.printStackTrace();
+            }
+        } );
+
     }
 
 }
