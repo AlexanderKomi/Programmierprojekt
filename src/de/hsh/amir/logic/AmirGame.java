@@ -1,5 +1,6 @@
 package de.hsh.amir.logic;
 
+import common.util.Logger;
 import common.util.PlaySound;
 import de.hsh.kevin.logic.Score;
 import javafx.scene.canvas.Canvas;
@@ -20,6 +21,9 @@ public class AmirGame {
         this.canvas = canvas;
     }
 
+    /**
+     * Inizialisert die Spielfigur auf in die Mitte der Canvas.
+     */
     private void initializePlayer() {
         this.spielfigur = new Spielfigur();
         spielfigur.setPos(canvas.getWidth() / 2, canvas.getHeight() - 100);
@@ -51,17 +55,19 @@ public class AmirGame {
     private void collisionGegnerSpieler() {
         ArrayList<Gegner> toRemove = new ArrayList<Gegner>();
         for (Gegner gegner : gegnerManager.getGegnerListe()) {
+
             if (spielfigur.doesCollide(gegner)) {
                 points.increase();
                 playSound();
                 toRemove.add(gegner);
+                Logger.log(this.getClass() + " : Anzahl Gegner in der Gegnerliste = " + gegnerManager.getGegnerListe().size());
             }
+
         }
 
         for ( Gegner gegner : toRemove ) {
             gegnerManager.remove( gegner );
         }
-
     }
 
 
