@@ -104,9 +104,10 @@ public class Board {
         } else if (p1.getPoints() < p2.getPoints()){
             winner = p2;
         } else {
-            winner = null;
-            Logger.log("IT'S A DRAW \n");
+            winner = new Player() {};
+            winner.setName("BOTH");
         }
+        Logger.log("P1: " + p1.getPoints() + "P2:" +p2.getPoints());
         return winner;
     }
     /**
