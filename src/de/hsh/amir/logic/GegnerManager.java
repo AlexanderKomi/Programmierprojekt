@@ -40,15 +40,16 @@ public class GegnerManager implements Observer {
 
         Random random = new Random();
         Gegner gegner = null;
+        int    zufallsZahl;
 
         boolean collides = true;
         while ( collides ) {
 
             collides = false;
 
-            int zufallsZahl = RAND_ABSCHNITT + random.nextInt( SPIELFELD_BREITE - 2 * RAND_ABSCHNITT );
+            zufallsZahl = RAND_ABSCHNITT + random.nextInt( SPIELFELD_BREITE - 2 * RAND_ABSCHNITT );
 
-            gegner = new Gegner( "/de/hsh/amir/resources/enemyFigur.png", zufallsZahl );
+            gegner = new Gegner( zufallsZahl );
             gegner.addObserver( this );
 
             for ( Gegner g : this.gegnerListe ) {
@@ -69,7 +70,7 @@ public class GegnerManager implements Observer {
      *
      * @param anzahlGegner unabhöngig von diesem Parameter werden "max" Gegner erstellt.
      */
-    void erstelleGegner( int anzahlGegner ) {
+    void erstelleGegner( final int anzahlGegner ) {
         //CHANGE THIS ONLY IF YOU WANT TO CHANGE THE NUMBER OF GEGNER-OBJECTS!!!
         int max = 5;
 
@@ -118,7 +119,7 @@ public class GegnerManager implements Observer {
         }
     }
 
-    private void moveEnemy( Canvas canvas, int zufallsZahl ) {
+    private void moveEnemy( Canvas canvas, final int zufallsZahl ) {
         for ( Gegner gegner : gegnerListe ) {
             gegner.move();
             if ( gegner.getY() >= canvas.getHeight() ) {

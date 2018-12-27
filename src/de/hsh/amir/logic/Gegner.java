@@ -2,16 +2,22 @@ package de.hsh.amir.logic;
 
 import common.actor.Actor;
 
-public class Gegner extends Actor {
+public final class Gegner extends Actor {
 
     private static final double START_Y = 10;
     private static double GEGNER_SPEED = 3;
 
-    Gegner( String pictureFileName, double x ) {
-        super(pictureFileName, x, START_Y);
+    private static final String enemyPicture = "/de/hsh/amir/resources/enemyFigur.png";
+
+    Gegner( final double x ) {
+        super( enemyPicture, x, START_Y );
     }
 
-    public void move() {
+    Gegner( String enemyPicture, final double x ) {
+        super( enemyPicture, x, START_Y );
+    }
+
+    public final void move() {
         setPos(this.getX(), this.getY() + GEGNER_SPEED);
     }
 
@@ -26,9 +32,5 @@ public class Gegner extends Actor {
      */
     public static void setGegnerSpeed(double speed) {
         GEGNER_SPEED = speed;
-    }
-
-    public static double getGegnerSpeed() {
-        return GEGNER_SPEED;
     }
 }

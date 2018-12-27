@@ -1,14 +1,13 @@
 package common.util;
 
 import common.util.loaders.AudioBuffer;
+import javafx.application.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public final class PlaySound {
-
-    private static int threadCounter = 0;
 
     private static String      musicFile    = null;
     private static Media       currentMedia = null;
@@ -22,7 +21,7 @@ public final class PlaySound {
         playSound( path, true );
     }
 
-    public static void playSound( final String path, boolean resetMediaPlayer ) {
+    public static void playSound( final String path, final boolean resetMediaPlayer ) {
         if ( musicFile == null || !musicFile.equals( path ) ) { //Perfomance-Kniff
             try {
                 if ( prop_mediaPlayer != null ) {
@@ -39,7 +38,7 @@ public final class PlaySound {
         if ( resetMediaPlayer ) {
             resetTimer( prop_mediaPlayer );
         }
-        prop_mediaPlayer.play();
+        Platform.runLater( () -> prop_mediaPlayer.play() );
     }
 
     private static void resetTimer( MediaPlayer mediaPlayer ) {
