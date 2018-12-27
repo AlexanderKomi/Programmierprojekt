@@ -68,18 +68,9 @@ public class Board {
             setCardsMatched();
             matchCount++;
 
-            if (p1.isMyTurn()) {
-                p1.incrementPoints();
-                Logger.log("P1 points: " + p1.getPoints() + "\n ");
-            } else {
-                p2.incrementPoints();
-                Logger.log("P2 points: " + p2.getPoints() + "\n ");
-            }
 
-            if(matchCount == numberOfPairs) {
-                getWinner();
-                Logger.log(winner.getName() + " WINS");
-            }
+            givePoints();
+
             nullCards();
             return;
 
@@ -108,10 +99,13 @@ public class Board {
 
     public Player getWinner() {
         winner = new Player();
-        if(p1.isMyTurn()) {
+        if(p1.getPoints() > p2.getPoints()) {
             winner = p1;
-        } else {
+        } else if (p1.getPoints() < p2.getPoints()){
             winner = p2;
+        } else {
+            winner = null;
+            Logger.log("IT'S A DRAW \n");
         }
         return winner;
     }
@@ -152,6 +146,21 @@ public class Board {
         return this.c2;
     }
 
+
+    public void givePoints() {
+        if (p1.isMyTurn()) {
+            p1.incrementPoints();
+            Logger.log("P1 points: " + p1.getPoints() + "\n ");
+        } else {
+            p2.incrementPoints();
+            Logger.log("P2 points: " + p2.getPoints() + "\n ");
+        }
+
+        if (matchCount == numberOfPairs) {
+            getWinner();
+            Logger.log(winner.getName() + " WINS");
+        }
+    }
 }
 
 
