@@ -32,6 +32,7 @@ public final class GUIBoard extends Board {
         for ( Card card : cardList ) {
             if ( CollisionCheck.doesCollide( card, mouse_x, mouse_y ) ) {
                 onClickedCard( card );
+                break;
             }
         }
     }
