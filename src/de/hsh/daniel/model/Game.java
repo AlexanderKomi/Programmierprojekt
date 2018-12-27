@@ -11,8 +11,6 @@ import javafx.scene.canvas.Canvas;
 public final class Game {
 
     private GUIBoard board;
-    private Player   p1;
-    private Player   p2;
 
     public final void render( Canvas gameCanvas, final int fps ) {
 
