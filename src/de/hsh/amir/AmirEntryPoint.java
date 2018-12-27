@@ -16,63 +16,65 @@ import java.util.Observer;
  */
 public class AmirEntryPoint extends GameEntryPoint {
 
-    private AmirFxmlChanger changer;
+    private AmirFxmlChanger    changer;
     private AmirGameController amirGame;
 
-    public AmirEntryPoint(Observer o) {
-        super(o, WindowConfig.amir_title);
+    public AmirEntryPoint( Observer o ) {
+        super( o, WindowConfig.amir_title );
         //this.amirGame = new AmirGameController();
-        changer = new AmirFxmlChanger(this, AmirsMainMenuController.fxml, new AmirsMainMenuController());
+        changer = new AmirFxmlChanger( this, AmirsMainMenuController.fxml, new AmirsMainMenuController() );
     }
 
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (arg instanceof String) {
+    public void update( Observable o, Object arg ) {
+        if ( arg instanceof String ) {
             String message = (String) arg;
-            switch (message) {
+            switch ( message ) {
                 case UpdateCodes.Amir.startGame:
                     this.amirGame = new AmirGameController();
-                    changer.changeFxml(this.amirGame, UpdateCodes.Amir.startGame);
+                    changer.changeFxml( this.amirGame, UpdateCodes.Amir.startGame );
                     break;
                 case UpdateCodes.Amir.mainMenu:
-                    changer.changeFxml(new AmirsMainMenuController(), UpdateCodes.Amir.mainMenu);
+                    changer.changeFxml( new AmirsMainMenuController(), UpdateCodes.Amir.mainMenu );
                     break;
                 case UpdateCodes.Amir.showEndScreen:
-                    if(amirGame!= null) {
+                    if ( amirGame != null ) {
                         amirGame.deleteObservers();
                         amirGame = null;
                     }
-                    changer.changeFxml(new AmirsMainMenuController(), UpdateCodes.Amir.showEndScreen);
+                    changer.changeFxml( new AmirsMainMenuController(), UpdateCodes.Amir.showEndScreen );
                     break;
                 case UpdateCodes.DefaultCodes.exitToMainGUI:
-                    if(amirGame!= null) {
+                    if ( amirGame != null ) {
                         amirGame.deleteObservers();
                         amirGame = null;
                     }
-                    changer.changeFxml(new AmirsMainMenuController(), UpdateCodes.Amir.mainMenu);
+                    changer.changeFxml( new AmirsMainMenuController(), UpdateCodes.Amir.mainMenu );
                     exitToMainGUI();
                     break;
                 default:
-                    logParsingError(o, arg);
+                    logParsingError( o, arg );
                     break;
             }
             //this.notifyObservers( message );
-        } else {
-            logParsingError(o, arg);
+        }
+        else {
+            logParsingError( o, arg );
         }
     }
 
     @Override
-    public void render(int fps) {
-        if (amirGame != null) {
-            Platform.runLater(() -> {
-                amirGame.render(fps);
-            });
-        }
+    public void render( final int fps ) {
+        Platform.runLater( () -> {
+            if ( amirGame != null ) {
+                amirGame.render( fps );
+            }
+        } );
+
     }
 
-    private static void logParsingError(Observable o, Object arg) {
-        Logger.log("AmirEntryPoint: update : from observable : " + o + " Argument could not be parsed : " + arg);
+    private static void logParsingError( Observable o, Object arg ) {
+        Logger.log( "AmirEntryPoint: update : from observable : " + o + " Argument could not be parsed : " + arg );
     }
 }
