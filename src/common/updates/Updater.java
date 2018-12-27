@@ -38,7 +38,7 @@ public class Updater {
                 UpdateAmirsGame.update( (AmirEntryPoint) gameEntryPoint, arg, gameContainer );
             }
             else if ( gameEntryPoint instanceof RAM ) {
-                update( (RAM) gameEntryPoint, arg, gameContainer );
+                UpdateRAM.update( (RAM) gameEntryPoint, arg, gameContainer );
             } else if (gameEntryPoint instanceof DennisGameEntryPoint) {
                 UpdateDDOSDefender.update((DennisGameEntryPoint) gameEntryPoint, arg, gameContainer);
             }
@@ -60,20 +60,8 @@ public class Updater {
         }
     }
 
-    public static void update( AmirEntryPoint game, Object arg, GameContainer gameContainer ) {
-        Logger.log( game, arg );
-    }
-
-    public static void update( RAM game, Object arg, GameContainer gameContainer ) {
-        Logger.log( game, arg );
-    }
-
-    public static void update(DennisGameEntryPoint game, Object arg, GameContainer gameContainer) {
-        Logger.log(game, arg);
-    }
-
-    public static void update(LKEntryPoint game, Object arg, GameContainer gameContainer ) {
-        Logger.log( game, arg );
+    public static void update( GameEntryPoint game, Object arg, GameContainer gameContainer ) {
+        Logger.log( "Game is not parsed by " + Updater.class + " : " + game, arg );
     }
 
 }
