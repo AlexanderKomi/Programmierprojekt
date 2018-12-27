@@ -27,7 +27,6 @@ public final class Gegner extends Actor {
 
     /**
      * Setzt Gegnergeschwindigkeit GLOBAL!!! auf den übergebenen Wert.
-     *
      * @param speed
      */
     public static void setGegnerSpeed(double speed) {
