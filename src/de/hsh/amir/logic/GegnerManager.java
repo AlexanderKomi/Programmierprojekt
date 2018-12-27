@@ -10,10 +10,10 @@ import java.util.Observer;
 import java.util.Random;
 
 public class GegnerManager implements Observer {
-    private static final int               SPIELFELD_BREITE = 1200;
-    private static final int               RAND_ABSCHNITT   = 200;
-    private              ArrayList<Gegner> gegnerListe      = new ArrayList<Gegner>();
-    private              Score             points;
+    private static final int SPIELFELD_BREITE = 1200;
+    private static final int RAND_ABSCHNITT = 200;
+    private ArrayList<Gegner> gegnerListe = new ArrayList<Gegner>();
+    private Score points;
 
     GegnerManager() {
     }
@@ -40,20 +40,21 @@ public class GegnerManager implements Observer {
 
         Random random = new Random();
         Gegner gegner = null;
-        int    zufallsZahl;
+        int zufallsZahl;
 
         boolean collides = true;
-        while ( collides ) {
+        while (collides) {
 
             collides = false;
 
-            zufallsZahl = RAND_ABSCHNITT + random.nextInt( SPIELFELD_BREITE - 2 * RAND_ABSCHNITT );
+            //set Gegner at a random x-position
+            zufallsZahl = RAND_ABSCHNITT + random.nextInt(SPIELFELD_BREITE - 2 * RAND_ABSCHNITT);
 
-            gegner = new Gegner( zufallsZahl );
-            gegner.addObserver( this );
+            gegner = new Gegner(zufallsZahl);
+            gegner.addObserver(this);
 
-            for ( Gegner g : this.gegnerListe ) {
-                if ( gegner.doesCollide( g ) ) {
+            for (Gegner g : this.gegnerListe) {
+                if (gegner.doesCollide(g)) {
                     collides = true;
                     gegner.deleteObservers();
                     break;
@@ -61,7 +62,11 @@ public class GegnerManager implements Observer {
             }
         }
 
-        this.gegnerListe.add(gegner);
+        //Packe maximal 20 Gegner in der Liste rein!
+        if(gegnerListe.size()<=20){
+            this.gegnerListe.add(gegner);
+        }
+
     }
 
     /**
@@ -70,7 +75,7 @@ public class GegnerManager implements Observer {
      *
      * @param anzahlGegner unabhöngig von diesem Parameter werden "max" Gegner erstellt.
      */
-    void erstelleGegner( final int anzahlGegner ) {
+    void erstelleGegner(final int anzahlGegner) {
         //CHANGE THIS ONLY IF YOU WANT TO CHANGE THE NUMBER OF GEGNER-OBJECTS!!!
         int max = 5;
 
@@ -95,36 +100,37 @@ public class GegnerManager implements Observer {
      * @param canvas
      */
     public void move(Canvas canvas) {
+
         Random random = new Random();
         int zufallsZahl = RAND_ABSCHNITT + random.nextInt(SPIELFELD_BREITE - 2 * RAND_ABSCHNITT);
         int levelNumber = AmirsMainMenuController.LEVEL_NUMBER;
+
         if (levelNumber == 1) {
-            moveEnemy( canvas, zufallsZahl );
-        } else if ( levelNumber == 2) {
-            moveEnemy( canvas, zufallsZahl );
-        }
-        else if ( levelNumber == 3 ) {
+            moveEnemy(canvas, zufallsZahl);
+        } else if (levelNumber == 2) {
+            moveEnemy(canvas, zufallsZahl);
+        } else if (levelNumber == 3) {
+
             for (Gegner gegner : gegnerListe) {
-                if ( gegnerListe.indexOf( gegner ) % 2 == 0 ) {
+                if (gegnerListe.indexOf(gegner) % 2 == 0) {
                     gegner.move();
-                }
-                else {
+                } else {
                     gegner.moveDiagonal();
                 }
-                if ( gegner.getY() >= canvas.getHeight()) {
-                    gegner.setY( -30 );
-                    gegner.setX( zufallsZahl );
+                if (gegner.getY() >= canvas.getHeight()) {
+                    gegner.setY(-30);
+                    gegner.setX(zufallsZahl);
                 }
             }
         }
     }
 
-    private void moveEnemy( Canvas canvas, final int zufallsZahl ) {
-        for ( Gegner gegner : gegnerListe ) {
+    private void moveEnemy(Canvas canvas, final int zufallsZahl) {
+        for (Gegner gegner : gegnerListe) {
             gegner.move();
-            if ( gegner.getY() >= canvas.getHeight() ) {
-                gegner.setY( -30 );
-                gegner.setX( zufallsZahl );
+            if (gegner.getY() >= canvas.getHeight()) {
+                gegner.setY(-30);
+                gegner.setX(zufallsZahl);
             }
         }
     }
