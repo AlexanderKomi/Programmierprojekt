@@ -19,23 +19,23 @@ public final class PacManEndScreen extends Observable implements Initializable {
     public static final String  fxml        = "PacManEndScreen.fxml";
     private             boolean initialized = false;
 
-    public static int player1Points = 0;
-    public static int player2Points = 0;
+    static int player1Points = 0;
+    static int player2Points = 0;
 
 
     @FXML
-    public Canvas player1Canvas;
+    private Canvas player1Canvas;
     @FXML
-    public Canvas player2Canvas;
+    private Canvas player2Canvas;
 
     private PacMan1 pacMan1;
     private PacMan2 pacMan2;
 
 
     @FXML
-    public Label player1PointsLabel;
+    private Label player1PointsLabel;
     @FXML
-    public Label player2PointsLabel;
+    private Label player2PointsLabel;
 
 
     @FXML

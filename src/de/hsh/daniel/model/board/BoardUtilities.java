@@ -6,7 +6,7 @@ import de.hsh.daniel.model.Resources;
 import java.util.ArrayList;
 import java.util.Collections;
 
-final class BoardUtilities {
+public final class BoardUtilities {
 
     private BoardUtilities() {}
 
@@ -92,7 +92,7 @@ final class BoardUtilities {
      * @param time
      *         is converted from sec. to ms.
      */
-    static void delay( final int time ) {
+    public static void delay( final int time ) {
         try {
             Thread.sleep( time * 1000 );
         }

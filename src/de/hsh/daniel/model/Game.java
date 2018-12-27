@@ -1,5 +1,6 @@
 package de.hsh.daniel.model;
 
+import de.hsh.daniel.model.board.BoardUtilities;
 import de.hsh.daniel.model.board.GUIBoard;
 import javafx.scene.canvas.Canvas;
 
@@ -10,11 +11,18 @@ import javafx.scene.canvas.Canvas;
 public final class Game {
 
     private GUIBoard board;
-    private Player   p1;
-    private Player   p2;
 
     public final void render( Canvas gameCanvas, final int fps ) {
+
         board.draw(gameCanvas);
+        if(board.getC2() != null && !board.getC2().isCardMatched()) {
+            BoardUtilities.delay(2);
+        }
+        if(board.getC2() != null && !board.getC2().isCardMatched()) {
+            board.turnBackCards();
+            board.nullCards();
+        }
+
     }
 
     /**
@@ -22,12 +30,16 @@ public final class Game {
      */
     public final void initialize( Canvas gameCanvas ) {
         board = new GUIBoard();
-        p1 = new Player();
-        p2 = new Player();
 
         gameCanvas.setOnMouseClicked(e -> {
             board.onMouseClick(e.getX(), e.getY());
+
         });
+
+      /*  if(board.getC2() != null && !board.getC2().isCardMatched()) {
+            BoardUtilities.delay(2);
+        }*/
+
 
 
     }

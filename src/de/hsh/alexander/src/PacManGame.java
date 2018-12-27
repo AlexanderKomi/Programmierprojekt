@@ -21,7 +21,8 @@ import java.util.ResourceBundle;
 
 public final class PacManGame extends Observable implements Observer, Initializable {
 
-    public static final String fxml = "PacManGame.fxml";
+    public static final String gameFinishedMessage = "PacMan : Game finished";
+    public static final String fxml                = "PacManGame.fxml";
     boolean initialized = false;
 
     private PacManLevel currentLevel;
@@ -63,8 +64,8 @@ public final class PacManGame extends Observable implements Observer, Initializa
     public void update( Observable o, Object arg ) {
         if ( arg instanceof String ) {
             String message = (String) arg;
-            if ( message.equals( PacManLevel.gameFinishedMessage ) ) {
-                Logger.log( this.getClass() + ": " + PacManLevel.gameFinishedMessage );
+            if ( message.equals( gameFinishedMessage ) ) {
+                Logger.log( this.getClass() + ": " + gameFinishedMessage );
                 this.setChanged();
                 this.notifyObservers( UpdateCodes.PacMan.showEndScreen );
             }
