@@ -11,12 +11,6 @@ abstract public class ControlableActor extends Actor {
 
 
     protected ControlableActor( final String pictureFileName,
-                                final HashMap<String, Direction> keymap ) {
-        super( pictureFileName );
-        this.movement.setKeyMap( keymap );
-    }
-
-    protected ControlableActor( final String pictureFileName,
                                 final double x,
                                 final double y,
                                 final HashMap<String, Direction> keymap ) {
@@ -57,7 +51,16 @@ abstract public class ControlableActor extends Actor {
     * Checks Key Released and Pressed Events.
     * */
     public void move( final KeyEvent keyEvent ) {
-        Movement.move( this, keyEvent );
+
+        final String keyName   = keyEvent.getCode().getName();
+        final String eventName = keyEvent.getEventType().getName();
+
+        if ( eventName.equals( "KEY_PRESSED" ) ) {
+            this.movement.onKeyPressed( keyName );
+        }
+        else if ( eventName.equals( "KEY_RELEASED" ) ) {
+            this.movement.onKeyReleased( keyName );
+        }
     }
 
     public void draw( Canvas canvas ) {
@@ -71,10 +74,10 @@ abstract public class ControlableActor extends Actor {
 
     private double[] calculateNewPosFromInput() {
         final double[] xyTuple  = new double[ 2 ];
-        final double   velocity = getMovement().getVelocity();
+        final double   velocity = movement.getVelocity();
 
-        getMovement().getDirections().forEach( direction -> {
-            if ( getMovement().isHoldDown( direction ) ) {
+        movement.getDirections().forEach( direction -> {
+            if ( movement.isHoldDown( direction ) ) {
                 final double[] temp = calculateDirectedSpeed( direction, velocity );
                 xyTuple[ 0 ] = temp[ 0 ];
                 xyTuple[ 1 ] = temp[ 1 ];
@@ -105,13 +108,4 @@ abstract public class ControlableActor extends Actor {
         return xyTuple;
     }
 
-    //--------------------- Getter and Setter ---------------------
-
-    public void setKeyMap( final HashMap<String, Direction> keyMap ) {
-        this.movement.setKeyMap( keyMap );
-    }
-
-    public Movement getMovement() {
-        return movement;
-    }
 }

@@ -32,16 +32,12 @@ abstract public class Drawable extends Observable {
     private int     switchingBuffer          = 0;
     private double  switchingDelay           = 0;
     private boolean switchImageAutomatically = true;
-    private boolean oneTimeAnimation         = false;
-
 
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
-    private int     rotation                 = 0;
-    private boolean doRotation               = false;
 
     private final ImageView        imageView       = new ImageView();
-    private       ArrayList<Image> switchingImages = new ArrayList<>();
+    private final ArrayList<Image> switchingImages = new ArrayList<>();
 
 
     protected Drawable( final String pictureFileName ) {
@@ -112,7 +108,7 @@ abstract public class Drawable extends Observable {
         this( Arrays.asList( pictureFileName ), x, y, delay );
     }
 
-    protected Drawable( double x, double y, double scale, String picturePath ) {
+    protected Drawable( final double x, final double y, final double scale, final String picturePath ) {
         this( picturePath, x, y );
         this.scaleImage( scale );
     }
@@ -124,12 +120,6 @@ abstract public class Drawable extends Observable {
         else {
             this.name = fileName;
             return TextureBuffer.loadImage( fileName );
-        }
-    }
-
-    protected void triggerOneTimeAnimation() {
-        if ( oneTimeAnimation ) {
-
         }
     }
 
@@ -155,11 +145,10 @@ abstract public class Drawable extends Observable {
         }
         else {
             this.setCurrentImage( this.switchingImages.get( 0 ) );
-            this.oneTimeAnimation = false;
         }
     }
 
-    protected void scaleImageWidth( double factor ) {
+    protected void scaleImageWidth( final double factor ) {
         if ( factor > 0 ) {
             this.width *= factor;
         }
@@ -172,7 +161,7 @@ abstract public class Drawable extends Observable {
         this.imageView.setScaleX( scaleX );
     }
 
-    protected void scaleImageHeight( double factor ) {
+    protected void scaleImageHeight( final double factor ) {
         if ( factor > 0 ) {
             this.height *= factor;
         }
@@ -184,7 +173,7 @@ abstract public class Drawable extends Observable {
         this.imageView.setScaleY( scaleY );
     }
 
-    protected void scaleImage( double factor ) {
+    protected void scaleImage( final double factor ) {
         scaleImageHeight( factor );
         scaleImageWidth( factor );
     }
@@ -195,11 +184,11 @@ abstract public class Drawable extends Observable {
         draw( canvas, 0, 0 );
     }
 
-    public synchronized void draw( Canvas canvas, double[] offset_pos ) {
+    public synchronized void draw( Canvas canvas, final double[] offset_pos ) {
         draw( canvas, offset_pos[ 0 ], offset_pos[ 1 ] );
     }
 
-    public synchronized void draw( Canvas canvas, double offset_to_new_x, double offset_to_new_y ) {
+    public synchronized void draw( Canvas canvas, final double offset_to_new_x, final double offset_to_new_y ) {
         draw( canvas, canvas.getWidth(), canvas.getHeight(), offset_to_new_x, offset_to_new_y );
     }
 
@@ -217,8 +206,8 @@ abstract public class Drawable extends Observable {
                                                           canvas_height,
                                                           offset_to_new_x,
                                                           offset_to_new_y );
-        double[] in_bounds_pos = calcPosAfterBounds( isInBounds, offset_to_new_x, offset_to_new_y );
-        double[] old_pos       = this.getPos();
+        final double[] in_bounds_pos = calcPosAfterBounds( isInBounds, offset_to_new_x, offset_to_new_y );
+        final double[] old_pos       = this.getPos();
         this.setPos( in_bounds_pos );
         this.setPos( beforeDrawing( old_pos, in_bounds_pos ) ); // Maybe reset ? :)
         switchImages();
@@ -392,7 +381,7 @@ abstract public class Drawable extends Observable {
         return switchingDelay;
     }
 
-    public void setSwitchingDelay( double switchingDelay ) {
+    protected void setSwitchingDelay( double switchingDelay ) {
         this.switchingDelay = switchingDelay;
     }
 
@@ -404,7 +393,7 @@ abstract public class Drawable extends Observable {
         this.switchImageAutomatically = switchImageAutomatically;
     }
 
-    public Image getCurrentImage() {
+    protected Image getCurrentImage() {
         return this.imageView.getImage();
     }
 
@@ -418,7 +407,7 @@ abstract public class Drawable extends Observable {
         this.setWidth( this.getCurrentImage().getWidth() );
     }
 
-    public ArrayList<Image> getSwitchingImages() {
+    private ArrayList<Image> getSwitchingImages() {
         return switchingImages;
     }
 
@@ -426,7 +415,7 @@ abstract public class Drawable extends Observable {
         this.switchingImages.addAll( switchingImages );
     }
 
-    public void addSwitchingImage( String imagePath ) {
+    private void addSwitchingImage( String imagePath ) {
         this.getSwitchingImages().add( this.loadPicture( imagePath ) );
     }
 

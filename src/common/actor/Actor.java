@@ -14,8 +14,6 @@ import java.util.List;
  */
 abstract public class Actor extends Drawable {
 
-    private double      soundDelay      = 0;
-    private double      soundBuffer     = 0;
     final   Movement    movement        = new Movement();
     private List<Actor> collisionActors = new ArrayList<>();
 
@@ -159,13 +157,11 @@ abstract public class Actor extends Drawable {
     }
 
     protected synchronized void playSound( final String filePath ) {
-        //PlaySound p = new PlaySound();
-        //p.play( filePath );
         PlaySound.playSound( filePath );
     }
 
     // ----------------------------------- GETTER AND SETTER -----------------------------------
-    void setCollisionActors( final List<Actor> list ) {
+    private void setCollisionActors( final List<Actor> list ) {
         this.collisionActors = list;
     }
 
@@ -183,9 +179,7 @@ abstract public class Actor extends Drawable {
         this.setCollisionActors( l );
     }
 
-    protected void onRemove( Collectable collectable ) {
-
-    }
+    protected void onRemove( final Collectable collectable ) {}
 
     public void setSpeed( double speed ) {
         this.movement.setVelocity( speed );
@@ -195,18 +189,13 @@ abstract public class Actor extends Drawable {
         return this.movement.getVelocity();
     }
 
-    public List<Actor> getCollisionActors() {
+    private List<Actor> getCollisionActors() {
         return this.collisionActors;
     }
 
-    public boolean addCollidingActor( Actor a ) {
+    public void addCollidingActor( Actor a ) {
         if ( !this.collisionActors.contains( a ) ) {
-            return this.collisionActors.add( a );
+            this.collisionActors.add( a );
         }
-        return false;
-    }
-
-    public void setSoundDelay( double soundDelay ) {
-        this.soundDelay = soundDelay;
     }
 }

@@ -123,8 +123,8 @@ public class CollisionCheck {
                             mouse_x, mouse_y, 0, 0 );
     }
 
-    public static boolean doesCollide(final double a_x, final double a_y, final double a_width, final double a_height,
-                               final double b_x, final double b_y, final double b_width, final double b_height) {
+    private static boolean doesCollide( final double a_x, final double a_y, final double a_width, final double a_height,
+                                        final double b_x, final double b_y, final double b_width, final double b_height ) {
         return checkUpperLeftCorner(a_x, a_y, a_width, a_height, b_x, b_y) ||
                 checkUpperRightCorner(a_x, a_y, a_width, a_height, b_x, b_y, b_width) ||
                 checkLowerRightCorner(a_x, a_y, a_width, a_height, b_x, b_y, b_width, b_height) ||

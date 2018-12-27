@@ -1,7 +1,5 @@
 package common.actor;
 
-import javafx.scene.input.KeyEvent;
-
 import java.util.HashMap;
 import java.util.Set;
 
@@ -25,7 +23,7 @@ final class Movement {
     }
 
     private boolean isHoldDown( final String keyName ) {
-        Direction d = this.keymap.get( keyName );
+        final Direction d = this.keymap.get( keyName );
         if ( d != null ) {
             return holdDown.get( d );
         }
@@ -37,26 +35,22 @@ final class Movement {
     }
 
     private void setKeyHoldDownIfPresent( final String keyName, final boolean b ) {
-        Direction d = this.keymap.get( keyName );
+        final Direction d = this.keymap.get( keyName );
         if ( d != null ) {
             this.holdDown.put( d, b );
         }
     }
 
-    static void move( ControlableActor a, final KeyEvent keyEvent ) {
-        String keyName   = keyEvent.getCode().getName();
-        String eventName = keyEvent.getEventType().getName();
-        if ( eventName.equals( "KEY_PRESSED" ) ) {
-            if ( !a.getMovement().isHoldDown( keyName ) ) {
-                if ( a.getMovement().contains( keyName ) ) {
-                    a.getMovement().setKeyHoldDownIfPresent( keyName, true );
-                    //movement.addDirection(movement.getKeymap().get( keyName ));
-                }
+    void onKeyPressed( final String keyName ) {
+        if ( !this.isHoldDown( keyName ) ) {
+            if ( this.contains( keyName ) ) {
+                this.setKeyHoldDownIfPresent( keyName, true );
             }
         }
-        else if ( eventName.equals( "KEY_RELEASED" ) ) {
-            a.getMovement().setKeyHoldDownIfPresent( keyName, false );
-        }
+    }
+
+    void onKeyReleased( final String keyName ) {
+        this.setKeyHoldDownIfPresent( keyName, false );
     }
 
     // ------------- GETTER and Setter --------------

@@ -177,11 +177,11 @@ abstract public class Level extends Observable implements Observer, ILevel {
 
     protected abstract boolean isGameFinished();
 
-    public List<ControlableActor> getPlayers() {
+    protected List<ControlableActor> getPlayers() {
         return players;
     }
 
-    public List<LevelElement> getLevelElements() {
+    protected List<LevelElement> getLevelElements() {
         return levelElements;
     }
 
@@ -189,7 +189,7 @@ abstract public class Level extends Observable implements Observer, ILevel {
         return npcs;
     }
 
-    public List<Collectable> getCollectables() {
+    protected List<Collectable> getCollectables() {
         return this.collectables;
     }
 
