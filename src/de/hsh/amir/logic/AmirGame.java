@@ -79,6 +79,9 @@ public class AmirGame {
         this.spielfigur.move(event);
     }
 
+    /**
+     * Zeichnet den Spieler und die Gegner auf die Canvas
+     */
     private void draw() {
         clearCanvasForPlayer();
         spielfigur.draw( canvas );
