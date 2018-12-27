@@ -11,10 +11,10 @@ import java.util.Observer;
 
 public final class PacManController extends GameEntryPoint {
 
-    private final PacManFxmlChanger changer;
-    private       PacManGame        game;
-    private       PacManEndScreen   pacManEndScreen = new PacManEndScreen();
-    private       PacManMenu        pacManMenu      = new PacManMenu();
+    private final  PacManFxmlChanger changer;
+    private static PacManGame        game;
+    private static PacManEndScreen   pacManEndScreen = new PacManEndScreen();
+    private static PacManMenu        pacManMenu      = new PacManMenu();
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );
@@ -34,23 +34,11 @@ public final class PacManController extends GameEntryPoint {
                     break;
                 case UpdateCodes.PacMan.mainMenu:
                     Logger.log( "-------------------MAIN MENU----------------------" );
-
                     changer.changeFxml( pacManMenu, UpdateCodes.PacMan.mainMenu );
                     exitToMainGUI();
                     break;
                 case UpdateCodes.PacMan.showEndScreen:
-                    Platform.runLater( () -> {
-                        PacManEndScreen.player1Points = game.getCurrentLevel().getPacMan1Property().get();
-                        PacManEndScreen.player2Points = game.getCurrentLevel().getPacMan2Property().get();
-                        changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
-
-                        if ( this.game != null ) {
-                            this.game.delete();
-                            this.game = null;
-                        }
-                    } );
-
-
+                    showEndScreen();
                     break;
                 case UpdateCodes.PacMan.repeatGame:
                     //changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
@@ -68,12 +56,25 @@ public final class PacManController extends GameEntryPoint {
     }
 
     private void startGame() {
-        if ( this.game != null ) {
-            this.game.deleteObservers();
+        if ( game != null ) {
+            game.deleteObservers();
         }
-        this.game = new PacManGame();
+        game = new PacManGame();
         game.addObserver( this );
-        changer.changeFxml( this.game, UpdateCodes.PacMan.startGame );
+        changer.changeFxml( game, UpdateCodes.PacMan.startGame );
+    }
+
+    private void showEndScreen() {
+        Platform.runLater( () -> {
+            PacManEndScreen.player1Points = game.getCurrentLevel().getPacMan1Property().get();
+            PacManEndScreen.player2Points = game.getCurrentLevel().getPacMan2Property().get();
+            changer.changeFxml( pacManEndScreen, UpdateCodes.PacMan.showEndScreen );
+
+            if ( game != null ) {
+                game.delete();
+                game = null;
+            }
+        } );
     }
 
     private static void logParsingError( Observable o, Object arg ) {

@@ -23,9 +23,9 @@ public final class PacManMenu extends Observable implements Initializable {
 
     public static final String   fxml        = "PacManMenu.fxml";
     private             boolean  initialized = false;
-    private             DataCoin d;
-    private             PacMan1  pacMan1;
-    private             PacMan2  pacMan2;
+    private static      DataCoin d;
+    private static      PacMan1  pacMan1;
+    private static      PacMan2  pacMan2;
 
     @FXML
     public VBox   basicPane;
