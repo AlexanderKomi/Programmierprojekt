@@ -12,7 +12,7 @@ import javafx.application.Platform;
 import java.util.Observable;
 import java.util.Observer;
 
-public class RAM extends GameEntryPoint {
+public final class RAM extends GameEntryPoint {
 
     public static final String             directory   = Path.getExecutionLocation() + "de/hsh/daniel/";
     private             RAMFxmlChanger     changer;

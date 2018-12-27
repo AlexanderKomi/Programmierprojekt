@@ -4,9 +4,9 @@ import common.GameContainer;
 import common.util.Logger;
 import de.hsh.alexander.src.PacManController;
 
-public class UpdatePacman {
+public final class UpdatePacman {
 
-    public static void update( PacManController pacManController, Object arg, GameContainer gameContainer ) {
+    public static void update( PacManController pacManController, final Object arg, GameContainer gameContainer ) {
         if ( arg instanceof String ) {
             String message = (String) arg;
             switch ( message ) {
@@ -21,7 +21,7 @@ public class UpdatePacman {
             }
         }
         else {
-            Logger.log( pacManController, arg );
+            Logger.log( UpdatePacman.class + " : Unknown Arguments :  " + pacManController, arg );
         }
     }
 

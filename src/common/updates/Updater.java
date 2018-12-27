@@ -13,11 +13,11 @@ import de.hsh.kevin.controller.TIController;
 
 import java.util.Observable;
 
-public class Updater {
+public final class Updater {
 
-    final static String unknownErrorCode  = "ATTENTION : UNKNOWN OBSERVABLE OF TYPE GAME IS NOT PARSED";
-    final static String unkownParsingCode = "Unknown String argument: ";
-    final static String parsingErrorCode  = "Can not parse : ";
+    private final static String unknownErrorCode  = "ATTENTION : UNKNOWN OBSERVABLE OF TYPE GAME IS NOT PARSED";
+    final static         String unkownParsingCode = "Unknown String argument: ";
+    final static         String parsingErrorCode  = "Can not parse : ";
 
     /**
      * Cast observables to the correct type, and call the correct method.<br>
