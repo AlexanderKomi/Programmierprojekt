@@ -14,30 +14,28 @@ public class Board {
 
     public static byte numberOfPairs = 0; // These are set externally from the menu.
 
-    private static Card            c1               = null;
-    private static Card            c2               = null;
-    private static boolean         firstCardClicked = false;
-    static         ArrayList<Card> cardList;
+    private static Card c1 = null;
+    private static Card c2 = null;
+    private static boolean firstCardClicked = false;
+    static ArrayList<Card> cardList;
 
 
     Board() {
-        cardList = BoardUtilities.initCards( numberOfPairs );
+        cardList = BoardUtilities.initCards(numberOfPairs);
     }
 
-    void matchCards( Card card ) {
-        if ( !card.isCardMatched() ) {
-            if ( !firstCardClicked ) {
+    void matchCards(Card card) {
+        if (!card.isCardMatched()) {
+            if (!firstCardClicked) {
                 c1 = card;
                 firstCardClicked = true;
-            }
-            else {
+            } else {
                 c2 = card;
             }
 
-            if ( c1 != null && c2 == null ) {
+            if (c1 != null && c2 == null) {
                 c1.turn();
-            }
-            else if ( c1 != null ) {
+            } else if (c1 != null) {
                 c2.turn();
             }
         }
@@ -50,18 +48,17 @@ public class Board {
      */
     private void checkMatch() {
 
-        if ( c1 == null || c2 == null ) {
-            Logger.log( "Cards are empty." );
+        if (c1 == null || c2 == null) {
+            Logger.log("Cards are empty.");
             return;
         }
 
-        if ( c1.equals( c2 ) ) {
-            Logger.log( "CARDS MATCH" );
+        if (c1.equals(c2)) {
+            Logger.log("CARDS MATCH");
             setCardsMatched();
-        }
-        else {
-            Logger.log( "CARDS DON'T MATCH" );
-            BoardUtilities.delay( 2 );
+        } else {
+            Logger.log("CARDS DON'T MATCH");
+            BoardUtilities.delay(2);
             turnBackCards();
         }
         nullCards();
@@ -72,8 +69,8 @@ public class Board {
      * Locks matched cards so that they can not be turned anymore
      */
     private void setCardsMatched() {
-        c1.setCardMatched( true );
-        c2.setCardMatched( true );
+        c1.setCardMatched(true);
+        c2.setCardMatched(true);
     }
 
     /**
@@ -92,7 +89,6 @@ public class Board {
         c2 = null;
         firstCardClicked = false;
     }
-
 
 
 }
