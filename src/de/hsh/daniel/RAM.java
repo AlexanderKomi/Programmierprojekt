@@ -29,16 +29,21 @@ public class RAM extends GameEntryPoint {
         if ( arg instanceof String ) {
             String message = (String) arg;
 
-            Logger.log( this.getClass() + ": arg = " + message );
+            Logger.log(this.getClass() + ": arg = " + message);
 
-            if ( message.equals( UpdateCodes.RAM.startGame ) ) {
+            if (message.equals(UpdateCodes.RAM.startGame)) {
 
                 game = new RamGame_controller();
-                changer.changeFxml( game, message );
+                changer.changeFxml(game, message);
                 initialized = true;
+
+            } else if (message.equals(UpdateCodes.DefaultCodes.exitToMainGUI)) {
+                Logger.log("exit reached");
+                exitToMainGUI();
+
+            } else {
+                changer.changeFxml(o, (String) arg);
             }
-        }else{
-            changer.changeFxml( o, (String) arg );
         }
     }
 

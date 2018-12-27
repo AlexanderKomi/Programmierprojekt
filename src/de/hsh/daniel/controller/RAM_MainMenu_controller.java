@@ -12,7 +12,7 @@ import java.util.Observable;
 
 public class RAM_MainMenu_controller extends Observable {
 
-    public static String fxml = "view/ram_Menu.fxml";
+    public static String fxml = "view/ramMenuNew.fxml";
 
     @FXML
     private Button b_play;
@@ -61,7 +61,7 @@ public class RAM_MainMenu_controller extends Observable {
 
             case "b_back":
                 setChanged();
-                notifyObservers(id);
+                notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
                 break;
 
             default:

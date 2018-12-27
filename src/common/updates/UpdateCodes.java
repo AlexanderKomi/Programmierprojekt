@@ -46,10 +46,12 @@ public final class UpdateCodes {
     }
 
     public static final class RAM {
-        public static final String startGame = "Start Game";
-        public static final String mainMenu = "Mainmenu";
-        public static final String fieldSize = "Field size changed";
         public static final String gameName = WindowConfig.daniel_title;
+        public static final String startGame = "Start Game";
+        public static final String mainMenu = "MainMenu";
+        public static final String fieldSize = "Field size changed";
+        public static final String gameOver = "Game Over";
+        public static final String quit = "Quit to MainGUI";
     }
 
     public static final class LK {
