@@ -1,7 +1,6 @@
 package de.hsh.amir.logic;
 
 import common.util.PlaySound;
-import de.hsh.dennis.model.AudioPlayer;
 import de.hsh.kevin.logic.Score;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
@@ -41,7 +40,7 @@ public class AmirGame {
      * Spielt einen Sound ab.
      */
     private static void playSound() {
-        PlaySound.playSound("src/de/hsh/amir/resources/clickSound.mp3");
+        PlaySound.playSound( "src/de/hsh/amir/resources/clickSound.mp3", true );
     }
 
 
