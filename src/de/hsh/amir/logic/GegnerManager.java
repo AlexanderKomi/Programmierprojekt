@@ -37,10 +37,29 @@ public class GegnerManager implements Observer {
      * Erstellt einen Gegner und setzt ihn an eine zufällig x-Position.
      */
     private void erstelleGegner() {
+
         Random random = new Random();
-        int zufallsZahl = RAND_ABSCHNITT + random.nextInt(SPIELFELD_BREITE - 2 * RAND_ABSCHNITT);
-        Gegner gegner = new Gegner("/de/hsh/amir/resources/enemyFigur.png", zufallsZahl);
-        gegner.addObserver(this);
+        Gegner gegner = null;
+
+        boolean collides = true;
+        while ( collides ) {
+
+            collides = false;
+
+            int zufallsZahl = RAND_ABSCHNITT + random.nextInt( SPIELFELD_BREITE - 2 * RAND_ABSCHNITT );
+
+            gegner = new Gegner( "/de/hsh/amir/resources/enemyFigur.png", zufallsZahl );
+            gegner.addObserver( this );
+
+            for ( Gegner g : this.gegnerListe ) {
+                if ( gegner.doesCollide( g ) ) {
+                    collides = true;
+                    gegner.deleteObservers();
+                    break;
+                }
+            }
+        }
+
         this.gegnerListe.add(gegner);
     }
 
