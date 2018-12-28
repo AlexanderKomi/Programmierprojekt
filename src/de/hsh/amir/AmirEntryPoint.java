@@ -16,8 +16,8 @@ import java.util.Observer;
  */
 public class AmirEntryPoint extends GameEntryPoint {
 
-    private AmirFxmlChanger    changer;
-    private AmirGameController amirGame;
+    private final  AmirFxmlChanger    changer;
+    private static AmirGameController amirGame;
 
     public AmirEntryPoint( Observer o ) {
         super( o, WindowConfig.amir_title );
@@ -32,8 +32,8 @@ public class AmirEntryPoint extends GameEntryPoint {
             String message = (String) arg;
             switch ( message ) {
                 case UpdateCodes.Amir.startGame:
-                    this.amirGame = new AmirGameController();
-                    changer.changeFxml( this.amirGame, UpdateCodes.Amir.startGame );
+                    amirGame = new AmirGameController();
+                    changer.changeFxml( amirGame, UpdateCodes.Amir.startGame );
                     break;
                 case UpdateCodes.Amir.mainMenu:
                     changer.changeFxml( new AmirsMainMenuController(), UpdateCodes.Amir.mainMenu );

@@ -152,6 +152,11 @@ abstract public class Actor extends Drawable {
         return b;
     }
 
+    public boolean isInBounds( double canvas_width, double canvas_height ) {
+        boolean[] temp = CollisionCheck.isInBounds( this, canvas_width, canvas_height );
+        return (temp[ 0 ] && temp[ 1 ]);
+    }
+
     protected synchronized boolean collisionModifier( final Actor other ) {
         return true;
     }
