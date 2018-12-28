@@ -103,12 +103,13 @@ public class Board {
      * Determines winner from collected points
      */
     private void announceWinner() {
-        winner = new Player();
+
         if (p1.getPoints() > p2.getPoints()) {
             winner = p1;
         } else if (p1.getPoints() < p2.getPoints()) {
             winner = p2;
-        } else {
+        } else if( p1.getPoints() == p2.getPoints() ){
+            winner = new Player();
             winner.setName("BOTH");
         }
         Logger.log("P1: " + p1.getPoints() + "| P2:" + p2.getPoints());
@@ -151,7 +152,7 @@ public class Board {
         if (p1.isMyTurn()) {
             p1.incrementPoints();
             Logger.log("P1 points: " + p1.getPoints() + "\n ");
-        } else {
+        } else if(p2.isMyTurn()) {
             p2.incrementPoints();
             Logger.log("P2 points: " + p2.getPoints() + "\n ");
         }
@@ -166,6 +167,7 @@ public class Board {
     public Board getBoard() {
         return this;
     }
+    public static void resetWinner() {winner = null; }
 
 
 }

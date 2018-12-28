@@ -8,8 +8,8 @@ import javafx.scene.canvas.Canvas;
 public final class GUIBoard extends Board {
 
 
-    private static final byte   gridH   = 4;
-    private static final int    spacing = 40;
+    private static final byte gridH = 4;
+    private static final int spacing = 40;
     private static final double imgSize = (double) (WindowConfig.window_height / 4) - (double) spacing / 2;
 
     public GUIBoard() {
@@ -21,16 +21,16 @@ public final class GUIBoard extends Board {
                 gridW,
                 gridH,
                 imgSize,
-                spacing );
+                spacing);
     }
 
     /**
      * A mouse click happened to the board.
      */
-    public void onMouseClick( final double mouse_x, final double mouse_y ) {
-        for ( Card card : cardList ) {
-            if ( CollisionCheck.doesCollide( card, mouse_x, mouse_y ) ) {
-                onClickedCard( card );
+    public void onMouseClick(final double mouse_x, final double mouse_y) {
+        for (Card card : cardList) {
+            if (CollisionCheck.doesCollide(card, mouse_x, mouse_y)) {
+                onClickedCard(card);
                 break;
             }
         }
@@ -39,16 +39,16 @@ public final class GUIBoard extends Board {
     /**
      * Checks if card is clicked and not selected, then turns that card
      */
-    private void onClickedCard( Card card ) {
-        matchCards( card );
+    private void onClickedCard(Card card) {
+        matchCards(card);
     }
 
-    public void draw( Canvas canvas ) {
-        for ( Card card : cardList ) {
-            card.draw( canvas );
+    public void draw(Canvas canvas) {
+        for (Card card : cardList) {
+            card.draw(canvas);
         }
 
-        if ( c2 != null && !c2.isCardMatched() ) {
+        if (c2 != null && !c2.isCardMatched()) {
             this.turnBackCards();
             this.nullCards();
         }

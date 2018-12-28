@@ -12,17 +12,13 @@ public class Player {
     public Player() {
         ++playerCount;
         points = 0;
-        if (playerCount <= 2) {
+        if (playerCount < 3) {
             setName("P" + playerCount);
         } else {
             setName("BOTH");
             ;
         }
     }
-
-    /*TODO: Implement check if players is in line
-     */
-
 
     /**
      * Increments players points

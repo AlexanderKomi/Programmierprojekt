@@ -4,6 +4,7 @@ import common.config.WindowConfig;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.daniel.model.Game;
+import de.hsh.daniel.model.board.Board;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,6 +57,7 @@ public class RamGame_controller extends Observable implements Initializable {
                     } else {
                         return;
                     }
+                    Board.resetWinner();
                 }
             }
         }
