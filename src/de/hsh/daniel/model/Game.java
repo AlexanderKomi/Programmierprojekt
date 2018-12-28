@@ -1,5 +1,6 @@
 package de.hsh.daniel.model;
 
+import de.hsh.daniel.model.board.Board;
 import de.hsh.daniel.model.board.GUIBoard;
 import javafx.scene.canvas.Canvas;
 
@@ -23,9 +24,13 @@ public final class Game {
 
         gameCanvas.setOnMouseClicked(e -> {
             board.onMouseClick(e.getX(), e.getY());
-
         });
     }
+
+    public Board getGUIBoard() { return board.getBoard(); }
+
+
+   // public Board getBoard() { return this.board; }
 }
 
 

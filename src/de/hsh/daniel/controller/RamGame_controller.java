@@ -4,7 +4,6 @@ import common.config.WindowConfig;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.daniel.model.Game;
-import de.hsh.daniel.model.board.Board;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,13 +30,50 @@ public class RamGame_controller extends Observable implements Initializable {
     @FXML
     private Button b_X;
 
-    public void render( final int fps ) {
-        if(game != null){
-            if(initialized) {
-                gameCanvas.getGraphicsContext2D().clearRect(0,0,WindowConfig.window_width, WindowConfig.window_height);
+    public void render(final int fps) {
+        if (game != null) {
+            if (initialized) {
+                gameCanvas.getGraphicsContext2D().clearRect(0, 0, WindowConfig.window_width, WindowConfig.window_height);
                 game.render(gameCanvas, fps);
+
+                if (game.getGUIBoard().getWinner() != null) {
+
+                    if (gameWon().equals(UpdateCodes.RAM.p1Win)) {
+                        setChanged();
+                        notifyObservers(UpdateCodes.RAM.p1Win);
+                        initialized = false;
+
+                    } else if (gameWon().equals(UpdateCodes.RAM.p2Win)) {
+                        setChanged();
+                        notifyObservers(UpdateCodes.RAM.p2Win);
+                        initialized = false;
+
+                    } else if (gameWon().equals(UpdateCodes.RAM.tie)) {
+                        setChanged();
+                        notifyObservers(UpdateCodes.RAM.tie);
+                        initialized = false;
+
+                    } else {
+                        return;
+                    }
+                }
             }
         }
+    }
+
+
+    private String gameWon() {
+        if (game.getGUIBoard().getWinner().getName().equals("P1")) {
+            return UpdateCodes.RAM.p1Win;
+
+        } else if (game.getGUIBoard().getWinner().getName().equals("P2")) {
+            return UpdateCodes.RAM.p2Win;
+        } else if (game.getGUIBoard().getWinner().getName().equals("BOTH")) {
+            return UpdateCodes.RAM.tie;
+        } else {
+            return null;
+        }
+
     }
 
     @Override
@@ -51,7 +87,6 @@ public class RamGame_controller extends Observable implements Initializable {
     }
 
 
-
     @FXML
     public void button_click(ActionEvent event) {
         String id = getId(event);
@@ -61,7 +96,6 @@ public class RamGame_controller extends Observable implements Initializable {
                 setChanged();
                 notifyObservers(UpdateCodes.RAM.mainMenu);
                 break;
-
             default:
                 Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
 
@@ -69,6 +103,7 @@ public class RamGame_controller extends Observable implements Initializable {
 
 
     }
+
     private String getId(ActionEvent event) {
         return ((Node) event.getSource()).getId();
     }

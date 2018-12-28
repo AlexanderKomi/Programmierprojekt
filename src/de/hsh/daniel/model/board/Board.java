@@ -81,16 +81,11 @@ public class Board {
             Logger.log("CARDS DON'T MATCH");
             changeActivePlayer();
         }
-
-            /*
-            turnBackCards();
-            nullCards();*/
     }
 
     /**
      * Changes active player if cards we're not matched
      */
-
     public void changeActivePlayer() {
         if (p1.isMyTurn()) {
             p1.setTurn(false);
@@ -106,7 +101,7 @@ public class Board {
     /**
      * Determines winner from collected points
      */
-    private void getWinner() {
+    private void announceWinner() {
         winner = new Player();
         if (p1.getPoints() > p2.getPoints()) {
             winner = p1;
@@ -119,6 +114,8 @@ public class Board {
         }
         Logger.log("P1: " + p1.getPoints() + "| P2:" + p2.getPoints());
     }
+
+    public Player getWinner() { return this.winner; }
 
     /**
      * Locks matched cards so that they can not be turned anymore
@@ -146,6 +143,9 @@ public class Board {
         firstCardClicked = false;
     }
 
+    /**
+     * Gives points to player who found a pair of cards
+     */
     private void givePoints() {
         if (p1.isMyTurn()) {
             p1.incrementPoints();
@@ -156,10 +156,15 @@ public class Board {
         }
 
         if (matchCount == numberOfPairs) {
-            getWinner();
+            announceWinner();
             Logger.log(winner.getName() + " WINS");
         }
     }
+
+
+    public  Board getBoard() { return this; }
+
+
 }
 
 

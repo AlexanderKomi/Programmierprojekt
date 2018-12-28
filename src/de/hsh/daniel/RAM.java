@@ -6,6 +6,7 @@ import common.updates.UpdateCodes;
 import common.util.Logger;
 import common.util.Path;
 import de.hsh.daniel.controller.RAM_MainMenu_controller;
+import de.hsh.daniel.controller.RAM_winScreen_controller;
 import de.hsh.daniel.controller.RamGame_controller;
 import javafx.application.Platform;
 
@@ -19,6 +20,7 @@ public final class RAM extends GameEntryPoint {
     private boolean initialized = false;
     private RamGame_controller game;
     private RAM_MainMenu_controller ramMenu;
+    private RAM_winScreen_controller winScreen;
 
     public RAM(Observer o) {
         super(o, WindowConfig.daniel_title);
@@ -41,12 +43,23 @@ public final class RAM extends GameEntryPoint {
             } else if (message.equals(UpdateCodes.RAM.mainMenu)) {
 
                 ramMenu = new RAM_MainMenu_controller();
-                changer.changeFxml(ramMenu, message);
                 initialized = false;
+                changer.changeFxml(ramMenu, message);
 
-            } else if (message.equals(UpdateCodes.DefaultCodes.exitToMainGUI)) {
+
+            } else if (message.equals(UpdateCodes.DefaultCodes.exitToMainGUI) || message.equals(UpdateCodes.RAM.quit)) {
                 Logger.log("exit reached");
+                initialized = false;
                 exitToMainGUI();
+
+            } else if (message.equals(UpdateCodes.RAM.p1Win) || message.equals(UpdateCodes.RAM.p2Win) ||
+                    message.equals(UpdateCodes.RAM.tie)) {
+
+                winScreen = new RAM_winScreen_controller();
+                initialized = false;
+                changer.changeFxml(winScreen, message);
+
+
             } else {
                 changer.changeFxml(o, (String) arg);
             }

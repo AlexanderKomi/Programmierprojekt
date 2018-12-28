@@ -50,7 +50,9 @@ public final class UpdateCodes {
         public static final String startGame = "Start Game";
         public static final String mainMenu = "MainMenu";
         public static final String fieldSize = "Field size changed";
-        public static final String gameOver = "Game Over";
+        public static final String p1Win = "Player 1 wins";
+        public static final String p2Win = "Player 2 wins";
+        public static final String tie = "It's a tie";
         public static final String quit = "Quit to MainGUI";
     }
 
