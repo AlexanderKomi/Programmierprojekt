@@ -18,6 +18,10 @@ public class CollisionCheck {
         return isInBounds(a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas);
     }
 
+    public static boolean[] isInBounds( Drawable a, double canvas_widht, double canvas_height ) {
+        return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas_widht, canvas_height, 0, 0 );
+    }
+
 
     /**
      * Calculates if a rectangle with a tuple of coordinates (x, y) and given width and height,

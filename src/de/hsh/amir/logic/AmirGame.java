@@ -9,14 +9,14 @@ import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 
 public class AmirGame {
-    private Spielfigur spielfigur;
-    private Score points;
+    private Spielfigur    spielfigur;
+    private Score         points;
     private GegnerManager gegnerManager;
-    private Canvas canvas;
-    private int timer;
+    private Canvas        canvas;
+    private int           timer;
 
 
-    public AmirGame(Canvas canvas, Score points) {
+    public AmirGame( Canvas canvas, Score points ) {
         this.points = points;
         this.canvas = canvas;
     }
@@ -26,18 +26,35 @@ public class AmirGame {
      */
     private void initializePlayer() {
         this.spielfigur = new Spielfigur();
-        spielfigur.setPos(canvas.getWidth() / 2, canvas.getHeight() - 100);
+        spielfigur.setPos( canvas.getWidth() / 2, canvas.getHeight() - 100 );
     }
 
     public void render( final int fps ) {
+        deleteOutOfBoundsEnemies( canvas.getWidth(), canvas.getHeight() );
         timer++;
-        if (timer == 120) {
-            gegnerManager.erstelleGegner(4);
+        if ( timer == 120 ) {
+            gegnerManager.erstelleGegner( 4 );
             timer = 0;
         }
         collisionGegnerSpieler();
-        gegnerManager.move(canvas);
+        gegnerManager.move( canvas );
         draw();
+    }
+
+    /**
+     * Löscht alle Gegner die sich nicht mehr im sichtbaren Bereich befinden.
+     */
+    private void deleteOutOfBoundsEnemies( final double canvasWidth, final double canvasHeight ) {
+        ArrayList<Gegner> temp     = gegnerManager.getGegnerListe();
+        ArrayList<Gegner> toRemove = new ArrayList<>();
+
+        for ( Gegner gegner : temp ) {
+            if ( !gegner.isInBounds( canvasWidth, canvasHeight + gegner.getHeight() ) ) {
+                toRemove.add( gegner );
+            }
+        }
+        temp.removeAll( toRemove );
+        gegnerManager.setGegnerListe( temp );
     }
 
     /**
@@ -54,13 +71,13 @@ public class AmirGame {
      */
     private void collisionGegnerSpieler() {
         ArrayList<Gegner> toRemove = new ArrayList<Gegner>();
-        for (Gegner gegner : gegnerManager.getGegnerListe()) {
+        for ( Gegner gegner : gegnerManager.getGegnerListe() ) {
 
-            if (spielfigur.doesCollide(gegner)) {
+            if ( spielfigur.doesCollide( gegner ) ) {
                 points.increase();
                 playSound();
-                toRemove.add(gegner);
-                Logger.log(this.getClass() + " : Anzahl Gegner in der Gegnerliste = " + gegnerManager.getGegnerListe().size());
+                toRemove.add( gegner );
+                Logger.log( this.getClass() + " : Anzahl Gegner in der Gegnerliste = " + gegnerManager.getGegnerListe().size() );
             }
 
         }
@@ -77,11 +94,11 @@ public class AmirGame {
     public void reset() {
         initializePlayer();
         gegnerManager = new GegnerManager();
-        points.setScore(0);
+        points.setScore( 0 );
     }
 
-    public void onKeyPressed(KeyEvent event) {
-        this.spielfigur.move(event);
+    public void onKeyPressed( KeyEvent event ) {
+        this.spielfigur.move( event );
     }
 
     /**

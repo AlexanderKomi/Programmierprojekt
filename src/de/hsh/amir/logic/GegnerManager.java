@@ -10,10 +10,10 @@ import java.util.Observer;
 import java.util.Random;
 
 public class GegnerManager implements Observer {
-    private static final int SPIELFELD_BREITE = 1200;
-    private static final int RAND_ABSCHNITT = 200;
-    private ArrayList<Gegner> gegnerListe = new ArrayList<Gegner>();
-    private Score points;
+    private static final int               SPIELFELD_BREITE = 1200;
+    private static final int               RAND_ABSCHNITT   = 200;
+    private              ArrayList<Gegner> gegnerListe      = new ArrayList<>();
+    private              Score             points;
 
     GegnerManager() {
     }
@@ -142,5 +142,9 @@ public class GegnerManager implements Observer {
 
     public void remove(Gegner gegner) {
         gegnerListe.remove(gegner);
+    }
+
+    void setGegnerListe( ArrayList<Gegner> gegnerListe ) {
+        this.gegnerListe = gegnerListe;
     }
 }
