@@ -14,11 +14,11 @@ import java.util.Observer;
 
 public final class RAM extends GameEntryPoint {
 
-    private boolean                  initialized = false;
-    private RAMFxmlChanger           changer;
-    private RamGame_controller       game;
-    private RAM_MainMenu_controller  ramMenu;
-    private RAM_winScreen_controller winScreen;
+    private        boolean                  initialized = false;
+    private final  RAMFxmlChanger           changer;
+    private static RamGame_controller       game;
+    private static RAM_MainMenu_controller  ramMenu;
+    private static RAM_winScreen_controller winScreen;
 
     public RAM(Observer o) {
         super(o, WindowConfig.daniel_title);

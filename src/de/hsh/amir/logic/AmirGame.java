@@ -8,7 +8,7 @@ import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
 
-public class AmirGame {
+public final class AmirGame {
     private Spielfigur    spielfigur;
     private Score         points;
     private GegnerManager gegnerManager;
