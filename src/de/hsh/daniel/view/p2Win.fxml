@@ -13,11 +13,13 @@
             <Image url="@p2Win.png" />
          </image>
       </ImageView>
-      <Button id="b_quit" fx:id="b_quit" layoutX="333.0" layoutY="438.0" mnemonicParsing="false" onAction="#button_click" text="Quit">
+      <Button id="b_quit" fx:id="b_quit" layoutX="333.0" layoutY="438.0" mnemonicParsing="false"
+              onAction="#button_click" text="Quit">
          <font>
             <Font name="Bell MT Bold" size="12.0" />
          </font>
       </Button>
-      <Button id="b_replay" fx:id="b_replay" layoutX="187.0" layoutY="438.0" mnemonicParsing="false" onAction="#button_click" text="Play again" />
+      <Button id="b_replay" fx:id="b_replay" layoutX="187.0" layoutY="438.0" mnemonicParsing="false"
+              onAction="#button_click" text="Play again" />
    </children>
 </AnchorPane>

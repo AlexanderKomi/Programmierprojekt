@@ -65,7 +65,6 @@ public class RamGame_controller extends Observable implements Initializable {
     private String gameWon() {
         if (game.getGUIBoard().getWinner().getName().equals("P1")) {
             return UpdateCodes.RAM.p1Win;
-
         } else if (game.getGUIBoard().getWinner().getName().equals("P2")) {
             return UpdateCodes.RAM.p2Win;
         } else if (game.getGUIBoard().getWinner().getName().equals("BOTH")) {

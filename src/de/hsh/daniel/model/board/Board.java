@@ -30,12 +30,14 @@ public class Board {
         p1 = new Player();
         p2 = new Player();
         p1.setTurn(true);
+        winner = null;
     }
 
 
     /**
      * Checks if one or two cards are selected and determines which card
      * should be turned.
+     *
      * @param card
      */
     void matchCards(Card card) {
@@ -73,7 +75,6 @@ public class Board {
             Logger.log("CARDS MATCH");
             setCardsMatched();
             matchCount++;
-
             givePoints();
             nullCards();
 
@@ -108,14 +109,14 @@ public class Board {
         } else if (p1.getPoints() < p2.getPoints()) {
             winner = p2;
         } else {
-            winner = new Player() {
-            };
             winner.setName("BOTH");
         }
         Logger.log("P1: " + p1.getPoints() + "| P2:" + p2.getPoints());
     }
 
-    public Player getWinner() { return this.winner; }
+    public Player getWinner() {
+        return this.winner;
+    }
 
     /**
      * Locks matched cards so that they can not be turned anymore
@@ -162,7 +163,9 @@ public class Board {
     }
 
 
-    public  Board getBoard() { return this; }
+    public Board getBoard() {
+        return this;
+    }
 
 
 }
