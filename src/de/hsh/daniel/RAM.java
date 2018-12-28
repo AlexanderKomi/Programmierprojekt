@@ -4,7 +4,6 @@ import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import common.util.Path;
 import de.hsh.daniel.controller.RAM_MainMenu_controller;
 import de.hsh.daniel.controller.RAM_winScreen_controller;
 import de.hsh.daniel.controller.RamGame_controller;
@@ -15,11 +14,10 @@ import java.util.Observer;
 
 public final class RAM extends GameEntryPoint {
 
-    public static final String directory = Path.getExecutionLocation() + "de/hsh/daniel/";
-    private RAMFxmlChanger changer;
-    private boolean initialized = false;
-    private RamGame_controller game;
-    private RAM_MainMenu_controller ramMenu;
+    private boolean                  initialized = false;
+    private RAMFxmlChanger           changer;
+    private RamGame_controller       game;
+    private RAM_MainMenu_controller  ramMenu;
     private RAM_winScreen_controller winScreen;
 
     public RAM(Observer o) {
@@ -35,35 +33,44 @@ public final class RAM extends GameEntryPoint {
             Logger.log(this.getClass() + ": arg = " + message);
 
             if (message.equals(UpdateCodes.RAM.startGame)) {
-
-                game = new RamGame_controller();
-                changer.changeFxml(game, message);
-                initialized = true;
-
+                startGame( message );
             } else if (message.equals(UpdateCodes.RAM.mainMenu)) {
-
-                ramMenu = new RAM_MainMenu_controller();
-                initialized = false;
-                changer.changeFxml(ramMenu, message);
-
-
+                showMainMenu( message );
             } else if (message.equals(UpdateCodes.DefaultCodes.exitToMainGUI) || message.equals(UpdateCodes.RAM.quit)) {
-                Logger.log("exit reached");
-                initialized = false;
-                exitToMainGUI();
-
-            } else if (message.equals(UpdateCodes.RAM.p1Win) || message.equals(UpdateCodes.RAM.p2Win) ||
-                    message.equals(UpdateCodes.RAM.tie)) {
-
-                winScreen = new RAM_winScreen_controller();
-                initialized = false;
-                changer.changeFxml(winScreen, message);
-
-
+                exit( message );
+            }
+            else if ( message.equals( UpdateCodes.RAM.p1Win ) ||
+                      message.equals( UpdateCodes.RAM.p2Win ) ||
+                      message.equals( UpdateCodes.RAM.tie ) ) {
+                showEndScreen( message );
             } else {
                 changer.changeFxml(o, (String) arg);
             }
         }
+    }
+
+    private void startGame( String message ) {
+        game = new RamGame_controller();
+        changer.changeFxml( game, message );
+        initialized = true;
+    }
+
+    private void showMainMenu( String message ) {
+        ramMenu = new RAM_MainMenu_controller();
+        initialized = false;
+        changer.changeFxml( ramMenu, message );
+    }
+
+    private void showEndScreen( String message ) {
+        winScreen = new RAM_winScreen_controller();
+        initialized = false;
+        changer.changeFxml( winScreen, message );
+    }
+
+    private void exit( String message ) {
+        Logger.log( "exit reached" );
+        initialized = false;
+        exitToMainGUI();
     }
 
     @Override
