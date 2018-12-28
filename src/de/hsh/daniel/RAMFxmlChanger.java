@@ -2,12 +2,10 @@ package de.hsh.daniel;
 
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
-import common.engine.components.game.GameEntryPoint;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.daniel.controller.RAM_MainMenu_controller;
 import de.hsh.daniel.controller.RamGame_controller;
-import de.hsh.dennis.controller.MainMenu_controller;
 
 import java.util.Observable;
 
@@ -25,13 +23,13 @@ public class RAMFxmlChanger extends FxmlChanger {
         if (msg.equals(UpdateCodes.RAM.startGame)) {
             changeScene(RamGame_controller.fxml, o);
 
-        } else if (msg.equals(UpdateCodes.RAM.mainMenu)) {
-            this.changeScene(RAM_MainMenu_controller.fxml, o);
+        } else if (msg.equals(UpdateCodes.RAM.mainMenu) || msg.equals(UpdateCodes.RAM.quit)) {
+            changeScene(RAM_MainMenu_controller.fxml, o);
 
-        } else if (msg.equals(UpdateCodes.DefaultCodes.exitToMainGUI)){
+        } else if (msg.equals(UpdateCodes.DefaultCodes.exitToMainGUI)) {
             changeScene("common/gui/P3_Gui.fxml", o);
 
-        }else{
+        } else {
             Logger.log(this.getClass() + ": fxml not found");
         }
 

@@ -28,7 +28,7 @@ public final class BoardUtilities {
     }
 
     /**
-     * Created card grid
+     * Creates card grid
      */
     static ArrayList<Card> createGrid( final ArrayList<Card> cardList,
                                        final byte numberOfPairs,
@@ -59,6 +59,17 @@ public final class BoardUtilities {
                                     spacing );
     }
 
+    /**
+     * Adjusts card positions depending on grid sizing/ number of cards.
+     * @param cardList
+     * @param xStart
+     * @param xStartReset
+     * @param gridW
+     * @param gridH
+     * @param imgSize
+     * @param spacing
+     * @return
+     */
     private static ArrayList<Card> adjustCardPositions(
             final ArrayList<Card> cardList,
             int xStart,
@@ -92,7 +103,7 @@ public final class BoardUtilities {
      * Delays time for given amount
      *
      * @param time
-     *         is converted from sec. to ms.
+     *         is converted from sec. to millis.
      */
     public static void delay( final int time ) {
         Platform.runLater( () -> {

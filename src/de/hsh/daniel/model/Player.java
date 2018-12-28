@@ -19,8 +19,8 @@ public class Player {
      */
 
 
-    /*
-    Adds one point to points
+    /**
+     * Increments players points
      */
     public void incrementPoints() {
         points++;

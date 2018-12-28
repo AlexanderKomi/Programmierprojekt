@@ -4,6 +4,7 @@ package de.hsh.daniel.model;
 import common.actor.Actor;
 import common.util.Logger;
 import common.util.PlaySound;
+import de.hsh.daniel.model.board.BoardUtilities;
 
 
 public class Card extends Actor {
@@ -18,7 +19,11 @@ public class Card extends Actor {
 
     private boolean turned = true;
 
-
+    /**
+     * Card constructor
+     * @param pictureFileName: Path to image for card
+     * @param pair_id
+     */
     public Card( String pictureFileName, int pair_id ) {
         super( pictureFileName );
         this.pictureFileName = pictureFileName;
@@ -49,13 +54,16 @@ public class Card extends Actor {
         return result;
     }
 
-    public void turn() {
 
-        PlaySound.playSound( cardFrontSoundPath  );
+    /**
+     * Displays front card image and plays sound when "turning" card.
+     */
+    public void turn() {
         final double backupWidth  = this.getWidth();
         final double backupHeight = this.getHeight();
 
         if ( this.isTurned() ) {
+            PlaySound.playSound( cardFrontSoundPath  );
             this.setCurrentImage( this.getPictureFileName() );
             this.setTurned( false );
         }

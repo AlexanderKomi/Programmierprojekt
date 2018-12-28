@@ -15,14 +15,14 @@ public class Board {
 
     public static byte numberOfPairs = 0; // These are set externally from the menu.
 
-    private static Card            c1               = null;
-    static         Card            c2               = null;
-    private static boolean         firstCardClicked = false;
-    static         ArrayList<Card> cardList;
-    private static Player          p1;
-    private static Player          p2;
-    private static Player          winner;
-    private static int             matchCount       = 0;
+    private static Card c1 = null;
+    static Card c2 = null;
+    private static boolean firstCardClicked = false;
+    static ArrayList<Card> cardList;
+    private static Player p1;
+    private static Player p2;
+    private static Player winner;
+    private static int matchCount = 0;
 
 
     Board() {
@@ -32,6 +32,12 @@ public class Board {
         p1.setTurn(true);
     }
 
+
+    /**
+     * Checks if one or two cards are selected and determines which card
+     * should be turned.
+     * @param card
+     */
     void matchCards(Card card) {
         Logger.log("P1 ACTIVE: " + p1.isMyTurn());
         Logger.log("P2 ACTIVE: " + p2.isMyTurn() + "\n");
@@ -73,36 +79,47 @@ public class Board {
 
         } else {
             Logger.log("CARDS DON'T MATCH");
+            changeActivePlayer();
+        }
 
-            if (p1.isMyTurn()) {
-                p1.setTurn(false);
-                p2.setTurn(true);
-                Logger.log("IT'S P2s TURN! NOW");
-            } else {
-                p2.setTurn(false);
-                p1.setTurn(true);
-                Logger.log("IT'S P1s TURN! NOW");
-            }
             /*
             turnBackCards();
             nullCards();*/
-        }
-
-
     }
 
+    /**
+     * Changes active player if cards we're not matched
+     */
+
+    public void changeActivePlayer() {
+        if (p1.isMyTurn()) {
+            p1.setTurn(false);
+            p2.setTurn(true);
+            Logger.log("IT'S P2s TURN! NOW");
+        } else {
+            p2.setTurn(false);
+            p1.setTurn(true);
+            Logger.log("IT'S P1s TURN! NOW");
+        }
+    }
+
+    /**
+     * Determines winner from collected points
+     */
     private void getWinner() {
         winner = new Player();
-        if(p1.getPoints() > p2.getPoints()) {
+        if (p1.getPoints() > p2.getPoints()) {
             winner = p1;
-        } else if (p1.getPoints() < p2.getPoints()){
+        } else if (p1.getPoints() < p2.getPoints()) {
             winner = p2;
         } else {
-            winner = new Player() {};
+            winner = new Player() {
+            };
             winner.setName("BOTH");
         }
-        Logger.log("P1: " + p1.getPoints() + "P2:" +p2.getPoints());
+        Logger.log("P1: " + p1.getPoints() + "| P2:" + p2.getPoints());
     }
+
     /**
      * Locks matched cards so that they can not be turned anymore
      */
@@ -112,16 +129,16 @@ public class Board {
     }
 
     /**
-     * Turns both selected cards facedown again
+     * Turns both selected cards face down again
      */
     void turnBackCards() {
         c1.turn();
         c2.turn();
-        BoardUtilities.delay( 2 );
+        BoardUtilities.delay(2);
     }
 
     /**
-     * Sets cards to null
+     * Sets selected cards to null
      */
     void nullCards() {
         c1 = null;

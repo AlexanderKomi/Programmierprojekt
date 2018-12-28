@@ -14,19 +14,20 @@ import java.util.Observer;
 
 public final class RAM extends GameEntryPoint {
 
-    public static final String             directory   = Path.getExecutionLocation() + "de/hsh/daniel/";
-    private             RAMFxmlChanger     changer;
-    private             boolean            initialized = false;
-    private             RamGame_controller game;
+    public static final String directory = Path.getExecutionLocation() + "de/hsh/daniel/";
+    private RAMFxmlChanger changer;
+    private boolean initialized = false;
+    private RamGame_controller game;
+    private RAM_MainMenu_controller ramMenu;
 
-    public RAM( Observer o ) {
-        super( o, WindowConfig.daniel_title );
-        changer = new RAMFxmlChanger( this, RAM_MainMenu_controller.fxml, new RAM_MainMenu_controller() );
+    public RAM(Observer o) {
+        super(o, WindowConfig.daniel_title);
+        changer = new RAMFxmlChanger(this, RAM_MainMenu_controller.fxml, new RAM_MainMenu_controller());
     }
 
     @Override   //hier melden sich die Controller
-    public void update( Observable o, Object arg ) {
-        if ( arg instanceof String ) {
+    public void update(Observable o, Object arg) {
+        if (arg instanceof String) {
             String message = (String) arg;
 
             Logger.log(this.getClass() + ": arg = " + message);
@@ -37,10 +38,15 @@ public final class RAM extends GameEntryPoint {
                 changer.changeFxml(game, message);
                 initialized = true;
 
+            } else if (message.equals(UpdateCodes.RAM.mainMenu)) {
+
+                ramMenu = new RAM_MainMenu_controller();
+                changer.changeFxml(ramMenu, message);
+                initialized = false;
+
             } else if (message.equals(UpdateCodes.DefaultCodes.exitToMainGUI)) {
                 Logger.log("exit reached");
                 exitToMainGUI();
-
             } else {
                 changer.changeFxml(o, (String) arg);
             }
@@ -48,12 +54,12 @@ public final class RAM extends GameEntryPoint {
     }
 
     @Override
-    public void render( final int fps ) {
-        if ( initialized ) {
+    public void render(final int fps) {
+        if (initialized) {
             if (game != null) {
-                Platform.runLater( () -> {
-                    game.render( fps );
-                } );
+                Platform.runLater(() -> {
+                    game.render(fps);
+                });
             }
         }
 
