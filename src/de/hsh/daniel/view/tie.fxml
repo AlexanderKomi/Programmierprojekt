@@ -13,7 +13,7 @@
             <Image url="@tie.png" />
          </image>
       </ImageView>
-      <Button layoutX="333.0" layoutY="438.0" mnemonicParsing="false" text="Quit">
+      <Button id="b_quit" fx:id="b_quit" layoutX="333.0" layoutY="438.0" mnemonicParsing="false"  onAction="#button_click" text="Quit">
          <font>
             <Font name="Bell MT Bold" size="12.0" />
          </font>

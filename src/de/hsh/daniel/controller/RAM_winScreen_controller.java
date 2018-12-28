@@ -33,7 +33,7 @@ public class RAM_winScreen_controller extends Observable {
                 break;
             case "b_quit":
                 setChanged();
-                notifyObservers(UpdateCodes.RAM.quit);
+                notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
                 break;
 
             default:

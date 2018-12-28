@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 
 public class RAM_MainMenu_controller extends Observable {
@@ -18,11 +19,12 @@ public class RAM_MainMenu_controller extends Observable {
     private Button b_play;
 
     @FXML
-    private Button twelvePairs;
+    private Button sixPairs;
+
     @FXML
-    private Button sixteenPairs;
+    private Button eightPairs;
     @FXML
-    private Button twentyPairs;
+    private Button tenPairs;
 
     @FXML
     private Button b_back;
@@ -43,18 +45,27 @@ public class RAM_MainMenu_controller extends Observable {
 
             case "sixPairs":
                 setChanged();
+                sixPairs.setDisable(true);
+                eightPairs.setDisable(false);
+                tenPairs.setDisable(false);
                 Board.numberOfPairs = 6;
                 notifyObservers(UpdateCodes.RAM.fieldSize);
                 break;
 
             case "eightPairs":
                 setChanged();
+                sixPairs.setDisable(false);
+                eightPairs.setDisable(true);
+                tenPairs.setDisable(false);
                 Board.numberOfPairs = 8;
                 notifyObservers(UpdateCodes.RAM.fieldSize);
                 break;
 
             case "tenPairs":
                 setChanged();
+                sixPairs.setDisable(false);
+                eightPairs.setDisable(false);
+                tenPairs.setDisable(true);
                 Board.numberOfPairs = 10;
                 notifyObservers(UpdateCodes.RAM.fieldSize);
                 break;
