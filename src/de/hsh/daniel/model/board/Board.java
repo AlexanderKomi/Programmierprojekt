@@ -142,6 +142,7 @@ public class Board {
         c1.turn();
         c2.turn();
         BoardUtilities.delay(2);
+
     }
 
     /**
@@ -189,6 +190,12 @@ public class Board {
     public Player getWinner() {
         return this.winner;
     }
+    public int getP1Points() { return p1.getPoints();}
+    public int getP2Points() { return p2.getPoints();}
+
+    public boolean isP1Turn() { return p1.isMyTurn(); }
+    public boolean isP2Turn() { return p2.isMyTurn(); }
+
 
 
 }

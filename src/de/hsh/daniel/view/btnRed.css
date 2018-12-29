@@ -1,0 +1,48 @@
+.button {
+    -fx-background-color: linear-gradient(#ff3535, #6b0000),
+    radial-gradient(center 50% -40%, radius 200%, #ff3535 45%, #6b0000 50%);
+    -fx-background-insets: 0, 1, 4, 5, 6;
+    -fx-background-radius: 7, 8, 5, 4, 3;
+    -fx-padding: 5 5 5 5;
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    /*-fx-font-weight: bold;*/
+    -fx-text-fill: #b3b3b3;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.2), 1, 0.0, 0, 1);
+}
+
+.button Text {
+    -fx-effect: dropshadow(one-pass-box, black, 0, 0.0, 0, -1);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#ff8080, #693434),
+    radial-gradient(center 50% -40%, radius 200%, #ff6969 45%, #693434 50%);
+    -fx-background-insets: 0, 1, 4, 5, 6;
+    -fx-background-radius: 7, 8, 5, 4, 3;
+    -fx-padding: 5 5 5 5;
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.2), 1, 0.0, 0, 1);
+}
+
+.button Text {
+    -fx-effect: dropshadow(one-pass-box, black, 0, 0.0, 0, -1);
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(#ff8080, #693434),
+    radial-gradient(center 50% -40%, radius 200%, #ff6969 45%, #693434 50%);
+    -fx-background-insets: 0, 1, 4, 5, 6;
+    -fx-background-radius: 7, 8, 5, 4, 3;
+    -fx-padding: 5 5 5 5;
+    -fx-font-family: "Arial";
+    -fx-font-size: 11px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.2), 1, 0.0, 0, 1);
+}
+
+.button Text {
+    -fx-effect: dropshadow(one-pass-box, black, 0, 0.0, 0, -1);
+}
