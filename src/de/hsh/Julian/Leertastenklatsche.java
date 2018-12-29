@@ -18,12 +18,13 @@ public class Leertastenklatsche extends Observable implements Observer {
     static final         String     location = "/de/hsh/Julian/";
     private static final SpawnTimer timer    = new SpawnTimer();
 
-    private int              score     = 0;
+    private int              score     = 60;
     private int              leben     = 3;
     private boolean          gamedone  = false;
     boolean horrorWasActivated = false;
     private TheDude          thedude;
     private ArrayList<Enemy> enemyList = new ArrayList<>();
+    private double spawntimer;
 
     public Leertastenklatsche() {
         initGame();
@@ -34,6 +35,8 @@ public class Leertastenklatsche extends Observable implements Observer {
                                WindowConfig.window_height * 0.73
         );
         thedude.setSpeed( 0 );
+        PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\SMB.mp3" );
+        //TODO: Make music play permamnently but cancel when entering horrormode
     }
 
     void render( Canvas gc ) {
@@ -52,7 +55,12 @@ public class Leertastenklatsche extends Observable implements Observer {
     }
 
     private void createNewEnemies() {
-        if ( timer.elabsedTime() > 2.0d - score / 50.0 ) {
+        if(score >= 70)
+            spawntimer= 0.2;
+        else
+            spawntimer = 2.0d - score / 50;
+
+        if ( timer.elabsedTime() > spawntimer) {
             timer.resetTimer();
             final Enemy e = Enemy.createEnemy();
             e.addObserver( this );
@@ -75,7 +83,7 @@ public class Leertastenklatsche extends Observable implements Observer {
     private void renderScore( Canvas canvas ) {
         GraphicsContext gc         = canvas.getGraphicsContext2D();
         String          pointsText;
-        if(score<=100) {
+        if(score<70) {
             pointsText    ="LEERTASTENKLATSCHE\nGegner abgewehrt: " + (score) + "\nVerbleibende Leben: " + (leben);
             //Logger.log(getClass()+" Score: "+score);
 
@@ -83,11 +91,15 @@ public class Leertastenklatsche extends Observable implements Observer {
             gc.strokeText(pointsText, 360, 36);
         }
         else{
-            if(!horrorWasActivated)
-                leben = 100;
+            if(!horrorWasActivated){
+                //PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\horror.wav" );
+                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\Kalinka.mp3" );
+                leben = 70;
+            }
+
             horrorWasActivated=true;
-            pointsText = "HORRORMODUS SCORE" + (score) + "\nKLATSCH KLATSCH KLATSCH Leben: " + (leben);
-            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\horror.wav" );
+            pointsText = "HORRORMODUS SCORE: " + (score) + "\nKLATSCH KLATSCH KLATSCH Leben: " + (leben);
+
             //Logger.log(getClass()+" Score: "+score);
 
             gc.fillText( pointsText, 360, 36);
@@ -112,6 +124,7 @@ public class Leertastenklatsche extends Observable implements Observer {
                 break;
             //EASTEREGG ;-))
             case "SPACE":
+                if(!horrorWasActivated)
                 PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\cat.wav" );
                 break;
         }
@@ -139,10 +152,12 @@ public class Leertastenklatsche extends Observable implements Observer {
                     if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
                         if ( thedude.turnedleft ) {
                             score++;
+                            if(!horrorWasActivated)
                             PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
                         }
                         else {
                             leben--;
+                            if(!horrorWasActivated)
                             PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
                             gameOver();
                         }
@@ -150,10 +165,12 @@ public class Leertastenklatsche extends Observable implements Observer {
                     else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
                         if ( !thedude.turnedleft ) {
                             score++;
+                            if(!horrorWasActivated)
                             PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
                         }
                         else {
                             leben--;
+                            if(!horrorWasActivated)
                             PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
                             gameOver();
                         }
