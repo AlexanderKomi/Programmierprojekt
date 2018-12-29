@@ -92,9 +92,9 @@ public class Leertastenklatsche extends Observable implements Observer {
         }
         else{
             if(!horrorWasActivated){
-                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\horror.wav" );
+                //PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\horror.wav" );
                 PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\Kalinka.mp3" );
-                leben = 100;
+                leben = 70;
             }
 
             horrorWasActivated=true;
@@ -124,6 +124,7 @@ public class Leertastenklatsche extends Observable implements Observer {
                 break;
             //EASTEREGG ;-))
             case "SPACE":
+                if(!horrorWasActivated)
                 PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\cat.wav" );
                 break;
         }
