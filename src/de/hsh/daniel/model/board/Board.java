@@ -22,11 +22,12 @@ public class Board {
     private static Player p1;
     private static Player p2;
     private static Player winner;
-    private static int matchCount = 0;
+    private static int matchCount;
 
 
     Board() {
         cardList = BoardUtilities.initCards(numberOfPairs);
+        matchCount = 0;
         p1 = new Player();
         p2 = new Player();
         p1.setTurn(true);
@@ -110,14 +111,11 @@ public class Board {
             winner = p2;
         } else if( p1.getPoints() == p2.getPoints() ){
             winner = new Player();
-            winner.setName("BOTH");
         }
         Logger.log("P1: " + p1.getPoints() + "| P2:" + p2.getPoints());
     }
 
-    public Player getWinner() {
-        return this.winner;
-    }
+
 
     /**
      * Locks matched cards so that they can not be turned anymore
@@ -167,7 +165,15 @@ public class Board {
     public Board getBoard() {
         return this;
     }
-    public static void resetWinner() {winner = null; }
+
+    public static void reset() {
+        matchCount =  0;
+        winner = null;
+    }
+
+    public Player getWinner() {
+        return this.winner;
+    }
 
 
 }
