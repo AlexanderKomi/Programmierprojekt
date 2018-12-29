@@ -2,6 +2,7 @@ package de.hsh.daniel.controller;
 
 import common.updates.UpdateCodes;
 import common.util.Logger;
+import de.hsh.daniel.RAM;
 import de.hsh.daniel.model.board.Board;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,10 +29,13 @@ public class RAM_winScreen_controller extends Observable {
         Logger.log(this.getClass() + ": button clicked: " + event);
         switch (id) {
             case "b_replay":
+
+                Board.reset();
                 setChanged();
                 notifyObservers(UpdateCodes.RAM.mainMenu);
                 break;
             case "b_quit":
+                Board.reset();
                 setChanged();
                 notifyObservers(UpdateCodes.DefaultCodes.exitToMainGUI);
                 break;

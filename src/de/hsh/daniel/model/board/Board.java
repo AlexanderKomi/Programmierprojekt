@@ -28,10 +28,11 @@ public class Board {
     Board() {
         cardList = BoardUtilities.initCards(numberOfPairs);
         matchCount = 0;
-        p1 = new Player();
-        p2 = new Player();
-        p1.setTurn(true);
+        p1 = new Player("P1");
+        p2 = new Player("P2");
         winner = null;
+        p1.setTurn(true);
+
     }
 
 
@@ -45,19 +46,27 @@ public class Board {
         Logger.log("P1 ACTIVE: " + p1.isMyTurn());
         Logger.log("P2 ACTIVE: " + p2.isMyTurn() + "\n");
 
-        if (!card.isCardMatched()) {
+        if (!card.isCardMatched() && card.isTurned()) {
+            boolean sameCard = false;
             if (!firstCardClicked) {
                 c1 = card;
                 firstCardClicked = true;
+            } else if (firstCardClicked && card == c1) {
+                Logger.log("SAME CARD SELECTED");
+                sameCard = true;
+                return;
             } else {
                 c2 = card;
             }
-            if (c1 != null && c2 == null) {
+
+            if (c1 != null && c2 == null && !sameCard) {
                 c1.turn();
             } else if (c1 != null) {
                 c2.turn();
             }
+
         }
+
         this.checkMatch();
     }
 
@@ -75,7 +84,7 @@ public class Board {
         if (c1.equals(c2)) {
             Logger.log("CARDS MATCH");
             setCardsMatched();
-            matchCount++;
+            ++matchCount;
             givePoints();
             nullCards();
 
@@ -109,12 +118,13 @@ public class Board {
             winner = p1;
         } else if (p1.getPoints() < p2.getPoints()) {
             winner = p2;
-        } else if( p1.getPoints() == p2.getPoints() ){
-            winner = new Player();
+        } else if (p1.getPoints() == p2.getPoints()) {
+            winner = p1;
+            winner.setName("BOTH");
+            //winner.setDraw(p1.getPoints());
         }
         Logger.log("P1: " + p1.getPoints() + "| P2:" + p2.getPoints());
     }
-
 
 
     /**
@@ -150,7 +160,7 @@ public class Board {
         if (p1.isMyTurn()) {
             p1.incrementPoints();
             Logger.log("P1 points: " + p1.getPoints() + "\n ");
-        } else if(p2.isMyTurn()) {
+        } else if (p2.isMyTurn()) {
             p2.incrementPoints();
             Logger.log("P2 points: " + p2.getPoints() + "\n ");
         }
@@ -167,8 +177,13 @@ public class Board {
     }
 
     public static void reset() {
-        matchCount =  0;
+        c1 = null;
+        c2 = null;
+        p1 = null;
+        p2 = null;
         winner = null;
+        matchCount = 0;
+
     }
 
     public Player getWinner() {

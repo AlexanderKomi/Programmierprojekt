@@ -40,21 +40,18 @@ public class RamGame_controller extends Observable implements Initializable {
                 if (game.getGUIBoard().getWinner() != null) {
                     if (gameWon().equals(UpdateCodes.RAM.p1Win)) {
                         setChanged();
-
                         notifyObservers(UpdateCodes.RAM.p1Win);
                         Board.reset();
                         initialized = false;
 
                     } else if (gameWon().equals(UpdateCodes.RAM.p2Win)) {
                         setChanged();
-
                         notifyObservers(UpdateCodes.RAM.p2Win);
                         Board.reset();
                         initialized = false;
 
                     } else if (gameWon().equals(UpdateCodes.RAM.tie)) {
                         setChanged();
-
                         notifyObservers(UpdateCodes.RAM.tie);
                         Board.reset();
                         initialized = false;

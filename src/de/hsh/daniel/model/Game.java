@@ -29,8 +29,6 @@ public final class Game {
 
     public Board getGUIBoard() { return board.getBoard(); }
 
-
-   // public Board getBoard() { return this.board; }
 }
 
 

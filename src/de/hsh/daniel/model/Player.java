@@ -6,18 +6,11 @@ public class Player {
     private String name;
     private int points;
     private boolean myTurn;
-    private static int playerCount = 0;
 
 
-    public Player() {
-        ++playerCount;
+    public Player(String name) {
+        setName(name);
         points = 0;
-        if (playerCount < 3) {
-            setName("P" + playerCount);
-        } else {
-            setName("BOTH");
-            ;
-        }
     }
 
     /**
@@ -41,10 +34,13 @@ public class Player {
     }
 
 
-    public Player getActivePlayer() {
+    /*public Player getActivePlayer() {
         return this;
+    }*/
+    /*public void setDraw(int points) {
+        this.points = points;
     }
-
+*/
     public int getPoints() {
         return this.points;
     }
