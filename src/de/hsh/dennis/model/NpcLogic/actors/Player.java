@@ -22,19 +22,27 @@ public class Player extends Actor {
     public void changeSkin(Direction dir) {
         switch (dir) {
             case Left:
-                setSkin(SkinConfig.Player.skin_left);
+                setSkin(SkinConfig.Player.skin_hit_left);
                 setDirection(Direction.Left);
                 break;
             case Right:
-                setSkin(SkinConfig.Player.skin_right);
+                setSkin(SkinConfig.Player.skin_hit_right);
                 setDirection(Direction.Right);
                 break;
             case Up:
-                setSkin(SkinConfig.Player.skin_up);
+                if(this.getSkin() == SkinConfig.Player.skin_standard_right){
+                    setSkin(SkinConfig.Player.skin_up_right);
+                }else{
+                    setSkin(SkinConfig.Player.skin_up_left);
+                }
                 setDirection(Direction.Up);
                 break;
             case Down:
-                setSkin(SkinConfig.Player.skin_down);
+                if(this.getSkin() == SkinConfig.Player.skin_standard_right){
+                    setSkin(SkinConfig.Player.skin_down_right);
+                }else{
+                    setSkin(SkinConfig.Player.skin_down_left);
+                }
                 setDirection(Direction.Down);
                 break;
 
@@ -52,7 +60,12 @@ public class Player extends Actor {
     }
 
     public void setSkinToDefault() {
-        setCurrentImage(SkinConfig.Player.skin_standard);
+        if(     this.getSkin() == SkinConfig.Player.skin_hit_right  ||
+                this.getSkin() == SkinConfig.Player.skin_up_right   ||
+                this.getSkin() == SkinConfig.Player.skin_down_right )
+        {       setCurrentImage(SkinConfig.Player.skin_standard_right); }
+        else{   setCurrentImage(SkinConfig.Player.skin_standard_left);  }
+
         setDirection(Direction.Non);
     }
 

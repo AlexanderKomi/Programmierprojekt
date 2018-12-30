@@ -14,17 +14,29 @@ public class SkinConfig {
     }
 
     public static class Player {
+
         public static Image skin_standard = new Image("de/hsh/dennis/resources/actors/player/player_standard.png");
-        public static Image skin_left = new Image("de/hsh/dennis/resources/actors/player/player_left.png");
-        public static Image skin_right = new Image("de/hsh/dennis/resources/actors/player/player_right.png");
-        public static Image skin_up = new Image("de/hsh/dennis/resources/actors/player/player_up.png");
-        public static Image skin_down = new Image("de/hsh/dennis/resources/actors/player/player_down.png");
+
+        public static Image skin_standard_right = new Image("de/hsh/dennis/resources/actors/player/player_standard_right.png");
+        public static Image skin_standard_left = new Image("de/hsh/dennis/resources/actors/player/player_standard_left.png");
+
+        public static Image skin_hit_left = new Image("de/hsh/dennis/resources/actors/player/player_hit_left.png");
+        public static Image skin_hit_right = new Image("de/hsh/dennis/resources/actors/player/player_hit_right.png");
+
+        public static Image skin_up_right = new Image("de/hsh/dennis/resources/actors/player/player_up_right.png");
+        public static Image skin_up_left = new Image("de/hsh/dennis/resources/actors/player/player_up_left.png");
+
+        public static Image skin_down_right = new Image("de/hsh/dennis/resources/actors/player/player_down_right.png");
+        public static Image skin_down_left = new Image("de/hsh/dennis/resources/actors/player/player_down_left.png");
+
 
         public static double offsetX = 0;
         public static double offsetY = 100;
 
         public static double posX = (WindowConfig.window_width / 2.0) - ((int) skin_standard.getWidth() / 2.0) + offsetX;
         public static double posY = (WindowConfig.window_height / 2.0) - ((int) skin_standard.getHeight() / 2.0) + offsetY;
+
+        public static double resetDelay = 0.2d;
     }
 
     public static class Bot {

@@ -52,7 +52,7 @@ public class GameModel extends Observable {
 
 
     //animation timing values
-    private double animationDelay = 0.1; //animation delay in seconds
+    private double animationDelay = SkinConfig.Player.resetDelay; //animation delay in seconds
     private long skinResetTimer;
     private boolean reset = false;
     public int fps = -1;
@@ -242,7 +242,7 @@ public class GameModel extends Observable {
 
     //default fps == 60 -> 60 * pro Sekunde bewegt sich ein Npc um 'speed' pixel.
     private double calcAudioDelay(int fps, double speed) {
-        double widthToMove = ((canvas.getWidth() / 2d) - (SkinConfig.Player.skin_standard.getWidth() / 2d) - 5d);         //600.0d
+        double widthToMove = ((canvas.getWidth() / 2d) - (SkinConfig.Player.skin_standard_right.getWidth() / 2d) - 5d);         //600.0d
         return (widthToMove / (fps * speed));
     }
 
@@ -466,7 +466,7 @@ public class GameModel extends Observable {
         if (ai) {
             if (health == 0) {
                 acting = false;
-                AudioPlayer.MusicPlayer.pause();
+                AudioPlayer.MusicPlayer.stop();
                 clearCanvas();
                 Logger.log("checkEnd case : 1");
                 setChanged();
@@ -474,7 +474,7 @@ public class GameModel extends Observable {
 
             } else if (npcHandler.isEndReached() && score > 0) {
                 acting = false;
-                AudioPlayer.MusicPlayer.pause();
+                AudioPlayer.MusicPlayer.stop();
                 clearCanvas();
                 Logger.log("checkEnd case : 2");
                 setChanged();
@@ -482,7 +482,7 @@ public class GameModel extends Observable {
 
             } else if (npcHandler.isEndReached() && score <= 0) {
                 acting = false;
-                AudioPlayer.MusicPlayer.pause();
+                AudioPlayer.MusicPlayer.stop();
                 clearCanvas();
                 Logger.log("checkEnd case : 3");
                 setChanged();
