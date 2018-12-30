@@ -113,7 +113,8 @@ public class DennisFxmlChanger extends FxmlChanger {
             case "b_continue":
                 Logger.log("handle_BreakMenu_controller: b_continue erreicht");
                 breakStage.close();
-                //TODO: implement continuing current level
+                setChanged();
+                notifyObservers(UpdateCodes.Dennis.continiue);
                 break;
 
             default:
@@ -122,7 +123,7 @@ public class DennisFxmlChanger extends FxmlChanger {
     }
 
     private void handle_Level_controller(String code) {
-        if (code.equals(KeyLayout.Control.ESC.toString())) {
+        if (code.equals(KeyLayout.Control.BREAK.toString()) || code.equals(KeyLayout.Control.BREAK_ALT.toString())) {
             openBreakMenu();
         }
     }

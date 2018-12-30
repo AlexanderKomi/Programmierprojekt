@@ -75,8 +75,10 @@ public class DennisGameEntryPoint extends GameEntryPoint {
 
 
         } else if (arg instanceof KeyCode) {
-            if (arg == KeyLayout.Control.ESC) {
-                //changer.changeFxml(o, KeyLayout.Control.ESC.toString());      //no game pausing
+            if (arg == KeyLayout.Control.BREAK || arg == KeyLayout.Control.BREAK_ALT) {
+                gm.triggerBreak();
+                rendering = false;
+                changer.changeFxml(o, arg.toString());      //no game pausing
             } else {
                 gm.userInput((KeyCode) arg);
             }
@@ -85,8 +87,16 @@ public class DennisGameEntryPoint extends GameEntryPoint {
             if (arg.equals(UpdateCodes.Dennis.gameReady)) {
                 rendering = true;
             }else if(arg.equals(UpdateCodes.Dennis.replay)){
+                gm.reset();
                 loadReplay();
-            }else {
+            }else if(arg.equals(UpdateCodes.Dennis.continiue)){
+                gm.unTriggerBreak();
+                rendering = true;
+            }else if(arg.equals("b_main_menu")){
+                gm.reset();
+                changer.changeFxml(o, (String) arg);
+            }
+            else{
                 changer.changeFxml(o, (String) arg);
             }
         }

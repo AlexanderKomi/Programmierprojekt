@@ -58,6 +58,7 @@ public class KeyLayout {
 
     //open break menu
     public static class Control {
-        public static final KeyCode ESC = KeyCode.ESCAPE;
+        public static final KeyCode BREAK = KeyCode.ESCAPE;
+        public static final KeyCode BREAK_ALT = KeyCode.P;
     }
 }

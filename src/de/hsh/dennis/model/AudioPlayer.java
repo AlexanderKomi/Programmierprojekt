@@ -16,6 +16,7 @@ public class AudioPlayer {
         private static Player player;
         static         Thread musikThreat;
         private static File   file;
+        private static boolean isPlaying = false;
 
         public static void play() {
             if ( musikThreat.isAlive() ) {musikThreat.stop();}
@@ -25,15 +26,18 @@ public class AudioPlayer {
             }
             Logger.log( "music starts playing" );
             musikThreat.start();
+            setIsPlaying(true);
         }
 
         public static void pause() {
             Logger.log( "music paused" );
             musikThreat.suspend();
+            setIsPlaying(false);
         }
 
         public static void resume() {
             Logger.log( "music playing again" );
+            setIsPlaying(true);
             musikThreat.resume();
         }
 
@@ -43,6 +47,7 @@ public class AudioPlayer {
                 musikThreat = null;
             }
             if ( file != null ) {file = null;}
+            setIsPlaying(false);
         }
 
         public static void shutdown() {
@@ -51,6 +56,7 @@ public class AudioPlayer {
 
                 player.close();
             }
+            setIsPlaying(false);
             Logger.log( "MusikPlayer and dependencies finaly shut down !!!" );
         }
 
@@ -86,5 +92,12 @@ public class AudioPlayer {
             loadFile( path );
         }
 
+        public static boolean getIsPlaying() {
+            return isPlaying;
+        }
+
+        public static void setIsPlaying(boolean playing) {
+            isPlaying = playing;
+        }
     }
 }

@@ -36,6 +36,8 @@ public class NpcHandler {
     private int pointValue = 1;
     private double spawnDelay = 0d;
 
+    private double breakTimeElabsed = 0d;
+    private double breakTimeMark = 0d;
 
     public NpcHandler(Canvas canvas) {
         NpcHandler.canvas = canvas;
@@ -50,10 +52,20 @@ public class NpcHandler {
         return false;
     }
 
+    public void triggerBreak(){
+        breakTimeMark = time.getCurrentTimeStamp();
+    }
+
+    public void unTriggerBreak(){
+        breakTimeElabsed += time.getCurrentTimeStamp() - breakTimeMark;
+        breakTimeMark = 0d;
+    }
+
+
     public void spawning() {
         if (spawnArray != null) {
             //time.start();
-            if (spawnIterator < spawnArray.length && time.getCurrentTimeStamp() >= spawnArray[spawnIterator].getSpawnTime()) {
+            if (spawnIterator < spawnArray.length && (time.getCurrentTimeStamp() - breakTimeElabsed) >= spawnArray[spawnIterator].getSpawnTime()) {
                 synchronized (npcList) {
                     spawnNpc(spawnArray[spawnIterator]);
                 }
