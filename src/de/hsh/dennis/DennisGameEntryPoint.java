@@ -25,6 +25,7 @@ public class DennisGameEntryPoint extends GameEntryPoint {
     private SkinConfig.Level.Difficulty lastGameMode;
 
 
+
     public DennisGameEntryPoint(Observer o) {
         super(o, WindowConfig.dennis_title);
         changer = new DennisFxmlChanger(this, "view/mainMenu.fxml", new MainMenu_controller());
@@ -34,6 +35,7 @@ public class DennisGameEntryPoint extends GameEntryPoint {
 
     @Override
     public void render(int fps) {
+        if(!gm.isActing()){gm.printLoading();}
         if(gm.getFps() != fps){gm.setFps(fps);}
         if (rendering) {
             Platform.runLater( () -> {

@@ -65,6 +65,7 @@ public class GameModel extends Observable {
 
     // --- ACT ------------------------------------------------------------------------------------
     private boolean ai = false;
+
     private boolean acting = false;
 
     public GameModel() {
@@ -118,6 +119,8 @@ public class GameModel extends Observable {
             }
             if (acting) {
 
+
+
                 audioTimer.start();
                 if (musicStart && audioTimer.getCurrentTimeStamp() >= audioDelay) {
                     musicStart = false;
@@ -145,6 +148,14 @@ public class GameModel extends Observable {
 
     }
 
+    public void printLoading(){
+        if(gc != null) {
+            String loading = "[ L O A D I N G ]";
+            gc.setFill(Color.BLACK);
+            gc.fillText(loading, (canvas.getWidth() / 2) - (loading.length() * 3), (canvas.getHeight() / 2));
+        }
+    }
+
     public void triggerBreak(){
         setBreaking(true);
         AudioPlayer.MusicPlayer.pause();
@@ -160,6 +171,7 @@ public class GameModel extends Observable {
     }
 
     private void actInit() {
+
         if (npcHandler == null) {
             npcHandler = new NpcHandler(canvas);
 
@@ -218,6 +230,7 @@ public class GameModel extends Observable {
         }
         //npcHandler.loadNpcs(difficulty);
 
+        printLoading();
 
         score = 0;
         health = 100;
@@ -533,5 +546,9 @@ public class GameModel extends Observable {
 
     public void setBreaking(boolean breaking) {
         this.breaking = breaking;
+    }
+
+    public boolean isActing() {
+        return acting;
     }
 }
