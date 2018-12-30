@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 
 public class Package extends Npc {
 
-    private static final String pictureFileName = "/de/hsh/dennis/resources/actors/Bot/bot_standard.png";
+    private static final String pictureFileName = "/de/hsh/dennis/resources/actors/package/package.png";
     private static final int defaultSpeed = 1;
 
     public Package(NPCEnums.Spawn spawnType) throws FileNotFoundException {

@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 
 public class Hacker extends Npc {
 
-    private static final String pictureFileName = "/de/hsh/dennis/resources/actors/Bot/bot_standard.png";
+    private static final String pictureFileName = "/de/hsh/dennis/resources/actors/hacker/hacker.png";
     private static final int defaultSpeed = 1;
 
 

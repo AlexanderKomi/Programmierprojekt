@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 public class Player extends Actor {
 
     //Visuals
-    private static final String    pictureFileName  = "/de/hsh/dennis/resources/actors/Player/player_standard.png";
+    private static final String    pictureFileName  = "/de/hsh/dennis/resources/actors/player/player_standard.png";
 
     private              Direction currentDirection = Direction.Non;
 

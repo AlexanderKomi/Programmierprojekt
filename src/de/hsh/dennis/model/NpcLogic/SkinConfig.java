@@ -12,11 +12,11 @@ public class SkinConfig {
     }
 
     public static class Player {
-        public static Image skin_standard = new Image("de/hsh/dennis/resources/actors/Player/player_standard.png");
-        public static Image skin_left = new Image("de/hsh/dennis/resources/actors/Player/player_left.png");
-        public static Image skin_right = new Image("de/hsh/dennis/resources/actors/Player/player_right.png");
-        public static Image skin_up = new Image("de/hsh/dennis/resources/actors/Player/player_up.png");
-        public static Image skin_down = new Image("de/hsh/dennis/resources/actors/Player/player_down.png");
+        public static Image skin_standard = new Image("de/hsh/dennis/resources/actors/player/player_standard.png");
+        public static Image skin_left = new Image("de/hsh/dennis/resources/actors/player/player_left.png");
+        public static Image skin_right = new Image("de/hsh/dennis/resources/actors/player/player_right.png");
+        public static Image skin_up = new Image("de/hsh/dennis/resources/actors/player/player_up.png");
+        public static Image skin_down = new Image("de/hsh/dennis/resources/actors/player/player_down.png");
 
         public static double offsetX = 0;
         public static double offsetY = 100;
@@ -26,14 +26,15 @@ public class SkinConfig {
     }
 
     public static class Bot {
-        public static Image skin_standard = new Image("de/hsh/dennis/resources/actors/Bot/bot_standard.png");
+        public static Image skin_standard = new Image("de/hsh/dennis/resources/actors/bot/bot.png");
     }
 
     public static class Hacker {
-        public static Image skin_standard = new Image("de/hsh/dennis/resources/actors/Bot/bot_standard.png");
+        public static Image skin_standard = new Image("de/hsh/dennis/resources/actors/hacker/hacker.png");
     }
 
     public static class Package {
-        public static Image skin_standard = new Image("de/hsh/dennis/resources/actors/Bot/bot_standard.png");
+        public static Image skin_standard = new Image("de/hsh/dennis/resources/actors/package/package.png");
+        public static Image skin_healing = new Image("de/hsh/dennis/resources/actors/package/packageHealing.png");
     }
 }
