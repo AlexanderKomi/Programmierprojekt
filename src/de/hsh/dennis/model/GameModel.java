@@ -150,6 +150,7 @@ public class GameModel extends Observable {
 
     public void printLoading(){
         if(gc != null) {
+            clearCanvas();
             String loading = "[ L O A D I N G ]";
             gc.setFill(Color.BLACK);
             gc.fillText(loading, (canvas.getWidth() / 2) - (loading.length() * 3), (canvas.getHeight() / 2));
@@ -492,8 +493,11 @@ public class GameModel extends Observable {
     }
 
     private void clearCanvas() {
+        /*
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        */
+        gc.drawImage(SkinConfig.Level.level_Background , 0, 0);
     }
 
     public void updateScore(int addToScore) {

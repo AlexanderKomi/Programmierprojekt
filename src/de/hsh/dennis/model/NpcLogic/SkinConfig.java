@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 public class SkinConfig {
 
     public static class Level {
+        public static Image level_Background = new Image("de/hsh/dennis/resources/background_Level.png");
+
         public static double speed = 1.0;
 
         public enum Difficulty {EASY, MEDIUM, HARD, NIGHTMARE, CUSTOM}
