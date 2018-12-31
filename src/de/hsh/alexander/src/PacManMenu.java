@@ -12,8 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.Observable;
@@ -28,18 +26,11 @@ public final class PacManMenu extends Observable implements Initializable {
     private static      PacMan2  pacMan2;
 
     @FXML
-    public VBox   basicPane;
-    @FXML
     public Canvas dataCoinCanvas;
     @FXML
     public Canvas player1Canvas;
     @FXML
     public Canvas player2Canvas;
-    @FXML
-    public Button backButton;
-    @FXML
-    public Button okButton;
-
 
     public void backButtonPressed( ActionEvent actionEvent ) {
         Logger.log( "PacManMenu : Back Button pressed" );
