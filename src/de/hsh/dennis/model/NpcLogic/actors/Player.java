@@ -10,6 +10,7 @@ import static de.hsh.dennis.model.NpcLogic.SkinConfig.Player.*;
 public class Player extends Actor {
 
     private              Direction currentDirection = Direction.Non;
+    private              Direction lastLR           = Direction.Non;
 
 
     public Player() {
@@ -22,13 +23,19 @@ public class Player extends Actor {
             case Left:
                 setSkin( skin_hit_left_path );
                 setDirection(Direction.Left);
+                lastLR = Direction.Left;
                 break;
             case Right:
                 setSkin( skin_hit_right_path );
                 setDirection(Direction.Right);
+                lastLR = Direction.Right;
                 break;
             case Up:
-                setSkin( skin_up_left_path );
+                if(lastLR == Direction.Right){
+                    setCurrentImage( skin_up_right_path );
+                }else{
+                    setCurrentImage( skin_up_left_path );
+                }
                 setDirection(Direction.Up);
                 break;
             case Down:
@@ -49,7 +56,12 @@ public class Player extends Actor {
     }
 
     public void setSkinToDefault() {
-        setCurrentImage( skin_standard_left_path );
+        if(lastLR == Direction.Right){
+            setCurrentImage( skin_standard_right_path );
+        }else{
+            setCurrentImage( skin_standard_left_path );
+        }
+
         setDirection(Direction.Non);
     }
 
