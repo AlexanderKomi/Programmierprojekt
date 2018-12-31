@@ -14,6 +14,6 @@ public final class Configuration {
      * @return Returns true, when everything should be logged to the console.
      */
     static boolean shouldLog() {
-        return true;
+        return false;
     }
 }
