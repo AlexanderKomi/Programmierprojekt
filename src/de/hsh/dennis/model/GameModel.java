@@ -127,7 +127,6 @@ public final class GameModel extends Observable {
             npcHandler.spawning();
             npcHandler.move();
 
-
             npcList = npcHandler.getNpcList();
             //collideCheck();
 
@@ -184,12 +183,10 @@ public final class GameModel extends Observable {
                 GameModelUtils.initHardDifficulty( npcHandler );
                 audioDelay = calcAudioDelay( getFps(), MovingSpeeds._hard );
                 break;
-
             case NIGHTMARE:
                 GameModelUtils.initNightmareDifficulty( npcHandler );
                 audioDelay = calcAudioDelay( getFps(), MovingSpeeds._nightmare );
                 break;
-
             case CUSTOM:
                 break;
         }
@@ -210,7 +207,7 @@ public final class GameModel extends Observable {
     //default fps == 60 -> 60 * pro Sekunde bewegt sich ein Npc um 'speed' pixel.
     private double calcAudioDelay( int fps, double speed ) {
         double widthToMove =
-                ((canvas.getWidth() / 2d) - (SkinConfig.Player.skin_standard_right.getWidth() / 2d) - 5d);         //600.0d
+                ((canvas.getWidth() / 2d) - (SkinConfig.Player.skin_width / 2d) - 5d);         //600.0d
         return (widthToMove / (fps * speed));
     }
 
@@ -408,7 +405,6 @@ public final class GameModel extends Observable {
             double elapsedSeconds = elapsedTime / 1000;
             if ( elapsedSeconds >= animationDelay ) {
                 player.setSkinToDefault();
-                player.setDirection( Direction.Non );
                 reset = false;
             }
         }

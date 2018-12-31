@@ -11,6 +11,7 @@ public class Player extends Actor {
 
     private              Direction currentDirection = Direction.Non;
 
+
     public Player() {
         super( SkinConfig.Player.skin_standard_path, SkinConfig.Player.posX, SkinConfig.Player.posY );
         setSkinToDefault();
@@ -27,22 +28,13 @@ public class Player extends Actor {
                 setDirection(Direction.Right);
                 break;
             case Up:
-                if ( this.getSkin() == skin_standard_right ) {
-                    setSkin( skin_up_right_path );
-                }else{
-                    setSkin( skin_up_left_path );
-                }
+                setSkin( skin_up_left_path );
                 setDirection(Direction.Up);
                 break;
             case Down:
-                if ( this.getSkin() == skin_standard_right ) {
-                    setSkin( skin_down_right_path );
-                }else{
-                    setSkin( skin_down_left_path );
-                }
+                setSkin( skin_down_left_path );
                 setDirection(Direction.Down);
                 break;
-
         }
     }
 
@@ -57,11 +49,7 @@ public class Player extends Actor {
     }
 
     public void setSkinToDefault() {
-        if ( this.getSkin() == skin_hit_right ||
-             this.getSkin() == skin_up_right ||
-             this.getSkin() == skin_down_right ) { setCurrentImage( skin_standard_right_path ); }
-        else { setCurrentImage( skin_standard_left_path ); }
-
+        setCurrentImage( skin_standard_left_path );
         setDirection(Direction.Non);
     }
 

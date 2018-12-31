@@ -28,13 +28,13 @@ public abstract class Npc extends Actor implements Comparable {
                 break;
             case BOT:
                 setPosX( (spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width :
-                         0 - SkinConfig.Bot.skin_standard.getWidth() );
-                setPosY( SkinConfig.Player.posY + (SkinConfig.Player.skin_standard.getHeight() * 0.2) );
+                         0 - SkinConfig.Bot.skin_width );
+                setPosY( SkinConfig.Player.posY + (SkinConfig.Player.skin_height * 0.2) );
                 break;
             case HACKER:
                 setPosX( (spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width :
                          0 - SkinConfig.Hacker.skin_standard.getWidth() );
-                setPosY( SkinConfig.Player.posY + SkinConfig.Player.skin_standard.getHeight() -
+                setPosY( SkinConfig.Player.posY + SkinConfig.Player.skin_height -
                          SkinConfig.Hacker.skin_standard.getHeight() );
                 break;
 
@@ -60,12 +60,12 @@ public abstract class Npc extends Actor implements Comparable {
             case BOT:
                 setPosX( (spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width :
                          0 - SkinConfig.Bot.skin_standard.getWidth() );
-                setPosY( SkinConfig.Player.posY + (SkinConfig.Player.skin_standard.getHeight() * 0.2) );
+                setPosY( SkinConfig.Player.posY + (SkinConfig.Player.skin_height * 0.2) );
                 break;
             case HACKER:
                 setPosX( (spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width :
                          0 - SkinConfig.Hacker.skin_standard.getWidth() );
-                setPosY( SkinConfig.Player.posY + SkinConfig.Player.skin_standard.getHeight() -
+                setPosY( SkinConfig.Player.posY + SkinConfig.Player.skin_height -
                          SkinConfig.Hacker.skin_standard.getHeight() );
                 break;
 
