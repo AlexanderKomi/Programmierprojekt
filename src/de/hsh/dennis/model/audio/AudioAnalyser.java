@@ -5,8 +5,7 @@ import common.util.Logger;
 import v4lk.lwbd.BeatDetector;
 import v4lk.lwbd.util.Beat;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ import static de.hsh.dennis.model.audio.AudioConfig.DelayBetweenSpawns._default;
 public class AudioAnalyser {
 
     private BeatDetector detector;
-    private File audioFile;
+    private InputStream audioStream;
 
 
     private double sensitivityFixed = 0.2d;
@@ -29,27 +28,29 @@ public class AudioAnalyser {
         detector = new BeatDetector();
     }
 
-    public void loadSound(String path){
-        audioFile = new File(this.getClass().getResource(path).getPath());
+    public void loadSound(String mp3Name){
+        String path = "/de/hsh/dennis/resources/audioFiles/" ;
+
+
+
+            audioStream = getClass().getResourceAsStream(path + mp3Name);
+
     }
 
-    public void loadSound(File audioFile){
-        this.audioFile = audioFile;
-    }
 
     public void clearAudioFile(){
-        this.audioFile = null;
+        this.audioStream = null;
     }
 
     public List<Double> getSpawnTimes(){
-        if(audioFile == null){
+        if(audioStream == null){
             Logger.log(this.getClass().getName() + " : no File detected ...");
         }else{
 
 
             try {
 
-                Beat[] beats = BeatDetector.detectBeats(audioFile, BeatDetector.AudioType.MP3);
+                Beat[] beats = BeatDetector.detectBeats(audioStream, BeatDetector.AudioType.MP3);
 
                 List<Double> spawnTimes = new ArrayList<>();
 
@@ -63,7 +64,7 @@ public class AudioAnalyser {
                         }else{spawnTimes.add(b.timeMs / 1000d);}
                     }
                 }
-                Logger.log("detected " + spawnTimes.size() + " usable beats in " + audioFile.getName());
+                Logger.log("detected " + spawnTimes.size() + " usable beats.");
                 return spawnTimes;
             } catch (IOException e) {
                 e.printStackTrace();

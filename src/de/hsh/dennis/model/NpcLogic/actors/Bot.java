@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 
 public class Bot extends Npc {
 
-    private static final String pictureFileName = "/de/hsh/dennis/resources/actors/bot/bot.png";
+    private static final String picturePath = "/dennis/skins/bot/bot.png";
     private static final int defaultSpeed = 1;
 
     private double bounceMax = 5.0;
@@ -18,20 +18,20 @@ public class Bot extends Npc {
 
 
     public Bot(NPCEnums.Spawn spawnType) throws FileNotFoundException {
-        super(pictureFileName, spawnType, NPCEnums.NpcType.BOT);
+        super(SkinConfig.Bot.skin_standard_path, spawnType, NPCEnums.NpcType.BOT);
         setCurrentImage(SkinConfig.Bot.skin_standard);
         bounceInit();
     }
 
     public Bot(NPCEnums.Spawn spawnType, double spawnTime) throws FileNotFoundException {
-        super(pictureFileName, spawnType, NPCEnums.NpcType.BOT, spawnTime, defaultSpeed);
+        super(SkinConfig.Bot.skin_standard_path, spawnType, NPCEnums.NpcType.BOT, spawnTime, defaultSpeed);
         setCurrentImage(SkinConfig.Bot.skin_standard);
 
         bounceInit();
     }
 
     public Bot(NPCEnums.Spawn spawnType, double spawnTime, double speed) throws FileNotFoundException {
-        super(pictureFileName, spawnType, NPCEnums.NpcType.BOT, spawnTime, speed);
+        super(SkinConfig.Bot.skin_standard_path, spawnType, NPCEnums.NpcType.BOT, spawnTime, speed);
         setCurrentImage(SkinConfig.Bot.skin_standard);
 
         bounceInit();

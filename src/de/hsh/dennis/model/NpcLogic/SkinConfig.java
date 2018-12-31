@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 public final class SkinConfig {
 
     private static final String resourceFolderPath = "/de/hsh/dennis/resources/";
-    private static final String actorFolder        = resourceFolderPath + "actors/";
+    private static final String skinFolder = resourceFolderPath + "skins/";
 
     public static final class Level {
         public static Image level_Background = new Image( resourceFolderPath + "background_Level.png" );
@@ -17,7 +17,7 @@ public final class SkinConfig {
     }
 
     public static final class Player {
-        private static final String playerPath    = actorFolder + "player/";
+        private static final String playerPath    = skinFolder + "player/";
 
 
         public static final String skin_standard_path = playerPath + "player_standard.png";
@@ -61,19 +61,19 @@ public final class SkinConfig {
     }
 
     public static class Bot {
-        private static final String botFolder          = actorFolder + "bot/";
-        static final         String skin_standard_path = botFolder + "bot.png";
+        private static final String botFolder          = skinFolder + "bot/";
+        public static final         String skin_standard_path = botFolder + "bot.png";
         public static        Image  skin_standard      = new Image( skin_standard_path );
     }
 
     public static class Hacker {
-        private static final String hackerFolder       = actorFolder + "hacker/";
+        private static final String hackerFolder       = skinFolder + "hacker/";
         public static final  String skin_standard_path = hackerFolder + "hacker.png";
         public static        Image  skin_standard      = new Image( skin_standard_path );
     }
 
     public static class Package {
-        private static final String packageFolder = actorFolder + "package/";
+        private static final String packageFolder = skinFolder + "package/";
 
         public static final String skin_standard_path = packageFolder + "package.png";
         public static       Image  skin_standard      = new Image( skin_standard_path );

@@ -92,10 +92,10 @@ public class NpcHandler {
         spawnArray = temp;
     }
 
-    public void generateNpcs(String pathToMp3, double speed) {
+    public void generateNpcs(String mp3Name, double speed) {
 
 
-        aa.loadSound(pathToMp3);
+        aa.loadSound(mp3Name);
         List<Double> tempTimes = aa.getSpawnTimes();
         aa.clearAudioFile();
 
