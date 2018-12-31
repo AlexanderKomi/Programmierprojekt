@@ -18,7 +18,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -35,13 +34,13 @@ public class GameModel extends Observable {
     public static StringProperty score_string = new SimpleStringProperty("0");
 
     //GAME STATES
-    public boolean gameLost = false;
+    private boolean gameLost = false;
 
 
-    public boolean breaking = false;
+    private boolean breaking = false;
 
 
-    public SkinConfig.Level.Difficulty difficulty = SkinConfig.Level.Difficulty.EASY;
+    private SkinConfig.Level.Difficulty difficulty = SkinConfig.Level.Difficulty.EASY;
 
     //Objects
     private NpcHandler npcHandler;
@@ -58,10 +57,12 @@ public class GameModel extends Observable {
     public int fps = -1;
 
     //Audio Stuff
-    private boolean musicStart = true;
-    SpawnTimer audioTimer;
-    private final double audioDelayFixed = 8.35d;
-    private double audioDelay = audioDelayFixed;       //ausprobierter Wert, ersetzen durch berechneten Wert (Wie lange muss der Sound warten bis er spielen darf um mit den Enemys synchron zu sein. Abhängikkeit Geschwindigkeit, Abstand SpawnPunkt zur Mitte!)
+    private       boolean    musicStart      = true;
+    private       SpawnTimer audioTimer;
+    private final double     audioDelayFixed = 8.35d;
+    private       double     audioDelay      = audioDelayFixed;
+            //ausprobierter Wert, ersetzen durch berechneten Wert (Wie lange muss der Sound warten bis er spielen darf um mit
+    // den Enemys synchron zu sein. Abhängikkeit Geschwindigkeit, Abstand SpawnPunkt zur Mitte!)
 
     // --- ACT ------------------------------------------------------------------------------------
     private boolean ai = false;
@@ -69,11 +70,7 @@ public class GameModel extends Observable {
     private boolean acting = false;
 
     public GameModel() {
-        try {
-            player = new Player();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        player = new Player();
     }
 
     public void reset() {
@@ -89,11 +86,7 @@ public class GameModel extends Observable {
 
         //Objects
         npcHandler = null;
-        try {
-            player = new Player();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        player = new Player();
 
         clearCanvas();
         npcList.clear();
@@ -500,7 +493,7 @@ public class GameModel extends Observable {
         gc.drawImage(SkinConfig.Level.level_Background , 0, 0);
     }
 
-    public void updateScore(int addToScore) {
+    private void updateScore( int addToScore ) {
         if (score + addToScore <= 0) {
             score = 0;
         } else {
@@ -510,7 +503,7 @@ public class GameModel extends Observable {
 
     }
 
-    public void updateHealth(int addToHealth) {
+    private void updateHealth( int addToHealth ) {
         if (health + addToHealth <= 0) {
             health = 0;
             gameLost = true;
