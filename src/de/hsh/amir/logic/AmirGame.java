@@ -77,7 +77,6 @@ public final class AmirGame {
                 points.increase();
                 playSound();
                 toRemove.add( gegner );
-                Logger.log( this.getClass() + " : Anzahl Gegner in der Gegnerliste = " + gegnerManager.getGegnerListe().size() );
             }
 
         }
