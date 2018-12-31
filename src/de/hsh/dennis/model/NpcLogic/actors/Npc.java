@@ -23,7 +23,7 @@ public abstract class Npc extends Actor implements Comparable {
         switch ( type ) {
             case PACKAGE:
                 setPosX( (spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width :
-                         0 - SkinConfig.Package.skin_standard.getWidth() );
+                         0 - SkinConfig.Package.skin_width );
                 setPosY( SkinConfig.Player.posY );
                 break;
             case BOT:
@@ -33,9 +33,9 @@ public abstract class Npc extends Actor implements Comparable {
                 break;
             case HACKER:
                 setPosX( (spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width :
-                         0 - SkinConfig.Hacker.skin_standard.getWidth() );
+                         0 - SkinConfig.Hacker.skin_width );
                 setPosY( SkinConfig.Player.posY + SkinConfig.Player.skin_height -
-                         SkinConfig.Hacker.skin_standard.getHeight() );
+                         SkinConfig.Hacker.skin_height );
                 break;
 
             default:
@@ -54,19 +54,19 @@ public abstract class Npc extends Actor implements Comparable {
         switch ( type ) {
             case PACKAGE:
                 setPosX( (spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width :
-                         0 - SkinConfig.Package.skin_standard.getWidth() );
+                         0 - SkinConfig.Package.skin_width );
                 setPosY( SkinConfig.Player.posY );
                 break;
             case BOT:
                 setPosX( (spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width :
-                         0 - SkinConfig.Bot.skin_standard.getWidth() );
+                         0 - SkinConfig.Bot.skin_width );
                 setPosY( SkinConfig.Player.posY + (SkinConfig.Player.skin_height * 0.2) );
                 break;
             case HACKER:
                 setPosX( (spawnType == NPCEnums.Spawn.RIGHT) ? WindowConfig.window_width :
-                         0 - SkinConfig.Hacker.skin_standard.getWidth() );
+                         0 - SkinConfig.Hacker.skin_width );
                 setPosY( SkinConfig.Player.posY + SkinConfig.Player.skin_height -
-                         SkinConfig.Hacker.skin_standard.getHeight() );
+                         SkinConfig.Hacker.skin_height );
                 break;
 
             default:

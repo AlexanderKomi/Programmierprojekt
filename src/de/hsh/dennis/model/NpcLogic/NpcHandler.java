@@ -2,12 +2,11 @@ package de.hsh.dennis.model.NpcLogic;
 
 import common.util.Logger;
 import common.util.RandomInt;
-import de.hsh.dennis.model.NpcLogic.actors.*;
 import de.hsh.dennis.model.NpcLogic.actors.Package;
+import de.hsh.dennis.model.NpcLogic.actors.*;
 import de.hsh.dennis.model.audio.AudioAnalyser;
 import javafx.scene.canvas.Canvas;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -103,32 +102,30 @@ public class NpcHandler {
 
         for (Double d : tempTimes) {
             if (d >= spawnDelay) {
-                try {
-                    NPCEnums.Spawn direction;
-                    int dirTemp = RandomInt.randInt(1, 2);
-                    if (dirTemp == 1) {
-                        direction = NPCEnums.Spawn.RIGHT;
-                    } else {
-                        direction = NPCEnums.Spawn.LEFT;
-                    }
+                NPCEnums.Spawn direction;
+                int            dirTemp = RandomInt.randInt( 1, 2 );
+                if ( dirTemp == 1 ) {
+                    direction = NPCEnums.Spawn.RIGHT;
+                }
+                else {
+                    direction = NPCEnums.Spawn.LEFT;
+                }
 
-                    switch (RandomInt.randInt(1, 3)) {
-                        case 1:
-                            if (RandomInt.randInt(1, 4) == 1) {
-                                temp.add(new PackageHealing(direction, d, speed));
-                            } else {
-                                temp.add(new Package(direction, d, speed));
-                            }
-                            break;
-                        case 2:
-                            temp.add(new Bot(direction, d, speed));
-                            break;
-                        case 3:
-                            temp.add(new Hacker(direction, d, speed));
-                            break;
-                    }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                switch ( RandomInt.randInt( 1, 3 ) ) {
+                    case 1:
+                        if ( RandomInt.randInt( 1, 4 ) == 1 ) {
+                            temp.add( new PackageHealing( direction, d, speed ) );
+                        }
+                        else {
+                            temp.add( new Package( direction, d, speed ) );
+                        }
+                        break;
+                    case 2:
+                        temp.add( new Bot( direction, d, speed ) );
+                        break;
+                    case 3:
+                        temp.add( new Hacker( direction, d, speed ) );
+                        break;
                 }
             }
         }

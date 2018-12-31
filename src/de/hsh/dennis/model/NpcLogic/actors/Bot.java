@@ -1,39 +1,18 @@
 package de.hsh.dennis.model.NpcLogic.actors;
 
 
-import de.hsh.dennis.model.NpcLogic.SkinConfig;
 import de.hsh.dennis.model.NpcLogic.NPCEnums;
-
-import java.io.FileNotFoundException;
+import de.hsh.dennis.model.NpcLogic.SkinConfig;
 
 public class Bot extends Npc {
-
-    private static final String picturePath = "/dennis/skins/bot/bot.png";
-    private static final int defaultSpeed = 1;
 
     private double bounceMax = 5.0;
     private double bouncePos = getBounceMax() * -1.0;
     private double bounceSpeed = getSpeed() / 2.0;
     private boolean bounceInitialized = false;
 
-
-    public Bot(NPCEnums.Spawn spawnType) throws FileNotFoundException {
-        super(SkinConfig.Bot.skin_standard_path, spawnType, NPCEnums.NpcType.BOT);
-        setCurrentImage(SkinConfig.Bot.skin_standard);
-        bounceInit();
-    }
-
-    public Bot(NPCEnums.Spawn spawnType, double spawnTime) throws FileNotFoundException {
-        super(SkinConfig.Bot.skin_standard_path, spawnType, NPCEnums.NpcType.BOT, spawnTime, defaultSpeed);
-        setCurrentImage(SkinConfig.Bot.skin_standard);
-
-        bounceInit();
-    }
-
-    public Bot(NPCEnums.Spawn spawnType, double spawnTime, double speed) throws FileNotFoundException {
+    public Bot( NPCEnums.Spawn spawnType, double spawnTime, double speed ) {
         super(SkinConfig.Bot.skin_standard_path, spawnType, NPCEnums.NpcType.BOT, spawnTime, speed);
-        setCurrentImage(SkinConfig.Bot.skin_standard);
-
         bounceInit();
     }
 

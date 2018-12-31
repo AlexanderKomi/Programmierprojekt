@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 public final class SkinConfig {
 
     private static final String resourceFolderPath = "/de/hsh/dennis/resources/";
-    private static final String skinFolder = resourceFolderPath + "skins/";
+    private static final String skinFolder         = resourceFolderPath + "skins/";
 
     public static final class Level {
         public static Image level_Background = new Image( resourceFolderPath + "background_Level.png" );
@@ -17,11 +17,10 @@ public final class SkinConfig {
     }
 
     public static final class Player {
-        private static final String playerPath    = skinFolder + "player/";
+        private static final String playerPath = skinFolder + "player/";
 
 
         public static final String skin_standard_path = playerPath + "player_standard.png";
-        public static       Image  skin_standard      = new Image( skin_standard_path );
 
         public static final String skin_standard_right_path = playerPath + "player_standard_right.png";
 
@@ -54,31 +53,27 @@ public final class SkinConfig {
         public static double resetDelay = 0.2d;
     }
 
-    public static class Bot {
+    public static final class Bot {
         private static final String botFolder          = skinFolder + "bot/";
         public static final  String skin_standard_path = botFolder + "bot.png";
-        public static        Image  skin_standard      = new Image( skin_standard_path );
         public static final  int    skin_width         = 50;
         public static final  int    skin_height        = 50;
     }
 
-    public static class Hacker {
+    public static final class Hacker {
         private static final String hackerFolder       = skinFolder + "hacker/";
         public static final  String skin_standard_path = hackerFolder + "hacker.png";
-        public static        Image  skin_standard      = new Image( skin_standard_path );
 
         public static final int skin_width  = 50;
         public static final int skin_height = 50;
     }
 
-    public static class Package {
+    public static final class Package {
         private static final String packageFolder = skinFolder + "package/";
 
         public static final String skin_standard_path = packageFolder + "package.png";
-        public static       Image  skin_standard      = new Image( skin_standard_path );
 
         public static final String skin_healing_path = packageFolder + "packageHealing.png";
-        public static       Image  skin_healing      = new Image( skin_healing_path );
 
         public static final int skin_width  = 50;
         public static final int skin_height = 50;
