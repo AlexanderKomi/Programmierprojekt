@@ -6,6 +6,7 @@ import common.util.Logger;
 import de.hsh.alexander.src.actor.player.PacMan1;
 import de.hsh.alexander.src.actor.player.PacMan2;
 import de.hsh.alexander.src.level.Level1;
+import de.hsh.alexander.src.level.Level2;
 import de.hsh.alexander.src.level.PacManLevel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -100,11 +101,25 @@ public final class PacManGame extends Observable implements Observer, Initializa
             return;
         }
         this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
+        createLevel1();
+
+        Logger.log( this.getClass() + ": Resetted game" );
+    }
+
+    private void createLevel1() {
         this.currentLevel = new Level1( gameCanvas );
+        levelSetup();
+    }
+
+    private void createLevel2() {
+        this.currentLevel = new Level2( gameCanvas );
+        levelSetup();
+    }
+
+    private void levelSetup() {
         this.gameCanvas.setOnKeyPressed( this.currentLevel::keyboardInput );
         this.gameCanvas.setOnKeyReleased( this.currentLevel::keyboardInput ); // Only fires, when traversable
         this.currentLevel.addObserver( this );
-        Logger.log( this.getClass() + ": Resetted game" );
     }
 
     private void bindLabelsToPoints() {
