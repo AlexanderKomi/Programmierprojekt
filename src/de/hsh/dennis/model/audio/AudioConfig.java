@@ -2,7 +2,7 @@ package de.hsh.dennis.model.audio;
 
 public class AudioConfig {
 
-    public static class Mp3Paths {
+    public static class Mp3Names {
 
         public static String easy = "sound1.mp3";
 

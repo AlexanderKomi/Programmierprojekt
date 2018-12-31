@@ -4,10 +4,7 @@ import common.util.Logger;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 public class AudioPlayer {
 
@@ -60,31 +57,27 @@ public class AudioPlayer {
             Logger.log( "MusikPlayer and dependencies finaly shut down !!!" );
         }
 
-        public static void loadFile( String path ) {
+        public static void loadFile( String mp3Name ) {
+            String path = "/de/hsh/dennis/resources/audioFiles/";
+
+            InputStream fis =  AudioPlayer.class.getResourceAsStream(path + mp3Name);
+            bis = new BufferedInputStream( fis );
 
             try {
-                FileInputStream     fis = new FileInputStream( path );
-                bis = new BufferedInputStream( fis );
-
-                try {
-                    player = new Player( bis );
-                    musikThreat = new Thread( () -> {
-                        try {
-                            player.play();
-                        }
-                        catch ( JavaLayerException e ) {
-                            e.printStackTrace();
-                        }
-                    } );
-                }
-                catch ( JavaLayerException e ) {
-                    e.printStackTrace();
-                }
-
+                player = new Player( bis );
+                musikThreat = new Thread( () -> {
+                    try {
+                        player.play();
+                    }
+                    catch ( JavaLayerException e ) {
+                        e.printStackTrace();
+                    }
+                } );
             }
-            catch ( FileNotFoundException e ) {
+            catch ( JavaLayerException e ) {
                 e.printStackTrace();
             }
+
         }
 
 
