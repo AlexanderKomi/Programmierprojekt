@@ -6,12 +6,11 @@ import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.amir.controller.AmirGameController;
 import de.hsh.amir.controller.AmirsMainMenuController;
-import sun.rmi.runtime.Log;
-
 import java.util.Observable;
 
 /**
- * TODO maybe for fixation of exitButton
+ * Klasse, die für das Wechseln der FXML-Dateien, sprich die das Menü und
+ * das Spiel verantwortlich ist.
  */
 public class AmirFxmlChanger extends FxmlChanger {
 

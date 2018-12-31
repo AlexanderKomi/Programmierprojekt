@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 
 public class Bot extends Npc {
 
-    private static final String pictureFileName = "/de/hsh/dennis/resources/actors/Bot/bot_standard.png";
+    private static final String pictureFileName = "/de/hsh/dennis/resources/actors/bot/bot.png";
     private static final int defaultSpeed = 1;
 
     private double bounceMax = 5.0;

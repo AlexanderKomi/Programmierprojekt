@@ -54,10 +54,6 @@ public class EndScreen_controller extends Observable implements Initializable {
                 setChanged();
                 notifyObservers(id);
                 break;
-
-            default:
-                Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
-
         }
     }
 

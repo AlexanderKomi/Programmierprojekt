@@ -21,7 +21,6 @@ public class AmirEntryPoint extends GameEntryPoint {
 
     public AmirEntryPoint( Observer o ) {
         super( o, WindowConfig.amir_title );
-        //this.amirGame = new AmirGameController();
         changer = new AmirFxmlChanger( this, AmirsMainMenuController.fxml, new AmirsMainMenuController() );
     }
 
@@ -57,7 +56,6 @@ public class AmirEntryPoint extends GameEntryPoint {
                     logParsingError( o, arg );
                     break;
             }
-            //this.notifyObservers( message );
         }
         else {
             logParsingError( o, arg );

@@ -35,8 +35,14 @@ public class Leertastenklatsche extends Observable implements Observer {
                                WindowConfig.window_height * 0.73
         );
         thedude.setSpeed( 0 );
-        PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\SMB.mp3" );
-        //TODO: Make music play permamnently but cancel when entering horrormode
+
+        Thread thread = new Thread(){
+            public void run(){
+                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\SMB.mp3" );
+            }
+        };
+            thread.start();
+
     }
 
     void render( Canvas gc ) {

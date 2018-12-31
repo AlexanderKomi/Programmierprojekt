@@ -27,6 +27,7 @@ public final class UpdateCodes {
         public static final String gameLost = "Game lost";
         public static final String gameWon = "Game Won";
         public static final String replay = "replay";
+        public static final String continiue = "continiue";
     }
 
     public static final class TunnelInvader {

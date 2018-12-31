@@ -45,7 +45,7 @@ public class BreakMenu_controller extends Observable implements Initializable {
 
     @FXML
     void keyInputHandler(KeyEvent event) {
-        if (event.getCode() == KeyLayout.Control.ESC) {
+        if (event.getCode().equals(KeyLayout.Control.BREAK) || event.getCode().equals(KeyLayout.Control.BREAK_ALT)) {
             setChanged();
             notifyObservers("b_continue");
         }

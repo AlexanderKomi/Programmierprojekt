@@ -21,9 +21,9 @@ public class AudioConfig {
 
         public static double _medium = 0.2d;
 
-        public static double _hard = 0.2d;
+        public static double _hard = 0.15d;
 
-        public static double _nightmare = 0.0d;
+        public static double _nightmare = 0.05d;
     }
 
     public static class MovingSpeeds{
@@ -32,9 +32,9 @@ public class AudioConfig {
 
         public static double _easy = 1d;
 
-        public static double _medium = 1d;
+        public static double _medium = 1.5d;
 
-        public static double _hard = 1.5d;
+        public static double _hard = 2d;
 
         public static double _nightmare = 2d;
 

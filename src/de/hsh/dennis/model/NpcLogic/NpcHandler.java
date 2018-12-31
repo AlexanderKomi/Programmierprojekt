@@ -2,9 +2,7 @@ package de.hsh.dennis.model.NpcLogic;
 
 import common.util.Logger;
 import common.util.RandomInt;
-import de.hsh.dennis.model.NpcLogic.actors.Bot;
-import de.hsh.dennis.model.NpcLogic.actors.Hacker;
-import de.hsh.dennis.model.NpcLogic.actors.Npc;
+import de.hsh.dennis.model.NpcLogic.actors.*;
 import de.hsh.dennis.model.NpcLogic.actors.Package;
 import de.hsh.dennis.model.audio.AudioAnalyser;
 import javafx.scene.canvas.Canvas;
@@ -36,6 +34,8 @@ public class NpcHandler {
     private int pointValue = 1;
     private double spawnDelay = 0d;
 
+    private double breakTimeElabsed = 0d;
+    private double breakTimeMark = 0d;
 
     public NpcHandler(Canvas canvas) {
         NpcHandler.canvas = canvas;
@@ -50,10 +50,20 @@ public class NpcHandler {
         return false;
     }
 
+    public void triggerBreak() {
+        breakTimeMark = time.getCurrentTimeStamp();
+    }
+
+    public void unTriggerBreak() {
+        breakTimeElabsed += time.getCurrentTimeStamp() - breakTimeMark;
+        breakTimeMark = 0d;
+    }
+
+
     public void spawning() {
         if (spawnArray != null) {
             //time.start();
-            if (spawnIterator < spawnArray.length && time.getCurrentTimeStamp() >= spawnArray[spawnIterator].getSpawnTime()) {
+            if (spawnIterator < spawnArray.length && (time.getCurrentTimeStamp() - breakTimeElabsed) >= spawnArray[spawnIterator].getSpawnTime()) {
                 synchronized (npcList) {
                     spawnNpc(spawnArray[spawnIterator]);
                 }
@@ -104,7 +114,11 @@ public class NpcHandler {
 
                     switch (RandomInt.randInt(1, 3)) {
                         case 1:
-                            temp.add(new Package(direction, d, speed));
+                            if (RandomInt.randInt(1, 4) == 1) {
+                                temp.add(new PackageHealing(direction, d, speed));
+                            } else {
+                                temp.add(new Package(direction, d, speed));
+                            }
                             break;
                         case 2:
                             temp.add(new Bot(direction, d, speed));
@@ -134,7 +148,9 @@ public class NpcHandler {
                 switch (npc.getNpcType()) {
                     case PACKAGE:
                         scoreChange += pointValue;
-                        healthChange += pointValue;
+                        if (npc instanceof PackageHealing) {
+                            healthChange += pointValue;
+                        }
                         break;
                     case BOT:
                         scoreChange += pointValue;
@@ -176,7 +192,6 @@ public class NpcHandler {
         }
 
     }
-
 
 
     public void hitNpc(Npc npc) {
