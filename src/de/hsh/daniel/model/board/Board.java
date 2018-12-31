@@ -26,6 +26,7 @@ public class Board {
 
 
     Board() {
+        reset();
         cardList = BoardUtilities.initCards(numberOfPairs);
         matchCount = 0;
         p1 = new Player("P1");
@@ -187,15 +188,33 @@ public class Board {
 
     }
 
+    /**
+     *          *****************************************************************
+     *          *                                                               *
+     *          *                       GETTERS & SETTERS                       *
+     *          *                                                               *
+     *          *****************************************************************
+     *
+     */
     public Player getWinner() {
         return this.winner;
     }
-    public int getP1Points() { return p1.getPoints();}
-    public int getP2Points() { return p2.getPoints();}
 
-    public boolean isP1Turn() { return p1.isMyTurn(); }
-    public boolean isP2Turn() { return p2.isMyTurn(); }
+    public int getP1Points() {
+        return p1.getPoints();
+    }
 
+    public int getP2Points() {
+        return p2.getPoints();
+    }
+
+    public boolean isP1Turn() {
+        return p1.isMyTurn();
+    }
+
+    public boolean isP2Turn() {
+        return p2.isMyTurn();
+    }
 
 
 }

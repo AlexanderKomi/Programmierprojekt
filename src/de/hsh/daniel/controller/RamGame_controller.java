@@ -13,7 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Paint;
 
 import java.net.URL;
 import java.util.Observable;
@@ -55,10 +54,6 @@ public class RamGame_controller extends Observable implements Initializable {
     }
 
 
-
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Logger.log(this.getClass() + ": initialized");
@@ -93,24 +88,22 @@ public class RamGame_controller extends Observable implements Initializable {
         if (gameWon().equals(UpdateCodes.RAM.p1Win)) {
             setChanged();
             notifyObservers(UpdateCodes.RAM.p1Win);
-            Board.reset();
             initialized = false;
 
         } else if (gameWon().equals(UpdateCodes.RAM.p2Win)) {
             setChanged();
             notifyObservers(UpdateCodes.RAM.p2Win);
-            Board.reset();
             initialized = false;
 
         } else if (gameWon().equals(UpdateCodes.RAM.tie)) {
             setChanged();
             notifyObservers(UpdateCodes.RAM.tie);
-            Board.reset();
             initialized = false;
         } else {
             return;
         }
     }
+
     /**
      * Checks which player won
      *
@@ -130,23 +123,24 @@ public class RamGame_controller extends Observable implements Initializable {
     }
 
     private void update_p1Score() {
-        Platform.runLater( () -> p1_score.setText("P1: " + game.getGUIBoard().getP1Points()));
-        if(game.getGUIBoard().isP1Turn()){
+        Platform.runLater(() -> p1_score.setText("P1: " + game.getGUIBoard().getP1Points()));
+        if (game.getGUIBoard().isP1Turn()) {
             p1_score.setDisable(false);
         } else {
             p1_score.setDisable(true);
         }
     }
+
     private void update_p2Score() {
-        Platform.runLater( () -> p2_score.setText("P2: " + game.getGUIBoard().getP2Points()) );
-        if(game.getGUIBoard().isP2Turn()){
+        Platform.runLater(() -> p2_score.setText("P2: " + game.getGUIBoard().getP2Points()));
+        if (game.getGUIBoard().isP2Turn()) {
             p2_score.setDisable(false);
         } else {
             p2_score.setDisable(true);
         }
     }
-
-
 }
+
+
 
 
