@@ -143,8 +143,9 @@ public final class GameModel extends Observable {
     public void printLoading() {
         if ( gc != null ) {
             clearCanvas();
+
             String loading = "[ L O A D I N G ]";
-            gc.setFill( Color.BLACK );
+            gc.setFill( Color.WHITE );
             gc.fillText( loading, (canvas.getWidth() / 2) - (loading.length() * 3), (canvas.getHeight() / 2) );
         }
     }

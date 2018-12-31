@@ -15,12 +15,12 @@ public class AudioPlayer {
 
         private static Player player;
         static         Thread musikThreat;
-        private static File   file;
+        private static BufferedInputStream bis;
         private static boolean isPlaying = false;
 
         public static void play() {
             if ( musikThreat.isAlive() ) {musikThreat.stop();}
-            if ( file == null || musikThreat == null ) {
+            if ( bis == null || musikThreat == null ) {
                 Logger.log( "no file to play detected. Please load a .mp3 first." );
                 return;
             }
@@ -46,7 +46,7 @@ public class AudioPlayer {
                 musikThreat.stop();
                 musikThreat = null;
             }
-            if ( file != null ) {file = null;}
+            if ( bis != null ) {bis = null;}
             setIsPlaying(false);
         }
 
@@ -62,10 +62,9 @@ public class AudioPlayer {
 
         public static void loadFile( String path ) {
 
-            file = new File( path );
             try {
-                FileInputStream     fis = new FileInputStream( file );
-                BufferedInputStream bis = new BufferedInputStream( fis );
+                FileInputStream     fis = new FileInputStream( path );
+                bis = new BufferedInputStream( fis );
 
                 try {
                     player = new Player( bis );
@@ -88,9 +87,6 @@ public class AudioPlayer {
             }
         }
 
-        public static void playFile( String path ) {
-            loadFile( path );
-        }
 
         public static boolean getIsPlaying() {
             return isPlaying;
