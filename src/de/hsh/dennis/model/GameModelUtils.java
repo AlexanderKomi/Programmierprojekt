@@ -7,7 +7,6 @@ import de.hsh.dennis.model.audio.AudioConfig.Mp3Paths;
 
 final class GameModelUtils {
 
-    private static final String ressourcePath     = "/de/hsh/dennis/resources/audioFiles/";
     private static final String relativeRessource = "../resources/audioFiles/";
 
     private GameModelUtils() {}
