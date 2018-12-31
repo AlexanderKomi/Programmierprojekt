@@ -1,35 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import java.net.URL?>
-<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:id="hbox_1" prefHeight="800.0" prefWidth="1200.0"
-      >
+
+<HBox fx:id="hbox_1" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox fx:id="vbox_1" alignment="CENTER" prefHeight="800.0" prefWidth="1200.0" HBox.hgrow="ALWAYS">
             <children>
                 <AnchorPane VBox.vgrow="ALWAYS">
                     <children>
-                        <ImageView fx:id="imageView" fitHeight="300.0" fitWidth="600.0" layoutX="300.0" layoutY="150.0"
-                                   pickOnBounds="true" preserveRatio="true"/>
-                        <Button fx:id="b_left" layoutX="284.0" layoutY="560.0" mnemonicParsing="false"
-                                onAction="#button_clicked" text="&lt;--"/>
-                        <Button fx:id="b_right" layoutX="886.0" layoutY="560.0" mnemonicParsing="false"
-                                onAction="#button_clicked" text="--&gt;"/>
-                        <Button fx:id="b_exit" layoutX="579.0" layoutY="620.0" mnemonicParsing="false"
-                                onAction="#button_clicked" text="exit"/>
-                        <TextArea fx:id="ta_left" layoutX="14.0" layoutY="150.0" prefHeight="300.0" prefWidth="200.0"
-                                  text="Beschreibung" AnchorPane.leftAnchor="40.0"/>
-                        <TextArea fx:id="ta_right" layoutX="986.0" layoutY="150.0" prefHeight="300.0" prefWidth="200.0"
-                                  text="Beschreibung" AnchorPane.rightAnchor="40.0"/>
-                        <Text fx:id="t_subject" layoutX="520.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Subject" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0"
-                              AnchorPane.topAnchor="60.0">
+                        <ImageView fx:id="imageView" fitHeight="300.0" fitWidth="600.0" layoutX="300.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button fx:id="b_left" layoutX="284.0" layoutY="560.0" mnemonicParsing="false" onAction="#button_clicked" text="&lt;--" />
+                        <Button fx:id="b_right" layoutX="886.0" layoutY="560.0" mnemonicParsing="false" onAction="#button_clicked" text="--&gt;" />
+                        <Button fx:id="b_exit" layoutX="579.0" layoutY="620.0" mnemonicParsing="false" onAction="#button_clicked" text="exit" />
+                        <TextArea fx:id="ta_left" layoutX="14.0" layoutY="150.0" prefHeight="300.0" prefWidth="200.0" text=" Mit den Pfeiltasten oder W,A,S,D steuern. Kommt ein Gegner von rechts, drück rechts. Links das gleiche. Kommt ein Gegner von Oben, drück nach unten um dich zu ducken. Kommt er von unten, drück nach oben um über ihn zu springen.&#10;" AnchorPane.leftAnchor="40.0" />
+                        <TextArea fx:id="ta_right" layoutX="986.0" layoutY="150.0" prefHeight="300.0" prefWidth="200.0" text="Gegner von rechts, oben und unten ziehen dir einen Punkt und Gegner von rechts, links und unten auch Leben wenn man sie verfehlt. Triffst du einen Gegner gibt es einen Punkt und bei Herzen leben zurück." AnchorPane.rightAnchor="40.0" />
+                        <Text fx:id="t_subject" layoutX="520.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="60.0">
                             <font>
-                                <Font size="42.0"/>
+                                <Font size="42.0" />
                             </font>
                         </Text>
                     </children>
@@ -38,6 +33,6 @@
         </VBox>
     </children>
     <stylesheets>
-        <URL value="@css/dimensions.css"/>
+        <URL value="@css/dimensions.css" />
     </stylesheets>
 </HBox>
