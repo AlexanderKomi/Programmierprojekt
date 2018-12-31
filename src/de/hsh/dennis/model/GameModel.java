@@ -4,13 +4,11 @@ import common.actor.Direction;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.dennis.model.KeyLayout.Movement.Custom;
-import de.hsh.dennis.model.NpcLogic.NPCEnums;
 import de.hsh.dennis.model.NpcLogic.NpcHandler;
 import de.hsh.dennis.model.NpcLogic.SkinConfig;
 import de.hsh.dennis.model.NpcLogic.SpawnTimer;
 import de.hsh.dennis.model.NpcLogic.actors.Npc;
 import de.hsh.dennis.model.NpcLogic.actors.Player;
-import de.hsh.dennis.model.audio.AudioConfig;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
@@ -22,16 +20,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import static de.hsh.dennis.model.NpcLogic.NPCEnums.NpcType;
+import static de.hsh.dennis.model.NpcLogic.NPCEnums.Spawn;
+import static de.hsh.dennis.model.audio.AudioConfig.MovingSpeeds;
 
-public class GameModel extends Observable {
+
+public final class GameModel extends Observable {
 
     //Score & Health
-    private int health_init = 100;
-    private int score_init = 0;
-    public static int health;
-    public static StringProperty health_string = new SimpleStringProperty("100");
-    public static int score;
-    public static StringProperty score_string = new SimpleStringProperty("0");
+    private       int            health_init   = 100;
+    private       int            score_init    = 0;
+    public static int            health;
+    public static StringProperty health_string = new SimpleStringProperty( "100" );
+    public static int            score;
+    public static StringProperty score_string  = new SimpleStringProperty( "0" );
 
     //GAME STATES
     private boolean gameLost = false;
@@ -43,25 +45,25 @@ public class GameModel extends Observable {
     private SkinConfig.Level.Difficulty difficulty = SkinConfig.Level.Difficulty.EASY;
 
     //Objects
-    private NpcHandler npcHandler;
-    private Canvas canvas;
+    private NpcHandler      npcHandler;
+    private Canvas          canvas;
     private GraphicsContext gc;
-    private Player player;
-    private List<Npc> npcList;
+    private Player          player;
+    private List<Npc>       npcList;
 
 
     //animation timing values
-    private double animationDelay = SkinConfig.Player.resetDelay; //animation delay in seconds
-    private long skinResetTimer;
-    private boolean reset = false;
-    public int fps = -1;
+    private double  animationDelay = SkinConfig.Player.resetDelay; //animation delay in seconds
+    private long    skinResetTimer;
+    private boolean reset          = false;
+    public  int     fps            = -1;
 
     //Audio Stuff
     private       boolean    musicStart      = true;
     private       SpawnTimer audioTimer;
     private final double     audioDelayFixed = 8.35d;
     private       double     audioDelay      = audioDelayFixed;
-            //ausprobierter Wert, ersetzen durch berechneten Wert (Wie lange muss der Sound warten bis er spielen darf um mit
+    //ausprobierter Wert, ersetzen durch berechneten Wert (Wie lange muss der Sound warten bis er spielen darf um mit
     // den Enemys synchron zu sein. Abhängikkeit Geschwindigkeit, Abstand SpawnPunkt zur Mitte!)
 
     // --- ACT ------------------------------------------------------------------------------------
@@ -77,8 +79,7 @@ public class GameModel extends Observable {
         //Score & Health
         health_init = 100;
         score_init = 0;
-        StringProperty health_string = new SimpleStringProperty("100");
-        score_string = new SimpleStringProperty("0");
+        score_string = new SimpleStringProperty( "0" );
 
         //GAME STATES
         gameLost = false;
@@ -107,58 +108,57 @@ public class GameModel extends Observable {
 
     public void act() {
 
-            if (!ai) {
-                actInit();
+        if ( !ai ) {
+            actInit();
+        }
+        if ( acting ) {
+
+
+            audioTimer.start();
+            if ( musicStart && audioTimer.getCurrentTimeStamp() >= audioDelay ) {
+                musicStart = false;
+                AudioPlayer.MusicPlayer.play();
             }
-            if (acting) {
 
 
+            updateHealth( npcHandler.getHealthChange() );
+            updateScore( npcHandler.getScoreChange() );
 
-                audioTimer.start();
-                if (musicStart && audioTimer.getCurrentTimeStamp() >= audioDelay) {
-                    musicStart = false;
-                    AudioPlayer.MusicPlayer.play();
-                }
-
-
-                updateHealth(npcHandler.getHealthChange());
-                updateScore(npcHandler.getScoreChange());
-
-                npcHandler.spawning();
-                npcHandler.move();
+            npcHandler.spawning();
+            npcHandler.move();
 
 
-                npcList = npcHandler.getNpcList();
-                //collideCheck();
+            npcList = npcHandler.getNpcList();
+            //collideCheck();
 
-                clearCanvas();
-                resetSkin();
-                NpcHandler.drawNpcs();
-                gc.drawImage(player.getSkin(), player.getPosX(), player.getPosY());
+            clearCanvas();
+            resetSkin();
+            NpcHandler.drawNpcs();
+            gc.drawImage( player.getSkin(), player.getPosX(), player.getPosY() );
 
-                checkEnd();
-            }
+            checkEnd();
+        }
 
     }
 
-    public void printLoading(){
-        if(gc != null) {
+    public void printLoading() {
+        if ( gc != null ) {
             clearCanvas();
             String loading = "[ L O A D I N G ]";
-            gc.setFill(Color.BLACK);
-            gc.fillText(loading, (canvas.getWidth() / 2) - (loading.length() * 3), (canvas.getHeight() / 2));
+            gc.setFill( Color.BLACK );
+            gc.fillText( loading, (canvas.getWidth() / 2) - (loading.length() * 3), (canvas.getHeight() / 2) );
         }
     }
 
-    public void triggerBreak(){
-        setBreaking(true);
+    public void triggerBreak() {
+        setBreaking( true );
         AudioPlayer.MusicPlayer.pause();
         npcHandler.triggerBreak();
         acting = false;
     }
 
-    public void unTriggerBreak(){
-        setBreaking(false);
+    public void unTriggerBreak() {
+        setBreaking( false );
         AudioPlayer.MusicPlayer.resume();
         npcHandler.unTriggerBreak();
         acting = true;
@@ -166,62 +166,35 @@ public class GameModel extends Observable {
 
     private void actInit() {
 
-        if (npcHandler == null) {
-            npcHandler = new NpcHandler(canvas);
+        if ( npcHandler == null ) {
+            npcHandler = new NpcHandler( canvas );
 
         }
         audioTimer = new SpawnTimer();
-        final String ressourcePath = "/de/hsh/dennis/resources/audioFiles/";
-        final String relativeRessource = "../resources/audioFiles/";
-        switch (difficulty) {
+        switch ( difficulty ) {
             case EASY:
-                npcHandler.getAudioAnalyzer().setSensitivity(0.2d);
-                npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._easy);
-                npcHandler.generateNpcs(ressourcePath + AudioConfig.Mp3Paths.easy, AudioConfig.MovingSpeeds._easy);
-                AudioPlayer.MusicPlayer.playFile(this.getClass()
-                        .getResource(relativeRessource + AudioConfig.Mp3Paths.easy)
-                        .getPath());
-                audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._easy);
-                npcHandler.getAudioAnalyzer().resetSensitivity();
+                GameModelUtils.initEasyDifficulty( npcHandler );
+                audioDelay = calcAudioDelay( getFps(), MovingSpeeds._easy );
                 break;
-
             case MEDIUM:
-                npcHandler.getAudioAnalyzer().setSensitivity(0.1d);
-                npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._medium);
-                npcHandler.generateNpcs(ressourcePath + AudioConfig.Mp3Paths.medium, AudioConfig.MovingSpeeds._medium);
-                AudioPlayer.MusicPlayer.playFile(this.getClass()
-                        .getResource(relativeRessource + AudioConfig.Mp3Paths.medium)
-                        .getPath());
-                audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._medium);
-                npcHandler.getAudioAnalyzer().resetSensitivity();
+                GameModelUtils.initMediumDifficulty( npcHandler );
+                audioDelay = calcAudioDelay( getFps(), MovingSpeeds._medium );
                 break;
-
             case HARD:
-                npcHandler.getAudioAnalyzer().setSensitivity(0.05d);
-                npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._hard);
-                npcHandler.generateNpcs(ressourcePath + AudioConfig.Mp3Paths.hard, AudioConfig.MovingSpeeds._hard);
-                AudioPlayer.MusicPlayer.playFile(this.getClass()
-                        .getResource(relativeRessource + AudioConfig.Mp3Paths.hard)
-                        .getPath());
-                audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._hard);
-                npcHandler.getAudioAnalyzer().resetSensitivity();
+                GameModelUtils.initHardDifficulty( npcHandler );
+                audioDelay = calcAudioDelay( getFps(), MovingSpeeds._hard );
                 break;
 
             case NIGHTMARE:
-                npcHandler.getAudioAnalyzer().setSensitivity(0.0d);
-                npcHandler.setDelaysBetweenSpawns(AudioConfig.DelayBetweenSpawns._nightmare);
-                npcHandler.generateNpcs(ressourcePath + AudioConfig.Mp3Paths.nightmare, AudioConfig.MovingSpeeds._nightmare);
-                AudioPlayer.MusicPlayer.playFile(this.getClass()
-                        .getResource(relativeRessource + AudioConfig.Mp3Paths.nightmare)
-                        .getPath());
-                audioDelay = calcAudioDelay(getFps(), AudioConfig.MovingSpeeds._nightmare);
-                npcHandler.getAudioAnalyzer().resetSensitivity();
+                GameModelUtils.initNightmareDifficulty( npcHandler );
+                audioDelay = calcAudioDelay( getFps(), MovingSpeeds._nightmare );
                 break;
 
             case CUSTOM:
-
                 break;
         }
+
+        npcHandler.getAudioAnalyzer().resetSensitivity();
         //npcHandler.loadNpcs(difficulty);
 
         printLoading();
@@ -230,43 +203,41 @@ public class GameModel extends Observable {
         health = 100;
         ai = true;
         acting = true;
-        Logger.log("actInit done ...");
+        Logger.log( "actInit done ..." );
     }
 
+
     //default fps == 60 -> 60 * pro Sekunde bewegt sich ein Npc um 'speed' pixel.
-    private double calcAudioDelay(int fps, double speed) {
-        double widthToMove = ((canvas.getWidth() / 2d) - (SkinConfig.Player.skin_standard_right.getWidth() / 2d) - 5d);         //600.0d
+    private double calcAudioDelay( int fps, double speed ) {
+        double widthToMove =
+                ((canvas.getWidth() / 2d) - (SkinConfig.Player.skin_standard_right.getWidth() / 2d) - 5d);         //600.0d
         return (widthToMove / (fps * speed));
     }
 
 
     // --- /ACT -----------------------------------------------------------------------------------
 
-    public void userInput(KeyCode k) {
+    public void userInput( KeyCode k ) {
 
-        if (k == Custom.UP || k == Custom.UP_ALT) {
-            player.changeSkin(Direction.Up);
-            setResetTimer();
-            collideCheck();
-            return;
-        } else if (k == Custom.LEFT || k == Custom.LEFT_ALT) {
-            player.changeSkin(Direction.Left);
-            setResetTimer();
-            collideCheck();
-            return;
-        } else if (k == Custom.DOWN || k == Custom.DOWN_ALT) {
-            player.changeSkin(Direction.Down);
-            setResetTimer();
-            collideCheck();
-            return;
-        } else if (k == Custom.RIGHT || k == Custom.RIGHT_ALT) {
-            player.changeSkin(Direction.Right);
-            setResetTimer();
-            collideCheck();
-            return;
+        if ( k == Custom.UP || k == Custom.UP_ALT ) {
+            changeDirection( Direction.Up );
         }
-
+        else if ( k == Custom.LEFT || k == Custom.LEFT_ALT ) {
+            changeDirection( Direction.Left );
+        }
+        else if ( k == Custom.DOWN || k == Custom.DOWN_ALT ) {
+            changeDirection( Direction.Down );
+        }
+        else if ( k == Custom.RIGHT || k == Custom.RIGHT_ALT ) {
+            changeDirection( Direction.Right );
+        }
         //Logger.log("unbidden Key Input \'" + k + "\'");
+    }
+
+    private void changeDirection( Direction d ) {
+        player.changeSkin( d );
+        setResetTimer();
+        collideCheck();
     }
 
 
@@ -275,28 +246,29 @@ public class GameModel extends Observable {
         ArrayList<Npc> tempTargets = chooseNextTargets();
 
 
-        for (Npc npc : tempTargets) {
+        for ( Npc npc : tempTargets ) {
 
             //hässlich aber korrekt ...
             //BOT
-            if (npc.getNpcType() == NPCEnums.NpcType.BOT
-                    && ((npc.getSpawnType() == NPCEnums.Spawn.RIGHT && player.getDirection() == Direction.Right) || (npc.getSpawnType() == NPCEnums.Spawn.LEFT && player.getDirection() == Direction.Left))
-                    && player.doesCollide(npc)) {
-                npcHandler.hitNpc(npc);
+            if ( npc.getNpcType() == NpcType.BOT
+                 && ((npc.getSpawnType() == Spawn.RIGHT && player.getDirection() == Direction.Right) ||
+                     (npc.getSpawnType() == Spawn.LEFT && player.getDirection() == Direction.Left))
+                 && player.doesCollide( npc ) ) {
+                npcHandler.hitNpc( npc );
             }
 
             //PACKAGE
-            else if (npc.getNpcType() == NPCEnums.NpcType.PACKAGE
-                    && player.getDirection() == Direction.Down
-                    && player.doesCollide(npc)) {
-                npcHandler.hitNpc(npc);
+            else if ( npc.getNpcType() == NpcType.PACKAGE
+                      && player.getDirection() == Direction.Down
+                      && player.doesCollide( npc ) ) {
+                npcHandler.hitNpc( npc );
             }
 
             //HACKER
-            else if (npc.getNpcType() == NPCEnums.NpcType.HACKER
-                    && player.getDirection() == Direction.Up
-                    && player.doesCollide(npc)) {
-                npcHandler.hitNpc(npc);
+            else if ( npc.getNpcType() == NpcType.HACKER
+                      && player.getDirection() == Direction.Up
+                      && player.doesCollide( npc ) ) {
+                npcHandler.hitNpc( npc );
             }
         }
     }
@@ -306,31 +278,32 @@ public class GameModel extends Observable {
         Npc rightLeftPackage = null;
 
         Npc rightBot = null;
-        Npc leftBot = null;
+        Npc leftBot  = null;
 
         Npc rightLeftHacker = null;
 
-        for (Npc npc : npcList) {
-            if (rightLeftPackage == null ||
-                    rightBot == null ||
-                    leftBot == null ||
-                    rightLeftHacker == null) {
+        for ( Npc npc : npcList ) {
+            if ( rightLeftPackage == null ||
+                 rightBot == null ||
+                 leftBot == null ||
+                 rightLeftHacker == null ) {
 
-                switch (npc.getNpcType()) {
+                switch ( npc.getNpcType() ) {
                     case PACKAGE:
-                        if (rightLeftPackage == null) {
+                        if ( rightLeftPackage == null ) {
                             rightLeftPackage = npc;
                         }
                         break;
                     case BOT:
-                        if (rightBot == null && npc.getSpawnType() == NPCEnums.Spawn.RIGHT) {
+                        if ( rightBot == null && npc.getSpawnType() == Spawn.RIGHT ) {
                             rightBot = npc;
-                        } else if (leftBot == null && npc.getSpawnType() == NPCEnums.Spawn.LEFT) {
+                        }
+                        else if ( leftBot == null && npc.getSpawnType() == Spawn.LEFT ) {
                             leftBot = npc;
                         }
                         break;
                     case HACKER:
-                        if (rightLeftHacker == null) {
+                        if ( rightLeftHacker == null ) {
                             rightLeftHacker = npc;
                         }
                         break;
@@ -339,17 +312,17 @@ public class GameModel extends Observable {
         }
 
         ArrayList<Npc> tempTargets = new ArrayList<>();
-        if (rightLeftPackage != null) {
-            tempTargets.add(rightLeftPackage);
+        if ( rightLeftPackage != null ) {
+            tempTargets.add( rightLeftPackage );
         }
-        if (rightBot != null) {
-            tempTargets.add(rightBot);
+        if ( rightBot != null ) {
+            tempTargets.add( rightBot );
         }
-        if (leftBot != null) {
-            tempTargets.add(leftBot);
+        if ( leftBot != null ) {
+            tempTargets.add( leftBot );
         }
-        if (rightLeftHacker != null) {
-            tempTargets.add(rightLeftHacker);
+        if ( rightLeftHacker != null ) {
+            tempTargets.add( rightLeftHacker );
         }
         return tempTargets;
     }
@@ -430,56 +403,50 @@ public class GameModel extends Observable {
     }
 
     private void resetSkin() {
-        if (reset) {
-            double elapsedTime = System.currentTimeMillis() - skinResetTimer;
+        if ( reset ) {
+            double elapsedTime    = System.currentTimeMillis() - skinResetTimer;
             double elapsedSeconds = elapsedTime / 1000;
-            if (elapsedSeconds >= animationDelay) {
+            if ( elapsedSeconds >= animationDelay ) {
                 player.setSkinToDefault();
-                player.setDirection(Direction.Non);
+                player.setDirection( Direction.Non );
                 reset = false;
             }
         }
     }
 
-    private void resetSkinFast() {
-
-        player.setSkinToDefault();
-        player.setDirection(Direction.Non);
-        reset = false;
-
-    }
-
-    public void setCanvas(Canvas canvas) {
+    public void setCanvas( Canvas canvas ) {
         this.canvas = canvas;
         gc = this.canvas.getGraphicsContext2D();
-        npcHandler = new NpcHandler(canvas);
+        npcHandler = new NpcHandler( canvas );
     }
 
     private void checkEnd() {
-        if (ai) {
-            if (health == 0) {
+        if ( ai ) {
+            if ( health == 0 ) {
                 acting = false;
                 AudioPlayer.MusicPlayer.stop();
                 clearCanvas();
-                Logger.log("checkEnd case : 1");
+                Logger.log( "checkEnd case : 1" );
                 setChanged();
-                notifyObservers(UpdateCodes.Dennis.gameLost);
+                notifyObservers( UpdateCodes.Dennis.gameLost );
 
-            } else if (npcHandler.isEndReached() && score > 0) {
+            }
+            else if ( npcHandler.isEndReached() && score > 0 ) {
                 acting = false;
                 AudioPlayer.MusicPlayer.stop();
                 clearCanvas();
-                Logger.log("checkEnd case : 2");
+                Logger.log( "checkEnd case : 2" );
                 setChanged();
-                notifyObservers(UpdateCodes.Dennis.gameWon);
+                notifyObservers( UpdateCodes.Dennis.gameWon );
 
-            } else if (npcHandler.isEndReached() && score <= 0) {
+            }
+            else if ( npcHandler.isEndReached() && score <= 0 ) {
                 acting = false;
                 AudioPlayer.MusicPlayer.stop();
                 clearCanvas();
-                Logger.log("checkEnd case : 3");
+                Logger.log( "checkEnd case : 3" );
                 setChanged();
-                notifyObservers(UpdateCodes.Dennis.gameLost);
+                notifyObservers( UpdateCodes.Dennis.gameLost );
 
             }
         }
@@ -490,32 +457,34 @@ public class GameModel extends Observable {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         */
-        gc.drawImage(SkinConfig.Level.level_Background , 0, 0);
+        gc.drawImage( SkinConfig.Level.level_Background, 0, 0 );
     }
 
     private void updateScore( int addToScore ) {
-        if (score + addToScore <= 0) {
+        if ( score + addToScore <= 0 ) {
             score = 0;
-        } else {
+        }
+        else {
             score += addToScore;
         }
-        score_string.set(Integer.toString(score));
+        score_string.set( Integer.toString( score ) );
 
     }
 
     private void updateHealth( int addToHealth ) {
-        if (health + addToHealth <= 0) {
+        if ( health + addToHealth <= 0 ) {
             health = 0;
             gameLost = true;
-        } else if (health + addToHealth <= 100) {
+        }
+        else if ( health + addToHealth <= 100 ) {
             health += addToHealth;
         }
-        health_string.set(Integer.toString(health));
+        health_string.set( Integer.toString( health ) );
     }
 
     private Npc getNextNpc() {
-        if (npcList.size() > 0) {
-            return npcList.get(0);
+        if ( npcList.size() > 0 ) {
+            return npcList.get( 0 );
         }
         return null;
     }
@@ -524,7 +493,7 @@ public class GameModel extends Observable {
         return fps;
     }
 
-    public void setFps(int fps) {
+    public void setFps( int fps ) {
         this.fps = fps;
     }
 
@@ -533,7 +502,7 @@ public class GameModel extends Observable {
         return difficulty;
     }
 
-    public void setDifficulty(SkinConfig.Level.Difficulty difficulty) {
+    public void setDifficulty( SkinConfig.Level.Difficulty difficulty ) {
         this.difficulty = difficulty;
     }
 
@@ -541,7 +510,7 @@ public class GameModel extends Observable {
         return score;
     }
 
-    public void setBreaking(boolean breaking) {
+    public void setBreaking( boolean breaking ) {
         this.breaking = breaking;
     }
 
