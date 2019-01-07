@@ -18,7 +18,7 @@ public class Leertastenklatsche extends Observable implements Observer {
     static final         String     location = "/de/hsh/Julian/";
     private static final SpawnTimer timer    = new SpawnTimer();
 
-    private int              score     = 60;
+    private int              score     = 0;
     private int              leben     = 3;
     private boolean          gamedone  = false;
     boolean horrorWasActivated = false;
@@ -36,12 +36,7 @@ public class Leertastenklatsche extends Observable implements Observer {
         );
         thedude.setSpeed( 0 );
 
-        Thread thread = new Thread(){
-            public void run(){
-                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\SMB.mp3" );
-            }
-        };
-            thread.start();
+
 
     }
 
