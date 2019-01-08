@@ -45,9 +45,13 @@ public final class PlaySound {
                 }
             }
             if ( resetMediaPlayer ) {
-                resetTimer( prop_mediaPlayer );
+                if ( prop_mediaPlayer != null ) {
+                    resetTimer( prop_mediaPlayer );
+                }
             }
-            Platform.runLater( () -> prop_mediaPlayer.play() );
+            if ( prop_mediaPlayer != null ) {
+                Platform.runLater( () -> prop_mediaPlayer.play() );
+            }
         }
 
         private void resetTimer( MediaPlayer mediaPlayer ) {
