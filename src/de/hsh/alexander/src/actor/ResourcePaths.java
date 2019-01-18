@@ -3,7 +3,7 @@ package de.hsh.alexander.src.actor;
 public final class ResourcePaths {
 
     private static final String resourceFolderPath = "/de/hsh/alexander/res/";
-    private static final String soundDirectory     = "src/de/hsh/alexander/sounds/";
+    private static final String soundDirectory     = "/de/hsh/alexander/sounds/";
 
     public static final class Actor {
 

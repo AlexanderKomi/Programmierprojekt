@@ -3,7 +3,7 @@ package common.util.loaders;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 
-import java.io.File;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 public final class AudioBuffer {
@@ -23,7 +23,13 @@ public final class AudioBuffer {
     }
 
     private static Media newMedia( final String fileName ) throws MediaException {
-        return new Media( new File( fileName ).toURI().toString() );
+        try {
+            return new Media( AudioBuffer.class.getResource( fileName ).toURI().toString() );
+        }
+        catch ( URISyntaxException e ) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static boolean contains( final String fileName ) {

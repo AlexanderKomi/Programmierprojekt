@@ -1,6 +1,5 @@
 package de.hsh.amir.logic;
 
-import common.util.Logger;
 import common.util.PlaySound;
 import de.hsh.kevin.logic.Score;
 import javafx.scene.canvas.Canvas;
@@ -9,6 +8,8 @@ import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 
 public final class AmirGame {
+
+    private static final String soundLocation = "/de/hsh/amir/resources/";
     private Spielfigur    spielfigur;
     private Score         points;
     private GegnerManager gegnerManager;
@@ -61,7 +62,7 @@ public final class AmirGame {
      * Spielt einen Sound ab.
      */
     private static void playSound() {
-        PlaySound.playSound( "src/de/hsh/amir/resources/clickSound.mp3", true );
+        PlaySound.playSound( soundLocation + "clickSound.mp3", true );
     }
 
 

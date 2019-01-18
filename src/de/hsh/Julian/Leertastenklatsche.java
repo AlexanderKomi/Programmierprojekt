@@ -15,8 +15,9 @@ import java.util.Observer;
 public class Leertastenklatsche extends Observable implements Observer {
 
 
-    static final         String     location = "/de/hsh/Julian/";
-    private static final SpawnTimer timer    = new SpawnTimer();
+    static final         String     location      = "/de/hsh/Julian/";
+    private static final String     soundLocation = "/de/hsh/Julian/wav/";
+    private static final SpawnTimer timer         = new SpawnTimer();
 
     private int              score     = 60;
     private int              leben     = 3;
@@ -38,7 +39,7 @@ public class Leertastenklatsche extends Observable implements Observer {
 
         Thread thread = new Thread(){
             public void run(){
-                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\SMB.mp3" );
+                PlaySound.playSound( soundLocation + "SMB.mp3" );
             }
         };
             thread.start();
@@ -99,7 +100,7 @@ public class Leertastenklatsche extends Observable implements Observer {
         else{
             if(!horrorWasActivated){
                 //PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\horror.wav" );
-                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\Kalinka.mp3" );
+                PlaySound.playSound( soundLocation + "Kalinka.mp3" );
                 leben = 70;
             }
 
@@ -130,8 +131,7 @@ public class Leertastenklatsche extends Observable implements Observer {
                 break;
             //EASTEREGG ;-))
             case "SPACE":
-                if(!horrorWasActivated)
-                PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\cat.wav" );
+                if ( !horrorWasActivated ) { PlaySound.playSound( soundLocation + "cat.wav" ); }
                 break;
         }
     }
@@ -158,26 +158,22 @@ public class Leertastenklatsche extends Observable implements Observer {
                     if ( enemy.getPos()[ 0 ] <= thedude.getPos()[ 0 ] ) {
                         if ( thedude.turnedleft ) {
                             score++;
-                            if(!horrorWasActivated)
-                            PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
+                            if ( !horrorWasActivated ) { PlaySound.playAndResetSound( soundLocation + "collision.wav" ); }
                         }
                         else {
                             leben--;
-                            if(!horrorWasActivated)
-                            PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
+                            if ( !horrorWasActivated ) { PlaySound.playAndResetSound( soundLocation + "hit.wav" ); }
                             gameOver();
                         }
                     }
                     else if ( enemy.getPos()[ 0 ] > thedude.getPos()[ 0 ] ) {
                         if ( !thedude.turnedleft ) {
                             score++;
-                            if(!horrorWasActivated)
-                            PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\collision.wav" );
+                            if ( !horrorWasActivated ) { PlaySound.playAndResetSound( soundLocation + "collision.wav" ); }
                         }
                         else {
                             leben--;
-                            if(!horrorWasActivated)
-                            PlaySound.playAndResetSound( "src\\de\\hsh\\Julian\\wav\\hit.wav" );
+                            if ( !horrorWasActivated ) { PlaySound.playAndResetSound( soundLocation + "hit.wav" ); }
                             gameOver();
                         }
                     }
@@ -196,7 +192,7 @@ public class Leertastenklatsche extends Observable implements Observer {
 
         if ( leben <= 0 && !gamedone ) {
             gamedone = true;
-            PlaySound.playSound( "src\\de\\hsh\\Julian\\wav\\noo.wav" );
+            PlaySound.playSound( soundLocation + "noo.wav" );
             for ( Enemy e : this.enemyList ) {
                 e.deleteObservers();
             }

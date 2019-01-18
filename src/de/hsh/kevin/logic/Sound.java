@@ -2,6 +2,7 @@ package de.hsh.kevin.logic;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
@@ -24,6 +25,7 @@ public class Sound {
                 sounds.put(enmSounds.collision, new Media(Sound.class.getResource(path + "collision.mp3").toURI().toString()));
                 sounds.put(enmSounds.badPaketIgnored, new Media(Sound.class.getResource(path + "bad_paket.mp3").toURI().toString()));
                 sounds.put(enmSounds.hit, new Media(Sound.class.getResource(path + "hit.mp3").toURI().toString()));
+                System.out.println( Sound.class.getResource( path + "hit.mp3" ).toURI().toString() );
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }            

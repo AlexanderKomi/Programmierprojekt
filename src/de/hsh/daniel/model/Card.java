@@ -4,17 +4,16 @@ package de.hsh.daniel.model;
 import common.actor.Actor;
 import common.util.Logger;
 import common.util.PlaySound;
-import de.hsh.daniel.model.board.BoardUtilities;
 
 
 public class Card extends Actor {
 
-
-    private static final String  cardFrontSoundPath = "src\\de\\hsh\\daniel\\resources\\cardFlip1.wav";
-    private static final String  cardBackSoundPath = "src\\de\\hsh\\daniel\\resources\\cardFlip2.wav";
+    private static final String  soundLocationPath  = "/de/hsh/daniel/resources/";
+    private static final String  cardFrontSoundPath = soundLocationPath + "cardFlip1.wav";
+    private static final String  cardBackSoundPath  = soundLocationPath + "cardFlip2.wav";
     private final        int     pair_id;
     private final        String  pictureFileName;
-    private              boolean cardMatched              = false;
+    private              boolean cardMatched        = false;
 
 
     private boolean turned = true;
