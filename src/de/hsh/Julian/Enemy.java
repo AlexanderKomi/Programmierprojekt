@@ -1,8 +1,14 @@
+/**
+ * @author Julian Sender
+ */
 package de.hsh.Julian;
 
 import common.actor.Collectable;
 import common.config.WindowConfig;
 
+/**
+ * Enemyclass is collectable
+ */
 final class Enemy extends Collectable {
 
     private static final String imageLocation  = Leertastenklatsche.location + "enemyvirus.png";
@@ -12,7 +18,22 @@ final class Enemy extends Collectable {
         super( imagePath );
     }
 
-    // Gegner erstellen und zufällig links oder rechts starten lassen
+    /**
+     * GETTERS AND SETTERS
+     *
+     */
+    public static String getImageLocation() {
+        return imageLocation;
+    }
+
+    public static String getImageLocation2() {
+        return imageLocation2;
+    }
+
+    /**
+     * Create enemys and let them spawn randomly left or right
+     * @return
+     */
     static Enemy createEnemy() {
 
         Enemy  enemyvirus = new Enemy( imageLocation );

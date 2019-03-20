@@ -1,3 +1,6 @@
+/**
+ * @author Julian Sender
+ */
 package de.hsh.Julian;
 
 import common.engine.FxModul;
@@ -11,19 +14,38 @@ import sun.rmi.runtime.Log;
 
 import java.util.Observable;
 
+/**
+ * Changer for fxml menues
+ */
 public class LKFxmlChanger extends FxmlChanger {
 
     private static final String fxmlPackage = "view/";
 
+    /**
+     *
+     * @param fxModul giving all to the FxmlChanger above
+     * @param fxmlPath Path of fxml file
+     * @param fxController Every menue needs its own controller
+     */
     LKFxmlChanger( FxModul fxModul, String fxmlPath, Observable fxController ) {
         super( fxModul, fxmlPackage + fxmlPath, fxController );
     }
 
+    /**
+     * Method to change the scene
+     * @param fxmlLocation Path to the .fxml to be loaded
+     * @param controller The controller suitable for the .fxml
+     */
     @Override
     public void changeScene( String fxmlLocation, Observable controller ) {
         super.changeScene( fxmlPackage + fxmlLocation, controller );
     }
 
+    /**
+     * Needed to change the fxml file
+     * @param o Observer
+     * @param msg Name of fxml
+     */
     @Override
     public void changeFxml( Observable o, String msg ) {
 

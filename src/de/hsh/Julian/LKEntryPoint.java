@@ -1,3 +1,6 @@
+/**
+ * @author Julian Sender
+ */
 package de.hsh.Julian;
 
 import common.config.WindowConfig;
@@ -14,9 +17,10 @@ import javafx.scene.text.FontWeight;
 import java.util.Observable;
 import java.util.Observer;
 
-//
-//
 
+/**
+ *  Entrypoint for the Game
+ */
 public final class LKEntryPoint extends GameEntryPoint {
 
     private final LKFxmlChanger      changer;
@@ -25,12 +29,18 @@ public final class LKEntryPoint extends GameEntryPoint {
     private       Canvas             canvas;
     private       Leertastenklatsche lk;
 
+    /**
+     *
+     * @param o Ist der nach oben geleitete Obsersver
+     */
     public LKEntryPoint( Observer o ) {
         super( o, WindowConfig.julian_title );
         changer = new LKFxmlChanger( this, LKStart.fxml, new LKStart() );
     }
 
-    //Getting the input and realizing when stopping input
+    /**
+     * Getting the input and realizing when stopping input
+     */
     private void addKeyListener() {
         canvas.setOnKeyPressed(
                 e -> lk.parseInput( e.getCode().toString() ) );
@@ -39,6 +49,9 @@ public final class LKEntryPoint extends GameEntryPoint {
                 e -> lk.parseInput( e.getCode().toString() ) );
     }
 
+    /**
+     * Initializing fonts on top-Screen
+     */
     private void initializeGraphicsContext() {
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 36 );
         gc = canvas.getGraphicsContext2D();
@@ -48,7 +61,10 @@ public final class LKEntryPoint extends GameEntryPoint {
         gc.setLineWidth( 1 );
     }
 
-
+    /**
+     * Rendering
+     * @param fps setting the desired frames per second
+     */
     public void render( final int fps ) {
         if ( !renderable || lk == null ) {
             return;
@@ -59,6 +75,11 @@ public final class LKEntryPoint extends GameEntryPoint {
         lk.render( this.canvas );
     }
 
+    /**
+     * Controls the scene-changes
+     * @param o Observer
+     * @param arg Ist Instanz von Canvas oder String
+     */
     @Override
     public void update( Observable o, Object arg ) {
         if ( arg instanceof Canvas ) {
@@ -87,6 +108,9 @@ public final class LKEntryPoint extends GameEntryPoint {
         }
     }
 
+    /**
+     * Adding observer
+     */
     private void initAfterCanvasPass() {
         this.lk = new Leertastenklatsche();
         lk.addObserver( this );

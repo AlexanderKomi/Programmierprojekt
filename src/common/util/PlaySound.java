@@ -1,3 +1,6 @@
+/**
+ * @author Julian Sender
+ */
 package common.util;
 
 import common.util.loaders.AudioBuffer;
@@ -7,22 +10,41 @@ import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+/**
+ * Class to play sounds
+ */
 public final class PlaySound {
 
     private static Player p = new Player();
 
+    /**
+     *
+     * @param path Player needs the path of mediafile as parameter
+     */
     public static void playSound( final String path ) {
         p.playSound( path, false );
     }
 
+    /**
+     * Plays and resets sound
+     * @param path Player needs the path of mediafile as parameter
+     */
     public static void playAndResetSound( final String path ) {
         p.playSound( path, true );
     }
 
+    /**
+     * Plays a sound
+     * @param path Player needs the path of mediafile as parameter
+     * @param resetMediaPlayer true, if it's desired to reset mediaplayer
+     */
     public static void playSound( final String path, final boolean resetMediaPlayer ) {
         p.playSound( path, resetMediaPlayer );
     }
 
+    /**
+     * Check if next sound is different to previous, else save performance :-)
+     */
     static class Player implements Runnable {
         private String      musicFile    = null;
         private Media       currentMedia = null;
@@ -50,6 +72,10 @@ public final class PlaySound {
             Platform.runLater( () -> prop_mediaPlayer.play() );
         }
 
+        /**
+         * Resets timer for MediaPlayer
+         * @param mediaPlayer needs instance of mediaplayer where to reset timer
+         */
         private void resetTimer( MediaPlayer mediaPlayer ) {
             if ( mediaPlayer.getCurrentTime().lessThan( mediaPlayer.getTotalDuration() ) ) {
                 mediaPlayer.stop();
@@ -57,6 +83,10 @@ public final class PlaySound {
             }
         }
 
+        /**
+         * Creates isntance of Mediaplayer
+         * @return returns the new instance of mediaplayer
+         */
         private MediaPlayer createMediaPlayer() {
             MediaPlayer mediaPlayer = new MediaPlayer( currentMedia );
             mediaPlayer.setAutoPlay( false );
@@ -68,6 +98,9 @@ public final class PlaySound {
             return mediaPlayer;
         }
 
+        /**
+         * Lets it all work together
+         */
         @Override
         public void run() {
             playSound( musicFile, resetTimer );

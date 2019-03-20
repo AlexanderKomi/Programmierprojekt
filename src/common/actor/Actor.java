@@ -1,3 +1,6 @@
+/**
+ * @author Julian Sender
+ */
 package common.actor;
 
 import common.util.Logger;
@@ -17,22 +20,45 @@ abstract public class Actor extends Drawable {
     final   Movement    movement        = new Movement();
     private List<Actor> collisionActors = new ArrayList<>();
 
+    /**
+     * Many overloaded constructors following up now...
+     * @param pictureFileName Filename of picture for actor
+     */
     public Actor( final String pictureFileName ) {
         this( pictureFileName, 0, 0 );
     }
 
+    /**
+     *
+     * @param pictureFileName  Filename of picture for actor
+     * @param x Position X for Actor
+     * @param y Position Y for Actor
+     */
     public Actor( final String pictureFileName,
                   final double x,
                   final double y ) {
         super( pictureFileName, x, y );
     }
 
+    /**
+     *
+     * @param pictureFileName Filename of picture for actor
+     * @param collisionActors Gives a list of Collision"able" actors
+     */
     public Actor( final String pictureFileName,
                   final ArrayList<Actor> collisionActors ) {
         super( pictureFileName );
         this.collisionActors = collisionActors;
     }
 
+    /**
+     *
+     * @param pictureFileName Filename of picture for actor
+     * @param x Position X for Actor
+     * @param y Position Y for Actor
+
+     * @param collisionActors Gives a list of Collision"able" actors
+     */
     public Actor( final String pictureFileName,
                   final double x,
                   final double y,
@@ -41,15 +67,30 @@ abstract public class Actor extends Drawable {
         this.collisionActors = collisionActors;
     }
 
+    /**
+     *
+     * @param mustHavePicture forcing use of picture
+     * @param pictureFilePaths Filename of picture for actor
+     */
     public Actor( final String mustHavePicture,
                   final String... pictureFilePaths ) {
         super( mustHavePicture, pictureFilePaths );
     }
 
+    /**
+     *
+     * @param pictureFilePaths Filename of picture for actor
+     */
     public Actor( final String[] pictureFilePaths ) {
         super( pictureFilePaths );
     }
 
+    /**
+     *
+     * @param collisionActors Gives a list of Collision"able" actors
+     * @param mustHavePicture forcing use of picture
+     * @param pictureFilePaths Filename of picture for actor
+     */
     public Actor( final ArrayList<Actor> collisionActors,
                   final String mustHavePicture,
                   final String... pictureFilePaths ) {
@@ -57,11 +98,17 @@ abstract public class Actor extends Drawable {
         this.collisionActors = collisionActors;
     }
 
+    /**
+     *
+     * @param pictureFilePaths Filename of picture for actor
+     * @param collisionActors Filename of picture for actor
+     */
     public Actor( final List<String> pictureFilePaths,
                   final ArrayList<Actor> collisionActors ) {
         super( pictureFilePaths );
         this.collisionActors = collisionActors;
     }
+
 
     public Actor( final List<String> pictureFilePaths,
                   final double x,
@@ -112,6 +159,15 @@ abstract public class Actor extends Drawable {
 
     public Actor( double x, double y, double scale, String picturePath ) {super( x, y, scale, picturePath );}
 
+    /**
+     * Returning position based on collisioncheck
+     * @param current_pos
+     *         The current position of the Drawable
+     * @param new_pos
+     *         The next position of the Drawable
+     *
+     * @return
+     */
     @Override
     protected double[] beforeDrawing( final double[] current_pos, final double[] new_pos ) {
         if ( this.doesCollide() ) {
@@ -122,6 +178,10 @@ abstract public class Actor extends Drawable {
         }
     }
 
+    /**
+     * Checks actor and a list of collisionActors for collision
+     * @return returns true, if collided, else false
+     */
     private boolean doesCollide() {
         try {
             final List<Actor> list = Collections.synchronizedList( this.getCollisionActors() );
@@ -143,6 +203,11 @@ abstract public class Actor extends Drawable {
         }
     }
 
+    /**
+     *
+     * @param other instance of actor
+     * @return returns if collisioned or not
+     */
     public synchronized boolean doesCollide( final Actor other ) {
         boolean b = CollisionCheck.doesCollide( this, other ) ||
                     CollisionCheck.doesCollide( other, this );
@@ -152,19 +217,38 @@ abstract public class Actor extends Drawable {
         return b;
     }
 
+    /**
+     * returns if two objects are in bounds of each other by checking coordinates
+     * @param canvas_width width
+     * @param canvas_height height
+     * @return returns if
+     */
     public boolean isInBounds( double canvas_width, double canvas_height ) {
         boolean[] temp = CollisionCheck.isInBounds( this, canvas_width, canvas_height );
         return (temp[ 0 ] && temp[ 1 ]);
     }
 
+    /**
+     * Collision Modifier
+     * @param other the Actor
+     * @return always true
+     */
     protected synchronized boolean collisionModifier( final Actor other ) {
         return true;
     }
 
+    /**
+     * Plays a sound
+     * @param filePath Path of soundfile
+     */
     protected synchronized void playSound( final String filePath ) {
         PlaySound.playSound( filePath );
     }
 
+    /**
+     * Sets or removes collisionactors
+     * @param list List of collisionactors
+     */
     // ----------------------------------- GETTER AND SETTER -----------------------------------
     private void setCollisionActors( final List<Actor> list ) {
         this.collisionActors = list;
@@ -186,6 +270,10 @@ abstract public class Actor extends Drawable {
 
     protected void onRemove( final Collectable collectable ) {}
 
+    /**
+     *  Sets the velocity
+     * @param speed parameter for speed as a double
+     */
     public void setSpeed( double speed ) {
         this.movement.setVelocity( speed );
     }
@@ -198,6 +286,10 @@ abstract public class Actor extends Drawable {
         return this.collisionActors;
     }
 
+    /**
+     * adds a colliding actor
+     * @param a Actor
+     */
     public void addCollidingActor( Actor a ) {
         if ( !this.collisionActors.contains( a ) ) {
             this.collisionActors.add( a );
