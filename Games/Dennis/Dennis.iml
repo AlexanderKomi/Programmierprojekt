@@ -20,7 +20,6 @@
     </orderEntry>
     <orderEntry type="module" module-name="MainMenu" />
     <orderEntry type="module" module-name="Engine" />
-    <orderEntry type="module" module-name="Util" />
     <orderEntry type="module" module-name="Actor" />
     <orderEntry type="module" module-name="Logger" />
     <orderEntry type="module" module-name="Path" />

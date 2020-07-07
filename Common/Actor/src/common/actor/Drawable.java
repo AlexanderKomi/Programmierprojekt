@@ -1,6 +1,6 @@
 package common.actor;
 
-import common.util.loaders.TextureBuffer;
+import common.loaders.TextureBuffer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

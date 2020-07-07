@@ -1,7 +1,7 @@
 /**
  * @author Julian Sender
  */
-package common.util.loaders;
+package common.loaders;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;

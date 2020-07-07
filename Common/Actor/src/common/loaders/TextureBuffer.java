@@ -1,4 +1,4 @@
-package common.util.loaders;
+package common.loaders;
 
 import javafx.scene.image.Image;
 

@@ -1,7 +1,6 @@
 package de.hsh.dennis.model.NpcLogic;
 
 import common.util.Logger;
-import common.util.RandomInt;
 import de.hsh.dennis.model.NpcLogic.actors.Package;
 import de.hsh.dennis.model.NpcLogic.actors.*;
 import de.hsh.dennis.model.audio.AudioAnalyser;

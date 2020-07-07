@@ -1,4 +1,4 @@
-package common.util;
+package de.hsh.dennis.model.NpcLogic;
 
 import java.util.concurrent.ThreadLocalRandom;
 

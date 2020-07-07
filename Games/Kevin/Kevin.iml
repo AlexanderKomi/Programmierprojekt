@@ -9,7 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Actor" />
-    <orderEntry type="module" module-name="Util" />
     <orderEntry type="module" module-name="Engine" />
     <orderEntry type="module" module-name="MainMenu" />
   </component>
