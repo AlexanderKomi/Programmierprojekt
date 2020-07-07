@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Observable;
+import java.util.Optional;
 
 
 /***
@@ -26,13 +27,18 @@ public abstract class FxmlChanger extends Observable {
      * @param fxController Matching controller for the .fxml
      */
     public FxmlChanger(FxModul fxModul, String fxmlPath, Observable fxController) {
-
-        if (fxModul != null && fxmlPath != null && !fxmlPath.equals("") && fxController != null) {
-            this.fxModul = fxModul;
-            this.addObserver(fxModul);
-            fxController.addObserver( fxModul );
-            this.fxModul.setScene( new Scene( Objects.requireNonNull( loadFxml( fxmlPath, fxController ) ) ) );
-        } else throw new NullPointerException("\t\tConstructor: FxmlChanger invalid parameters!");
+        if (fxModul == null || fxmlPath == null || fxmlPath.isEmpty() || fxController == null) {
+            throw new NullPointerException("\t\tConstructor: FxmlChanger invalid parameters!");
+        }
+        this.fxModul = fxModul;
+        this.addObserver(fxModul);
+        fxController.addObserver( fxModul );
+        Optional<Parent> p = loadFxml( fxmlPath, fxController );
+        if (p.isPresent()) {
+            this.fxModul.setScene( new Scene( p.get()) );
+        } else {
+            throw new NullPointerException("FXML kann nicht geladen werden: " + fxmlPath);
+        }
     }
 
     /***
@@ -42,16 +48,16 @@ public abstract class FxmlChanger extends Observable {
      * @param controller The controller suitable for the .fxml
      * @return A loaded Parent
      */
-    private Parent loadFxml(String fxmlLocation, Observable controller) {
+    private Optional<Parent> loadFxml(String fxmlLocation, Observable controller) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(fxmlLocation));
             fxmlLoader.setController(controller);
-            return fxmlLoader.load();
+            return Optional.of(fxmlLoader.load());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     /***
@@ -61,7 +67,8 @@ public abstract class FxmlChanger extends Observable {
      */
     public void changeScene( String fxmlLocation, Observable controller ) {
         controller.addObserver(getFxModul());
-        getFxModul().setRoot(Objects.requireNonNull(loadFxml(fxmlLocation, controller)));
+        loadFxml(fxmlLocation, controller)
+                .ifPresent(parent -> getFxModul().setRoot(parent));
     }
 
     /**
