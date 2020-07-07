@@ -3,7 +3,7 @@ package de.hsh.kevin;
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
 import common.engine.components.game.GameEntryPoint;
-import common.updates.DefaultCodes;
+import common.updates.MenuCodes;
 import common.updates.UpdateCodes;
 import de.hsh.kevin.controller.TIGameController;
 import de.hsh.kevin.controller.TIGameOverController;
@@ -29,13 +29,13 @@ public class TIFxmlChanger extends FxmlChanger {
     public void changeFxml(Observable o, String msg) {
         if (o instanceof TIMenuController) {
             switch (msg) {
-            case DefaultCodes.exitToMainGUI:
+            case MenuCodes.exitToMainGUI:
                 ((GameEntryPoint) getFxModul()).exitToMainGUI();
                 break;
             }
         } else if (o instanceof TIGameOverController) {
             switch (msg) {
-            case DefaultCodes.exitToMainGUI:
+            case MenuCodes.exitToMainGUI:
                 ((GameEntryPoint) getFxModul()).exitToMainGUI();
                 break;
             case UpdateCodes.TunnelInvader.gameMenu:

@@ -1,6 +1,6 @@
 package de.hsh.daniel.controller;
 
-import common.updates.DefaultCodes;
+import common.updates.MenuCodes;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.daniel.model.board.Board;
@@ -37,7 +37,7 @@ public class RAM_winScreen_controller extends Observable {
             case "b_quit":
                 Board.reset();
                 setChanged();
-                notifyObservers(DefaultCodes.exitToMainGUI);
+                notifyObservers(MenuCodes.exitToMainGUI);
                 break;
 
             default:

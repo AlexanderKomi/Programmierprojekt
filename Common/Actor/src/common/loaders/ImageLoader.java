@@ -58,20 +58,4 @@ public final class ImageLoader {
         }
     }
 
-    /**
-     *
-     * @param relativePath relative path to image
-     * @return returns bufferedinputstream as fileinputstream depending on relative path
-     * @throws NullPointerException Path not found
-     */
-    static BufferedInputStream getBufferedInputStream( String relativePath ) throws NullPointerException {
-        try {
-            return new BufferedInputStream( new FileInputStream( new File( relativePath ) ) );
-        }
-        catch ( FileNotFoundException e ) {
-            e.printStackTrace();
-        }
-        throw new NullPointerException( "File does not exist : " + relativePath );
-    }
-
 }

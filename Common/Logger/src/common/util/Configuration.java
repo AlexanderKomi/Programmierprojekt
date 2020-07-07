@@ -6,7 +6,7 @@ package common.util;
  *
  * @author Alexander Komischke
  */
-public final class Configuration {
+final class Configuration {
 
     static boolean shouldLog() {
         return true;

@@ -10,7 +10,7 @@ public final class UpdateRAM {
         Logger.log( UpdateRAM.class + ": " + game, arg );
        if(arg instanceof String) {
            String message = (String) arg;
-           if ( DefaultCodes.exitToMainGUI.equals( message ) ) {
+           if ( MenuCodes.exitToMainGUI.equals(message ) ) {
                gameContainer.showMainMenu();
                System.gc();                        //remind the garbage collector. he may trow some unused objects away after
                // the game session should be closed.

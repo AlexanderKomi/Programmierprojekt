@@ -2,7 +2,7 @@ package de.hsh.amir;
 
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
-import common.updates.DefaultCodes;
+import common.updates.MenuCodes;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.amir.controller.AmirGameController;
@@ -45,7 +45,7 @@ public class AmirEntryPoint extends GameEntryPoint {
                     }
                     changer.changeFxml( new AmirsMainMenuController(), UpdateCodes.Amir.showEndScreen );
                     break;
-                case DefaultCodes.exitToMainGUI:
+                case MenuCodes.exitToMainGUI:
                     if ( amirGame != null ) {
                         amirGame.deleteObservers();
                         amirGame = null;

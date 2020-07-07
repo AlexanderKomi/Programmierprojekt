@@ -2,7 +2,7 @@ package de.hsh.daniel;
 
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
-import common.updates.DefaultCodes;
+import common.updates.MenuCodes;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.daniel.controller.RAM_MainMenu_controller;
@@ -37,7 +37,7 @@ public final class RAM extends GameEntryPoint {
                 startGame(message);
             } else if (message.equals(UpdateCodes.RAM.mainMenu)) {
                 showMainMenu(message);
-            } else if (message.equals(DefaultCodes.exitToMainGUI) || message.equals(UpdateCodes.RAM.quit)) {
+            } else if (message.equals(MenuCodes.exitToMainGUI) || message.equals(UpdateCodes.RAM.quit)) {
                 exit(message);
             } else if (message.equals(UpdateCodes.RAM.p1Win) ||
                     message.equals(UpdateCodes.RAM.p2Win) ||

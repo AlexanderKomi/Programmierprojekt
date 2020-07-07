@@ -40,7 +40,7 @@ public abstract class FXGameContainer extends GameContainer {
         this.setLaunched();
         this.initStage( primaryStage );
 
-        this.setGameEntryPoints( createGames( this ) );
+        FXGameContainer.gameEntryPoints = createGames( this );
 
         this.setMenu( configMainMenu( getGameEntryPoints().getNames() ) );
         this.getMenu().addObserver( this );
@@ -64,14 +64,11 @@ public abstract class FXGameContainer extends GameContainer {
         return gameEntryPoints;
     }
 
-
     private void showWindow() {
-        if ( this.stage != null ) {
-            this.stage.show();
-        }
-        else {
+        if (this.stage == null) {
             throw new NullPointerException( "Stage is not existing anymore." );
         }
+        this.stage.show();
     }
 
     public void showMainMenu() {
@@ -110,15 +107,6 @@ public abstract class FXGameContainer extends GameContainer {
 
     protected abstract common.MainMenu configMainMenu(ArrayList<String> games);
 
-    protected void setGameEntryPoints( GameEntryPoints gameEntryPoints ) {
-        if ( gameEntryPoints == null ) {
-            throw new IllegalArgumentException( "GameEntryPoints are null" );
-        }
-        else {
-            FXGameContainer.gameEntryPoints = gameEntryPoints;
-        }
-    }
-
     public boolean containsGame( String gameName ) {
         return this.getGameEntryPoints().contains( gameName );
     }
@@ -128,26 +116,18 @@ public abstract class FXGameContainer extends GameContainer {
         if (!g.isPresent()) {
             throw new IllegalArgumentException( "GameEntryPoint not found" );
         }
-        else {
-            setGameShown(g.get());
-        }
+        setGameShown(g.get());
     }
 
     protected void setGameShown( GameEntryPoint gameEntryPoint ) {
         Scene s = gameEntryPoint.getScene();
         stage.setTitle(gameEntryPoint.getName());
-        if (s != null) {
-            if (s.rootProperty().get() != null) {
-                try {
-                    getStage().setScene(s);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                throw new NullPointerException("Scene root property is null.");
-            }
-        } else {
+        if (s == null) {
             throw new NullPointerException("Scene is null");
         }
+        if (s.rootProperty().get() == null) {
+            throw new NullPointerException("Scene root property is null.");
+        }
+        getStage().setScene(s);
     }
 }

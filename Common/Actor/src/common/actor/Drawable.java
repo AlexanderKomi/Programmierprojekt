@@ -30,8 +30,7 @@ abstract public class Drawable extends Observable {
     private String name;
 
     private int     switchingBuffer          = 0;
-    private double  switchingDelay           = 0;
-    private boolean switchImageAutomatically = true;
+    private       double  switchingDelay           = 0;
 
     private double  scaleX                   = 1.0;
     private double  scaleY                   = 1.0;
@@ -56,39 +55,9 @@ abstract public class Drawable extends Observable {
         id_counter++;
     }
 
-    protected Drawable( final String pictureFile, final String... pictureFilePaths ) {
-        this( pictureFile, Arrays.asList( pictureFilePaths ), 0, 0, 0 );
-    }
-
-    protected Drawable( final String[] pictureFilePaths ) {
-        this( 0, 0, 0 );
-        this.setSwitchingImages( Arrays.asList( pictureFilePaths ) );
-    }
-
-    protected Drawable( final List<String> pictureFilePaths ) {
-        this( pictureFilePaths, 0, 0, 0 );
-    }
-
-    protected Drawable( final List<String> pictureFilePaths, final int delay ) {
-        this( pictureFilePaths, 0, 0, delay );
-    }
-
-    protected Drawable( final List<String> pictureFilePaths, final double x, final double y ) {
-        this( pictureFilePaths, x, y, 0 );
-    }
-
     protected Drawable( final List<String> pictureFilePaths, final double x, final double y, final int delay ) {
         this( x, y, delay );
         this.setSwitchingImages( pictureFilePaths );
-    }
-
-    protected Drawable( final double x,
-                        final double y,
-                        final int delay,
-                        final String mustHave,
-                        final String... pictureFilePaths ) {
-        this( Arrays.asList( pictureFilePaths ), x, y, delay );
-        this.addSwitchingImage( mustHave );
     }
 
     protected Drawable( final String mustHave, final List<String> asList, final double x, final double y, final int delay ) {
@@ -127,7 +96,7 @@ abstract public class Drawable extends Observable {
      * Switch switchingImages based on buffer implementation.
      */
     private void switchImages() {
-        if ( this.switchingImages.isEmpty() || !this.switchImageAutomatically ) {
+        if (this.switchingImages.isEmpty()) {
             return;
         }
         if ( this.switchingBuffer < this.switchingDelay ) {
@@ -149,25 +118,17 @@ abstract public class Drawable extends Observable {
     }
 
     protected void scaleImageWidth( final double factor ) {
-        if ( factor > 0 ) {
-            this.width *= factor;
+        if (!(factor > 0)) {
+            this.setX(this.getX() + this.getWidth());
         }
-        else {
-            this.setX( this.getX() + this.getWidth() );
-            this.width *= factor;
-        }
+        this.width *= factor;
         this.scaleX *= factor;
         this.imageView.setFitWidth( scaleX );
         this.imageView.setScaleX( scaleX );
     }
 
     protected void scaleImageHeight( final double factor ) {
-        if ( factor > 0 ) {
-            this.height *= factor;
-        }
-        else {
-            this.height *= factor;
-        }
+        this.height *= factor;
         this.scaleY *= factor;
         this.imageView.setFitHeight( scaleY );
         this.imageView.setScaleY( scaleY );
@@ -281,25 +242,9 @@ abstract public class Drawable extends Observable {
         return result.toString();
     }
 
-    public void onClick() {
-        this.setChanged();
-        this.notifyObservers( this.getClass() + ": clicked" );
-    }
-
-    private void movePos( double horizontal, double vertical ) {
-        this.setPos(
-                this.getX() + horizontal,
-                this.getY() + vertical
-                   );
-    }
-
     public void setPos( double x, double y ) {
         this.setX( x );
         this.setY( y );
-    }
-
-    protected double getScaleY() {
-        return this.scaleY;
     }
 
     protected double getScaleX() {
@@ -309,15 +254,6 @@ abstract public class Drawable extends Observable {
     public void setPos( double[] pos ) {
         this.setX( pos[ 0 ] );
         this.setY( pos[ 1 ] );
-    }
-
-    public double[] getBounds() {
-        return new double[] {
-                this.getX(),
-                this.getY(),
-                this.getX() + this.getWidth(),
-                this.getY() + this.getHeight()
-        };
     }
 
     public double[] getPos() {
@@ -369,28 +305,8 @@ abstract public class Drawable extends Observable {
         this.name = name;
     }
 
-    public int getSwitchingBuffer() {
-        return switchingBuffer;
-    }
-
-    public void setSwitchingBuffer( int switchingBuffer ) {
-        this.switchingBuffer = switchingBuffer;
-    }
-
-    public double getSwitchingDelay() {
-        return switchingDelay;
-    }
-
     protected void setSwitchingDelay( double switchingDelay ) {
         this.switchingDelay = switchingDelay;
-    }
-
-    public boolean isSwitchImageAutomatically() {
-        return switchImageAutomatically;
-    }
-
-    public void setSwitchImageAutomatically( boolean switchImageAutomatically ) {
-        this.switchImageAutomatically = switchImageAutomatically;
     }
 
     protected Image getCurrentImage() {
@@ -409,10 +325,6 @@ abstract public class Drawable extends Observable {
 
     private ArrayList<Image> getSwitchingImages() {
         return switchingImages;
-    }
-
-    public void setSwitchingImages( LinkedList<Image> switchingImages ) {
-        this.switchingImages.addAll( switchingImages );
     }
 
     private void addSwitchingImage( String imagePath ) {

@@ -1,7 +1,7 @@
 package common.engine.components.game;
 
 import common.engine.FxModul;
-import common.updates.DefaultCodes;
+import common.updates.MenuCodes;
 
 import java.util.Observer;
 
@@ -41,7 +41,7 @@ public abstract class GameEntryPoint extends FxModul implements IGame {
     @Override
     public void exitToMainGUI() {
         this.setChanged();
-        super.notifyObservers(DefaultCodes.exitToMainGUI);
+        super.notifyObservers(MenuCodes.exitToMainGUI);
     }
 
     // ----------------------------------- GETTER & SETTER  -----------------------------------

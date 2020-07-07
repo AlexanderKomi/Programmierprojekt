@@ -26,26 +26,12 @@ abstract public class Collectable extends Actor {
         super( pictureFileName, x, y );
     }
 
-    protected Collectable( List<String> pictureFilePaths, double x, double y, int delay ) {
-        super( pictureFilePaths, x, y, delay );
-    }
-
-    protected Collectable( double x, double y, int delay, String... pictureFilePaths ) {
-        super( x, y, delay, pictureFilePaths );
-    }
-
     protected Collectable( double x, double y, int delay, double scale, String... pictureFilePaths ) {
         super( x, y, delay, pictureFilePaths );
         this.scaleImage( scale );
     }
 
-    protected Collectable( double x, double y, double scale, String picturePath ) {
-        super( x, y, scale, picturePath );
-        this.scaleImage( scale );
-    }
-
     public Collectable( double x, double y, String invisiblePictures ) {this( invisiblePictures, x, y );}
-
 
     /**
      * Notifys ovservers if a collectable was collected

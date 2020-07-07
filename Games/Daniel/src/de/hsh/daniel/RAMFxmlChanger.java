@@ -2,7 +2,7 @@ package de.hsh.daniel;
 
 import common.engine.FxModul;
 import common.engine.FxmlChanger;
-import common.updates.DefaultCodes;
+import common.updates.MenuCodes;
 import common.updates.UpdateCodes;
 import common.util.Logger;
 import de.hsh.daniel.controller.RAM_MainMenu_controller;
@@ -26,7 +26,7 @@ public class RAMFxmlChanger extends FxmlChanger {
         } else if (msg.equals(UpdateCodes.RAM.mainMenu) || msg.equals(UpdateCodes.RAM.quit)) {
             changeScene(RAM_MainMenu_controller.fxml, o);
 
-        } else if (msg.equals(DefaultCodes.exitToMainGUI)) {
+        } else if (msg.equals(MenuCodes.exitToMainGUI)) {
             changeScene("common/gui/P3_Gui.fxml", o);
 
         } else if (msg.equals(UpdateCodes.RAM.p1Win)) {

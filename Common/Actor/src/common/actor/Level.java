@@ -167,10 +167,6 @@ abstract public class Level extends Observable implements Observer, ILevel {
     public void reset( Canvas gameCanvas ) {
         initializeMembers();
         createLevel( gameCanvas );
-        combineResources();
-    }
-
-    protected void combineResources() {
         addCollision();
         addCollectables();
     }
@@ -183,10 +179,6 @@ abstract public class Level extends Observable implements Observer, ILevel {
 
     protected List<LevelElement> getLevelElements() {
         return levelElements;
-    }
-
-    public List<Actor> getNpcs() {
-        return npcs;
     }
 
     protected List<Collectable> getCollectables() {

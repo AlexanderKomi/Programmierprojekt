@@ -1,7 +1,7 @@
 package de.hsh.kevin.controller;
 
 import common.engine.components.menu.Menu;
-import common.updates.DefaultCodes;
+import common.updates.MenuCodes;
 import common.updates.UpdateCodes;
 import de.hsh.kevin.logic.Score;
 import javafx.application.Platform;
@@ -80,7 +80,7 @@ public class TIGameOverController extends Menu {
     void sammlungPressed(ActionEvent event) {
         this.setChanged();
         this.notifyObservers(UpdateCodes.TunnelInvader.gameMenu);
-        this.notifyObservers(DefaultCodes.exitToMainGUI);
+        this.notifyObservers(MenuCodes.exitToMainGUI);
     }
 
     @Override

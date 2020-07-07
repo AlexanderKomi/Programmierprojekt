@@ -34,7 +34,7 @@ final class Movement {
      * @return name of the pressed key
      */
     private boolean contains( final String keyName ) {
-        return keymap.keySet().contains( keyName );
+        return keymap.containsKey(keyName );
     }
 
     /**

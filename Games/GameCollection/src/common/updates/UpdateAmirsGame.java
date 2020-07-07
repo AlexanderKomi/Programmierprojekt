@@ -19,7 +19,7 @@ public class UpdateAmirsGame {
                 case UpdateCodes.Amir.startGame:
                     //don't know what belongs in here
                     break;
-                case DefaultCodes.exitToMainGUI:
+                case MenuCodes.exitToMainGUI:
                     gameContainer.showMainMenu();
                     System.gc();                        //remind the garbage collector. he may trow some unused objects away after the game session should be closed.
                     break;

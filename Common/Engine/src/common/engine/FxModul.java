@@ -26,18 +26,7 @@ public abstract class FxModul extends Observable implements Observer {
      * @param container belonging observer
      */
     public FxModul(Observer container) {
-        this( container, true );
-    }
-
-    /***
-     * Constructor with a passed observer object and the option to not load a default scene.
-     * @param container belonging observer
-     * @param b true -> load a default scene, false -> default scene = null;
-     */
-    public FxModul(Observer container, boolean b) {
-        if (b) {
-            this.loadedScene = new Scene( new Pane() );
-        }
+        this.loadedScene = new Scene( new Pane() );
         this.addObserver(Objects.requireNonNull(container));
     }
 

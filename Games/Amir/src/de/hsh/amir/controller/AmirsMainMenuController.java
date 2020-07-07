@@ -1,6 +1,6 @@
 package de.hsh.amir.controller;
 
-import common.updates.DefaultCodes;
+import common.updates.MenuCodes;
 import common.updates.UpdateCodes;
 import de.hsh.amir.logic.Gegner;
 import javafx.event.ActionEvent;
@@ -50,7 +50,7 @@ public class AmirsMainMenuController extends Observable {
         if (id.equals("startGameButton")) {
             this.notifyObservers(UpdateCodes.Amir.startGame);
         } else if (id.equals("exitButton")) {
-            this.notifyObservers(DefaultCodes.exitToMainGUI);
+            this.notifyObservers(MenuCodes.exitToMainGUI);
         } else if (id.equals("level1Button")) {
             setGegnerSpeed(GEGNER_SPEED);
             level1Button.setDisable(true);
