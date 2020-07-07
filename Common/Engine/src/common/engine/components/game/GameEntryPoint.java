@@ -19,8 +19,7 @@ public abstract class GameEntryPoint extends FxModul implements IGame {
 
 
     public GameEntryPoint( Observer container ) {
-        super(container);
-        this.name = "- Name not set -";
+        this(container, "- Name not set -");
     }
 
     public GameEntryPoint( Observer container, String name ) {

@@ -2,6 +2,7 @@ package common.engine.components.game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
 
@@ -9,20 +10,16 @@ public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
     }
 
     public GameEntryPoints( GameEntryPoint... gameEntryPoints ) {
-        this.addAll( gameEntryPoints );
+        Collections.addAll( this, gameEntryPoints );
     }
 
-    private void addAll( GameEntryPoint... g ) {
-        Collections.addAll( this, g );
-    }
-
-    public GameEntryPoint get( final String name ) {
+    public Optional<GameEntryPoint> get(final String name ) {
         for ( GameEntryPoint g : this ) {
             if (g.getName().equals(name)) {
-                return g;
+                return Optional.of(g);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override

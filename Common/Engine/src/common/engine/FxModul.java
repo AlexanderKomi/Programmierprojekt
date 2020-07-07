@@ -41,24 +41,6 @@ public abstract class FxModul extends Observable implements Observer {
         this.addObserver(Objects.requireNonNull(container));
     }
 
-    /***
-     * Constructor with a passed scene but no observer.
-     * @param scene
-     */
-    public FxModul(Scene scene) {
-        this.loadedScene = Objects.requireNonNull( scene );
-    }
-
-    /***
-     * Constructor with a passed scene and a suiting observer.
-     * @param scene
-     * @param controller
-     */
-    public FxModul(Scene scene, Observer controller) {
-        this.loadedScene = Objects.requireNonNull( scene );
-        this.addObserver(Objects.requireNonNull(controller));
-    }
-
     // ----------------------------------- GETTER & SETTER  -----------------------------------
 
     public Scene getScene() {
@@ -67,10 +49,6 @@ public abstract class FxModul extends Observable implements Observer {
 
     public void setScene(Scene scene) {
         this.loadedScene = scene;
-    }
-
-    public Parent getRoot() {
-        return getScene().getRoot();
     }
 
     public void setRoot(Parent root) {

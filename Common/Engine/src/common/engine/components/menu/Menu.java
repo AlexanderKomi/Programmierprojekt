@@ -1,35 +1,42 @@
 package common.engine.components.menu;
 
-import common.engine.components.Sceneable;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
+import java.util.Observable;
 import java.util.Observer;
 
-public abstract class Menu extends Sceneable {
+public abstract class Menu extends Observable implements Observer {
 
-    private Pane menuPane;
+    private Scene scene;
 
     public Menu() {
     }
 
-    public Menu(Observer observer) {
-        this.addObserver(observer);
+    @Override
+    public void notifyObservers() {
+        this.setChanged();
+        super.notifyObservers();
     }
 
-    public Pane getMenuPane() {
-        return menuPane;
+    @Override
+    public void notifyObservers(Object arg) {
+        this.setChanged();
+        super.notifyObservers(arg);
+    }
+
+    public Scene getScene() {
+        return scene;
     }
 
     public void setMenuPane(Pane menuPane) {
         if (menuPane == null) {
-            throw new IllegalArgumentException("menuPane is null");
+            throw new NullPointerException("menuPane is null");
         }
-        this.menuPane = menuPane;
-        if (this.getScene() != null) {
-            this.getScene().setRoot(this.menuPane);
+        if (this.scene != null) {
+            this.scene.setRoot(menuPane);
         } else {
-            this.setScene(new Scene(this.menuPane));
+            this.scene = new Scene(menuPane);
         }
     }
 

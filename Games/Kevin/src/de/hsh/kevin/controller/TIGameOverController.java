@@ -1,6 +1,6 @@
 package de.hsh.kevin.controller;
 
-import common.engine.components.menu.GameMenu;
+import common.engine.components.menu.Menu;
 import common.updates.DefaultCodes;
 import common.updates.UpdateCodes;
 import de.hsh.kevin.logic.Score;
@@ -11,12 +11,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.Observable;
+
 /**
  * Erstellt den GameOverScreen
  * @author Kevin
  *
  */
-public class TIGameOverController extends GameMenu {
+public class TIGameOverController extends Menu {
 
     public static AnchorPane gameOverPane;
 
@@ -81,4 +83,8 @@ public class TIGameOverController extends GameMenu {
         this.notifyObservers(DefaultCodes.exitToMainGUI);
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }

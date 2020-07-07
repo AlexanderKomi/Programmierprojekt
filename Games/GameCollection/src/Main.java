@@ -4,7 +4,7 @@ public class Main {
 
     public static void main( String[] args ) {
         final GameContainer gameContainer = new GameContainer();
-        if ( !GameContainer.isLaunched() ) {
+        if ( !gameContainer.isLaunched() ) {
             gameContainer.startContainer( args );
         }
     }

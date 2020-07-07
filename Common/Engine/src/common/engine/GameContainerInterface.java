@@ -1,8 +1,9 @@
 package common.engine;
 
 import java.util.Observable;
+import java.util.Observer;
 
-public interface GameContainerInterface {
+public interface GameContainerInterface extends Observer {
 
     /**
      * Start the new game. Must be called from the class launching the application!

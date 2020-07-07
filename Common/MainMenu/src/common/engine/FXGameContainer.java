@@ -11,13 +11,14 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 
 /**
  * FXGameContainer is a container for a game engine, a main menu and all gameEntryPoints.
  *
  * @author Alexander Komischke
  */
-public abstract class FXGameContainer extends Container implements Observer {
+public abstract class FXGameContainer extends GameContainer {
 
     private        Stage           stage;
     private static GameEntryPoints gameEntryPoints = new GameEntryPoints(); // Tracks all the gameEntryPoints
@@ -36,7 +37,7 @@ public abstract class FXGameContainer extends Container implements Observer {
         if ( isLaunched() ) {
             throw new IllegalStateException( "Already isLaunched an JavaFX Application. Use existing Stage instead." );
         }
-        Container.setLaunched( true );
+        this.setLaunched();
         this.initStage( primaryStage );
 
         this.setGameEntryPoints( createGames( this ) );
@@ -118,21 +119,17 @@ public abstract class FXGameContainer extends Container implements Observer {
         }
     }
 
-    public boolean containsGame( GameEntryPoint gameEntryPoint ) {
-        return this.getGameEntryPoints().contains( gameEntryPoint );
-    }
-
     public boolean containsGame( String gameName ) {
         return this.getGameEntryPoints().contains( gameName );
     }
 
-    public void setGameShown(String gameName) {
-        GameEntryPoint g = this.getGameEntryPoints().get( gameName );
-        if (g == null) {
+    public void setGameShown(final String gameName) {
+        Optional<GameEntryPoint> g = this.getGameEntryPoints().get(gameName );
+        if (!g.isPresent()) {
             throw new IllegalArgumentException( "GameEntryPoint not found" );
         }
         else {
-            setGameShown(g);
+            setGameShown(g.get());
         }
     }
 
