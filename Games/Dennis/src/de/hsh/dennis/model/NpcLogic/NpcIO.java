@@ -19,9 +19,6 @@ public class NpcIO {
 
         String fileName;
         switch (dif) {
-            case EASY:
-                fileName = "easy";
-                break;
             case MEDIUM:
                 fileName = "medium";
                 break;
@@ -42,49 +39,49 @@ public class NpcIO {
         return gsonRead(fileName);
     }
 
-    private void gsonWrite(JsonNpc[] array, String fileName) {
-        Gson gson = new Gson();
-        String json = gson.toJson(array);
-        try {
-            FileWriter writer = new FileWriter(Path.getExecutionLocation() + "de/de.hsh/dennis/resources/levelFiles/" + fileName + ".json");
-            writer.write(json);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private Npc[] gsonRead(String fileName) {
-        Gson gson = new Gson();
+        BufferedReader bufferedReader = null;
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(Path.getExecutionLocation() + "de/de.hsh/dennis/resources/levelFiles/" + fileName + ".json"));
-            JsonNpc[] parsingArray = gson.fromJson(bufferedReader, JsonNpc[].class);
-            Npc[] returnArray = new Npc[parsingArray.length];
-            for (int i = 0; i < parsingArray.length; i++) {
-
-                if (parsingArray[i].getNpcType() != null) {
-                    switch (parsingArray[i].getNpcType()) {
-                        case PACKAGE:
-                            returnArray[i] = new Package(parsingArray[i].getSpawnType(), parsingArray[i].getSpawnTime(), parsingArray[i].getSpeed());
-                            break;
-                        case BOT:
-                            returnArray[i] = new Bot(parsingArray[i].getSpawnType(), parsingArray[i].getSpawnTime(), parsingArray[i].getSpeed());
-                            break;
-
-                        case HACKER:
-                            returnArray[i] = new Hacker(parsingArray[i].getSpawnType(), parsingArray[i].getSpawnTime(), parsingArray[i].getSpeed());
-                            break;
-                        default:
-                            Logger.log(this.getClass().getName() + "failed to create matching NpcLogic");
-                    }
-                } else returnArray[i] = null;
-            }
-
-            return returnArray;
-
+            bufferedReader = new BufferedReader(new FileReader(Path.getExecutionLocation() + "de/hsh/dennis/resources/levelFiles/" + fileName + ".json"));
+            return readNPC(bufferedReader);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
         }
         return new Npc[]{};
+    }
+
+    private Npc[] readNPC(BufferedReader bufferedReader) {
+        Gson gson = new Gson();
+        JsonNpc[] parsingArray = gson.fromJson(bufferedReader, JsonNpc[].class);
+        Npc[] returnArray = new Npc[parsingArray.length];
+        for (int i = 0; i < parsingArray.length; i++) {
+
+            if (parsingArray[i].getNpcType() != null) {
+                switch (parsingArray[i].getNpcType()) {
+                    case PACKAGE:
+                        returnArray[i] = new Package(parsingArray[i].getSpawnType(), parsingArray[i].getSpawnTime(), parsingArray[i].getSpeed());
+                        break;
+                    case BOT:
+                        returnArray[i] = new Bot(parsingArray[i].getSpawnType(), parsingArray[i].getSpawnTime(), parsingArray[i].getSpeed());
+                        break;
+
+                    case HACKER:
+                        returnArray[i] = new Hacker(parsingArray[i].getSpawnType(), parsingArray[i].getSpawnTime(), parsingArray[i].getSpeed());
+                        break;
+                    default:
+                        Logger.log(this.getClass().getName() + "failed to create matching NpcLogic");
+                }
+            } else returnArray[i] = null;
+        }
+
+        return returnArray;
     }
 }

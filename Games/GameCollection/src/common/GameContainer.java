@@ -4,7 +4,7 @@ import common.engine.FXGameContainer;
 import common.engine.components.game.GameEntryPoints;
 import common.updates.Updater;
 import de.hsh.Julian.LKEntryPoint;
-import de.hsh.alexander.src.PacManController;
+import de.hsh.alexander.PacManController;
 import de.hsh.amir.AmirEntryPoint;
 import de.hsh.daniel.RAM;
 import de.hsh.dennis.DennisGameEntryPoint;

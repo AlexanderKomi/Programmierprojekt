@@ -1,8 +1,8 @@
-package de.hsh.alexander.src.actor.level_elements;
+package de.hsh.alexander.actor.level_elements;
 
 import common.actor.LevelElement;
 
-import static de.hsh.alexander.src.actor.ResourcePaths.Actor.LevelElements.Fan.pictures;
+import static de.hsh.alexander.actor.ResourcePaths.Actor.LevelElements.Fan.pictures;
 
 public class Fan extends LevelElement {
 

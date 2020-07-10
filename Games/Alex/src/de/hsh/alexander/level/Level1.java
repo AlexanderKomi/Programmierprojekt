@@ -1,9 +1,9 @@
-package de.hsh.alexander.src.level;
+package de.hsh.alexander.level;
 
-import de.hsh.alexander.src.actor.level_elements.Fan;
+import de.hsh.alexander.actor.level_elements.Fan;
 import javafx.scene.canvas.Canvas;
 
-import static de.hsh.alexander.src.actor.ResourcePaths.Actor.LevelElements.Backgrounds.microChip;
+import static de.hsh.alexander.actor.ResourcePaths.Actor.LevelElements.Backgrounds.microChip;
 
 public final class Level1 extends PacManLevel {
 

@@ -1,9 +1,10 @@
-package de.hsh.alexander.src.actor;
+package de.hsh.alexander.actor;
 
 public final class ResourcePaths {
 
-    private static final String resourceFolderPath = "/de/hsh/alexander/res/";
-    private static final String soundDirectory     = "src/de/hsh/alexander/sounds/";
+    private static final String resources = "/de/hsh/alexander/";
+    private static final String resourceFolderPath = resources + "res/";
+    private static final String soundDirectory     = resources + "sounds/";
 
     public static final class Actor {
 

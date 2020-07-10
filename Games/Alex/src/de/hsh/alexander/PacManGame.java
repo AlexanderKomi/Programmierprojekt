@@ -1,12 +1,12 @@
-package de.hsh.alexander.src;
+package de.hsh.alexander;
 
 import common.config.WindowConfig;
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import de.hsh.alexander.src.actor.player.PacMan1;
-import de.hsh.alexander.src.actor.player.PacMan2;
-import de.hsh.alexander.src.level.Level1;
-import de.hsh.alexander.src.level.PacManLevel;
+import de.hsh.alexander.level.Level1;
+import de.hsh.alexander.level.PacManLevel;
+import de.hsh.alexander.actor.player.PacMan1;
+import de.hsh.alexander.actor.player.PacMan2;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -100,7 +100,7 @@ public final class PacManGame extends Observable implements Observer, Initializa
             return;
         }
         this.gameCanvas.setFocusTraversable( true ); // DO NOT DELETE!!!! -> Otherwise does not fire events!
-        this.currentLevel = new Level1( gameCanvas );
+        this.currentLevel = new Level1(gameCanvas );
         this.gameCanvas.setOnKeyPressed( this.currentLevel::keyboardInput );
         this.gameCanvas.setOnKeyReleased( this.currentLevel::keyboardInput ); // Only fires, when traversable
         this.currentLevel.addObserver( this );

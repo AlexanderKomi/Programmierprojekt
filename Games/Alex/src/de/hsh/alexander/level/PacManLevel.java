@@ -1,15 +1,15 @@
-package de.hsh.alexander.src.level;
+package de.hsh.alexander.level;
 
 import common.actor.*;
 import common.config.WindowConfig;
 import common.util.Logger;
-import de.hsh.alexander.src.actor.collectables.DataCoin;
-import de.hsh.alexander.src.actor.collectables.Invisible;
-import de.hsh.alexander.src.actor.level_elements.Condensator;
-import de.hsh.alexander.src.actor.level_elements.SMD;
-import de.hsh.alexander.src.actor.player.PacMan;
-import de.hsh.alexander.src.actor.player.PacMan1;
-import de.hsh.alexander.src.actor.player.PacMan2;
+import de.hsh.alexander.actor.collectables.DataCoin;
+import de.hsh.alexander.actor.collectables.Invisible;
+import de.hsh.alexander.actor.level_elements.Condensator;
+import de.hsh.alexander.actor.level_elements.SMD;
+import de.hsh.alexander.actor.player.PacMan;
+import de.hsh.alexander.actor.player.PacMan1;
+import de.hsh.alexander.actor.player.PacMan2;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
@@ -17,7 +17,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.Observable;
 
-import static de.hsh.alexander.src.PacManGame.gameFinishedMessage;
+import static de.hsh.alexander.PacManGame.gameFinishedMessage;
 
 abstract public class PacManLevel extends Level {
 

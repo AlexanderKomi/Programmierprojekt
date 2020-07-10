@@ -119,11 +119,7 @@ public class GameField {
         playerImages.add(Config.resLocation + "player/player2.png");
 
         PlayerCharacter p = null;
-        try {
-            p = new PlayerCharacter(playerImages, playerKeyMap);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        p = new PlayerCharacter(playerImages, playerKeyMap);
         p.setPos(width / 2 - p.getWidth() / 2, height - 65);
         player = p;
     }

@@ -1,12 +1,12 @@
-package de.hsh.alexander.src;
+package de.hsh.alexander;
 
 
 import common.actor.Drawable;
 import common.updates.UpdateCodes;
 import common.util.Logger;
-import de.hsh.alexander.src.actor.collectables.DataCoin;
-import de.hsh.alexander.src.actor.player.PacMan1;
-import de.hsh.alexander.src.actor.player.PacMan2;
+import de.hsh.alexander.actor.collectables.DataCoin;
+import de.hsh.alexander.actor.player.PacMan1;
+import de.hsh.alexander.actor.player.PacMan2;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

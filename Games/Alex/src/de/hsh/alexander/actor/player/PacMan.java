@@ -1,10 +1,10 @@
-package de.hsh.alexander.src.actor.player;
+package de.hsh.alexander.actor.player;
 
 import common.actor.Actor;
 import common.actor.Collectable;
 import common.actor.ControlableActor;
 import common.actor.Direction;
-import de.hsh.alexander.src.actor.ResourcePaths;
+import de.hsh.alexander.actor.ResourcePaths;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.Arrays;
@@ -118,7 +118,7 @@ public class PacMan extends ControlableActor {
     }
 
     protected synchronized void playSound() {
-        super.playSound( ResourcePaths.Actor.Player.PacMan.pacManSound );
+        super.playSound(ResourcePaths.Actor.Player.PacMan.pacManSound );
     }
 
     @Override

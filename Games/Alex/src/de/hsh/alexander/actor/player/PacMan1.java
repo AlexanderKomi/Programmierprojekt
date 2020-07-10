@@ -1,7 +1,7 @@
-package de.hsh.alexander.src.actor.player;
+package de.hsh.alexander.actor.player;
 
 import common.actor.Direction;
-import de.hsh.alexander.src.actor.ResourcePaths;
+import de.hsh.alexander.actor.ResourcePaths;
 
 import java.util.HashMap;
 
@@ -17,7 +17,7 @@ public final class PacMan1 extends PacMan {
     }
 
     public PacMan1( double x, double y ) {
-        super( x, y, createKeyMap(), ResourcePaths.Actor.Player.PacMan.pacman1Pictures );
+        super(x, y, createKeyMap(), ResourcePaths.Actor.Player.PacMan.pacman1Pictures );
     }
 
 }

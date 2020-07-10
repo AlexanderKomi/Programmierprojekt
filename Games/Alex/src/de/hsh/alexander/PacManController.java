@@ -1,4 +1,4 @@
-package de.hsh.alexander.src;
+package de.hsh.alexander;
 
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
