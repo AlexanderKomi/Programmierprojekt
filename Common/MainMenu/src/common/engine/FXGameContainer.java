@@ -11,14 +11,13 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Optional;
 
 /**
  * FXGameContainer is a container for a game engine, a main menu and all gameEntryPoints.
  *
  * @author Alexander Komischke
  */
-public abstract class FXGameContainer extends GameContainer {
+public abstract class FXGameContainer extends EngineGameContainer {
 
     private        Stage           stage;
     private static GameEntryPoints gameEntryPoints = new GameEntryPoints(); // Tracks all the gameEntryPoints
@@ -42,11 +41,11 @@ public abstract class FXGameContainer extends GameContainer {
 
         FXGameContainer.gameEntryPoints = createGames( this );
 
-        this.setMenu( configMainMenu( getGameEntryPoints().getNames() ) );
-        this.getMenu().addObserver( this );
-        this.getMenu().initGameNames();
+        this.menu = configMainMenu(gameEntryPoints.getNames() );
+        this.menu.addObserver( this );
+        this.menu.initGameNames();
 
-        this.stage.setScene(this.getMenu().getScene());
+        this.stage.setScene(this.menu.getScene());
         this.startEngine();
         this.showWindow();
     }
@@ -60,10 +59,6 @@ public abstract class FXGameContainer extends GameContainer {
 
     public abstract GameEntryPoints createGames( Observer o );
 
-    public GameEntryPoints getGameEntryPoints() {
-        return gameEntryPoints;
-    }
-
     private void showWindow() {
         if (this.stage == null) {
             throw new NullPointerException( "Stage is not existing anymore." );
@@ -72,12 +67,8 @@ public abstract class FXGameContainer extends GameContainer {
     }
 
     public void showMainMenu() {
-        this.stage.setScene(this.getMenu().getScene());
+        this.stage.setScene(this.menu.getScene());
         stage.setTitle(WindowConfig.mainGui_title);
-    }
-
-    public MainMenu getMenu() {
-        return menu;
     }
 
     public abstract void update( Observable observable, Object arg );
@@ -95,33 +86,29 @@ public abstract class FXGameContainer extends GameContainer {
         Platform.exit();
     }
 
+    @Override
+    public void render( final int fps ) {
+        gameEntryPoints.render( fps );
+    }
     protected abstract void beforeStoppingContainer();
 
     private Stage getStage() {
         return this.stage;
     }
 
-    public void setMenu( MainMenu menu ) {
-        this.menu = menu;
-    }
-
     protected abstract common.MainMenu configMainMenu(ArrayList<String> games);
 
     public boolean containsGame( String gameName ) {
-        return this.getGameEntryPoints().contains( gameName );
+        return gameEntryPoints.contains( gameName );
     }
 
     public void setGameShown(final String gameName) {
-        Optional<GameEntryPoint> g = this.getGameEntryPoints().get(gameName );
-        if (!g.isPresent()) {
-            throw new IllegalArgumentException( "GameEntryPoint not found" );
-        }
-        setGameShown(g.get());
+        setGameShown(gameEntryPoints.get(gameName ));
     }
 
     protected void setGameShown( GameEntryPoint gameEntryPoint ) {
-        Scene s = gameEntryPoint.getScene();
         stage.setTitle(gameEntryPoint.getName());
+        Scene s = gameEntryPoint.getScene();
         if (s == null) {
             throw new NullPointerException("Scene is null");
         }

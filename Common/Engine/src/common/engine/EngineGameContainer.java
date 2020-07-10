@@ -2,7 +2,7 @@ package common.engine;
 
 import javafx.application.Application;
 
-public abstract class GameContainer extends Application
+public abstract class EngineGameContainer extends Application
         implements GameContainerInterface {
 
     // JavaFX Properties
@@ -12,7 +12,7 @@ public abstract class GameContainer extends Application
     private final Java2DEngine engine;
     private       boolean      running = false;
 
-    GameContainer() {
+    EngineGameContainer() {
         this.engine = new Java2DEngine( this );// This must be in every class, which is an FXGameContainer.
     }
 
@@ -22,7 +22,7 @@ public abstract class GameContainer extends Application
 
     final void startEngine() {
         this.setRunning( true );
-        this.getEngine().start();
+        this.engine.start();
     }
 
     public boolean isLaunched() {

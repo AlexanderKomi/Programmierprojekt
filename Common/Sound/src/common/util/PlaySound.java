@@ -3,7 +3,6 @@
  */
 package common.util;
 
-import common.util.loaders.AudioBuffer;
 import javafx.application.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
@@ -69,7 +68,9 @@ public final class PlaySound {
             if ( resetMediaPlayer ) {
                 resetTimer( prop_mediaPlayer );
             }
-            Platform.runLater( () -> prop_mediaPlayer.play() );
+            if (prop_mediaPlayer != null) {
+                Platform.runLater( () -> prop_mediaPlayer.play() );
+            }
         }
 
         /**

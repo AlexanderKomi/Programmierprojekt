@@ -64,12 +64,6 @@ public class GameContainer extends FXGameContainer {
         launch( args );
     }
 
-    @Override
-    public void render( final int fps ) {
-        if ( this.getGameEntryPoints() != null ) {
-            this.getGameEntryPoints().render( fps );
-        }
-    }
 
     @Override
     protected void beforeStoppingContainer() {

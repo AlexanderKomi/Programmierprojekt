@@ -13,13 +13,13 @@ public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
         Collections.addAll( this, gameEntryPoints );
     }
 
-    public Optional<GameEntryPoint> get(final String name ) {
+    public GameEntryPoint get(final String name ) {
         for ( GameEntryPoint g : this ) {
             if (g.getName().equals(name)) {
-                return Optional.of(g);
+                return g;
             }
         }
-        return Optional.empty();
+        throw new IllegalArgumentException( "GameEntryPoint not found" );
     }
 
     @Override
