@@ -1,16 +1,12 @@
 package common.engine;
 
-import common.MainMenu;
 import common.config.WindowConfig;
 import common.engine.components.game.GameEntryPoint;
-import common.engine.components.game.GameEntryPoints;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * FXGameContainer is a container for a game engine, a main menu and all gameEntryPoints.
@@ -20,7 +16,6 @@ import java.util.Observer;
 public abstract class FXGameContainer extends EngineGameContainer {
 
     private        Stage           stage;
-    private static GameEntryPoints gameEntryPoints = new GameEntryPoints(); // Tracks all the gameEntryPoints
     //Engine properties
 
     private common.MainMenu menu;
@@ -46,7 +41,7 @@ public abstract class FXGameContainer extends EngineGameContainer {
         this.menu.initGameNames();
 
         this.stage.setScene(this.menu.getScene());
-        this.startEngine();
+        this.engine.start();
         this.showWindow();
     }
 
@@ -56,8 +51,6 @@ public abstract class FXGameContainer extends EngineGameContainer {
         this.stage.setResizable( false );
         this.stage.setOnCloseRequest(close -> this.stopContainer());
     }
-
-    public abstract GameEntryPoints createGames( Observer o );
 
     private void showWindow() {
         if (this.stage == null) {
@@ -69,37 +62,6 @@ public abstract class FXGameContainer extends EngineGameContainer {
     public void showMainMenu() {
         this.stage.setScene(this.menu.getScene());
         stage.setTitle(WindowConfig.mainGui_title);
-    }
-
-    public abstract void update( Observable observable, Object arg );
-
-    /**
-     * Stops the Container instance and the running engine.
-     *
-     * @see GameContainerInterface
-     */
-    @Override
-    public void stopContainer() {
-        beforeStoppingContainer();
-        this.setRunning( false );
-        this.getEngine().shutdown();
-        Platform.exit();
-    }
-
-    @Override
-    public void render( final int fps ) {
-        gameEntryPoints.render( fps );
-    }
-    protected abstract void beforeStoppingContainer();
-
-    private Stage getStage() {
-        return this.stage;
-    }
-
-    protected abstract common.MainMenu configMainMenu(ArrayList<String> games);
-
-    public boolean containsGame( String gameName ) {
-        return gameEntryPoints.contains( gameName );
     }
 
     public void setGameShown(final String gameName) {
@@ -115,6 +77,21 @@ public abstract class FXGameContainer extends EngineGameContainer {
         if (s.rootProperty().get() == null) {
             throw new NullPointerException("Scene root property is null.");
         }
-        getStage().setScene(s);
+        stage.setScene(s);
     }
+    /**
+     * Stops the Container instance and the running engine.
+     *
+     * @see GameContainerInterface
+     */
+    @Override
+    public void stopContainer() {
+        beforeStoppingContainer();
+        this.engine.shutdown();
+        Platform.exit();
+    }
+
+
+    protected abstract common.MainMenu configMainMenu(ArrayList<String> games);
+
 }

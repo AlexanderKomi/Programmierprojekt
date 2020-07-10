@@ -1,43 +1,41 @@
 package common.engine;
 
+import common.engine.components.game.GameEntryPoints;
 import javafx.application.Application;
+
+import java.util.Observable;
+import java.util.Observer;
 
 public abstract class EngineGameContainer extends Application
         implements GameContainerInterface {
 
-    // JavaFX Properties
+    protected static GameEntryPoints gameEntryPoints = new GameEntryPoints(); // Tracks all the gameEntryPoints
     private boolean fxApplicationLaunched = false;
-
-    //Engine properties
-    private final Java2DEngine engine;
-    private       boolean      running = false;
+    protected final Java2DEngine engine;
 
     EngineGameContainer() {
         this.engine = new Java2DEngine( this );// This must be in every class, which is an FXGameContainer.
     }
 
-    public Java2DEngine getEngine() {return this.engine;}
+    @Override
+    public void render( final int fps ) {
+        gameEntryPoints.render( fps );
+    }
+
+    public abstract GameEntryPoints createGames(Observer o );
+    public abstract void update(Observable observable, Object arg );
+    protected abstract void beforeStoppingContainer();
+
+    public boolean containsGame( String gameName ) {
+        return gameEntryPoints.contains( gameName );
+    }
 
     //-------------------------------------- GETTER & SETTER --------------------------------------
-
-    final void startEngine() {
-        this.setRunning( true );
-        this.engine.start();
-    }
 
     public boolean isLaunched() {
         return this.fxApplicationLaunched;
     }
-
-    void setLaunched() {
+    protected void setLaunched() {
         this.fxApplicationLaunched = true;
-    }
-
-    public synchronized boolean isRunning() {
-        return running;
-    }
-
-    public synchronized void setRunning( boolean running ) {
-        this.running = running;
     }
 }

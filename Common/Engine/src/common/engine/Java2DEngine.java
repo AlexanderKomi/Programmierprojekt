@@ -17,7 +17,7 @@ public final class Java2DEngine extends Observable implements Runnable {
     private static final double                 UPDATE_CAP = 1.0 / 60.0;
     private static       Thread                 gameThread;
     private final        GameContainerInterface gameContainer;
-    private static       boolean                running    = false;
+    private static       boolean                isRunning = false;
     static               int                    fps;
 
     /**
@@ -25,7 +25,7 @@ public final class Java2DEngine extends Observable implements Runnable {
      * <p>
      * Initializes the Game Thread, with an instance of this class.
      */
-    public Java2DEngine( GameContainerInterface container ) {
+    public Java2DEngine( final GameContainerInterface container ) {
         this.gameContainer = container;
         gameThread = new Thread( this, "Java 2D Engine" );
     }
@@ -35,20 +35,16 @@ public final class Java2DEngine extends Observable implements Runnable {
      * Only starts the gameContainer thread.
      */
     final void start() {
-        if ( !this.isRunning() ) {
-            running = true;
+        if ( !isRunning ) {
+            isRunning = true;
             if ( !gameThread.isInterrupted() ) {
                 gameThread.start();
             }
         }
     }
 
-    private boolean isRunning() {
-        return running;
-    }
-
     void shutdown() {
-        running = false;
+        isRunning = false;
     }
 
     /**
@@ -70,24 +66,24 @@ public final class Java2DEngine extends Observable implements Runnable {
     private void game_loop() {
 
         //------
-        double first_time;
-        double last_time        = System.nanoTime() / 1000000000.0;
-        double passed_time;
-        double unprocessed_time = 0;
+        float first_time;
+        float last_time        = (float) (System.nanoTime() / 1000000000.0);
+        float passed_time;
+        float unprocessed_time = 0;
         //------
-        double frame_time = 0;
+        float frame_time = 0;
         int    frames     = 0;
 
 
         boolean shouldRender;
-        running = true;
+        isRunning = true;
 
-        while ( running ) {
+        while (isRunning) {
             shouldRender = false;
 
             // Needed for CPU idle time and rendering
-            first_time = System.nanoTime() / 1000000000.0;
-            passed_time = first_time - last_time;
+            first_time = (float) (System.nanoTime() / 1000000000.0);
+            passed_time = (first_time - last_time);
             last_time = first_time;
             unprocessed_time += passed_time;
 
@@ -113,8 +109,8 @@ public final class Java2DEngine extends Observable implements Runnable {
      * Interrupts the engine thread.
      */
     private void stop() {
-        if ( running ) {
-            running = (false);
+        if (isRunning) {
+            isRunning = (false);
             gameThread.interrupt();
         }
     }
@@ -130,7 +126,6 @@ public final class Java2DEngine extends Observable implements Runnable {
      */
     private byte render( final boolean shouldRender ) {
         if ( shouldRender ) {
-
             // START ------------------------ Render gameContainer ------------------------
             this.gameContainer.render( fps );
             // STOP  ------------------------ Render gameContainer ------------------------

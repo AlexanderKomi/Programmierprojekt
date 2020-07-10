@@ -45,9 +45,12 @@ abstract public class Drawable extends Observable {
 
     protected Drawable( final String pictureFileName, final double x, final double y ) {
         this.setCurrentImage( loadPicture( pictureFileName ) );
-
-        this.setHeight( this.getCurrentImage().getHeight() );
-        this.setWidth( this.getCurrentImage().getWidth() );
+        if (this.getCurrentImage() != null) {
+            this.setHeight( this.getCurrentImage().getHeight() );
+            this.setWidth( this.getCurrentImage().getWidth() );
+        } else {
+            throw new NullPointerException("Current Image is null! Path to image: " + pictureFileName);
+        }
 
         this.setX( x );
         this.setY( y );
@@ -82,14 +85,12 @@ abstract public class Drawable extends Observable {
         this.scaleImage( scale );
     }
 
-    private Image loadPicture( final String fileName ) {
+    private Image loadPicture( final String fileName ) throws NullPointerException {
         if ( fileName == null ) {
             throw new NullPointerException( "Relative path to an image can not be null." );
         }
-        else {
-            this.name = fileName;
-            return TextureBuffer.loadImage( fileName );
-        }
+        this.name = fileName;
+        return TextureBuffer.loadImage( fileName );
     }
 
     /**

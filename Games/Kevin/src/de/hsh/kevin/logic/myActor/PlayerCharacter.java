@@ -6,6 +6,7 @@ import common.loaders.ImageLoader;
 import javafx.scene.image.Image;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,8 +75,12 @@ public class PlayerCharacter extends ControlableActor {
         super(pictureFileName.get(0), x, y, keyMap);
         this.setSpeed(defaultSpeed);
         if (pictureFileName.size() >= 2) {
-            idleImage = ImageLoader.loadImage(pictureFileName.get(0));
-            firingImage = ImageLoader.loadImage(pictureFileName.get(1));
+            try {
+                idleImage = ImageLoader.loadImage(pictureFileName.get(0));
+                firingImage = ImageLoader.loadImage(pictureFileName.get(1));
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
 

@@ -20,25 +20,24 @@ public final class ImageLoader {
      * @param relativeFilePath the relative path to the image
      * @return returns imagepath for SwingFXUtils
      */
-    public static Image loadImage( final String relativeFilePath ) {
+    public static Image loadImage( final String relativeFilePath ) throws IOException {
 
         InputStream u = null;
         try {
             u = getInputStream( relativeFilePath );
-        }
-        catch ( NullPointerException npe ) {
-            npe.printStackTrace();
-        }
-        assert u != null;
-        BufferedImage image = null;
-        try {
+            BufferedImage image;
             image = ImageIO.read( u );
+            assert image != null;
+            return SwingFXUtils.toFXImage( image, null );
+        } finally {
+            if (u != null) {
+                try {
+                    u.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
         }
-        catch ( IOException e ) {
-            e.printStackTrace();
-        }
-        assert image != null;
-        return SwingFXUtils.toFXImage( image, null );
     }
 
     /**
@@ -48,14 +47,18 @@ public final class ImageLoader {
      * @return returns an inputstream containing the image
      * @throws NullPointerException Location not found
      */
-    private static InputStream getInputStream( String relativePath ) throws NullPointerException {
-        InputStream inputStream = ImageLoader.class.getResourceAsStream( relativePath );
-        if ( inputStream == null ) {
-            throw new NullPointerException( "File does not exist : " + relativePath );
+    private static InputStream getInputStream( String relativePath ) throws NullPointerException,
+            FileNotFoundException {
+
+        java.net.URL x = ImageLoader.class.getResource(relativePath);
+        if (x != null) {
+            File f = new File(x.getPath());
+            if (f.exists()) {
+                return ImageLoader.class.getResourceAsStream( relativePath );
+            }
+            throw new FileNotFoundException("File does not exist: " + x.getPath());
         }
-        else {
-            return inputStream;
-        }
+        throw new FileNotFoundException("File does not exist under relative Path: " + relativePath);
     }
 
 }

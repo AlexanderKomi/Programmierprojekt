@@ -27,5 +27,4 @@ public interface GameContainerInterface extends Observer {
      */
     void stopContainer();
 
-    void setRunning( final boolean value );
 }

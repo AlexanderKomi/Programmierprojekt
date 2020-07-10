@@ -2,6 +2,7 @@ package common.loaders;
 
 import javafx.scene.image.Image;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public final class TextureBuffer {
@@ -13,7 +14,7 @@ public final class TextureBuffer {
             fileToImage.put( filePath,
                              ImageLoader.loadImage( filePath ) );
         }
-        catch ( NullPointerException npe ) {
+        catch (NullPointerException | IOException npe ) {
             npe.printStackTrace();
         }
     }
