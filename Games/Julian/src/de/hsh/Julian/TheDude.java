@@ -52,10 +52,6 @@ final class TheDude extends Actor {
     }
 
     /**
-     * I have no idea what im doing.
-     * - Alexander Komischke.
-     */
-    /**
      *
      * @param other checks if collectable was collected
      * @return returns false or instance of collected item

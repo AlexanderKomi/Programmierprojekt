@@ -1,7 +1,7 @@
 /**
  * @author Julian Sender
  */
-package common.loaders;
+package common.actor;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -14,6 +14,8 @@ import java.io.*;
  * loading image
  */
 public final class ImageLoader {
+
+    private ImageLoader() {}
 
     /**
      * Returns Gets a path and returns image

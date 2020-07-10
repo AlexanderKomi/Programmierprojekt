@@ -57,8 +57,7 @@ abstract public class ControlableActor extends Actor {
 
         if ( eventName.equals( "KEY_PRESSED" ) ) {
             this.movement.onKeyPressed( keyName );
-        }
-        else if ( eventName.equals( "KEY_RELEASED" ) ) {
+        } else if ( eventName.equals( "KEY_RELEASED" ) ) {
             this.movement.onKeyReleased( keyName );
         }
     }
@@ -76,13 +75,13 @@ abstract public class ControlableActor extends Actor {
         final double[] xyTuple  = new double[ 2 ];
         final double   velocity = movement.getVelocity();
 
-        movement.getDirections().forEach( direction -> {
-            if ( movement.isHoldDown( direction ) ) {
+        movement.getDirections().stream()
+            .filter(movement::isHoldDown)
+            .forEach(direction -> {
                 final double[] temp = calculateDirectedSpeed( direction, velocity );
                 xyTuple[ 0 ] = temp[ 0 ];
                 xyTuple[ 1 ] = temp[ 1 ];
-            }
-        } );
+            });
         return xyTuple;
     }
 
@@ -90,20 +89,16 @@ abstract public class ControlableActor extends Actor {
                                                final double movement_speed ) {
         final double[] xyTuple = new double[ 2 ];
         if ( direction == Direction.Down ) {
-            xyTuple[ 0 ] += 0;
             xyTuple[ 1 ] += movement_speed;
         }
         if ( direction == Direction.Up ) {
-            xyTuple[ 0 ] += 0;
             xyTuple[ 1 ] += -movement_speed;
         }
         if ( direction == Direction.Left ) {
             xyTuple[ 0 ] += -movement_speed;
-            xyTuple[ 1 ] += 0;
         }
         if ( direction == Direction.Right ) {
             xyTuple[ 0 ] += movement_speed;
-            xyTuple[ 1 ] += 0;
         }
         return xyTuple;
     }

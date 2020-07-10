@@ -47,7 +47,7 @@ public class CollisionCheck {
                                 final double canvas_height,
                                 final double new_x,
                                 final double new_y) {
-        boolean[] temp = new boolean[]{
+        final boolean[] temp = new boolean[]{
                 false, false
         };
 
@@ -99,9 +99,7 @@ public class CollisionCheck {
         return checkUpperLeftCorner(a_x, a_y, a_width, a_height, b_x, b_y) ||
                 checkUpperRightCorner(a_x, a_y, a_width, a_height, b_x, b_y, b_width) ||
                 checkLowerRightCorner(a_x, a_y, a_width, a_height, b_x, b_y, b_width, b_height) ||
-                checkLowerLeftCorner(a_x, a_y, a_width, a_height, b_x, b_y, b_width, b_height)
-
-                ;
+                checkLowerLeftCorner(a_x, a_y, a_width, a_height, b_x, b_y, b_width, b_height);
     }
 
     /**

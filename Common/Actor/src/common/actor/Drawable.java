@@ -1,8 +1,6 @@
 package common.actor;
 
-import common.loaders.TextureBuffer;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -109,7 +107,7 @@ public class Drawable extends Observable {
         switchToNextImage();
     }
 
-    protected void switchToNextImage() {
+    private void switchToNextImage() {
         this.switchingBuffer = 0;
         final int index = this.switchingImages.indexOf(this.getCurrentImage());
         if (index < this.switchingImages.size() - 1) {
@@ -151,11 +149,12 @@ public class Drawable extends Observable {
         draw(canvas, canvas.getWidth(), canvas.getHeight(), offset_to_new_x, offset_to_new_y);
     }
 
-    public void draw(Canvas canvas,
-                                  double canvas_width,
-                                  double canvas_height,
-                                  double offset_to_new_x,
-                                  double offset_to_new_y) {
+    public void draw(
+            Canvas canvas,
+            final double canvas_width,
+            final double canvas_height,
+            final double offset_to_new_x,
+            final double offset_to_new_y) {
 
         final boolean[] isInBounds = CollisionCheck.isInBounds(
                 this.x,
@@ -182,63 +181,52 @@ public class Drawable extends Observable {
      * @param new_pos     The next position of the Drawable
      * @return Returns the new position of the Drawable.
      */
-    protected synchronized double[] beforeDrawing(double[] current_pos, double[] new_pos) {
+    protected double[] beforeDrawing(double[] current_pos, double[] new_pos) {
         return new_pos;
     }
 
     // ---------------------------------- END DRAW ----------------------------------
 
     private double[] calcPosAfterBounds(boolean[] isInBounds, double new_x, double new_y) {
-        double[] temp = new double[]{
-                this.x, this.y
-        };
-
-        if (isInBounds[0]) {
-            temp[0] += (new_x);
-        }
-        if (isInBounds[1]) {
-            temp[1] += (new_y);
-        }
+        final double[] temp = new double[]{this.x, this.y};
+        if (isInBounds[0]) { temp[0] += (new_x); }
+        if (isInBounds[1]) { temp[1] += (new_y); }
         return temp;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Drawable) {
-            Drawable d = (Drawable) obj;
+            final Drawable d = (Drawable) obj;
             return Arrays.equals(this.getPos(), d.getPos()) &&
                    this.height == d.height &&
                    this.width == d.width &&
                    this.name.equals(d.name) &&
-                   this.getCurrentImage().equals(d.getCurrentImage())
-                    ;
+                   this.getCurrentImage().equals(d.getCurrentImage());
         }
         return false;
     }
 
     @Override
     public String toString() {
-        return this.getClass() + "(" + prepareToString() + ")";
-    }
-
-    private String prepareToString() {
-        return "name:" + this.name + ", " +
+        return this.getClass() + "(" + "name:" +
+               this.name + ", " +
                "x:" + this.x + ", " +
                "y:" + this.y + ", " +
                "width:" + this.width + ", " +
-               "height:" + this.height;
+               "height:" + this.height + ")";
     }
 
-    public void setPos(double x, double y) {
+    protected final double getScaleX() {
+        return this.scaleX;
+    }
+
+    public void setPos(final double x, final double y) {
         this.x = x;
         this.y = y;
     }
 
-    protected double getScaleX() {
-        return this.scaleX;
-    }
-
-    public void setPos(double[] pos) {
+    public void setPos(final double[] pos) {
         this.x = pos[0];
         this.y = pos[1];
     }
@@ -279,20 +267,15 @@ public class Drawable extends Observable {
         this.width = width;
     }
 
-    public void setSize(double size) {
-        this.width  = size;
-        this.height = size;
+    public void setSize(final double size) {
+        this.width  = size; this.height = size;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    protected void setSwitchingDelay(double switchingDelay) {
+    protected void setSwitchingDelay(final double switchingDelay) {
         this.switchingDelay = switchingDelay;
     }
 
