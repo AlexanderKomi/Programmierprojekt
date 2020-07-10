@@ -15,7 +15,9 @@ import java.util.Observer;
 public class Leertastenklatsche extends Observable implements Observer {
 
 
-    static final         String     location = "/de/de.hsh/Julian/";
+    static final         String location    = "/de/hsh/Julian/";
+    static final String         pathToSound = location + "wav/";
+
     private static final SpawnTimer timer    = new SpawnTimer();
 
     private int              score     = 0;
@@ -94,7 +96,7 @@ public class Leertastenklatsche extends Observable implements Observer {
         else{
             if(!horrorWasActivated){
                 //PlaySound.playSound( "src\\de\\de.hsh\\Julian\\wav\\horror.wav" );
-                PlaySound.playSound( "src\\de\\de.hsh\\Julian\\wav\\Kalinka.mp3" );
+                PlaySound.playSound( pathToSound + "Kalinka.mp3" );
                 leben = 70;
             }
 
@@ -126,7 +128,7 @@ public class Leertastenklatsche extends Observable implements Observer {
             //EASTEREGG ;-))
             case "SPACE":
                 if(!horrorWasActivated)
-                PlaySound.playSound( "src\\de\\de.hsh\\Julian\\wav\\cat.wav" );
+                PlaySound.playSound( pathToSound + "cat.wav" );
                 break;
         }
     }
@@ -154,12 +156,12 @@ public class Leertastenklatsche extends Observable implements Observer {
                         if ( thedude.turnedleft ) {
                             score++;
                             if(!horrorWasActivated)
-                            PlaySound.playAndResetSound( "src\\de\\de.hsh\\Julian\\wav\\collision.wav" );
+                            PlaySound.playAndResetSound(pathToSound + "collision.wav" );
                         }
                         else {
                             leben--;
                             if(!horrorWasActivated)
-                            PlaySound.playAndResetSound( "src\\de\\de.hsh\\Julian\\wav\\hit.wav" );
+                            PlaySound.playAndResetSound(pathToSound + "hit.wav" );
                             gameOver();
                         }
                     }
@@ -167,12 +169,12 @@ public class Leertastenklatsche extends Observable implements Observer {
                         if ( !thedude.turnedleft ) {
                             score++;
                             if(!horrorWasActivated)
-                            PlaySound.playAndResetSound( "src\\de\\de.hsh\\Julian\\wav\\collision.wav" );
+                            PlaySound.playAndResetSound(pathToSound + "collision.wav" );
                         }
                         else {
                             leben--;
                             if(!horrorWasActivated)
-                            PlaySound.playAndResetSound( "src\\de\\de.hsh\\Julian\\wav\\hit.wav" );
+                            PlaySound.playAndResetSound(pathToSound + "hit.wav" );
                             gameOver();
                         }
                     }
@@ -191,7 +193,7 @@ public class Leertastenklatsche extends Observable implements Observer {
 
         if ( leben <= 0 && !gamedone ) {
             gamedone = true;
-            PlaySound.playSound( "src\\de\\de.hsh\\Julian\\wav\\noo.wav" );
+            PlaySound.playSound( pathToSound + "noo.wav" );
             for ( Enemy e : this.enemyList ) {
                 e.deleteObservers();
             }

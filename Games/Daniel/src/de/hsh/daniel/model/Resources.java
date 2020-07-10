@@ -2,7 +2,7 @@ package de.hsh.daniel.model;
 
 public final class Resources {
 
-    private static final String resourceFolderPath = "/de/de.hsh/daniel/resources/";
+    private static final String resourceFolderPath = "/de/hsh/daniel/resources/";
 
     private static final String file_type = ".png";
     public static final String cardback =resourceFolderPath + "0" + file_type ;

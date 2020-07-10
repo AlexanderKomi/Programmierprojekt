@@ -67,7 +67,6 @@ final class TheDude extends Actor {
             c.wasCollected( this );
             return false;
         }
-
-        return super.collisionModifier( other );
+        return true;
     }
 }

@@ -11,17 +11,13 @@ import java.util.GregorianCalendar;
  */
 public final class Logger {
 
+    private static final boolean shouldLog = true;
     private static final String separator       = "\t : \t";
-    private static final String topic_separator = " ------------------------- ";
 
     private Logger() {}
 
-    public static String log( Object o ) {
-        return log( o.toString() );
-    }
-
     private static String format(String message) {
-        if (!Configuration.shouldLog()) {
+        if (!shouldLog) {
             return "";
         }
         Calendar         calendar         = new GregorianCalendar();
@@ -29,16 +25,20 @@ public final class Logger {
         return simpleDateFormat.format( calendar.getTime() ) + separator + message;
     }
 
-    public static String log( final String message) {
-        final String m = format(message);
-        if (Configuration.shouldLog()) {
-            System.out.println(m);
-        }
-        return m;
+    public static String log( Object o ) {
+        return log( o.toString() );
     }
 
     public static String log( Object o, Object argument ) {
         return log( o.toString() + separator + argument.toString() );
+    }
+
+    public static String log( final String message) {
+        final String m = format(message);
+        if (shouldLog) {
+            System.out.println(m);
+        }
+        return m;
     }
 
     public static String log( String[] messages ) {
@@ -54,12 +54,5 @@ public final class Logger {
             s.append( log( prefix + message + suffix) );
         }
         return s.toString();
-    }
-
-    public static String log( String topic, String prefix, String[] messages, String suffix ) {
-        String s = topic_separator + topic + topic_separator;
-        return log( "Start : " + s ) + "\n" +
-               logStringArray(prefix, messages, suffix ) + "\n" +
-               log( "End : " + s );
     }
 }

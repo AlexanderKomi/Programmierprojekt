@@ -9,8 +9,8 @@ import common.util.PlaySound;
 public class Card extends Actor {
 
 
-    private static final String  cardFrontSoundPath = "src\\de\\de.hsh\\daniel\\resources\\cardFlip1.wav";
-    private static final String  cardBackSoundPath = "src\\de\\de.hsh\\daniel\\resources\\cardFlip2.wav";
+    private static final String  cardFrontSoundPath = "/de/hsh/daniel/resources/cardFlip1.wav";
+    private static final String  cardBackSoundPath = "/de/hsh/daniel/resources/cardFlip2.wav";
     private final        int     pair_id;
     private final        String  pictureFileName;
     private              boolean cardMatched              = false;

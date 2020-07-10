@@ -2,7 +2,6 @@ package de.hsh.dennis.model.NpcLogic;
 
 import com.google.gson.Gson;
 import common.util.Logger;
-import common.util.Path;
 import de.hsh.dennis.model.NpcLogic.actors.Bot;
 import de.hsh.dennis.model.NpcLogic.actors.Hacker;
 import de.hsh.dennis.model.NpcLogic.actors.Npc;
@@ -11,6 +10,17 @@ import de.hsh.dennis.model.NpcLogic.actors.Package;
 import java.io.*;
 
 public class NpcIO {
+
+    /**
+     * Gets the execution location of the main program.
+     *
+     * @return a String representation.
+     *
+     * @author Alexander Komischke
+     */
+    public static String getExecutionLocation() {
+        return NpcIO.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+    }
 
     public Npc[] loadLevel(SkinConfig.Level.Difficulty dif) {
 
@@ -42,7 +52,7 @@ public class NpcIO {
     private Npc[] gsonRead(String fileName) {
         BufferedReader bufferedReader = null;
         try {
-            bufferedReader = new BufferedReader(new FileReader(Path.getExecutionLocation() + "de/hsh/dennis/resources/levelFiles/" + fileName + ".json"));
+            bufferedReader = new BufferedReader(new FileReader(getExecutionLocation() + "de/hsh/dennis/resources/levelFiles/" + fileName + ".json"));
             return readNPC(bufferedReader);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -15,7 +15,6 @@
       <module fileurl="file://$PROJECT_DIR$/Games/Kevin/Kevin.iml" filepath="$PROJECT_DIR$/Games/Kevin/Kevin.iml" />
       <module fileurl="file://$PROJECT_DIR$/Common/Logger/Logger.iml" filepath="$PROJECT_DIR$/Common/Logger/Logger.iml" />
       <module fileurl="file://$PROJECT_DIR$/Common/MainMenu/MainMenu.iml" filepath="$PROJECT_DIR$/Common/MainMenu/MainMenu.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Common/Path/Path.iml" filepath="$PROJECT_DIR$/Common/Path/Path.iml" />
       <module fileurl="file://$PROJECT_DIR$/ProgrammierprojektRefactoring.iml" filepath="$PROJECT_DIR$/ProgrammierprojektRefactoring.iml" />
       <module fileurl="file://$PROJECT_DIR$/Common/Sound/Sound.iml" filepath="$PROJECT_DIR$/Common/Sound/Sound.iml" />
     </modules>

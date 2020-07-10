@@ -33,18 +33,25 @@ public final class RAM extends GameEntryPoint {
 
             Logger.log(this.getClass() + ": arg = " + message);
 
-            if (message.equals(UpdateCodes.RAM.startGame)) {
-                startGame(message);
-            } else if (message.equals(UpdateCodes.RAM.mainMenu)) {
-                showMainMenu(message);
-            } else if (message.equals(MenuCodes.exitToMainGUI) || message.equals(UpdateCodes.RAM.quit)) {
-                exit(message);
-            } else if (message.equals(UpdateCodes.RAM.p1Win) ||
-                    message.equals(UpdateCodes.RAM.p2Win) ||
-                    message.equals(UpdateCodes.RAM.tie)) {
-                showEndScreen(message);
-            } else {
-                changer.changeFxml(o, (String) arg);
+            switch (message) {
+                case UpdateCodes.RAM.startGame:
+                    startGame(message);
+                    break;
+                case UpdateCodes.RAM.mainMenu:
+                    showMainMenu(message);
+                    break;
+                case MenuCodes.exitToMainGUI:
+                case UpdateCodes.RAM.quit:
+                    exit(message);
+                    break;
+                case UpdateCodes.RAM.p1Win:
+                case UpdateCodes.RAM.p2Win:
+                case UpdateCodes.RAM.tie:
+                    showEndScreen(message);
+                    break;
+                default:
+                    changer.changeFxml(o, (String) arg);
+                    break;
             }
         }
     }
