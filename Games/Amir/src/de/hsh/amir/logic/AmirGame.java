@@ -60,7 +60,7 @@ public final class AmirGame {
      * Spielt einen Sound ab.
      */
     private static void playSound() {
-        PlaySound.playSound( "src/de/de.hsh/amir/resources/clickSound.mp3", true );
+        PlaySound.playSound( "/de/hsh/amir/resources/clickSound.mp3", true );
     }
 
 

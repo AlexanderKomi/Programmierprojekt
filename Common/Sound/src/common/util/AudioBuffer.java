@@ -5,6 +5,8 @@ import javafx.scene.media.MediaException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URI;
+import java.net.URL;
 import java.util.HashMap;
 
 public final class AudioBuffer {
@@ -24,7 +26,11 @@ public final class AudioBuffer {
     }
 
     private static Media newMedia( final String fileName ) throws MediaException, FileNotFoundException {
-        File soundFile = new File( fileName );
+        URL  url       = AudioBuffer.class.getResource(fileName);
+        if (url == null) {
+            throw new FileNotFoundException(fileName);
+        }
+        File soundFile = new File( url.getPath() );
         if (soundFile.exists()) {
             return new Media( soundFile.toURI().toString() );
         }

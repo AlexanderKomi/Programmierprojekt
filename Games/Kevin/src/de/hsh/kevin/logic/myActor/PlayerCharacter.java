@@ -26,30 +26,6 @@ public class PlayerCharacter extends ControlableActor {
     private static boolean isFiring;
 
     /**
-     * Erstellt PlayerCharacter
-     * @param pictureFileName
-     * @param keyMap
-     * @throws FileNotFoundException
-     */
-    public PlayerCharacter(String pictureFileName, HashMap<String, Direction> keyMap) throws FileNotFoundException {
-        this(pictureFileName, startX, startY, keyMap);
-    }
-
-    /**
-     *  Erstellt PlayerCharacter
-     * @param pictureFileName
-     * @param x
-     * @param y
-     * @param keyMap
-     * @throws FileNotFoundException
-     */
-    public PlayerCharacter(String pictureFileName, double x, double y, HashMap<String, Direction> keyMap)
-            throws FileNotFoundException {
-        super(pictureFileName, x, y, keyMap);
-        this.setSpeed(defaultSpeed);
-    }
-
-    /**
      * Setzt das zweite Bild der List<String> als feuerndes Bild und das erste Bild
      * sonst
      *
@@ -57,8 +33,7 @@ public class PlayerCharacter extends ControlableActor {
      * @param keyMap
      * @throws FileNotFoundException
      */
-    public PlayerCharacter(List<String> pictureFileName, HashMap<String, Direction> keyMap)
-            throws FileNotFoundException {
+    public PlayerCharacter(List<String> pictureFileName, HashMap<String, Direction> keyMap) {
         this(pictureFileName, startX, startY, keyMap);
     }
 
@@ -68,10 +43,8 @@ public class PlayerCharacter extends ControlableActor {
      *
      * @param pictureFileName
      * @param keyMap
-     * @throws FileNotFoundException
      */
-    public PlayerCharacter(List<String> pictureFileName, double x, double y, HashMap<String, Direction> keyMap)
-            throws FileNotFoundException {
+    public PlayerCharacter(List<String> pictureFileName, double x, double y, HashMap<String, Direction> keyMap) {
         super(pictureFileName.get(0), x, y, keyMap);
         this.setSpeed(defaultSpeed);
         if (pictureFileName.size() >= 2) {

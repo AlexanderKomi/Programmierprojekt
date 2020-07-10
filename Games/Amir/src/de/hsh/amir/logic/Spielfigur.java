@@ -11,7 +11,7 @@ public class Spielfigur extends ControlableActor {
     private static final double startX = 250;
     private static final double startY = 750;
     private static final int defaultSpeed = 10;
-    private static final String spielFigurBildpfad = "/de/de.hsh/amir/resources/playerFigur.png";
+    private static final String spielFigurBildpfad = "/de/hsh/amir/resources/playerFigur.png";
     private static final HashMap<String, Direction> playerKeyMap = createPlayerKeymap();
 
 

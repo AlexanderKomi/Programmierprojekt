@@ -25,8 +25,7 @@ public final class ImageLoader {
         InputStream u = null;
         try {
             u = getInputStream( relativeFilePath );
-            BufferedImage image;
-            image = ImageIO.read( u );
+            BufferedImage image = ImageIO.read( u );
             assert image != null;
             return SwingFXUtils.toFXImage( image, null );
         } finally {
@@ -49,7 +48,6 @@ public final class ImageLoader {
      */
     private static InputStream getInputStream( String relativePath ) throws NullPointerException,
             FileNotFoundException {
-
         java.net.URL x = ImageLoader.class.getResource(relativePath);
         if (x != null) {
             File f = new File(x.getPath());

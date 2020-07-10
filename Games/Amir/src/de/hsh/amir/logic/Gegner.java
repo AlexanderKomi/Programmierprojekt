@@ -7,7 +7,7 @@ public final class Gegner extends Actor {
     private static final double START_Y = 10;
     private static double GEGNER_SPEED = 3;
 
-    private static final String enemyPicture = "/de/de.hsh/amir/resources/enemyFigur.png";
+    private static final String enemyPicture = "/de/hsh/amir/resources/enemyFigur.png";
 
     Gegner( final double x ) {
         super( enemyPicture, x, START_Y );

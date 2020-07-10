@@ -14,7 +14,7 @@ import javafx.util.Duration;
  */
 public final class PlaySound {
 
-    private static Player p = new Player();
+    private static final Player p = new Player();
 
     /**
      *
@@ -50,27 +50,15 @@ public final class PlaySound {
         private MediaPlayer prop_mediaPlayer;
         private boolean     resetTimer;
 
-        public void playSound( final String path, final boolean resetMediaPlayer ) {
-            resetTimer = resetMediaPlayer;
-            if ( musicFile == null || !musicFile.equals( path ) ) { //Perfomance-Kniff
-                try {
-                    if ( prop_mediaPlayer != null ) {
-                        prop_mediaPlayer.dispose();
-                    }
-                    musicFile = path;
-                    currentMedia = AudioBuffer.loadMedia( path );
-                    prop_mediaPlayer = createMediaPlayer();
-                }
-                catch ( MediaException me ) {
-                    me.printStackTrace();
-                }
-            }
-            if ( resetMediaPlayer ) {
-                resetTimer( prop_mediaPlayer );
-            }
+        public void playSound( final String path, final boolean resetMediaPlayer ) throws MediaException{
+            initProperties(path, resetMediaPlayer);
             if (prop_mediaPlayer != null) {
+                if ( resetTimer ) {
+                    resetTimer( prop_mediaPlayer );
+                }
                 Platform.runLater( () -> prop_mediaPlayer.play() );
             }
+            // else { throw new NullPointerException("Mediaplayer is null"); }
         }
 
         /**
@@ -82,6 +70,25 @@ public final class PlaySound {
                 mediaPlayer.stop();
                 mediaPlayer.seek( Duration.ZERO );
             }
+        }
+
+        private void initProperties(final String path, final boolean resetMediaPlayer ) {
+            resetTimer = resetMediaPlayer;
+            if (musicFile != null && musicFile.equals(path)) { //Performance-Kniff
+                return;
+            }
+            if ( prop_mediaPlayer != null ) {
+                prop_mediaPlayer.dispose();
+            }
+            musicFile = path;
+            if (musicFile == null) {
+                throw new NullPointerException("MusicFile String is null");
+            }
+            currentMedia = AudioBuffer.loadMedia( path );
+            if (currentMedia == null) {
+                throw new NullPointerException("Current Media is null: " + musicFile);
+            }
+            prop_mediaPlayer = createMediaPlayer();
         }
 
         /**
