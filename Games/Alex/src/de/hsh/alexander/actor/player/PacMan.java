@@ -117,12 +117,12 @@ public class PacMan extends ControlableActor {
         }
     }
 
-    protected synchronized void playSound() {
+    protected void playSound() {
         super.playSound(ResourcePaths.Actor.Player.PacMan.pacManSound );
     }
 
     @Override
-    public synchronized boolean collisionModifier( Actor other ) {
+    public boolean collisionModifier( Actor other ) {
         if ( other instanceof Collectable ) {
             final Collectable c = (Collectable) other;
             c.wasCollected( this );

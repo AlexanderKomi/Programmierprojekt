@@ -67,8 +67,7 @@ abstract public class Actor extends Drawable {
     protected double[] beforeDrawing( final double[] current_pos, final double[] new_pos ) {
         if ( this.doesCollide() ) {
             return current_pos;
-        }
-        else {
+        } else {
             return new_pos;
         }
     }
@@ -78,24 +77,15 @@ abstract public class Actor extends Drawable {
      * @return returns true, if collided, else false
      */
     private boolean doesCollide() {
-        try {
-            final List<Actor> list = Collections.synchronizedList( this.getCollisionActors() );
-            synchronized ( list ) {
-                int size = list.size();
-                for ( int i = 0 ; i < size ; i++ ) {
-                    if ( this.doesCollide( list.get( i ) ) ) {
-                            return true;
-                        }
-
-                    size = list.size();
-                }
+        final List<Actor> list = Collections.synchronizedList(this.collisionActors);
+        int size = list.size();
+        for ( int i = 0 ; i < size ; i++ ) {
+            if ( this.doesCollide( list.get( i ) ) ) {
+                return true;
             }
-            return false;
+            size = list.size();
         }
-        catch ( NullPointerException | ConcurrentModificationException npe ) {
-            npe.printStackTrace();
-            return true;
-        }
+        return false;
     }
 
     /**
@@ -104,12 +94,11 @@ abstract public class Actor extends Drawable {
      * @return returns if collisioned or not
      */
     public synchronized boolean doesCollide( final Actor other ) {
-        boolean b = CollisionCheck.doesCollide( this, other ) ||
-                    CollisionCheck.doesCollide( other, this );
-        if ( b ) {
-            b = collisionModifier( other );
+        if ( CollisionCheck.doesCollide( this, other ) ||
+             CollisionCheck.doesCollide( other, this )) {
+            return collisionModifier( other );
         }
-        return b;
+        return false;
     }
 
     /**
@@ -118,9 +107,8 @@ abstract public class Actor extends Drawable {
      * @param canvas_height height
      * @return returns if
      */
-    public boolean isInBounds( double canvas_width, double canvas_height ) {
-        boolean[] temp = CollisionCheck.isInBounds( this, canvas_width, canvas_height );
-        return (temp[ 0 ] && temp[ 1 ]);
+    public boolean isInBounds(double canvas_width, double canvas_height ) {
+        return CollisionCheck.isInBounds( this, canvas_width, canvas_height );
     }
 
     /**
@@ -128,7 +116,7 @@ abstract public class Actor extends Drawable {
      * @param other the Actor
      * @return always true
      */
-    protected synchronized boolean collisionModifier( final Actor other ) {
+    protected boolean collisionModifier( final Actor other ) {
         return true;
     }
 
@@ -136,35 +124,23 @@ abstract public class Actor extends Drawable {
      * Plays a sound
      * @param filePath Path of soundfile
      */
-    protected synchronized void playSound( final String filePath ) {
+    protected void playSound( final String filePath ) {
         PlaySound.playSound( filePath );
     }
 
-    /**
-     * Sets or removes collisionactors
-     * @param list List of collisionactors
-     */
-    // ----------------------------------- GETTER AND SETTER -----------------------------------
-    private void setCollisionActors( final List<Actor> list ) {
-        this.collisionActors = list;
-    }
-
     public void removeCollisionActor( Collectable collectable ) {
-        final List<Actor> l = Collections.synchronizedList( this.getCollisionActors() );
-        synchronized ( l ) {
-            boolean b = l.remove( collectable );
-            if ( !b ) {
-                Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
-            }
-            else {
-                onRemove( collectable );
-            }
+        final List<Actor> l = Collections.synchronizedList( this.collisionActors );
+        if (l.remove(collectable)) {
+            onRemove( collectable );
+        } else {
+            Logger.log( "------>" + this.getClass() + " FATAL ERROR : Can not delete: " + collectable );
         }
         this.setCollisionActors( l );
     }
 
     protected void onRemove( final Collectable collectable ) {}
 
+    // ----------------------------------- GETTER AND SETTER -----------------------------------
     /**
      *  Sets the velocity
      * @param speed parameter for speed as a double
@@ -173,12 +149,12 @@ abstract public class Actor extends Drawable {
         this.movement.setVelocity( speed );
     }
 
-    public double getSpeed() {
-        return this.movement.getVelocity();
+    private void setCollisionActors( final List<Actor> list ) {
+        this.collisionActors = list;
     }
 
-    private List<Actor> getCollisionActors() {
-        return this.collisionActors;
+    public double getSpeed() {
+        return this.movement.getVelocity();
     }
 
     /**

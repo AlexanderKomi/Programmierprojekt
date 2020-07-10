@@ -1,7 +1,6 @@
 package common.actor;
 
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.MouseEvent;
 
 /**
  * Bounds checking for collision.
@@ -14,12 +13,14 @@ public class CollisionCheck {
     /**
      * Just a Wrapper.
      */
-    public static boolean[] isInBounds(Drawable a, Canvas canvas) {
-        return isInBounds(a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas);
+    public static boolean isInBounds(Drawable a, Canvas canvas) {
+        final boolean[] temp = isInBounds(a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas);
+        return temp[ 0 ] && temp[ 1 ];
     }
 
-    public static boolean[] isInBounds( Drawable a, double canvas_widht, double canvas_height ) {
-        return isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas_widht, canvas_height, 0, 0 );
+    public static boolean isInBounds( Drawable a, double canvas_widht, double canvas_height ) {
+        final boolean[] temp = isInBounds( a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas_widht, canvas_height, 0, 0 );
+        return temp[ 0 ] && temp[ 1 ];
     }
 
 
@@ -79,47 +80,13 @@ public class CollisionCheck {
     /**
      * Just a Wrapper.
      */
-    static boolean[] isInBounds(final double x, final double y, final double width, final double height, Canvas canvas) {
+    private static boolean[] isInBounds(final double x, final double y, final double width, final double height, Canvas canvas) {
         return isInBounds(x, y, width, height, canvas.getWidth(), canvas.getHeight(), 0, 0);
-    }
-
-    /**
-     * @return an boolean Array with index 0 for x coordinate and
-     * * index 1 for y coordinate. When true is written at the corresponding index, it means, that the corresponding
-     * coordinate
-     * * is in bounds.
-     * @author Alex
-     * @author Kevin
-     */
-    public static boolean[] isInBounds(Drawable a, Canvas canvas,
-                                       final double new_x,
-                                       final double new_y) {
-        return isInBounds(a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas.getWidth(), canvas.getHeight(), new_x, new_y);
-    }
-
-    /**
-     * Returns an boolean Array with index 0 equals x coordinate and
-     * index 1 equals y coordinate
-     *
-     * @author Alex
-     * @author Kevin
-     */
-    public static boolean[] isInBounds(Drawable a,
-                                       final double canvas_widht,
-                                       final double canvas_height,
-                                       final double new_x,
-                                       final double new_y) {
-        return isInBounds(a.getX(), a.getY(), a.getWidth(), a.getHeight(), canvas_widht, canvas_height, new_x, new_y);
     }
 
     static boolean doesCollide(Drawable a, Drawable b) {
         return checkUpperLeftCorner(a, b) || checkUpperRightCorner(a, b) || checkLowerRightCorner(a, b)
                 || checkLowerLeftCorner(a, b);
-    }
-
-    public static boolean doesCollide( Drawable a, MouseEvent b ) {
-        return doesCollide( a.getX(), a.getY(), a.getWidth(), a.getHeight(),
-                            b.getX(), b.getY(), 0, 0 );
     }
 
     public static boolean doesCollide( Drawable a, final double mouse_x, final double mouse_y ) {

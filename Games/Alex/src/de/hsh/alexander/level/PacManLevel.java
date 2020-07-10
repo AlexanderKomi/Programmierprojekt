@@ -94,10 +94,6 @@ abstract public class PacManLevel extends Level {
             }
         }
         this.collected( c );
-
-        if ( !isGameFinished() ) {
-            //Logger.log( this.getClass() + ": Still " + this.getCollectables().size() + " to collect." );
-        }
     }
 
     protected boolean isGameFinished() {
@@ -113,8 +109,7 @@ abstract public class PacManLevel extends Level {
         for ( int y = 0 ; y < WindowConfig.window_height ; y += 50 ) {
             for ( int x = 0 ; x < WindowConfig.window_width ; x += 50 ) {
                 final DataCoin  d  = new DataCoin( x, y );
-                final boolean[] xy = CollisionCheck.isInBounds( d, gameCanvas );
-                if ( xy[ 0 ] && xy[ 1 ] ) {
+                if (CollisionCheck.isInBounds( d, gameCanvas )) {
                     addCollectable( d );
                 }
             }
