@@ -32,7 +32,11 @@ public abstract class FXGameContainer extends EngineGameContainer {
             throw new IllegalStateException( "Already isLaunched an JavaFX Application. Use existing Stage instead." );
         }
         this.setLaunched();
-        this.initStage( primaryStage );
+
+        this.stage = primaryStage; // This line is required, for reference change.
+        this.stage.setTitle(WindowConfig.mainGui_title);
+        this.stage.setResizable( false );
+        this.stage.setOnCloseRequest(close -> this.stopContainer());
 
         FXGameContainer.gameEntryPoints = createGames( this );
 
@@ -42,17 +46,6 @@ public abstract class FXGameContainer extends EngineGameContainer {
 
         this.stage.setScene(this.menu.getScene());
         this.engine.start();
-        this.showWindow();
-    }
-
-    private void initStage( Stage primaryStage ) {
-        this.stage = primaryStage; // This line is required, for reference change.
-        this.stage.setTitle(WindowConfig.mainGui_title);
-        this.stage.setResizable( false );
-        this.stage.setOnCloseRequest(close -> this.stopContainer());
-    }
-
-    private void showWindow() {
         if (this.stage == null) {
             throw new NullPointerException( "Stage is not existing anymore." );
         }
@@ -65,10 +58,7 @@ public abstract class FXGameContainer extends EngineGameContainer {
     }
 
     public void setGameShown(final String gameName) {
-        setGameShown(gameEntryPoints.get(gameName ));
-    }
-
-    protected void setGameShown( GameEntryPoint gameEntryPoint ) {
+        GameEntryPoint gameEntryPoint = gameEntryPoints.get(gameName );
         stage.setTitle(gameEntryPoint.getName());
         Scene s = gameEntryPoint.getScene();
         if (s == null) {
@@ -79,6 +69,7 @@ public abstract class FXGameContainer extends EngineGameContainer {
         }
         stage.setScene(s);
     }
+
     /**
      * Stops the Container instance and the running engine.
      *
@@ -90,7 +81,6 @@ public abstract class FXGameContainer extends EngineGameContainer {
         this.engine.shutdown();
         Platform.exit();
     }
-
 
     protected abstract common.MainMenu configMainMenu(ArrayList<String> games);
 

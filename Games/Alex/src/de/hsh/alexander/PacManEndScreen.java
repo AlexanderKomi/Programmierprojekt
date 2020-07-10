@@ -64,13 +64,11 @@ public final class PacManEndScreen extends Observable implements Initializable {
         if ( !initialized ) {
             return;
         }
-        Platform.runLater( () -> {
-            player1Canvas.getGraphicsContext2D().clearRect( 0, 0, player1Canvas.getWidth(), player1Canvas.getHeight() );
-            player2Canvas.getGraphicsContext2D().clearRect( 0, 0, player2Canvas.getWidth(), player2Canvas.getHeight() );
+        player1Canvas.getGraphicsContext2D().clearRect( 0, 0, player1Canvas.getWidth(), player1Canvas.getHeight() );
+        player2Canvas.getGraphicsContext2D().clearRect( 0, 0, player2Canvas.getWidth(), player2Canvas.getHeight() );
 
-            pacMan1.draw( player1Canvas );
-            pacMan2.draw( player2Canvas );
-        } );
+        pacMan1.draw( player1Canvas );
+        pacMan2.draw( player2Canvas );
     }
 
 }

@@ -57,11 +57,9 @@ public final class PacManMenu extends Observable implements Initializable {
         if ( !initialized ) {
             return;
         }
-        Platform.runLater( () -> {
-            clearAndDraw( pacMan1, player1Canvas );
-            clearAndDraw( pacMan2, player2Canvas );
-            clearAndDraw( d, dataCoinCanvas );
-        } );
+        clearAndDraw( pacMan1, player1Canvas );
+        clearAndDraw( pacMan2, player2Canvas );
+        clearAndDraw( d, dataCoinCanvas );
     }
 
     static void clearAndDraw( Drawable p, Canvas canvas ) {

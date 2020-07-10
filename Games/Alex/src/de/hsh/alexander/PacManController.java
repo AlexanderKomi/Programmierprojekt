@@ -12,9 +12,9 @@ import java.util.Observer;
 public final class PacManController extends GameEntryPoint {
 
     private final  PacManFxmlChanger changer;
-    private static PacManGame        game;
-    private static PacManEndScreen   pacManEndScreen = new PacManEndScreen();
-    private static PacManMenu        pacManMenu      = new PacManMenu();
+    private static       PacManGame      game;
+    private static final PacManEndScreen pacManEndScreen = new PacManEndScreen();
+    private static final PacManMenu      pacManMenu      = new PacManMenu();
 
     public PacManController( Observer o ) {
         super( o, WindowConfig.alexander_title );

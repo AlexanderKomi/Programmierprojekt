@@ -1,5 +1,7 @@
 package common.engine.components.game;
 
+import javafx.application.Platform;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
@@ -48,8 +50,12 @@ public final class GameEntryPoints extends ArrayList<GameEntryPoint> {
         return false;
     }
 
-    public synchronized void render( final int fps ) {
-        this.forEach( game -> game.render( fps ) );
+    public void render( final int fps ) {
+        for (GameEntryPoint game : this) {
+            Platform.runLater( () -> {
+                game.render( fps );
+            });
+        }
     }
 
     public GameEntryPoints[] toArray() {
