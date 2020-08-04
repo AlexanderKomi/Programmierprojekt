@@ -32,7 +32,7 @@ public class LKEnd extends Observable {
                 notifyObservers(id);
                 break;
             default:
-                Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
+                Logger.INSTANCE.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
 
         }
     }

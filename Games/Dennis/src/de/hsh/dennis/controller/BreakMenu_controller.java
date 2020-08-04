@@ -71,7 +71,7 @@ public class BreakMenu_controller extends Observable implements Initializable {
                 break;
 
             default:
-                Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
+                Logger.INSTANCE.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
 
         }
     }
@@ -88,7 +88,7 @@ public class BreakMenu_controller extends Observable implements Initializable {
             tf_score.setText("0");
             tf_score.textProperty().bind(GameModel.score_string);
 
-            Logger.log("initializing DONE");
+            Logger.INSTANCE.log("initializing DONE");
         }
     }
 }

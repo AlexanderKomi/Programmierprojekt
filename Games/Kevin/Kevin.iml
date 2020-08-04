@@ -11,5 +11,6 @@
     <orderEntry type="module" module-name="Actor" />
     <orderEntry type="module" module-name="Engine" />
     <orderEntry type="module" module-name="MainMenu" />
+    <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
   </component>
 </module>

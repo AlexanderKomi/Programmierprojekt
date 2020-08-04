@@ -68,7 +68,7 @@ public class EndScreen_controller extends Observable implements Initializable {
 
             tf_score.setText("0");
 
-            Logger.log("initializing DONE");
+            Logger.INSTANCE.log("initializing DONE");
         }
     }
 

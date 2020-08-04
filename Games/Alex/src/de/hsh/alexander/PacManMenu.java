@@ -42,13 +42,13 @@ public final class PacManMenu extends Observable implements Initializable {
 
 
     public void backButtonPressed( ActionEvent actionEvent ) {
-        Logger.log( "PacManMenu : Back Button pressed" );
+        Logger.INSTANCE.log( "PacManMenu : Back Button pressed" );
         this.setChanged();
         this.notifyObservers( UpdateCodes.PacMan.mainMenu );
     }
 
     public void okButtonPressed( ActionEvent actionEvent ) {
-        Logger.log( "PacManMenu : Ok Button pressed" );
+        Logger.INSTANCE.log( "PacManMenu : Ok Button pressed" );
         this.setChanged();
         this.notifyObservers( UpdateCodes.PacMan.startGame );
     }

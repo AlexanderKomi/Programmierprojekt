@@ -47,7 +47,7 @@ public class Level_controller extends Observable implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (!initialized) {
-            Logger.log("initializing ...");
+            Logger.INSTANCE.log("initializing ...");
             canvas.setWidth(canvasX);
             canvas.setHeight(canvasY);
             tf_health.setText("100");
@@ -59,7 +59,7 @@ public class Level_controller extends Observable implements Initializable {
             tf_health.textProperty().bind(GameModel.health_string);
 
             this.canvas.setFocusTraversable(true);  //!!!must have!!! for a working canvas
-            Logger.log("initializing DONE");
+            Logger.INSTANCE.log("initializing DONE");
         }
     }
 

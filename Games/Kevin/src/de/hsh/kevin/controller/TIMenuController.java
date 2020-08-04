@@ -52,9 +52,9 @@ public class TIMenuController extends Observable {
         Config.switchDifficulty();
         String option = "";
 
-        if (Config.getDifficultyOption() == enmDifficultyOptions.easy) {
+        if (Config.INSTANCE.getDifficultyOption() == enmDifficultyOptions.easy) {
             option = "einfach";
-        } else if (Config.getDifficultyOption() == enmDifficultyOptions.normal) {
+        } else if (Config.INSTANCE.getDifficultyOption() == enmDifficultyOptions.normal) {
             option = "normal";
         } else {
             option = "schwer";
@@ -93,7 +93,7 @@ public class TIMenuController extends Observable {
     void soundPressed(ActionEvent event) {
         Config.switchSound();
         String option = "";
-        if (Config.getSoundOption() == enmSoundOptions.on) {
+        if (Config.INSTANCE.getSoundOption() == enmSoundOptions.on) {
             option = "on";
         } else {
             option = "off";

@@ -14,5 +14,6 @@
     <orderEntry type="module" module-name="Julian" />
     <orderEntry type="module" module-name="Kevin" />
     <orderEntry type="module" module-name="Dennis" />
+    <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
   </component>
 </module>

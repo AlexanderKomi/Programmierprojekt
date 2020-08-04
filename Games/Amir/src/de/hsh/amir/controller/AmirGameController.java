@@ -16,9 +16,9 @@ public class AmirGameController extends Observable implements Initializable {
 
     public static final String fxml = "view/AmirGame.fxml";
     public static final int WINNING_POINTS = 10;
-    private AmirGame game;
-    private Score points;
-    private boolean initialized = false;
+    private       AmirGame game;
+    private final Score    points;
+    private       boolean  initialized = false;
     @FXML
     private Label pointsLabel;
     @FXML
@@ -31,7 +31,7 @@ public class AmirGameController extends Observable implements Initializable {
     public void render(int fps) {
         if (initialized) {
             if (game != null) {
-                game.render(fps);
+                game.render();
                 updatePointsLabel();
                 if(spielGewonnen()){
                     this.setChanged();
@@ -44,23 +44,14 @@ public class AmirGameController extends Observable implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gameCanvas.setFocusTraversable(true);
-        gameCanvas.setOnKeyPressed(event -> {
-            game.onKeyPressed(event);
-        });
-        gameCanvas.setOnKeyReleased(event -> {
-            game.onKeyPressed(event);
-        });
+        gameCanvas.setOnKeyPressed(event -> game.onKeyPressed(event));
+        gameCanvas.setOnKeyReleased(event -> game.onKeyPressed(event));
         game = new AmirGame(gameCanvas, points);
-        game.reset();
         initialized = true;
     }
 
     private boolean spielGewonnen() {
-        int punkte = points.getScore();
-        if (punkte >= WINNING_POINTS) {
-            return true;
-        }
-        return false;
+        return points.getScore() >= WINNING_POINTS;
     }
 
     private void updatePointsLabel() {

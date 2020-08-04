@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -47,7 +48,6 @@ public class RamGame_controller extends Observable implements Initializable {
                     handleUpdateCodes();
                 }
 
-
             }
         }
     }
@@ -55,7 +55,7 @@ public class RamGame_controller extends Observable implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Logger.log(this.getClass() + ": initialized");
+        Logger.INSTANCE.log(this.getClass() + ": initialized");
 
         gameCanvas.setFocusTraversable(true);
         game = new Game();
@@ -67,15 +67,12 @@ public class RamGame_controller extends Observable implements Initializable {
     @FXML
     public void button_click(ActionEvent event) {
         String id = getId(event);
-        Logger.log(this.getClass() + ": button clicked: " + event);
-        switch (id) {
-            case "b_X":
-                setChanged();
-                notifyObservers(UpdateCodes.RAM.mainMenu);
-                break;
-            default:
-                Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
-
+        Logger.INSTANCE.log(this.getClass() + ": button clicked: " + event);
+        if ("b_X".equals(id)) {
+            setChanged();
+            notifyObservers(UpdateCodes.RAM.mainMenu);
+        } else {
+            Logger.INSTANCE.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
         }
     }
 
@@ -84,22 +81,22 @@ public class RamGame_controller extends Observable implements Initializable {
     }
 
     public void handleUpdateCodes() {
-        if (gameWon().equals(UpdateCodes.RAM.p1Win)) {
-            setChanged();
-            notifyObservers(UpdateCodes.RAM.p1Win);
-            initialized = false;
-
-        } else if (gameWon().equals(UpdateCodes.RAM.p2Win)) {
-            setChanged();
-            notifyObservers(UpdateCodes.RAM.p2Win);
-            initialized = false;
-
-        } else if (gameWon().equals(UpdateCodes.RAM.tie)) {
-            setChanged();
-            notifyObservers(UpdateCodes.RAM.tie);
-            initialized = false;
-        } else {
-            return;
+        switch (Objects.requireNonNull(gameWon())) {
+            case UpdateCodes.RAM.p1Win:
+                setChanged();
+                notifyObservers(UpdateCodes.RAM.p1Win);
+                initialized = false;
+                break;
+            case UpdateCodes.RAM.p2Win:
+                setChanged();
+                notifyObservers(UpdateCodes.RAM.p2Win);
+                initialized = false;
+                break;
+            case UpdateCodes.RAM.tie:
+                setChanged();
+                notifyObservers(UpdateCodes.RAM.tie);
+                initialized = false;
+                break;
         }
     }
 
@@ -109,7 +106,7 @@ public class RamGame_controller extends Observable implements Initializable {
      * @return UpdateCode for FXML Changer
      */
     private String gameWon() {
-        if (game.getGUIBoard().getWinner().getName().equals("P1")) {
+        if (Objects.requireNonNull(game.getGUIBoard().getWinner()).getName().equals("P1")) {
             return UpdateCodes.RAM.p1Win;
         } else if (game.getGUIBoard().getWinner().getName().equals("P2")) {
             return UpdateCodes.RAM.p2Win;
@@ -118,25 +115,16 @@ public class RamGame_controller extends Observable implements Initializable {
         } else {
             return null;
         }
-
     }
 
     private void update_p1Score() {
         Platform.runLater(() -> p1_score.setText("P1: " + game.getGUIBoard().getP1Points()));
-        if (game.getGUIBoard().isP1Turn()) {
-            p1_score.setDisable(false);
-        } else {
-            p1_score.setDisable(true);
-        }
+        p1_score.setDisable(!game.getGUIBoard().isP1Turn());
     }
 
     private void update_p2Score() {
         Platform.runLater(() -> p2_score.setText("P2: " + game.getGUIBoard().getP2Points()));
-        if (game.getGUIBoard().isP2Turn()) {
-            p2_score.setDisable(false);
-        } else {
-            p2_score.setDisable(true);
-        }
+        p2_score.setDisable(!game.getGUIBoard().isP2Turn());
     }
 }
 

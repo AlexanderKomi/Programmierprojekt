@@ -55,7 +55,7 @@ public final class PacManEndScreen extends Observable implements Initializable {
         pacMan1 = new PacMan1( 0, 0 );
         pacMan2 = new PacMan2( 0, 0 );
         initialized = true;
-        Logger.log( this.getClass() + " : initialized" );
+        Logger.INSTANCE.log( this.getClass() + " : initialized" );
         this.player1PointsLabel.setText( String.valueOf( player1Points ) );
         this.player2PointsLabel.setText( String.valueOf( player2Points ) );
     }

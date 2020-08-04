@@ -57,7 +57,7 @@ public final class PacManGame extends Observable implements Observer, Initializa
         initialized = true;
         reset();
         bindLabelsToPoints();
-        Logger.log( this.getClass() + ": init executed" );
+        Logger.INSTANCE.log( this.getClass() + ": init executed" );
     }
 
     @Override
@@ -65,20 +65,20 @@ public final class PacManGame extends Observable implements Observer, Initializa
         if ( arg instanceof String ) {
             String message = (String) arg;
             if ( message.equals( gameFinishedMessage ) ) {
-                Logger.log( this.getClass() + ": " + gameFinishedMessage );
+                Logger.INSTANCE.log( this.getClass() + ": " + gameFinishedMessage );
                 this.setChanged();
                 this.notifyObservers( UpdateCodes.PacMan.showEndScreen );
             }
             else {
-                Logger.log( this.getClass() + ": unknown update : " + o + ", " + arg );
+                Logger.INSTANCE.log( this.getClass() + ": unknown update : " + o + ", " + arg );
             }
         }
         else {
-            Logger.log( this.getClass() + ": unknown update : " + o + ", " + arg );
+            Logger.INSTANCE.log( this.getClass() + ": unknown update : " + o + ", " + arg );
         }
     }
 
-    synchronized void render( final int fps ) {
+    void render( final int fps ) {
         if ( !initialized ) {
             return;
         }
@@ -104,22 +104,18 @@ public final class PacManGame extends Observable implements Observer, Initializa
         this.gameCanvas.setOnKeyPressed( this.currentLevel::keyboardInput );
         this.gameCanvas.setOnKeyReleased( this.currentLevel::keyboardInput ); // Only fires, when traversable
         this.currentLevel.addObserver( this );
-        Logger.log( this.getClass() + ": Resetted game" );
+        Logger.INSTANCE.log( this.getClass() + ": Resetted game" );
     }
 
     private void bindLabelsToPoints() {
-        this.currentLevel.getPacMan1Property().addListener( ( obj, oldValue, newValue ) -> {
-            Platform.runLater( () -> {
-                this.player1Points.setText( String.valueOf( newValue ) );
-            } );
-        } );
-
-        this.currentLevel.getPacMan2Property().addListener( ( obj, oldValue, newValue ) -> {
-            Platform.runLater( () -> {
-                this.player2Points.setText( String.valueOf( newValue ) );
-            } );
-        } );
-
+        this.currentLevel.getPacMan1Property()
+                .addListener(
+                        ( obj, oldValue, newValue ) ->
+                                Platform.runLater(() -> this.player1Points.setText(String.valueOf(newValue ) )));
+        this.currentLevel.getPacMan2Property()
+                .addListener(
+                        ( obj, oldValue, newValue ) ->
+                                Platform.runLater(() -> this.player2Points.setText(String.valueOf(newValue ) )));
     }
 
     private void clearCanvas() {

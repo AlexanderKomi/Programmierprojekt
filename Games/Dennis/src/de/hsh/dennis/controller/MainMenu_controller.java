@@ -51,7 +51,7 @@ public class MainMenu_controller extends Observable {
                 break;
 
             default:
-                Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
+                Logger.INSTANCE.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
 
         }
     }

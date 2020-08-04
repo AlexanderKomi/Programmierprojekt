@@ -33,7 +33,7 @@ public class RAM_MainMenu_controller extends Observable {
     @FXML
     public void button_click(ActionEvent event) {
         String id = getId(event);
-        Logger.log(this.getClass() + ": button clicked: " + event);
+        Logger.INSTANCE.log(this.getClass() + ": button clicked: " + event);
         switch (id) {
             case "b_play":
                 setChanged();
@@ -76,7 +76,7 @@ public class RAM_MainMenu_controller extends Observable {
                 break;
 
             default:
-                Logger.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
+                Logger.INSTANCE.log("ERROR : button_clicked Aufruf mit default Ergebniss!");
 
         }
 
