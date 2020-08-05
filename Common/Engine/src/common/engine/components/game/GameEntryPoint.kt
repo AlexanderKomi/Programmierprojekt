@@ -17,10 +17,9 @@ abstract class GameEntryPoint @JvmOverloads constructor(container: Observer?,
                                                         val name: String = "- Name not set -") :
         FxModul(container!!),
         IGame {
-    override fun equals(obj: Any?): Boolean {
-        if (obj is GameEntryPoint) {
-            val g = obj
-            return name == g.name && g.scene == scene
+    override fun equals(other: Any?): Boolean {
+        if (other is GameEntryPoint) {
+            return name == other.name && other.scene == scene
         }
         return false
     }
@@ -28,6 +27,10 @@ abstract class GameEntryPoint @JvmOverloads constructor(container: Observer?,
     override fun exitToMainGUI() {
         setChanged()
         super.notifyObservers(MenuCodes.exitToMainGUI)
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
     }
 
 }

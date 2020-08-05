@@ -39,18 +39,16 @@ class TIFxmlChanger(fxModul: FxModul?, fxmlPath: String, fxController: Observabl
 
     /**
      * Ändert die Scene zum SpielScreen
-     * @param o
      * @param game
      */
-    fun changeGameFxml(o: Observable?, game: TIGameController?) =
+    fun changeGameFxml(game: TIGameController?) =
             changeScene(fxmlPackage + TIGameController.fxml, game!!)
 
     /**
      * Ändert die Scene zum GameOverScreen
-     * @param o
      * @param gameOver
      */
-    fun changeGameOverFxml(o: Observable?, gameOver: TIGameOverController?) =
+    fun changeGameOverFxml(gameOver: TIGameOverController?) =
             changeScene(fxmlPackage + TIGameOverController.fxml, gameOver!!)
 
     companion object {

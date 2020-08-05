@@ -24,7 +24,7 @@ abstract class Collectable : Actor {
                           y: Double,
                           delay: Int,
                           scale: Double,
-                          vararg pictureFilePaths: String) : super(x, y, delay, pictureFilePaths as Array<String>) {
+                          vararg pictureFilePaths: String) : super(x, y, delay, pictureFilePaths) {
         scaleImage(scale)
     }
 

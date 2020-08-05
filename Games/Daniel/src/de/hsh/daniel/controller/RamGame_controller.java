@@ -40,7 +40,7 @@ public class RamGame_controller extends Observable implements Initializable {
         if (game != null) {
             if (initialized) {
                 gameCanvas.getGraphicsContext2D().clearRect(0, 0, WindowConfig.window_width, WindowConfig.window_height);
-                game.render(gameCanvas, fps);
+                game.render(gameCanvas);
                 update_p1Score();
                 update_p2Score();
 
@@ -58,8 +58,7 @@ public class RamGame_controller extends Observable implements Initializable {
         Logger.INSTANCE.log(this.getClass() + ": initialized");
 
         gameCanvas.setFocusTraversable(true);
-        game = new Game();
-        game.initialize(gameCanvas);
+        game = new Game(gameCanvas);
         initialized = true;
     }
 

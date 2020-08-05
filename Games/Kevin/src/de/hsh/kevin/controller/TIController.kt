@@ -30,7 +30,7 @@ class TIController(o: Observer?) : GameEntryPoint(o, UpdateCodes.TunnelInvader.g
                         game!!.deleteObservers()
                     }
                     game = TIGameController(score)
-                    changer.changeGameFxml(o, game)
+                    changer.changeGameFxml(game)
                 }
                 UpdateCodes.TunnelInvader.gameOver -> {
                     if (game != null) {
@@ -41,7 +41,7 @@ class TIController(o: Observer?) : GameEntryPoint(o, UpdateCodes.TunnelInvader.g
                         gameOver!!.deleteObservers()
                     }
                     gameOver = TIGameOverController(score)
-                    changer.changeGameOverFxml(o, gameOver)
+                    changer.changeGameOverFxml(gameOver)
                     gameOver!!.setScore()
                 }
                 else                               -> changer.changeFxml(o, arg)
