@@ -16,21 +16,15 @@ import java.util.*
  * or attach your Fx code in this class directly via using setScene(Scene scene).
  *
  */
-abstract class FxModul(container: Observer) : Observable(),
-        Observer {
-    // ----------------------------------- GETTER & SETTER  -----------------------------------
-    var scene //local scene being worked on.
-            : Scene = Scene(Pane())
+abstract class FxModul(container: Observer) : Observable(), Observer {
+    var scene: Scene = Scene(Pane()) //local scene being worked on.
 
     fun setRoot(root: Parent?) {
         scene.root = root
     }
 
-    /***
-     * Constructor with a passed observer object.
-     * @param container belonging observer
-     */
     init {
+        @Suppress("LeakingThis")
         addObserver(container)
     }
 }

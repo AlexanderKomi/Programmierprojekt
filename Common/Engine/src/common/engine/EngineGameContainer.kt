@@ -17,18 +17,15 @@ abstract class EngineGameContainer : Application(),
     abstract fun createGames(o: Observer): GameEntryPoints
     abstract override fun update(observable: Observable, arg: Any)
 
-    fun containsGame(gameName: String): Boolean {
-        return gameEntryPoints.contains(gameName)
-    }
+    fun containsGame(gameName: String): Boolean = gameEntryPoints.contains(gameName)
 
     /**
      * Stops the engine container. Kills every process inside the container.
      */
-    override fun stopContainer(func : () -> Unit) {
-        super.stopContainer {
-            func()
-            engine.shutdown()
-        }
-    }
+    override fun stopContainer(func: () -> Unit) =
+            super.stopContainer {
+                func()
+                engine.shutdown()
+            }
 
 }

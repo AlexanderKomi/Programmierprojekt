@@ -14,13 +14,23 @@ import java.util.*
  * Works directly on the scene of his FxModul.
  *
  */
-abstract class FxmlChanger(fxModul: FxModul?,
-                           fxmlPath: String?,
-                           fxController: Observable?) :
+abstract class FxmlChanger(protected val fxModul: FxModul, fxmlPath: String, fxController: Observable) :
         Observable() {
-    // --- Getter & Setter ----------------------------------------------------------------
-    @JvmField
-    protected val fxModul: FxModul
+
+    init {
+        if (fxmlPath.isEmpty()) {
+            throw NullPointerException("\t\tConstructor: Fxml Path is empty!")
+        }
+        @Suppress("LeakingThis")
+        this.addObserver(fxModul)
+        fxController.addObserver(fxModul)
+        val p = loadFxml(fxmlPath, fxController)
+        if (p.isPresent) {
+            this.fxModul.scene = Scene(p.get())
+        } else {
+            throw NullPointerException("FXML kann nicht geladen werden: $fxmlPath")
+        }
+    }
 
     /***
      * Load a Parent Object
@@ -62,23 +72,4 @@ abstract class FxmlChanger(fxModul: FxModul?,
     abstract fun changeFxml(o: Observable?,
                             msg: String?)
 
-    /**
-     * @param fxModul      The FxModul in which this constructor is called or rather in which the scene to be edited is located.
-     * @param fxmlPath     Path to Fxml to be loaded when creating.
-     * @param fxController Matching controller for the .fxml
-     */
-    init {
-        if (fxModul == null || fxmlPath == null || fxmlPath.isEmpty() || fxController == null) {
-            throw NullPointerException("\t\tConstructor: FxmlChanger invalid parameters!")
-        }
-        this.fxModul = fxModul
-        addObserver(fxModul)
-        fxController.addObserver(fxModul)
-        val p = loadFxml(fxmlPath, fxController)
-        if (p.isPresent) {
-            this.fxModul.scene = Scene(p.get())
-        } else {
-            throw NullPointerException("FXML kann nicht geladen werden: $fxmlPath")
-        }
-    }
 }

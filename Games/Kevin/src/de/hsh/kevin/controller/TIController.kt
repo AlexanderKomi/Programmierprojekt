@@ -12,7 +12,7 @@ import java.util.*
  *
  * @author Kevin
  */
-class TIController(o: Observer?) : GameEntryPoint(o, UpdateCodes.TunnelInvader.gameName) {
+class TIController(o: Observer) : GameEntryPoint(o, UpdateCodes.TunnelInvader.gameName) {
     private val changer: TIFxmlChanger = TIFxmlChanger(this, TIMenuController.fxml, TIMenuController())
     private var game: TIGameController? = null
     private var gameOver: TIGameOverController? = null

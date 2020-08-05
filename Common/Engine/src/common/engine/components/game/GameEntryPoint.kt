@@ -12,11 +12,9 @@ import java.util.*
  *
  * @version 2
  */
-abstract class GameEntryPoint @JvmOverloads constructor(container: Observer?,
-        // ----------------------------------- GETTER & SETTER  -----------------------------------
-                                                        val name: String = "- Name not set -") :
-        FxModul(container!!),
-        IGame {
+abstract class GameEntryPoint(container: Observer, val name: String = "- Name not set -")
+    : FxModul(container), IGame {
+
     override fun equals(other: Any?): Boolean {
         if (other is GameEntryPoint) {
             return name == other.name && other.scene == scene

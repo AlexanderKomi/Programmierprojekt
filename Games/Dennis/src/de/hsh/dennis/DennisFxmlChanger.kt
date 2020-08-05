@@ -18,7 +18,7 @@ import javafx.stage.Stage
 import java.io.IOException
 import java.util.*
 
-class DennisFxmlChanger(fxModul: FxModul?, fxmlPath: String?, fxController: Observable?) :
+class DennisFxmlChanger(fxModul: FxModul, fxmlPath: String, fxController: Observable) :
         FxmlChanger(fxModul, fxmlPath, fxController) {
     var breakStage: Stage? = null
     private fun handle_Tutorial_controller(code: String?) {

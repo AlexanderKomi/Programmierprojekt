@@ -6,7 +6,6 @@ import common.engine.GameContainerInterface.Companion.gameEntryPoints
 import javafx.application.Platform
 import javafx.event.EventHandler
 import javafx.stage.Stage
-import java.util.*
 
 /**
  * FXGameContainer is a container for a game engine, a main menu and all gameEntryPoints.
@@ -64,12 +63,11 @@ abstract class FXGameContainer : EngineGameContainer() {
      *
      * @see GameContainerInterface
      */
-    override fun stopContainer(func: () -> Unit) {
-        super.stopContainer {
-            func()
-            Platform.exit()
-        }
-    }
+    override fun stopContainer(func: () -> Unit) =
+            super.stopContainer {
+                func()
+                Platform.exit()
+            }
 
     protected abstract fun configMainMenu(games: List<String>): MainMenu
 }

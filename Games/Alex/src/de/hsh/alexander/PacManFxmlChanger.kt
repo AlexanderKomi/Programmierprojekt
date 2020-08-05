@@ -7,17 +7,15 @@ import common.util.Logger
 import javafx.application.Platform
 import java.util.*
 
-class PacManFxmlChanger internal constructor(fxModul: FxModul?,
-                                             fxmlPath: String,
-                                             fxController: Observable?) :
+class PacManFxmlChanger(fxModul: FxModul,
+                        fxmlPath: String,
+                        fxController: Observable) :
         FxmlChanger(fxModul,
                     fxmlPackage + fxmlPath,
                     fxController) {
     override fun changeScene(fxmlLocation: String,
                              controller: Observable) = Platform.runLater {
-        super.changeScene(
-                fxmlPackage + fxmlLocation,
-                controller)
+        super.changeScene(fxmlPackage + fxmlLocation, controller)
     }
 
     override fun changeFxml(o: Observable?,

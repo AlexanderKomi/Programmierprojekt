@@ -13,7 +13,7 @@ import java.util.*
 /**
  * Erstellt den FXMLChanger zum wechseln der Scenes
  */
-class TIFxmlChanger(fxModul: FxModul?, fxmlPath: String, fxController: Observable?)
+class TIFxmlChanger(fxModul: FxModul, fxmlPath: String, fxController: Observable)
     : FxmlChanger(fxModul,
                   fxmlPackage + fxmlPath,
                   fxController) {

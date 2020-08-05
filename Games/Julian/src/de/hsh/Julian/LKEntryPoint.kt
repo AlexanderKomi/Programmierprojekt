@@ -19,7 +19,7 @@ import java.util.*
 /**
  * Entrypoint for the Game
  */
-class LKEntryPoint(o: Observer?) : GameEntryPoint(o, WindowConfig.julian_title) {
+class LKEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.julian_title) {
     private val changer: LKFxmlChanger = LKFxmlChanger(this, LKStart.fxml, LKStart())
     private var renderable = false
     private lateinit var canvas: Canvas

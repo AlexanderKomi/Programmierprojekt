@@ -15,9 +15,9 @@ import javafx.scene.input.KeyCode
 import java.lang.IllegalStateException
 import java.util.*
 
-class DennisGameEntryPoint(o: Observer?) : GameEntryPoint(o, WindowConfig.dennis_title) {
-    private val changer: DennisFxmlChanger
-    private val gm: GameModel
+class DennisGameEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.dennis_title) {
+    private val changer: DennisFxmlChanger = DennisFxmlChanger(this, "view/mainMenu.fxml", MainMenu_controller())
+    private val gm: GameModel = GameModel()
     private var rendering = false
     private var lastGameMode: Difficulty? = null
     override fun render(fps: Int) {
@@ -93,8 +93,6 @@ class DennisGameEntryPoint(o: Observer?) : GameEntryPoint(o, WindowConfig.dennis
     }
 
     init {
-        changer = DennisFxmlChanger(this, "view/mainMenu.fxml", MainMenu_controller())
-        gm = GameModel()
         gm.addObserver(this)
     }
 }

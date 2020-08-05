@@ -21,7 +21,7 @@ class LKFxmlChanger
  * @param fxmlPath Path of fxml file
  * @param fxController Every menue needs its own controller
  */
-internal constructor(fxModul: FxModul?, fxmlPath: String, fxController: Observable?) : FxmlChanger(
+internal constructor(fxModul: FxModul, fxmlPath: String, fxController: Observable) : FxmlChanger(
         fxModul,
         fxmlPackage + fxmlPath,
         fxController) {

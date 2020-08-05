@@ -13,7 +13,7 @@ import java.util.*
 /**
  * Created by 424-ml6-u1 on 30.10.18.
  */
-class AmirEntryPoint(o: Observer?) : GameEntryPoint(o, WindowConfig.amir_title) {
+class AmirEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.amir_title) {
     private val changer: AmirFxmlChanger = AmirFxmlChanger(this, AmirsMainMenuController.fxml, AmirsMainMenuController())
     override fun update(o: Observable, arg: Any) {
         if (arg is String) {
@@ -46,11 +46,9 @@ class AmirEntryPoint(o: Observer?) : GameEntryPoint(o, WindowConfig.amir_title) 
         }
     }
 
-    override fun render(fps: Int) {
-        Platform.runLater {
-            if (amirGame != null) {
-                amirGame!!.render(fps)
-            }
+    override fun render(fps: Int) = Platform.runLater {
+        if (amirGame != null) {
+            amirGame!!.render(fps)
         }
     }
 

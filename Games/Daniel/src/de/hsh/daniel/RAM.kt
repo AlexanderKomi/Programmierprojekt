@@ -11,7 +11,7 @@ import de.hsh.daniel.controller.RamGame_controller
 import javafx.application.Platform
 import java.util.*
 
-class RAM(o: Observer?) : GameEntryPoint(o, WindowConfig.daniel_title) {
+class RAM(o: Observer) : GameEntryPoint(o, WindowConfig.daniel_title) {
     private var initialized = false
     private val changer: RAMFxmlChanger = RAMFxmlChanger(this, RAM_MainMenu_controller.fxml, RAM_MainMenu_controller())
 
@@ -23,7 +23,7 @@ class RAM(o: Observer?) : GameEntryPoint(o, WindowConfig.daniel_title) {
             when (message) {
                 UpdateCodes.RAM.startGame                                         -> startGame(message)
                 UpdateCodes.RAM.mainMenu                                          -> showMainMenu(message)
-                MenuCodes.exitToMainGUI, UpdateCodes.RAM.quit                     -> exit(message)
+                MenuCodes.exitToMainGUI, UpdateCodes.RAM.quit                     -> exit()
                 UpdateCodes.RAM.p1Win, UpdateCodes.RAM.p2Win, UpdateCodes.RAM.tie -> showEndScreen(message)
                 else                                                              -> changer.changeFxml(o,
                                                                                                         arg)
@@ -51,7 +51,7 @@ class RAM(o: Observer?) : GameEntryPoint(o, WindowConfig.daniel_title) {
         changer.changeFxml(winScreen, message)
     }
 
-    private fun exit(message: String) {
+    private fun exit() {
         Logger.log("exit reached")
         initialized = false
         exitToMainGUI()

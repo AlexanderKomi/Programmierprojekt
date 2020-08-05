@@ -10,9 +10,9 @@ import de.hsh.daniel.controller.RAM_winScreen_controller
 import de.hsh.daniel.controller.RamGame_controller
 import java.util.*
 
-class RAMFxmlChanger internal constructor(fxModul: FxModul?,
-                                          fxmlPath: String?,
-                                          fxController: Observable?) : FxmlChanger(fxModul,
+class RAMFxmlChanger internal constructor(fxModul: FxModul,
+                                          fxmlPath: String,
+                                          fxController: Observable) : FxmlChanger(fxModul,
                                                                                    fxmlPath,
                                                                                    fxController) {
     override fun changeFxml(o: Observable?, msg: String?) {
