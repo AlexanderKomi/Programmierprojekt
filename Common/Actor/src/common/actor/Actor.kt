@@ -1,6 +1,3 @@
-/**
- * @author Julian Sender
- */
 package common.actor
 
 import common.util.Logger

@@ -51,7 +51,11 @@ open class Drawable : Observable {
     protected constructor(pictureFilePaths: List<String>,
                           x: Double,
                           y: Double,
-                          delay: Int) : this(x, y, delay) {
+                          delay: Int,
+                          picturePath: String = "") : this(x, y, delay) {
+        if (picturePath != ""){
+            loadPicture(picturePath).let { switchingImages.add(it) }
+        }
         for (filePath in pictureFilePaths) {
             loadPicture(filePath).let { switchingImages.add(it) }
         }
