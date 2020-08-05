@@ -19,17 +19,17 @@ import java.util.*
  */
 open class Drawable : Observable {
     val id: Int
-    var height = 0.0
-    var width = 0.0
-    lateinit var name: String
-    private var switchingBuffer = 0
-    var switchingDelay = 0.0
-    protected var scaleX = 1.0
-    private var scaleY = 1.0
-    private val imageView = ImageView()
-    private val switchingImages = ArrayList<Image>()
+    var height: Double = 0.0
+    var width: Double = 0.0
     var x: Double
     var y: Double
+    lateinit var currentImageName: String
+    private var switchingBuffer = 0
+    var switchImageDelay = 0.0
+    protected var scaleWidth = 1.0
+    var scaleHeight = 1.0
+    private val imageView = ImageView()
+    private val switchingImages = mutableListOf<Image>()
     var currentImage: Image
         get() = imageView.image
         set(currentImage) {
@@ -40,41 +40,29 @@ open class Drawable : Observable {
 
     protected constructor(pictureFileName: String,
                           x: Double = 0.0,
-                          y: Double = 0.0) {
+                          y: Double = 0.0,
+                          delay: Double = 0.0
+    ) {
         currentImage = loadPicture(pictureFileName)
         this.x = x
         this.y = y
+        this.switchImageDelay = delay
         id = id_counter
         id_counter++
     }
 
     protected constructor(pictureFilePaths: List<String>,
-                          x: Double,
-                          y: Double,
-                          delay: Int,
-                          picturePath: String = "") : this(x, y, delay) {
-        if (picturePath != ""){
-            loadPicture(picturePath).let { switchingImages.add(it) }
-        }
-        for (filePath in pictureFilePaths) {
-            loadPicture(filePath).let { switchingImages.add(it) }
-        }
-        if (switchingImages.size > 0) {
-            currentImage = switchingImages[0]
-        }
-    }
-
-    private constructor(x: Double, y: Double, delay: Int) {
+                          x: Double = 0.0,
+                          y: Double = 0.0,
+                          delay: Double = 0.0) {
         this.x = x
         this.y = y
-        switchingDelay = delay.toDouble()
+        switchImageDelay = delay
         id = id_counter
         id_counter++
+        pictureFilePaths.forEach { filePath -> addSwitchingImage(filePath) }
+        if (switchingImages.size > 0) { currentImage = switchingImages[0] }
     }
-
-    protected constructor(
-            x: Double, y: Double, delay: Int, pictureFileName: Array<out String>)
-            : this(listOf<String>(*pictureFileName), x, y, delay)
 
     protected constructor(x: Double,
                           y: Double,
@@ -84,9 +72,11 @@ open class Drawable : Observable {
     }
 
     private fun loadPicture(fileName: String): Image {
-        name = fileName
+        currentImageName = fileName
         return TextureBuffer.loadImage(fileName)
     }
+
+    private fun addSwitchingImage(picturePath: String) = loadPicture(picturePath).let { switchingImages.add(it) }
 
     /**
      * Switch switchingImages based on buffer implementation.
@@ -95,7 +85,7 @@ open class Drawable : Observable {
         if (switchingImages.isEmpty()) {
             return
         }
-        if (switchingBuffer < switchingDelay) {
+        if (switchingBuffer < switchImageDelay) {
             switchingBuffer++
             return
         }
@@ -117,16 +107,16 @@ open class Drawable : Observable {
             x += width
         }
         width *= factor
-        scaleX *= factor
-        imageView.fitWidth = scaleX
-        imageView.scaleX = scaleX
+        scaleWidth *= factor
+        imageView.fitWidth = scaleWidth
+        imageView.scaleX = scaleWidth
     }
 
     protected fun scaleImageHeight(factor: Double) {
         height *= factor
-        scaleY *= factor
-        imageView.fitHeight = scaleY
-        imageView.scaleY = scaleY
+        scaleHeight *= factor
+        imageView.fitHeight = scaleHeight
+        imageView.scaleY = scaleHeight
     }
 
     protected fun scaleImage(factor: Double) {
@@ -184,33 +174,26 @@ open class Drawable : Observable {
                 pos.contentEquals(other.pos) &&
                 height == other.height &&
                 width == other.width &&
-                name == other.name
+                currentImageName == other.currentImageName
             } else {
                 false
             }
 
     override fun toString(): String {
-        return """${this.javaClass}(name:$name, x:$x, y:$y, width:$width, height:$height)"""
+        return """${this.javaClass}(name:$currentImageName, x:$x, y:$y, width:$width, height:$height)"""
     }
 
-    fun setPos(x: Double, y: Double) {
+    inline fun setPos(x: Double, y: Double) {
         this.x = x
         this.y = y
     }
 
     var pos: DoubleArray
-        get() = doubleArrayOf(x, y)
-        set(pos) {
+        inline get() = doubleArrayOf(x, y)
+        inline set(pos) {
             x = pos[0]
             y = pos[1]
         }
-
-    fun setSize(size: Double) {
-        width = size
-        height = size
-    }
-
-    // --- Getter & Setter ------------------------------------------------------------------------
 
     fun setCurrentImage(filePath: String) {
         currentImage = loadPicture(filePath)
@@ -220,11 +203,11 @@ open class Drawable : Observable {
         var result = id
         result = 31 * result + height.hashCode()
         result = 31 * result + width.hashCode()
-        result = 31 * result + name.hashCode()
+        result = 31 * result + currentImageName.hashCode()
         result = 31 * result + switchingBuffer
-        result = 31 * result + switchingDelay.hashCode()
-        result = 31 * result + scaleX.hashCode()
-        result = 31 * result + scaleY.hashCode()
+        result = 31 * result + switchImageDelay.hashCode()
+        result = 31 * result + scaleWidth.hashCode()
+        result = 31 * result + scaleHeight.hashCode()
         result = 31 * result + x.hashCode()
         result = 31 * result + y.hashCode()
         return result

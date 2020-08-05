@@ -26,29 +26,15 @@ abstract class Actor : Drawable {
      * Many overloaded constructors following up now...
      * @param pictureFileName Filename of picture for actor
      */
-    @JvmOverloads
     constructor(pictureFileName: String,
                 x: Double = 0.0,
-                y: Double = 0.0) : super(pictureFileName, x, y)
+                y: Double = 0.0,
+                delay: Double = 0.0) : super(pictureFileName, x, y, delay)
 
     constructor(pictureFilePaths: List<String>,
-                x: Double,
-                y: Double,
-                delay: Int) : super(pictureFilePaths, x, y, delay)
-
-    constructor(mustHave: String,
-                asList: List<String>,
-                x: Double,
-                y: Double,
-                delay: Int) : super(asList, x, y, delay, mustHave)
-
-    constructor(x: Double,
-                y: Double,
-                delay: Int,
-                pictureFileName: Array<out String>) : super(x,
-                                                 y,
-                                                 delay,
-                                                            pictureFileName)
+                x: Double = 0.0,
+                y: Double = 0.0,
+                delay: Double = 0.0) : super(pictureFilePaths, x, y, delay)
 
     constructor(x: Double,
                 y: Double,

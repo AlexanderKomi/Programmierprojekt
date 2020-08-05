@@ -2,7 +2,6 @@ package de.hsh.amir.logic
 
 import common.actor.ControlableActor
 import common.actor.Direction
-import java.util.*
 
 class Spielfigur internal constructor(x: Double, y: Double)
     : ControlableActor(
@@ -12,13 +11,13 @@ class Spielfigur internal constructor(x: Double, y: Double)
         mapOf("Right" to Direction.Right,
               "Left" to Direction.Left)) {
 
-    override fun calculateDirectedSpeed(direction: Direction, movement_speed: Double): DoubleArray {
+    override fun calculateDirectedSpeed(direction: Direction, movementSpeed: Double): DoubleArray {
         val xyTuple = DoubleArray(2)
         if (direction === Direction.Left) {
-            xyTuple[0] = -movement_speed
+            xyTuple[0] = -movementSpeed
             xyTuple[1] = 0.0
         } else if (direction === Direction.Right) {
-            xyTuple[0] = movement_speed
+            xyTuple[0] = movementSpeed
             xyTuple[1] = 0.0
         }
         return xyTuple

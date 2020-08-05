@@ -21,7 +21,7 @@ internal class TheDude(x: Double,
     /**
      * Swapping image depending on actors view-direction
      */
-    fun swapImage() = if (name == firstImage) {
+    fun swapImage() = if (currentImageName == firstImage) {
         setCurrentImage(secondImage)
     } else {
         setCurrentImage(firstImage)

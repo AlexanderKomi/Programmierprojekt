@@ -1,12 +1,12 @@
 package common.actor
 
 abstract class LevelElement : Actor {
-    constructor(x: Double,
+
+    protected constructor(x: Double,
                 y: Double,
-                vararg pictureFilePaths: String) : super(x,
-                                                          y,
-                                                          0,
-                                                          pictureFilePaths)
+                pictureFilePaths: Array<String>,
+                delay: Double = 0.0)
+            : super(x = x, y = y, delay = delay, pictureFilePaths = pictureFilePaths.toList())
 
     protected constructor(x: Double,
                           y: Double,

@@ -9,8 +9,7 @@ internal object TextureBuffer {
     fun loadImage(fileName: String): Image {
         if (!fileToImage.containsKey(fileName)) {
             try {
-                fileToImage[fileName] = ImageLoader.loadImage(
-                        fileName)
+                fileToImage[fileName] = ImageLoader.loadImage(fileName)
             } catch (npe: NullPointerException) {
                 npe.printStackTrace()
             } catch (npe: IOException) {

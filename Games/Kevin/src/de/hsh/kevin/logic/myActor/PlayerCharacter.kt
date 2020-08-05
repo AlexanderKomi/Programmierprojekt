@@ -5,31 +5,35 @@ import common.actor.Direction
 import common.actor.ImageLoader.loadImage
 import javafx.scene.image.Image
 import java.io.IOException
-import java.util.*
 
 /**
  * Erstellt einen PlayerCharacter
  *
  * @author Kevin
  */
-class PlayerCharacter(pictureFileName: List<String>,
-                      keyMap: Map<String, Direction>) : ControlableActor(
-        pictureFileName[0],
-        250.0,
-        750.0,
-        keyMap) {
+class PlayerCharacter(
+        pictureFileName: List<String>,
+        keyMap: Map<String, Direction>,
+        x : Double = 250.0,
+        y : Double = 750.0
+) :
+        ControlableActor(
+                pictureFileName[0],
+                x,
+                y,
+                keyMap) {
     /**
      * Überschreibt die Bewegung von Super, sodass die Bewegung nur nach Links und
      * Rechts möglich ist
      */
     override fun calculateDirectedSpeed(direction: Direction,
-                                        movement_speed: Double): DoubleArray {
+                                        movementSpeed: Double): DoubleArray {
         val xyTuple = DoubleArray(2)
         if (direction === Direction.Left) {
-            xyTuple[0] = -movement_speed
+            xyTuple[0] = -movementSpeed
             xyTuple[1] = 0.0
         } else if (direction === Direction.Right) {
-            xyTuple[0] = movement_speed
+            xyTuple[0] = movementSpeed
             xyTuple[1] = 0.0
         }
         return xyTuple
@@ -44,7 +48,7 @@ class PlayerCharacter(pictureFileName: List<String>,
     }
 
     /**
-     * Ändert das Bild zum nichts machenden
+     * Änder Player in Idle Modus
      */
     fun switchIdle() {
         currentImage = idleImage

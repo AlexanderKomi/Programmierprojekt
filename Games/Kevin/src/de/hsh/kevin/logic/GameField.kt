@@ -14,14 +14,27 @@ import java.util.*
  */
 class GameField(canvas: Canvas, private val score: Score) {
 
-    @JvmField
-    var player: PlayerCharacter
-    private val paketManager: PaketManager
-    private val projectileManager: ProjectileManager
+    var player: PlayerCharacter = PlayerCharacter(
+        listOf(Config.resLocation + "player/player1.png",
+               Config.resLocation + "player/player2.png"),
+        mapOf("A" to Direction.Left,
+                "D" to Direction.Right,
+                // Easteregg Steuerung invertiert
+                "Left" to Direction.Right,
+                "Right" to Direction.Left),
+            canvas.width / 2 - 250.0 / 2,
+            canvas.height - 65
+        )
     private val leben: Leben = Leben()
+    private val paketManager: PaketManager = PaketManager(canvas.width, canvas.height, score, leben)
+    private val projectileManager: ProjectileManager = ProjectileManager()
     private val spawnDelay: Int = Config.getPaketSpawnDelay()
     private var spawnDelayBuffer = 0
-    private var projectileSpawning: Boolean = false
+
+    /**
+     * Aktiviert Spawnen von Projectilen (Schusstaste ist gedrückt)
+     */
+    var projectileSpawning: Boolean = false
 
 
     /**
@@ -37,34 +50,6 @@ class GameField(canvas: Canvas, private val score: Score) {
                     Random().nextInt(Config.maxSpawnCount) + 1)
         }
         spawnDelayBuffer--
-    }
-
-    /**
-     * Aktiviert Spawnen von Projectilen (Schusstaste ist gedrückt)
-     */
-    fun activateProjectileSpawn() {
-        projectileSpawning = true
-    }
-
-    /**
-     * Deaktiviert Spawnen von Projectilen (Schusstaste ist nicht mehr gedrückt)
-     */
-    fun deactivateProjectileSpawn() {
-        projectileSpawning = false
-    }
-
-    /**
-     * Änder Player in Idle Modus
-     */
-    fun setPlayerIdle() {
-        player!!.switchIdle()
-    }
-
-    /**
-     * Bewegt Player
-     */
-    fun movePlayer(keyEvent: KeyEvent) {
-        player!!.move(keyEvent)
     }
 
     /**
@@ -84,16 +69,6 @@ class GameField(canvas: Canvas, private val score: Score) {
     }
 
     /**
-     * Zeichnet alles aufs Canvas
-     */
-    private fun draw(canvas: Canvas) {
-        clearCanvas(canvas)
-        player!!.draw(canvas)
-        paketManager.draw(canvas)
-        projectileManager.draw(canvas)
-    }
-
-    /**
      * Führt die nächste Spieliteration aus
      */
     fun game(canvas: Canvas) {
@@ -102,9 +77,12 @@ class GameField(canvas: Canvas, private val score: Score) {
         moveAll()
         spawnPakete()
         if (projectileSpawning) {
-            projectileManager.createProjectile(player!!.pos, player!!.width / 4)
+            projectileManager.createProjectile(player.pos, player.width / 4)
         }
-        draw(canvas)
+        clearCanvas(canvas)
+        player.draw(canvas)
+        paketManager.draw(canvas)
+        projectileManager.draw(canvas)
     }
 
     /**
@@ -121,11 +99,9 @@ class GameField(canvas: Canvas, private val score: Score) {
      */
     private fun collisionPlayerPaket() {
         val toRemove = paketManager.pakete.filter { p: Paket? -> player!!.doesCollide(p) }
-        toRemove.forEach { _ ->
+        toRemove.forEach { paket ->
             Sound.playSound(enmSounds.collision)
             leben.decrease()
-        }
-        for (paket in toRemove) {
             paketManager.remove(paket)
         }
     }
@@ -152,28 +128,12 @@ class GameField(canvas: Canvas, private val score: Score) {
                     }
                 }
         }
-        for (paket in toRemovePakete) {
+        toRemovePakete.forEach { paket ->
             paketManager.remove(paket)
         }
-        for (toRemoveProjectile in toRemoveProjectiles) {
+        toRemoveProjectiles.forEach { toRemoveProjectile ->
             projectileManager.remove(toRemoveProjectile)
         }
-    }
-
-    init {
-        paketManager = PaketManager(canvas.width, canvas.height, score, leben)
-        projectileManager = ProjectileManager()
-
-        val p = PlayerCharacter(
-            listOf(Config.resLocation + "player/player1.png",
-                   Config.resLocation + "player/player2.png"),
-            mapOf("A" to Direction.Left,
-                    "D" to Direction.Right,
-                    // Easteregg Steuerung invertiert
-                    "Left" to Direction.Right,
-                    "Right" to Direction.Left))
-        p.setPos(canvas.width / 2 - p.width / 2, canvas.height - 65)
-        player = p
     }
 
     /**

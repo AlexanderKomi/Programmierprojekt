@@ -7,9 +7,10 @@ import common.actor.Actor
  * @author Kevin
  */
 class Paket(pictureFileName: List<String>,
-    x: Double,
-    y: Double,
-    paketTyp: enmPaketTyp) : Actor(pictureFileName, x, y, 15) {
+            x: Double,
+            y: Double,
+            paketTyp: enmPaketTyp) :
+        Actor(pictureFileName, x, y, 15.0) {
 
     override var speed = 3.0
 

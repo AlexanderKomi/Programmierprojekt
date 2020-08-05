@@ -31,7 +31,7 @@ public class TIGameController extends Observable implements Initializable {
     private boolean gameOver;
 
     private GameField gameField;
-    private Score score;
+    private final Score score;
 
     @FXML
     public Canvas gameCanvas;
@@ -54,8 +54,6 @@ public class TIGameController extends Observable implements Initializable {
 
     /**
      * Button zum Testen des GameOverScreens (derzeit deaktiviert)
-     * 
-     * @param event
      */
     @FXML
     void scorePressed(ActionEvent event) {
@@ -83,19 +81,19 @@ public class TIGameController extends Observable implements Initializable {
 
         this.gameCanvas.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE || keyEvent.getCode() == KeyCode.NUMPAD0) {
-                this.gameField.activateProjectileSpawn();
-                this.gameField.player.switchFiring();
+                this.gameField.setProjectileSpawning(true);
+                this.gameField.getPlayer().switchFiring();
             } else {
-                this.gameField.movePlayer(keyEvent);
+                this.gameField.getPlayer().move(keyEvent);
             }
         });
 
         this.gameCanvas.setOnKeyReleased(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE || keyEvent.getCode() == KeyCode.NUMPAD0) {
-                this.gameField.deactivateProjectileSpawn();
-                this.gameField.setPlayerIdle();
+                this.gameField.setProjectileSpawning(false);
+                this.gameField.getPlayer().switchIdle();
             } else {
-                this.gameField.movePlayer(keyEvent);
+                this.gameField.getPlayer().move(keyEvent);
 
             }
         });
@@ -127,7 +125,6 @@ public class TIGameController extends Observable implements Initializable {
             this.setChanged();
             this.notifyObservers(UpdateCodes.TunnelInvader.gameOver);
         }
-
     }
 
     /**

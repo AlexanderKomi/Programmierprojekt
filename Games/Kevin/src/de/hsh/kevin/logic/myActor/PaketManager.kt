@@ -49,7 +49,7 @@ class PaketManager
     fun move() {
         val toRemove = mutableListOf<Paket>()
         pakete.forEach { paket: Paket ->
-            if (paket.pos[1] > height) {
+            if (paket.y > height) {
                 if (paket.paketTyp === enmPaketTyp.good) {
                     score.increase()
                 } else {
@@ -69,10 +69,8 @@ class PaketManager
     /**
      * Zeichenet alle Pakete aufs Canvas
      */
-    fun draw(canvas: Canvas?) {
-        for (p in pakete) {
-            p.draw(canvas!!)
-        }
+    fun draw(canvas: Canvas) = pakete.forEach { p ->
+        p.draw(canvas)
     }
 
     /**
