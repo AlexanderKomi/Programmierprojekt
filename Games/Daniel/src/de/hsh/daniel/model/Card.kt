@@ -17,21 +17,21 @@ class Card(val pictureFileName: String, pair_id: Int) : Actor(pictureFileName) {
     var isCardMatched = false
     var isTurned = true
     override fun toString(): String {
-        return "pair_id: " + pair_id
+        return "pair_id: $pair_id"
     }
 
-    override fun equals(obj: Any?): Boolean {
-        if (this === obj) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
             return true
         }
-        if (obj == null) {
+        if (other == null) {
             return false
         }
-        if (javaClass != obj.javaClass) {
+        if (javaClass != other.javaClass) {
             return false
         }
-        val other = obj as Card
-        return pair_id == other.pair_id
+        val otherCard = other as Card
+        return pair_id == otherCard.pair_id
     }
 
     override fun hashCode(): Int {
@@ -67,11 +67,6 @@ class Card(val pictureFileName: String, pair_id: Int) : Actor(pictureFileName) {
         private const val cardBackSoundPath = "/de/hsh/daniel/resources/cardFlip2.wav"
     }
 
-    /**
-     * Card constructor
-     * @param pictureFileName: Path to image for card
-     * @param pair_id
-     */
     init {
         setCurrentImage(Resources.cardback)
         this.pair_id = pair_id

@@ -12,6 +12,7 @@ import de.hsh.dennis.model.NpcLogic.SkinConfig.Level.Difficulty
 import javafx.application.Platform
 import javafx.scene.canvas.Canvas
 import javafx.scene.input.KeyCode
+import java.lang.IllegalStateException
 import java.util.*
 
 class DennisGameEntryPoint(o: Observer?) : GameEntryPoint(o, WindowConfig.dennis_title) {
@@ -87,6 +88,7 @@ class DennisGameEntryPoint(o: Observer?) : GameEntryPoint(o, WindowConfig.dennis
             Difficulty.MEDIUM    -> changer.changeFxml(LevelMenu_controller(), "b_medium")
             Difficulty.HARD      -> changer.changeFxml(LevelMenu_controller(), "b_hard")
             Difficulty.NIGHTMARE -> changer.changeFxml(LevelMenu_controller(), "b_nightmare")
+            Difficulty.CUSTOM -> throw IllegalStateException("Custom difficulty is not implemented")
         }
     }
 

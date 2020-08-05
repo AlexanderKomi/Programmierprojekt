@@ -86,14 +86,11 @@ abstract class Level(gameCanvas: Canvas?) : Observable(),
         }
     }
 
-    @Synchronized
     private fun <T : Actor> draw(list: List<T>,
                                   canvas: Canvas) {
-        var size = list.size
+        val size = list.size
         for (i in 0 until size) {
-            val t: T? = list[i]
-            t?.draw(canvas)
-            size = list.size
+            list[i].draw(canvas)
         }
     }
 

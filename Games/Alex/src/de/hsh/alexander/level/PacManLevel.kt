@@ -113,9 +113,7 @@ abstract class PacManLevel internal constructor(gameCanvas: Canvas?) : Level(gam
         }
     }
 
-    fun addEasterEgg(gameCanvas: Canvas?, x: Int, y: Int) {
-        addCollectable(Invisible(x.toDouble(), y.toDouble()))
-    }
+    fun addEasterEgg(x: Int, y: Int) = addCollectable(Invisible(x.toDouble(), y.toDouble()))
 
     fun addPlayers(pacMan1_x: Int, pacMan1_y: Int, pacMan2_x: Int, pacMan2_y: Int) {
         addPlayer(PacMan1(pacMan1_x.toDouble(), pacMan1_y.toDouble()))

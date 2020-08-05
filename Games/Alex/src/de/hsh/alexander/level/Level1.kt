@@ -12,7 +12,7 @@ class Level1(gameCanvas: Canvas?) : PacManLevel(gameCanvas) {
         addPlayers(250, 150,
                    550, 350)
         addLevelElements(gameCanvas)
-        addEasterEgg(gameCanvas, 300, 300)
+        addEasterEgg(300, 300)
         createDataCoins(gameCanvas)
     }
 

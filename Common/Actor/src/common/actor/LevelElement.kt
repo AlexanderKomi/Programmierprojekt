@@ -6,7 +6,7 @@ abstract class LevelElement : Actor {
                 vararg pictureFilePaths: String) : super(x,
                                                           y,
                                                           0,
-                                                          pictureFilePaths as Array<String>)
+                                                          pictureFilePaths)
 
     protected constructor(x: Double,
                           y: Double,

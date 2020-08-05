@@ -9,20 +9,13 @@ import javafx.scene.input.MouseEvent
 /**
  * THis is the game started
  */
-class Game {
-    private var board: GUIBoard? = null
-    fun render(gameCanvas: Canvas, fps: Int) {
-        board!!.draw(gameCanvas)
-    }
+class Game(gameCanvas: Canvas) {
+    private var board: GUIBoard = GUIBoard()
+    fun render(gameCanvas: Canvas) = board.draw(gameCanvas)
 
-    /**
-     * Sets up Board on canvas and creates two Player objects
-     */
-    fun initialize(gameCanvas: Canvas) {
-        board = GUIBoard()
+    init {
         gameCanvas.onMouseClicked = EventHandler { e: MouseEvent ->
-            board!!.onMouseClick(e.x,
-                                 e.y)
+            board.onMouseClick(e.x, e.y)
         }
     }
 
@@ -35,5 +28,5 @@ class Game {
      *
      */
     val gUIBoard: Board
-        get() = board!!.board
+        get() = board.board
 }
