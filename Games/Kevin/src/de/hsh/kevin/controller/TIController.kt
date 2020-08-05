@@ -55,7 +55,7 @@ class TIController(o: Observer?) : GameEntryPoint(o, UpdateCodes.TunnelInvader.g
     override fun render(fps: Int) {
         Platform.runLater {
             if(game != null) {
-                game!!.render(fps)
+                game!!.render()
             }
         }
     }

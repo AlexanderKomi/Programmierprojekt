@@ -11,7 +11,7 @@ class Fan @JvmOverloads constructor(x: Double, y: Double, scale: Double = this.s
     }
 
     init {
-        setSwitchingDelay(default_delay)
+        this.switchingDelay = (default_delay)
         scaleImage(scale)
     }
 }

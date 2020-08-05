@@ -22,15 +22,10 @@ object ImageLoader {
      */
     @JvmStatic
     @Throws(IOException::class)
-    fun loadImage(relativeFilePath: String): Image {
-        getInputStream(relativeFilePath).use { u ->
-            val image = ImageIO.read(
-                    u)!!
-            return SwingFXUtils.toFXImage(
-                    image,
-                    null)
-        }
-    }
+    fun loadImage(relativeFilePath: String): Image =
+            getInputStream(relativeFilePath).use { u ->
+                return SwingFXUtils.toFXImage(ImageIO.read(u)!!, null)
+            }
 
     /**
      *
@@ -43,8 +38,7 @@ object ImageLoader {
     private fun getInputStream(relativePath: String): InputStream {
         val x = ImageLoader::class.java.getResource(relativePath)
                 ?: throw FileNotFoundException("File does not exist under relative Path: $relativePath")
-        val f = File(x.path)
-        if (!f.exists()) {
+        if (!File(x.path).exists()) {
             throw FileNotFoundException("File does not exist: " + x.path)
         }
         return ImageLoader::class.java.getResourceAsStream(relativePath)

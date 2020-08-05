@@ -6,44 +6,36 @@ import javafx.scene.canvas.Canvas
 import javafx.scene.input.KeyEvent
 
 class AmirGame(private val canvas: Canvas, private val points: Score) {
-    private var spielfigur: Spielfigur? = null
-    private var gegnerManager: GegnerManager? = null
+
+    private var spielfigur: Spielfigur = Spielfigur(canvas.width / 2, canvas.height - 100)
+    private var gegnerManager: GegnerManager = GegnerManager()
     private var timer = 0
 
-    init {
-        spielfigur = Spielfigur()
-        spielfigur!!.setPos(canvas.width / 2, canvas.height - 100)
-        gegnerManager = GegnerManager()
-        points.score = 0
-    }
-
     fun render() {
-        val temp = gegnerManager!!.gegnerListe
+        val temp = gegnerManager.gegnerListe
         temp.removeAll(temp.filterNot { it.isInBounds(canvas.width, canvas.height + it.height) })
-        gegnerManager!!.gegnerListe = temp
+        gegnerManager.gegnerListe = temp
 
         timer++
         if (timer == 120) {
-            gegnerManager!!.erstelleGegner(4)
+            gegnerManager.erstelleGegner(4)
             timer = 0
         }
 
-        val toRemove = gegnerManager!!.gegnerListe
-                .filter { gegner -> spielfigur!!.doesCollide(gegner) }
+        val toRemove = gegnerManager.gegnerListe
+                .filter { gegner -> spielfigur.doesCollide(gegner) }
         toRemove.forEach { gegner ->
             points.increase()
             playSound()
-            gegnerManager!!.gegnerListe.remove(gegner)
+            gegnerManager.gegnerListe.remove(gegner)
         }
-        gegnerManager!!.move(canvas)
+        gegnerManager.move(canvas)
         canvas.graphicsContext2D.clearRect(0.0, 0.0, canvas.width, canvas.height)
-        spielfigur!!.draw(canvas)
-        gegnerManager!!.draw(canvas)
+        spielfigur.draw(canvas)
+        gegnerManager.draw(canvas)
     }
 
-    fun onKeyPressed(event: KeyEvent?) {
-        spielfigur!!.move(event)
-    }
+    fun onKeyPressed(event: KeyEvent) = spielfigur.move(event)
 
     companion object {
         /**

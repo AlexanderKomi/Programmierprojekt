@@ -47,8 +47,6 @@ public class TIGameController extends Observable implements Initializable {
 
     /**
      * Erstellt den SpielController mit einem Score
-     * 
-     * @param score
      */
     public TIGameController(Score score) {
         this.score = score;
@@ -86,12 +84,9 @@ public class TIGameController extends Observable implements Initializable {
         this.gameCanvas.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE || keyEvent.getCode() == KeyCode.NUMPAD0) {
                 this.gameField.activateProjectileSpawn();
-                if (this.gameField.player != null) {
-                    this.gameField.player.switchFiring();
-                }
+                this.gameField.player.switchFiring();
             } else {
                 this.gameField.movePlayer(keyEvent);
-
             }
         });
 
@@ -110,10 +105,8 @@ public class TIGameController extends Observable implements Initializable {
 
     /**
      * Führt die nächste Spieliteration aus
-     * 
-     * @param fps
      */
-    public void render(int fps) {
+    public void render() {
         if (!initialized) {
             return;
         }

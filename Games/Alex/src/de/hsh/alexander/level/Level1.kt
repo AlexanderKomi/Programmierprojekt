@@ -4,15 +4,15 @@ import de.hsh.alexander.actor.ResourcePaths.Actor.LevelElements.Backgrounds
 import de.hsh.alexander.actor.level_elements.Fan
 import javafx.scene.canvas.Canvas
 
-class Level1(gameCanvas: Canvas?) : PacManLevel(gameCanvas) {
-    override fun createLevel(gameCanvas: Canvas?) {
+class Level1(gameCanvas: Canvas) : PacManLevel(gameCanvas) {
+    override fun createLevel(gameCanvas: Canvas) {
         setBackgroundImage(Backgrounds.microChip,
                            background_width,
                            background_height)
         addPlayers(250, 150,
                    550, 350)
         addLevelElements(gameCanvas)
-        addEasterEgg(gameCanvas, 300, 300)
+        addEasterEgg(300, 300)
         createDataCoins(gameCanvas)
     }
 

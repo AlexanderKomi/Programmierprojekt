@@ -12,7 +12,7 @@ class SMD(x: Double, y: Double) : LevelElement(x,
     }
 
     init {
-        setSwitchingDelay(default_delay.toDouble())
+        this.switchingDelay = default_delay.toDouble()
         scaleImage(scale)
     }
 }

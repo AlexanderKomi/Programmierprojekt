@@ -23,7 +23,7 @@ open class Drawable : Observable {
     var width = 0.0
     lateinit var name: String
     private var switchingBuffer = 0
-    private var switchingDelay = 0.0
+    var switchingDelay = 0.0
     protected var scaleX = 1.0
     private var scaleY = 1.0
     private val imageView = ImageView()
@@ -60,14 +60,6 @@ open class Drawable : Observable {
         }
     }
 
-    protected constructor(mustHave: String,
-                          asList: List<String>,
-                          x: Double,
-                          y: Double,
-                          delay: Int) : this(asList, x, y, delay) {
-        loadPicture(mustHave).let { switchingImages.add(it) }
-    }
-
     private constructor(x: Double, y: Double, delay: Int) {
         this.x = x
         this.y = y
@@ -76,21 +68,14 @@ open class Drawable : Observable {
         id_counter++
     }
 
-    protected constructor(x: Double,
-                          y: Double,
-                          delay: Int,
-                          pictureFileName: Array<out String>) : this(
-            listOf<String>(*pictureFileName),
-            x,
-            y,
-            delay)
+    protected constructor(
+            x: Double, y: Double, delay: Int, pictureFileName: Array<out String>)
+            : this(listOf<String>(*pictureFileName), x, y, delay)
 
     protected constructor(x: Double,
                           y: Double,
                           scale: Double,
-                          picturePath: String) : this(picturePath,
-                                                      x,
-                                                      y) {
+                          picturePath: String) : this(picturePath, x, y) {
         scaleImage(scale)
     }
 
@@ -116,10 +101,10 @@ open class Drawable : Observable {
     private fun switchToNextImage() {
         switchingBuffer = 0
         val index = switchingImages.indexOf(currentImage)
-        if (index < switchingImages.size - 1) {
-            currentImage = switchingImages[index + 1]
+        currentImage = if (index < switchingImages.size - 1) {
+            switchingImages[index + 1]
         } else {
-            currentImage = switchingImages[0]
+            switchingImages[0]
         }
     }
 
@@ -146,49 +131,24 @@ open class Drawable : Observable {
     }
 
     // ---------------------------------- START DRAW ----------------------------------
-    open fun draw(canvas: Canvas) {
-        draw(canvas, 0.0, 0.0)
-    }
+    open fun draw(canvas: Canvas) = draw(canvas, 0.0, 0.0)
 
-    open fun draw(canvas: Canvas,
-                  offset_to_new_x: Double,
-                  offset_to_new_y: Double) {
-        draw(canvas,
-             canvas.width,
-             canvas.height,
-             offset_to_new_x,
-             offset_to_new_y)
-    }
-
-    fun draw(
-            canvas: Canvas,
-            canvas_width: Double,
-            canvas_height: Double,
-            offset_to_new_x: Double,
-            offset_to_new_y: Double) {
-        val isInBounds = isInBounds(
-                x,
-                y,
-                width,
-                height,
-                canvas_width,
-                canvas_height,
+    fun draw(canvas: Canvas,
+             offset_to_new_x: Double,
+             offset_to_new_y: Double) {
+        val inBoundsPos = calcPosAfterBounds(
+                isInBounds(x, y,
+                           width, height,
+                           canvas.width, canvas.height,
+                           offset_to_new_x, offset_to_new_y),
                 offset_to_new_x,
                 offset_to_new_y)
-        val in_bounds_pos = calcPosAfterBounds(isInBounds,
-                                               offset_to_new_x,
-                                               offset_to_new_y)
-        val old_pos = pos
-        pos = in_bounds_pos
-        pos = beforeDrawing(old_pos, in_bounds_pos) // Maybe reset ? :)
+        val oldPos = pos
+        pos = inBoundsPos
+        pos = beforeDrawing(oldPos, inBoundsPos) // Maybe reset ? :)
         switchImages()
         //this.setCurrentImage(temp);
-        canvas.graphicsContext2D
-                .drawImage(currentImage,
-                           x,
-                           y,
-                           width,
-                           height)
+        canvas.graphicsContext2D.drawImage(currentImage, x, y, width, height)
     }
 
     /**
@@ -199,9 +159,7 @@ open class Drawable : Observable {
      * @return Returns the new position of the Drawable.
      */
     protected open fun beforeDrawing(current_pos: DoubleArray,
-                                     new_pos: DoubleArray): DoubleArray {
-        return new_pos
-    }
+                                     new_pos: DoubleArray): DoubleArray = new_pos
 
     // ---------------------------------- END DRAW ----------------------------------
     private fun calcPosAfterBounds(isInBounds: BooleanArray,
@@ -217,22 +175,18 @@ open class Drawable : Observable {
         return temp
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (other is Drawable) {
-            val d = other
-            return Arrays.equals(pos,
-                                 d.pos) && height == d.height && width == d.width && name == d.name && currentImage == d.currentImage
-        }
-        return false
-    }
+    override fun equals(other: Any?): Boolean =
+            if (other is Drawable) {
+                pos.contentEquals(other.pos) &&
+                height == other.height &&
+                width == other.width &&
+                name == other.name
+            } else {
+                false
+            }
 
     override fun toString(): String {
-        return this.javaClass.toString() + "(" + "name:" +
-               name + ", " +
-               "x:" + x + ", " +
-               "y:" + y + ", " +
-               "width:" + width + ", " +
-               "height:" + height + ")"
+        return """${this.javaClass}(name:$name, x:$x, y:$y, width:$width, height:$height)"""
     }
 
     fun setPos(x: Double, y: Double) {
@@ -252,15 +206,24 @@ open class Drawable : Observable {
         height = size
     }
 
-    protected fun setSwitchingDelay(switchingDelay: Double) {
-        this.switchingDelay = switchingDelay
-    }
-
     // --- Getter & Setter ------------------------------------------------------------------------
-
 
     fun setCurrentImage(filePath: String) {
         currentImage = loadPicture(filePath)
+    }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + height.hashCode()
+        result = 31 * result + width.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + switchingBuffer
+        result = 31 * result + switchingDelay.hashCode()
+        result = 31 * result + scaleX.hashCode()
+        result = 31 * result + scaleY.hashCode()
+        result = 31 * result + x.hashCode()
+        result = 31 * result + y.hashCode()
+        return result
     }
 
     companion object {

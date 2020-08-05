@@ -13,7 +13,7 @@ import java.util.*
  * @author Kevin
  */
 class PlayerCharacter(pictureFileName: List<String>,
-                      keyMap: HashMap<String, Direction>) : ControlableActor(
+                      keyMap: Map<String, Direction>) : ControlableActor(
         pictureFileName[0],
         250.0,
         750.0,

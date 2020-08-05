@@ -8,15 +8,15 @@ interface ILevel {
      * Create all your level elements
      * @param gameCanvas
      */
-    fun createLevel(gameCanvas: Canvas?)
+    fun createLevel(gameCanvas: Canvas)
 
     /**
      * What happens, when a key is pressed?
      */
-    fun keyboardInput(keyEvent: KeyEvent?)
+    fun keyboardInput(keyEvent: KeyEvent)
 
     /**
      * Draw what you would like to :)
      */
-    fun render(canvas: Canvas?, fps: Int)
+    fun render(canvas: Canvas, fps: Int)
 }

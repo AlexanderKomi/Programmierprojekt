@@ -71,7 +71,7 @@ class PaketManager
      */
     fun draw(canvas: Canvas?) {
         for (p in pakete) {
-            p.draw(canvas!!, 0.0, 0.0)
+            p.draw(canvas!!)
         }
     }
 

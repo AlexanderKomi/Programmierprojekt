@@ -13,17 +13,15 @@ import java.util.*
  * @author Kevin
  */
 class GameField(canvas: Canvas, private val score: Score) {
-    private val width: Double = canvas.width
-    private val height: Double = canvas.height
 
     @JvmField
-    var player: PlayerCharacter? = null
+    var player: PlayerCharacter
     private val paketManager: PaketManager
     private val projectileManager: ProjectileManager
     private val leben: Leben = Leben()
     private val spawnDelay: Int = Config.getPaketSpawnDelay()
     private var spawnDelayBuffer = 0
-    private var projectileSpawning: Boolean
+    private var projectileSpawning: Boolean = false
 
 
     /**
@@ -34,8 +32,9 @@ class GameField(canvas: Canvas, private val score: Score) {
             spawnDelayBuffer = spawnDelay
         }
         if (spawnDelayBuffer == spawnDelay) {
-            val number = Random().nextInt(Config.maxSpawnCount) + 1
-            paketManager.createNewPaket(0.75, number)
+            paketManager.createNewPaket(
+                    0.75,
+                    Random().nextInt(Config.maxSpawnCount) + 1)
         }
         spawnDelayBuffer--
     }
@@ -64,7 +63,7 @@ class GameField(canvas: Canvas, private val score: Score) {
     /**
      * Bewegt Player
      */
-    fun movePlayer(keyEvent: KeyEvent?) {
+    fun movePlayer(keyEvent: KeyEvent) {
         player!!.move(keyEvent)
     }
 
@@ -72,9 +71,9 @@ class GameField(canvas: Canvas, private val score: Score) {
      * Bewegt Pakete und Projectile
      */
     private fun moveAll() {
-        val t1 = Thread(Runnable { paketManager.move() })
+        val t1 = Thread { paketManager.move() }
         t1.start()
-        val t2 = Thread(Runnable { projectileManager.move() })
+        val t2 = Thread { projectileManager.move() }
         t2.start()
         try {
             t1.join()
@@ -162,22 +161,18 @@ class GameField(canvas: Canvas, private val score: Score) {
     }
 
     init {
-        paketManager = PaketManager(width, height, score, leben)
+        paketManager = PaketManager(canvas.width, canvas.height, score, leben)
         projectileManager = ProjectileManager()
-        projectileSpawning = false
-
-        val playerKeyMap = HashMap<String, Direction>()
-        playerKeyMap["A"] = Direction.Left
-        playerKeyMap["D"] = Direction.Right
-        // Easteregg Steuerung invertiert
-        playerKeyMap["Left"] = Direction.Right
-        playerKeyMap["Right"] = Direction.Left
 
         val p = PlayerCharacter(
             listOf(Config.resLocation + "player/player1.png",
                    Config.resLocation + "player/player2.png"),
-            playerKeyMap)
-        p.setPos(width / 2 - p.width / 2, height - 65)
+            mapOf("A" to Direction.Left,
+                    "D" to Direction.Right,
+                    // Easteregg Steuerung invertiert
+                    "Left" to Direction.Right,
+                    "Right" to Direction.Left))
+        p.setPos(canvas.width / 2 - p.width / 2, canvas.height - 65)
         player = p
     }
 

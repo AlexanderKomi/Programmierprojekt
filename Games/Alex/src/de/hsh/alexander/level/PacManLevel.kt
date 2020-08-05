@@ -21,47 +21,39 @@ import javafx.scene.canvas.Canvas
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
 import java.util.*
-import java.util.function.Consumer
 
-abstract class PacManLevel internal constructor(gameCanvas: Canvas?) : Level(gameCanvas) {
-    override fun reset(gameCanvas: Canvas?) {
-        super.reset(gameCanvas)
-        gameCanvas!!.onMouseClicked = EventHandler { clickEvent: MouseEvent ->
-            onMouseClick(
-                    clickEvent)
-        }
-        //Logger.log( this.getClass() + ": Resettet Level" );
-        isGameFinished
-    }
+abstract class PacManLevel(gameCanvas: Canvas) : Level(gameCanvas) {
+
+    override fun resetAndThan(gameCanvas: Canvas, thanDo: (Canvas) -> Unit) =
+            super.resetAndThan(gameCanvas) {
+                gameCanvas.onMouseClicked = EventHandler { clickEvent: MouseEvent ->
+                    onMouseClick(clickEvent)
+                }
+                //Logger.log( this.getClass() + ": Resettet Level" );
+                isGameFinished
+            }
 
     private fun onMouseClick(clickEvent: MouseEvent) {
-        val x = clickEvent.x
-        val y = clickEvent.y
         //Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
-        addCollectable(
-                DataCoin(x, y)
-                      )
+        addCollectable(DataCoin(clickEvent.x, clickEvent.y))
     }
 
     val pacMan1Property: SimpleIntegerProperty
-        get() = getPlayers().stream()
-                .filter { player: ControlableActor? -> player is PacMan1 }
-                .map { player: ControlableActor? -> player as PacMan1? }
-                .map { obj: PacMan1? -> obj?.points!! }
-                .findFirst()
-                .get()
+        get() = players
+                .filterIsInstance<PacMan1>()
+                .map { player: PacMan1 -> player.points  }
+                .first()
 
     val pacMan2Property: SimpleIntegerProperty
-        get() = getPlayers().stream()
-                .filter { player: ControlableActor? -> player is PacMan2 }
-                .map { player: ControlableActor? -> player as PacMan2? }
-                .map { obj: PacMan2? -> obj?.points }.findFirst().get()
+        get() = players
+                .filterIsInstance<PacMan2>()
+                .map { player: PacMan2 -> player.points }
+                .first()
 
-    override fun keyboardInput(keyEvent: KeyEvent?) {
-        getPlayers().forEach(Consumer { pacMan: ControlableActor ->
-            pacMan.move(keyEvent)
-        })
-    }
+    override fun keyboardInput(keyEvent: KeyEvent) =
+            players.forEach { pacMan: ControlableActor ->
+                pacMan.move(keyEvent)
+            }
 
     override fun update(o: Observable, arg: Any) {
         if (o is Collectable) {
@@ -113,9 +105,8 @@ abstract class PacManLevel internal constructor(gameCanvas: Canvas?) : Level(gam
         }
     }
 
-    fun addEasterEgg(gameCanvas: Canvas?, x: Int, y: Int) {
+    fun addEasterEgg(x: Int, y: Int) =
         addCollectable(Invisible(x.toDouble(), y.toDouble()))
-    }
 
     fun addPlayers(pacMan1_x: Int, pacMan1_y: Int, pacMan2_x: Int, pacMan2_y: Int) {
         addPlayer(PacMan1(pacMan1_x.toDouble(), pacMan1_y.toDouble()))
@@ -175,25 +166,19 @@ abstract class PacManLevel internal constructor(gameCanvas: Canvas?) : Level(gam
         }
     }
 
-    override fun addCollectable(c: Collectable): Boolean {
-        if (!collidesWithPlayer(c)) {
-            if (!collidesWithLevelElement(c)) {
-                if (!collidesWithCollectable(c)) {
-                    return super.addCollectable(c)
-                }
+    override fun addCollectable(c: Collectable): Boolean =
+            if (!collidesWithPlayer(c) && !collidesWithLevelElement(c) && !collidesWithCollectable(c)) {
+                super.addCollectable(c)
+            } else {
+                false
             }
-        }
-        return false
-    }
 
-    override fun addLevelElement(levelElement: LevelElement): Boolean {
-        if (!collidesWithPlayer(levelElement)) {
-            if (!collidesWithLevelElement(levelElement)) {
-                return super.addLevelElement(levelElement)
+    override fun addLevelElement(levelElement: LevelElement): Boolean =
+            if (!collidesWithPlayer(levelElement) && !collidesWithLevelElement(levelElement)) {
+                super.addLevelElement(levelElement)
+            } else {
+                false
             }
-        }
-        return false
-    }
 
     companion object {
         const val background_width = 950
