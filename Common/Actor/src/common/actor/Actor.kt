@@ -3,7 +3,6 @@ package common.actor
 import common.util.Logger
 import common.util.PlaySound
 import java.util.*
-import kotlin.ConcurrentModificationException
 
 /**
  * Actor is a drawable with a few added features.
@@ -41,7 +40,7 @@ abstract class Actor : Drawable {
                 asList: List<String>,
                 x: Double,
                 y: Double,
-                delay: Int) : super(mustHave, asList, x, y, delay)
+                delay: Int) : super(asList, x, y, delay, mustHave)
 
     constructor(x: Double,
                 y: Double,
@@ -66,13 +65,9 @@ abstract class Actor : Drawable {
      * @return
      */
     override fun beforeDrawing(current_pos: DoubleArray,
-                               new_pos: DoubleArray): DoubleArray {
-        return if (this.doesCollide()) {
-            current_pos
-        } else {
-            new_pos
-        }
-    }
+                               new_pos: DoubleArray): DoubleArray =
+            if (this.doesCollide()) { current_pos }
+            else { new_pos }
 
     /**
      * Checks actor and a list of collisionActors for collision
@@ -95,7 +90,6 @@ abstract class Actor : Drawable {
      * @param other instance of actor
      * @return returns if collisioned or not
      */
-    @Synchronized
     fun doesCollide(other: Actor?): Boolean {
         return if (CollisionCheck.doesCollide(this, other as Drawable) ||
                    CollisionCheck.doesCollide(other, this)) {
@@ -139,7 +133,7 @@ abstract class Actor : Drawable {
         } else {
             Logger.log("------>" + this.javaClass + " FATAL ERROR : Can not delete: " + collectable)
         }
-        collisionActors = (l)
+        collisionActors = l
     }
 
     protected open fun onRemove(collectable: Collectable?) {}
@@ -155,9 +149,5 @@ abstract class Actor : Drawable {
         if (!collisionActors.contains(a)) {
             collisionActors.add(a)
         }
-    }
-
-    fun setKeyMap(keymap: HashMap<String, Direction?>?) {
-        this.movement.setKeyMap(keymap)
     }
 }
