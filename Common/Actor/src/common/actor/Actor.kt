@@ -1,26 +1,18 @@
 package common.actor
 
 import common.util.Logger
-import common.util.PlaySound
-import java.util.*
 
 /**
  * Actor is a drawable with a few added features.
  * A commonly used feature is collision with other actors or the movement of an actor, when it should be drawn.
  */
 abstract class Actor : Drawable {
-    @kotlin.jvm.JvmField
     val movement = Movement()
-    private var collisionActors: MutableList<Actor> = ArrayList()
+    private var collisionActors = mutableListOf<Actor>()
 
-    /**
-     * Sets the velocity
-     */
     open var speed: Double
         get() = movement.velocity
-        set(speed) {
-            movement.velocity = speed
-        }
+        set(speed) { movement.velocity = speed }
 
     /**
      * Many overloaded constructors following up now...
@@ -29,17 +21,20 @@ abstract class Actor : Drawable {
     constructor(pictureFileName: String,
                 x: Double = 0.0,
                 y: Double = 0.0,
-                delay: Double = 0.0) : super(pictureFileName, x, y, delay)
+                delay: Int = 0,
+                scale: Double = 1.0) : super(pictureFileName, x, y, delay, scale)
+
+    constructor(pictureFilePaths: Array<String>,
+                x: Double = 0.0,
+                y: Double = 0.0,
+                delay: Int = 0,
+                scale: Double = 1.0) : super(pictureFilePaths.toList(), x, y, delay, scale)
 
     constructor(pictureFilePaths: List<String>,
                 x: Double = 0.0,
                 y: Double = 0.0,
-                delay: Double = 0.0) : super(pictureFilePaths, x, y, delay)
-
-    constructor(x: Double,
-                y: Double,
-                scale: Double,
-                picturePath: String) : super(x, y, scale, picturePath)
+                delay: Int = 0,
+                scale: Double = 1.0) : super(pictureFilePaths, x, y, delay, scale)
 
     /**
      * Returning position based on collisioncheck
@@ -50,10 +45,8 @@ abstract class Actor : Drawable {
      *
      * @return
      */
-    override fun beforeDrawing(current_pos: DoubleArray,
-                               new_pos: DoubleArray): DoubleArray =
-            if (this.doesCollide()) { current_pos }
-            else { new_pos }
+    override fun beforeDrawing(current_pos: DoubleArray, new_pos: DoubleArray): DoubleArray =
+            if (this.doesCollide()) current_pos else new_pos
 
     /**
      * Checks actor and a list of collisionActors for collision
@@ -62,13 +55,7 @@ abstract class Actor : Drawable {
     private fun doesCollide(): Boolean {
         val list = arrayListOf<Actor>()
         list.addAll(collisionActors)
-        var collided = false
-        for(item in list) {
-            if (this.doesCollide(item)) {
-                collided = true
-            }
-        }
-        return collided
+        return list.any { doesCollide(it) }
     }
 
     /**
@@ -76,12 +63,11 @@ abstract class Actor : Drawable {
      * @param other instance of actor
      * @return returns if collisioned or not
      */
-    fun doesCollide(other: Actor?): Boolean {
-        return if (CollisionCheck.doesCollide(this, other as Drawable) ||
-                   CollisionCheck.doesCollide(other, this)) {
-            collisionModifier(other)
-        } else false
-    }
+    fun doesCollide(other: Actor): Boolean =
+            if (CollisionCheck.doesCollide(this, other as Drawable) ||
+                CollisionCheck.doesCollide(other, this)) {
+                collisionModifier(other)
+            } else false
 
     /**
      * returns if two objects are in bounds of each other by checking coordinates
@@ -89,31 +75,18 @@ abstract class Actor : Drawable {
      * @param canvas_height height
      * @return returns if
      */
-    fun isInBounds(canvas_width: Double,
-                   canvas_height: Double): Boolean {
-        return CollisionCheck.isInBounds(this, canvas_width, canvas_height)
-    }
+    fun isInBounds(canvas_width: Double, canvas_height: Double): Boolean =
+            CollisionCheck.isInBounds(this, canvas_width, canvas_height)
 
     /**
-     * Collision Modifier
+     * Please override to provide a modifier for if any is applicable.
      * @param other the Actor
      * @return always true
      */
-    protected open fun collisionModifier(other: Actor?): Boolean {
-        return true
-    }
-
-    /**
-     * Plays a sound
-     * @param filePath Path of soundfile
-     */
-    protected fun playSound(filePath: String) {
-        PlaySound.playSound(filePath)
-    }
+    protected open fun collisionModifier(other: Actor): Boolean = true
 
     fun removeCollisionActor(collectable: Collectable) {
-        val l = Collections.synchronizedList(
-                collisionActors)
+        val l = collisionActors
         if (l.remove(collectable)) {
             onRemove(collectable)
         } else {
@@ -122,10 +95,7 @@ abstract class Actor : Drawable {
         collisionActors = l
     }
 
-    protected open fun onRemove(collectable: Collectable?) {}
-    // ----------------------------------- GETTER AND SETTER -----------------------------------
-
-
+    protected open fun onRemove(collectable: Collectable) {}
 
     /**
      * adds a colliding actor

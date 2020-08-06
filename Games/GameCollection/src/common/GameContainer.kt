@@ -8,7 +8,7 @@ import de.hsh.alexander.PacManController
 import de.hsh.amir.AmirEntryPoint
 import de.hsh.daniel.RAM
 import de.hsh.dennis.DennisGameEntryPoint
-import de.hsh.dennis.model.AudioPlayer
+import de.hsh.dennis.model.MusicPlayer
 import de.hsh.kevin.controller.TIController
 import javafx.fxml.FXMLLoader
 import java.io.IOException
@@ -44,7 +44,7 @@ class GameContainer : FXGameContainer() {
      * Muss in der aufgerufenen Klasse implementiert sein!
      */
     override fun startContainer(args: Array<String>) = launch(*args)
-    override fun beforeStoppingContainer() = AudioPlayer.MusicPlayer.shutdown()
+    override fun beforeStoppingContainer() = MusicPlayer.shutdown()
     override fun toString(): String {
         return "GameContainer(" +
                "superclass:" + super.toString() +

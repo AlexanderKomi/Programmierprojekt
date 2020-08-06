@@ -34,12 +34,13 @@ class LKEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.julian_title) {
             return
         }
         Platform.runLater {
-            canvas.graphicsContext2D!!.clearRect(0.0,
-                                                 0.0,
-                                                 WindowConfig.window_width.toDouble(),
-                                                 WindowConfig.window_height.toDouble())
+            canvas.graphicsContext2D!!.clearRect(
+                    0.0,
+                    0.0,
+                    WindowConfig.window_width.toDouble(),
+                    WindowConfig.window_height.toDouble())
+            lk.render(canvas)
         }
-        lk.render(canvas)
     }
 
     /**
@@ -54,23 +55,20 @@ class LKEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.julian_title) {
     }
 
     private fun initializeGame(arg: Canvas) {
-        lk = Leertastenklatsche()
-        lk.addObserver(this)
-        val theFont = Font.font("Helvetica",
-                                FontWeight.BOLD,
-                                36.0)
-        canvas = arg
-        with(canvas.graphicsContext2D!!) {
-            font = theFont
-            fill = Color.BLACK
-            stroke = Color.BLACK
-            lineWidth = 1.0
-        }
+        lk = Leertastenklatsche(this)
 
+        canvas = arg
         canvas.onKeyPressed = EventHandler { e: KeyEvent ->
             lk.parseInput(e.code.toString())
         }
         canvas.onKeyReleased = canvas.onKeyPressed
+
+        with(canvas.graphicsContext2D!!) {
+            font = Font.font("Helvetica", FontWeight.BOLD, 36.0)
+            fill = Color.BLACK
+            stroke = Color.BLACK
+            lineWidth = 1.0
+        }
 
         renderable = true
     }

@@ -81,14 +81,11 @@ abstract class PacManLevel(gameCanvas: Canvas) : Level(gameCanvas) {
     }
 
     override val isGameFinished: Boolean
-        get() {
-            if (collectables.size == 0) {
-                setChanged()
-                this.notifyObservers(PacManGame.gameFinishedMessage)
-                return true
-            }
-            return false
-        }
+        get() = if (collectables.size == 0) {
+            setChanged()
+            this.notifyObservers(PacManGame.gameFinishedMessage)
+            true
+        } else { false }
 
     fun createDataCoins(gameCanvas: Canvas?) {
         var y = 0

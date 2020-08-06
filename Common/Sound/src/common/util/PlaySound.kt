@@ -16,21 +16,10 @@ object PlaySound {
     private val p = Player()
 
     /**
-     *
-     * @param path Player needs the path of mediafile as parameter
+     * Buffer Media before it needs to be played.
      */
-    @JvmStatic
-    fun playSound(path: String) {
-        p.playSound(path, false)
-    }
-
-    /**
-     * Plays and resets sound
-     * @param path Player needs the path of mediafile as parameter
-     */
-    @JvmStatic
-    fun playAndResetSound(path: String) {
-        p.playSound(path, true)
+    fun loadMedia(mediaPath: String) {
+        AudioBuffer.loadMedia(mediaPath)
     }
 
     /**
@@ -38,32 +27,81 @@ object PlaySound {
      * @param path Player needs the path of mediafile as parameter
      * @param resetMediaPlayer true, if it's desired to reset mediaplayer
      */
-    @JvmStatic
-    fun playSound(path: String,
-                  resetMediaPlayer: Boolean) {
+    fun playSound(path: String, resetMediaPlayer: Boolean = false) {
         p.playSound(path, resetMediaPlayer)
     }
 
     /**
+     * Plays and resets sound
+     * @param path Player needs the path of mediafile as parameter
+     */
+    fun playAndResetSound(path: String) {
+        p.playSound(path, true)
+    }
+
+    fun stop() {
+        p.stop()
+    }
+
+    fun pause() {
+        this.p.pause()
+    }
+
+    fun resume() {
+        this.p.resume()
+    }
+    /**
      * Check if next sound is different to previous, else save performance :-)
      */
     internal class Player : Runnable {
+
         private var musicFile: String? = null
+            set(value) {
+                field = value
+                if (field == null) {
+                    throw NullPointerException("MusicFile String is null")
+                }
+            }
         private var currentMedia: Media? = null
-        private var prop_mediaPlayer: MediaPlayer? = null
+            set(value) {
+                field = value
+                if (field == null) {
+                    throw NullPointerException("Current Media is null: $musicFile")
+                }
+            }
+        private var propMediaplayer: MediaPlayer? = null
         private var resetTimer = false
 
         @Throws(MediaException::class)
-        fun playSound(path: String,
-                      resetMediaPlayer: Boolean) {
-            initProperties(path, resetMediaPlayer)
-            if (prop_mediaPlayer != null) {
-                if (resetTimer) {
-                    resetTimer(prop_mediaPlayer!!)
+        fun playSound(path: String, resetMediaPlayer: Boolean) {
+            fun initProperties(path: String, resetMediaPlayer: Boolean) {
+                fun createMediaPlayer(): MediaPlayer {
+                    val mediaPlayer = MediaPlayer(currentMedia)
+                    mediaPlayer.isAutoPlay = false
+                    mediaPlayer.onEndOfMedia = Runnable {
+                        mediaPlayer.stop()
+                        mediaPlayer.seek(Duration.ZERO)
+                    }
+                    return mediaPlayer
                 }
-                Platform.runLater { prop_mediaPlayer!!.play() }
+
+                resetTimer = resetMediaPlayer
+                if (musicFile != null && musicFile == path) { //Performance-Kniff
+                    return
+                }
+                if (propMediaplayer != null) propMediaplayer!!.dispose()
+                musicFile = path
+                currentMedia = AudioBuffer.loadMedia(path)
+                propMediaplayer = createMediaPlayer()
             }
-            // else { throw new NullPointerException("Mediaplayer is null"); }
+
+            initProperties(path, resetMediaPlayer)
+            if (propMediaplayer != null) {
+                if (resetTimer) {
+                    resetTimer(propMediaplayer!!)
+                }
+                Platform.runLater { propMediaplayer!!.play() } // TODO: Durch Coroutine ersetzen
+            }
         }
 
         /**
@@ -71,46 +109,10 @@ object PlaySound {
          * @param mediaPlayer needs instance of mediaplayer where to reset timer
          */
         private fun resetTimer(mediaPlayer: MediaPlayer) {
-            if (mediaPlayer.currentTime
-                            .lessThan(mediaPlayer.totalDuration)) {
+            if (mediaPlayer.currentTime.lessThan(mediaPlayer.totalDuration)) {
                 mediaPlayer.stop()
                 mediaPlayer.seek(Duration.ZERO)
             }
-        }
-
-        private fun initProperties(path: String,
-                                   resetMediaPlayer: Boolean) {
-            resetTimer = resetMediaPlayer
-            if (musicFile != null && musicFile == path) { //Performance-Kniff
-                return
-            }
-            if (prop_mediaPlayer != null) {
-                prop_mediaPlayer!!.dispose()
-            }
-            musicFile = path
-            if (musicFile == null) {
-                throw NullPointerException("MusicFile String is null")
-            }
-            currentMedia = AudioBuffer.loadMedia(path)
-            if (currentMedia == null) {
-                throw NullPointerException("Current Media is null: $musicFile")
-            }
-            prop_mediaPlayer = createMediaPlayer()
-        }
-
-        /**
-         * Creates isntance of Mediaplayer
-         * @return returns the new instance of mediaplayer
-         */
-        private fun createMediaPlayer(): MediaPlayer {
-            val mediaPlayer = MediaPlayer(
-                    currentMedia)
-            mediaPlayer.isAutoPlay = false
-            mediaPlayer.onEndOfMedia = Runnable {
-                mediaPlayer.stop()
-                mediaPlayer.seek(Duration.ZERO)
-            }
-            return mediaPlayer
         }
 
         /**
@@ -118,6 +120,18 @@ object PlaySound {
          */
         override fun run() {
             musicFile?.let { playSound(it, resetTimer) }
+        }
+
+        fun stop() {
+            this.propMediaplayer?.stop()
+        }
+
+        fun pause() {
+            this.propMediaplayer?.pause()
+        }
+
+        fun resume() {
+            this.propMediaplayer?.play()
         }
     }
 }

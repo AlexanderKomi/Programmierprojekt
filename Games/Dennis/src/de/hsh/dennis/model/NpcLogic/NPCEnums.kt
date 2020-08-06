@@ -5,7 +5,4 @@ class NPCEnums {
         RIGHT, LEFT
     }
 
-    enum class NpcType {
-        BOT, HACKER, PACKAGE
-    }
 }

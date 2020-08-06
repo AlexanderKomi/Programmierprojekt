@@ -15,7 +15,7 @@ abstract class ControlableActor : Actor {
                           x: Double,
                           y: Double,
                           keymap: Map<String, Direction>,
-                          delay: Double) : super(pictureFileNames.toList(), x = x, y = y, delay = delay) {
+                          delay: Int) : super(pictureFileNames.toList(), x = x, y = y, delay = delay) {
         this.movement.keymap = (keymap)
     }
 
@@ -41,7 +41,7 @@ abstract class ControlableActor : Actor {
         if (directedSpeed != null) {
             super.draw(canvas, directedSpeed[0], directedSpeed[1])
         } else {
-            super.draw(canvas, 0.0, 0.0)
+            super.draw(canvas)
         }
     }
 

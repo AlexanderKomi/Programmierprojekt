@@ -19,17 +19,10 @@ import java.util.*
  */
 open class Drawable : Observable {
     val id: Int
-    var height: Double = 0.0
-    var width: Double = 0.0
     var x: Double
     var y: Double
-    lateinit var currentImageName: String
-    private var switchingBuffer = 0
-    var switchImageDelay = 0.0
-    protected var scaleWidth = 1.0
-    var scaleHeight = 1.0
-    private val imageView = ImageView()
-    private val switchingImages = mutableListOf<Image>()
+    var height: Double = 0.0
+    var width: Double = 0.0
     var currentImage: Image
         get() = imageView.image
         set(currentImage) {
@@ -38,12 +31,31 @@ open class Drawable : Observable {
             width = this.currentImage.width
         }
 
-    protected constructor(pictureFileName: String,
-                          x: Double = 0.0,
-                          y: Double = 0.0,
-                          delay: Double = 0.0
-    ) {
-        currentImage = loadPicture(pictureFileName)
+    var pos: DoubleArray
+        inline get() = doubleArrayOf(x, y)
+        inline set(pos) {
+            x = pos[0]
+            y = pos[1]
+        }
+
+    protected lateinit var currentImageName: String
+    protected var scaleHeight = 1.0
+    protected var scaleWidth = 1.0
+    private var switchImageDelay = 0
+    private var switchingBuffer = 0
+    private val imageView = ImageView()
+    private val switchingImages = mutableListOf<Image>()
+
+    fun setPos(x: Double, y: Double) {
+        this.x = x; this.y = y
+    }
+
+    fun setCurrentImage(filePath: String) {
+        currentImage = TextureBuffer.loadImage(filePath)
+        currentImageName = filePath
+    }
+
+    private constructor(x: Double, y: Double, delay: Int) {
         this.x = x
         this.y = y
         this.switchImageDelay = delay
@@ -51,56 +63,31 @@ open class Drawable : Observable {
         id_counter++
     }
 
-    protected constructor(pictureFilePaths: List<String>,
+    protected constructor(pictureFileName: String,
                           x: Double = 0.0,
                           y: Double = 0.0,
-                          delay: Double = 0.0) {
-        this.x = x
-        this.y = y
-        switchImageDelay = delay
-        id = id_counter
-        id_counter++
-        pictureFilePaths.forEach { filePath -> addSwitchingImage(filePath) }
-        if (switchingImages.size > 0) { currentImage = switchingImages[0] }
-    }
-
-    protected constructor(x: Double,
-                          y: Double,
-                          scale: Double,
-                          picturePath: String) : this(picturePath, x, y) {
+                          delay: Int = 0,
+                          scale: Double = 1.0) :
+            this(x, y, delay) {
+        setCurrentImage(pictureFileName)
         scaleImage(scale)
     }
 
-    private fun loadPicture(fileName: String): Image {
-        currentImageName = fileName
-        return TextureBuffer.loadImage(fileName)
-    }
-
-    private fun addSwitchingImage(picturePath: String) = loadPicture(picturePath).let { switchingImages.add(it) }
-
-    /**
-     * Switch switchingImages based on buffer implementation.
-     */
-    private fun switchImages() {
-        if (switchingImages.isEmpty()) {
-            return
-        }
-        if (switchingBuffer < switchImageDelay) {
-            switchingBuffer++
-            return
-        }
-        switchToNextImage()
-    }
-
-    private fun switchToNextImage() {
-        switchingBuffer = 0
-        val index = switchingImages.indexOf(currentImage)
-        currentImage = if (index < switchingImages.size - 1) {
-            switchingImages[index + 1]
-        } else {
-            switchingImages[0]
+    protected constructor(
+            pictureFilePaths: List<String>,
+            x: Double = 0.0,
+            y: Double = 0.0,
+            delay: Int = 0,
+            scale: Double = 1.0
+    ) : this(x, y, delay) {
+        switchingImages.addAll(pictureFilePaths.map { filePath -> TextureBuffer.loadImage(filePath) })
+        if (switchingImages.size > 0) {
+            currentImageName = pictureFilePaths[0]
+            currentImage = switchingImages[0]
+            scaleImage(scale)
         }
     }
+
 
     protected fun scaleImageWidth(factor: Double) {
         if (factor <= 0) {
@@ -124,22 +111,54 @@ open class Drawable : Observable {
         scaleImageWidth(factor)
     }
 
-    // ---------------------------------- START DRAW ----------------------------------
     open fun draw(canvas: Canvas) = draw(canvas, 0.0, 0.0)
 
-    fun draw(canvas: Canvas,
-             offset_to_new_x: Double,
-             offset_to_new_y: Double) {
-        val inBoundsPos = calcPosAfterBounds(
-                isInBounds(x, y,
-                           width, height,
-                           canvas.width, canvas.height,
-                           offset_to_new_x, offset_to_new_y),
-                offset_to_new_x,
-                offset_to_new_y)
-        val oldPos = pos
-        pos = inBoundsPos
-        pos = beforeDrawing(oldPos, inBoundsPos) // Maybe reset ? :)
+    protected open fun draw(canvas: Canvas,
+                            offsetToNewX: Double,
+                            offsetToNewY: Double) {
+        /**
+         * Switch switchingImages based on buffer implementation.
+         */
+        fun switchImages() {
+            fun switchToNextImage() {
+                switchingBuffer = 0
+                val index = switchingImages.indexOf(currentImage)
+                currentImage = if (index < switchingImages.size - 1) switchingImages[index + 1] else switchingImages[0]
+            }
+            if (switchingImages.isEmpty()) {
+                return
+            }
+            if (switchingBuffer < switchImageDelay) {
+                switchingBuffer++
+                return
+            }
+            switchToNextImage()
+        }
+
+        fun calcPosAfterBounds(isInBounds: BooleanArray,
+                               newX: Double,
+                               newY: Double): DoubleArray {
+            val temp = doubleArrayOf(x, y)
+            if (isInBounds[0]) {
+                temp[0] += newX
+            }
+            if (isInBounds[1]) {
+                temp[1] += newY
+            }
+            return temp
+        }
+
+        if (offsetToNewX != 0.0 || offsetToNewY != 0.0) {
+            val inBoundsPos = calcPosAfterBounds(
+                    isInBounds(x, y,
+                               width, height,
+                               canvas.width, canvas.height,
+                               offsetToNewX, offsetToNewY),
+                    offsetToNewX,
+                    offsetToNewY)
+            val oldPos = pos
+            pos = beforeDrawing(oldPos, inBoundsPos) // Maybe reset ? :)
+        }
         switchImages()
         //this.setCurrentImage(temp);
         canvas.graphicsContext2D.drawImage(currentImage, x, y, width, height)
@@ -152,22 +171,8 @@ open class Drawable : Observable {
      * @param new_pos     The next position of the Drawable
      * @return Returns the new position of the Drawable.
      */
-    protected open fun beforeDrawing(current_pos: DoubleArray,
-                                     new_pos: DoubleArray): DoubleArray = new_pos
+    protected open fun beforeDrawing(current_pos: DoubleArray, new_pos: DoubleArray): DoubleArray = new_pos
 
-    // ---------------------------------- END DRAW ----------------------------------
-    private fun calcPosAfterBounds(isInBounds: BooleanArray,
-                                   new_x: Double,
-                                   new_y: Double): DoubleArray {
-        val temp = doubleArrayOf(x, y)
-        if (isInBounds[0]) {
-            temp[0] += new_x
-        }
-        if (isInBounds[1]) {
-            temp[1] += new_y
-        }
-        return temp
-    }
 
     override fun equals(other: Any?): Boolean =
             if (other is Drawable) {
@@ -181,22 +186,6 @@ open class Drawable : Observable {
 
     override fun toString(): String {
         return """${this.javaClass}(name:$currentImageName, x:$x, y:$y, width:$width, height:$height)"""
-    }
-
-    inline fun setPos(x: Double, y: Double) {
-        this.x = x
-        this.y = y
-    }
-
-    var pos: DoubleArray
-        inline get() = doubleArrayOf(x, y)
-        inline set(pos) {
-            x = pos[0]
-            y = pos[1]
-        }
-
-    fun setCurrentImage(filePath: String) {
-        currentImage = loadPicture(filePath)
     }
 
     override fun hashCode(): Int {

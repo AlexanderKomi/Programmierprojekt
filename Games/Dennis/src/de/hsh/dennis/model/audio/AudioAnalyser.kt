@@ -5,13 +5,12 @@ import de.hsh.dennis.model.audio.AudioConfig.DelayBetweenSpawns
 import v4lk.lwbd.BeatDetector
 import java.io.IOException
 import java.io.InputStream
-import java.util.*
 
-class AudioAnalyser {
+object AudioAnalyser {
     private var audioStream: InputStream? = null
     private val sensitivityFixed = 0.2
     var sensitivity = 0.2
-    private var spawnDelay = DelayBetweenSpawns._default
+    var spawnDelay = DelayBetweenSpawns._default
     fun loadSound(mp3Name: String) {
         val path = "/de/de.hsh/dennis/resources/audioFiles/"
         audioStream = javaClass.getResourceAsStream(path + mp3Name)
@@ -21,40 +20,34 @@ class AudioAnalyser {
         audioStream = null
     }
 
-    val spawnTimes: List<Double>
-        get() {
-            if (audioStream == null) {
-                log(this.javaClass.name + " : no File detected ...")
-            } else {
-                try {
-                    val beats = BeatDetector.detectBeats(audioStream, BeatDetector.AudioType.MP3)
-                    val spawnTimes: MutableList<Double> = ArrayList()
-                    for (b in beats) {
-                        if (b.energy >= sensitivity) {
-                            if (spawnTimes.size >= 1) {
-                                if (b.timeMs / 1000.0 - spawnTimes[spawnTimes.size - 1] >= spawnDelay) {
-                                    spawnTimes.add(b.timeMs / 1000.0)
-                                }
+    fun getSpawnTimes(): List<Double> {
+        if (audioStream == null) {
+            log(this.javaClass.name + " : no File detected ...")
+        } else {
+            try {
+                val beats = BeatDetector.detectBeats(audioStream, BeatDetector.AudioType.MP3)
+                val spawnTimes = mutableListOf<Double>()
+                beats.asSequence()
+                        .filter { it.energy >= sensitivity }
+                        .forEach {
+                            if (spawnTimes.size < 1) {
+                                spawnTimes.add(it.timeMs / 1000.0)
                             } else {
-                                spawnTimes.add(b.timeMs / 1000.0)
+                                if (it.timeMs / 1000.0 - spawnTimes[spawnTimes.size - 1] >= spawnDelay) {
+                                    spawnTimes.add(it.timeMs / 1000.0)
+                                }
                             }
                         }
-                    }
-                    log("detected " + spawnTimes.size + " usable beats.")
-                    return spawnTimes
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
+                log("detected " + spawnTimes.size + " usable beats.")
+                return spawnTimes
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-            return ArrayList()
         }
+        return listOf()
+    }
 
     fun resetSensitivity() {
         sensitivity = sensitivityFixed
     }
-
-    fun setSpawnDelay(spawnDelay: Double) {
-        this.spawnDelay = spawnDelay
-    }
-
 }
