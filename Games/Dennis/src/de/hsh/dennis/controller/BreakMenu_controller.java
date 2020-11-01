@@ -1,6 +1,6 @@
 package de.hsh.dennis.controller;
 
-import common.util.Logger;
+import common.logger.Logger;
 import de.hsh.dennis.model.GameModel;
 import de.hsh.dennis.model.KeyLayout;
 import javafx.event.ActionEvent;

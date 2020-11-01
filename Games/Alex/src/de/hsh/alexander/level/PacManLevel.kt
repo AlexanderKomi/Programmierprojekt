@@ -6,7 +6,7 @@ import common.actor.ControlableActor
 import common.actor.Level
 import common.actor.LevelElement
 import common.config.WindowConfig
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.alexander.PacManGame
 import de.hsh.alexander.actor.collectables.DataCoin
 import de.hsh.alexander.actor.collectables.Invisible

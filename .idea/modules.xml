@@ -10,7 +10,6 @@
       <module fileurl="file://$PROJECT_DIR$/Games/Dennis/Dennis.iml" filepath="$PROJECT_DIR$/Games/Dennis/Dennis.iml" />
       <module fileurl="file://$PROJECT_DIR$/Common/Engine/Engine.iml" filepath="$PROJECT_DIR$/Common/Engine/Engine.iml" />
       <module fileurl="file://$PROJECT_DIR$/Games/GameCollection/GameCollection.iml" filepath="$PROJECT_DIR$/Games/GameCollection/GameCollection.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Games/Games.iml" filepath="$PROJECT_DIR$/Games/Games.iml" />
       <module fileurl="file://$PROJECT_DIR$/Games/Julian/Julian.iml" filepath="$PROJECT_DIR$/Games/Julian/Julian.iml" />
       <module fileurl="file://$PROJECT_DIR$/Games/Kevin/Kevin.iml" filepath="$PROJECT_DIR$/Games/Kevin/Kevin.iml" />
       <module fileurl="file://$PROJECT_DIR$/Common/Logger/Logger.iml" filepath="$PROJECT_DIR$/Common/Logger/Logger.iml" />

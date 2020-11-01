@@ -3,7 +3,7 @@ package de.hsh.amir
 import common.engine.FxModul
 import common.engine.FxmlChanger
 import common.updates.UpdateCodes
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.amir.controller.AmirGameController
 import de.hsh.amir.controller.AmirsMainMenuController
 import java.util.*

@@ -3,7 +3,7 @@ package de.hsh.dennis
 import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoint
 import common.updates.UpdateCodes
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.dennis.controller.LevelMenu_controller
 import de.hsh.dennis.controller.MainMenu_controller
 import de.hsh.dennis.model.GameModel

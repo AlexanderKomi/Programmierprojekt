@@ -1,11 +1,10 @@
 package de.hsh.daniel.model.board
 
-import common.util.Logger.log
+import common.logger.Logger.log
 import de.hsh.daniel.model.Card
 import de.hsh.daniel.model.Player
 import de.hsh.daniel.model.board.BoardUtilities.delay
 import de.hsh.daniel.model.board.BoardUtilities.initCards
-import java.util.*
 
 /**
  * Class represents Gameboard where Cards are laid out

@@ -1,6 +1,6 @@
 package de.hsh.dennis.model.audio
 
-import common.util.Logger.log
+import common.logger.Logger.log
 import de.hsh.dennis.model.audio.AudioConfig.DelayBetweenSpawns
 import v4lk.lwbd.BeatDetector
 import java.io.IOException

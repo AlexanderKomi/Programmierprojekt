@@ -1,6 +1,6 @@
 package de.hsh.daniel.model.board
 
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.daniel.model.Card
 import de.hsh.daniel.model.Resources
 import javafx.application.Platform

@@ -5,7 +5,7 @@ import common.engine.FxModul
 import common.engine.FxmlChanger
 import common.engine.components.game.GameEntryPoint
 import common.updates.UpdateCodes
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.dennis.controller.*
 import de.hsh.dennis.model.GameModel
 import de.hsh.dennis.model.KeyLayout

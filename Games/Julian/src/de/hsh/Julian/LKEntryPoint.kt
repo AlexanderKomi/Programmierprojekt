@@ -5,7 +5,7 @@ package de.hsh.Julian
 
 import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoint
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.Julian.controller.LKStart
 import javafx.application.Platform
 import javafx.event.EventHandler

@@ -2,7 +2,7 @@ package de.hsh.daniel.controller;
 
 import common.config.WindowConfig;
 import common.updates.UpdateCodes;
-import common.util.Logger;
+import common.logger.Logger;
 import de.hsh.daniel.model.Game;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

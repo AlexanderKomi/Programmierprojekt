@@ -1,7 +1,7 @@
 package common.actor
 
-import common.util.Logger
-import common.util.PlaySound
+import common.logger.Logger
+import common.sound.PlaySound
 import java.util.*
 
 /**
@@ -123,9 +123,6 @@ abstract class Actor : Drawable {
     }
 
     protected open fun onRemove(collectable: Collectable?) {}
-    // ----------------------------------- GETTER AND SETTER -----------------------------------
-
-
 
     /**
      * adds a colliding actor

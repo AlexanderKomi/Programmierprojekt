@@ -2,7 +2,7 @@ package de.hsh.alexander.actor.collectables
 
 import common.actor.Actor
 import common.actor.Collectable
-import common.util.PlaySound
+import common.sound.PlaySound
 import de.hsh.alexander.actor.ResourcePaths
 
 class Invisible(x: Double, y: Double) : Collectable(x,

@@ -2,9 +2,9 @@ package de.hsh.amir
 
 import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoint
-import common.updates.MenuCodes
+import common.codes.EngineObserverCodes
 import common.updates.UpdateCodes
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.amir.controller.AmirGameController
 import de.hsh.amir.controller.AmirsMainMenuController
 import javafx.application.Platform
@@ -31,7 +31,7 @@ class AmirEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.amir_title) {
                     }
                     changer.changeFxml(AmirsMainMenuController(), UpdateCodes.Amir.showEndScreen)
                 }
-                MenuCodes.exitToMainGUI        -> {
+                EngineObserverCodes.exitToMainGUI        -> {
                     if (amirGame != null) {
                         amirGame!!.deleteObservers()
                         amirGame = null

@@ -6,7 +6,7 @@ package de.hsh.Julian
 import common.engine.FxModul
 import common.engine.FxmlChanger
 import common.engine.components.game.GameEntryPoint
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.Julian.controller.LKEnd
 import de.hsh.Julian.controller.SpielBildschirm_controller
 import java.util.*

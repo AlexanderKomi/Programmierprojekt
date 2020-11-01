@@ -3,7 +3,7 @@ package de.hsh.alexander
 import common.engine.FxModul
 import common.engine.FxmlChanger
 import common.updates.UpdateCodes
-import common.util.Logger
+import common.logger.Logger
 import javafx.application.Platform
 import java.util.*
 

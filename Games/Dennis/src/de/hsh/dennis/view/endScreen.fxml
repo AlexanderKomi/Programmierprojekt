@@ -28,7 +28,7 @@
                 <Pane prefHeight="200.0" prefWidth="200.0" />
                 <Button fx:id="b_replay" mnemonicParsing="false" onAction="#button_clicked" text="replay" />
                 <Pane prefHeight="200.0" prefWidth="200.0" />
-                <Button fx:id="b_main_menu" mnemonicParsing="false" onAction="#button_clicked" text="main menu" />
+                <Button fx:id="b_main_menu" mnemonicParsing="false" onAction="#button_clicked" text="main.java.main menu" />
                 <Pane prefHeight="200.0" prefWidth="200.0" />
                 <Pane prefHeight="200.0" prefWidth="200.0" />
             </children>

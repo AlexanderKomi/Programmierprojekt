@@ -1,10 +1,9 @@
 package de.hsh.alexander;
 
 import common.updates.UpdateCodes;
-import common.util.Logger;
+import common.logger.Logger;
 import de.hsh.alexander.actor.player.PacMan1;
 import de.hsh.alexander.actor.player.PacMan2;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;

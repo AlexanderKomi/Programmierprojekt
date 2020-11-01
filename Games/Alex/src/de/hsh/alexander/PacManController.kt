@@ -3,7 +3,7 @@ package de.hsh.alexander
 import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoint
 import common.updates.UpdateCodes
-import common.util.Logger
+import common.logger.Logger
 import javafx.application.Platform
 import java.util.*
 

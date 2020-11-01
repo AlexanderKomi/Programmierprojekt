@@ -1,6 +1,6 @@
 package de.hsh.dennis.model
 
-import common.util.Logger.log
+import common.logger.Logger.log
 import javazoom.jl.decoder.JavaLayerException
 import javazoom.jl.player.Player
 import java.io.BufferedInputStream

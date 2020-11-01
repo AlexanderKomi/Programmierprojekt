@@ -1,15 +1,14 @@
 package de.hsh.Julian
 
 import common.config.WindowConfig
-import common.util.Logger
-import common.util.PlaySound.playAndResetSound
-import common.util.PlaySound.playSound
+import common.logger.Logger
+import common.sound.PlaySound.playAndResetSound
+import common.sound.PlaySound.playSound
 import de.hsh.Julian.Enemy.Companion.createEnemy
 import de.hsh.dennis.model.NpcLogic.SpawnTimer
 import javafx.application.Platform
 import javafx.scene.canvas.Canvas
 import java.util.*
-import java.util.function.Consumer
 import kotlin.math.sqrt
 
 class Leertastenklatsche : Observable(), Observer {

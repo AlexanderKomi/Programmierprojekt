@@ -2,7 +2,7 @@ package de.hsh.dennis.controller;
 
 import common.config.WindowConfig;
 import common.updates.UpdateCodes;
-import common.util.Logger;
+import common.logger.Logger;
 import de.hsh.dennis.model.GameModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

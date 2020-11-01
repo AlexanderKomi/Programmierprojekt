@@ -1,7 +1,6 @@
 package de.hsh.dennis.model.NpcLogic
 
 import com.google.gson.Gson
-import common.util.Logger.log
 import de.hsh.dennis.model.NpcLogic.NPCEnums.NpcType
 import de.hsh.dennis.model.NpcLogic.SkinConfig.Level.Difficulty
 import de.hsh.dennis.model.NpcLogic.actors.Bot

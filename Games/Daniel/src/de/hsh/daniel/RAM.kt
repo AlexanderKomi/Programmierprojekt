@@ -2,9 +2,9 @@ package de.hsh.daniel
 
 import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoint
-import common.updates.MenuCodes
+import common.codes.EngineObserverCodes
 import common.updates.UpdateCodes
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.daniel.controller.RAM_MainMenu_controller
 import de.hsh.daniel.controller.RAM_winScreen_controller
 import de.hsh.daniel.controller.RamGame_controller
@@ -23,7 +23,7 @@ class RAM(o: Observer) : GameEntryPoint(o, WindowConfig.daniel_title) {
             when (message) {
                 UpdateCodes.RAM.startGame                                         -> startGame(message)
                 UpdateCodes.RAM.mainMenu                                          -> showMainMenu(message)
-                MenuCodes.exitToMainGUI, UpdateCodes.RAM.quit                     -> exit()
+                EngineObserverCodes.exitToMainGUI, UpdateCodes.RAM.quit                     -> exit()
                 UpdateCodes.RAM.p1Win, UpdateCodes.RAM.p2Win, UpdateCodes.RAM.tie -> showEndScreen(message)
                 else                                                              -> changer.changeFxml(o,
                                                                                                         arg)

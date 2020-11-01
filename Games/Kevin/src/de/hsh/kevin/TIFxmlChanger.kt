@@ -3,7 +3,7 @@ package de.hsh.kevin
 import common.engine.FxModul
 import common.engine.FxmlChanger
 import common.engine.components.game.GameEntryPoint
-import common.updates.MenuCodes
+import common.codes.EngineObserverCodes
 import common.updates.UpdateCodes
 import de.hsh.kevin.controller.TIGameController
 import de.hsh.kevin.controller.TIGameOverController
@@ -24,12 +24,12 @@ class TIFxmlChanger(fxModul: FxModul, fxmlPath: String, fxController: Observable
         when (o) {
             is TIMenuController         -> {
                 when (msg) {
-                    MenuCodes.exitToMainGUI -> (fxModul as GameEntryPoint).exitToMainGUI()
+                    EngineObserverCodes.exitToMainGUI -> (fxModul as GameEntryPoint).exitToMainGUI()
                 }
             }
             is TIGameOverController -> {
                 when (msg) {
-                    MenuCodes.exitToMainGUI -> (fxModul as GameEntryPoint).exitToMainGUI()
+                    EngineObserverCodes.exitToMainGUI -> (fxModul as GameEntryPoint).exitToMainGUI()
                     UpdateCodes.TunnelInvader.gameMenu -> changeScene(fxmlPackage + TIMenuController.fxml,
                                                                       TIMenuController())
                 }

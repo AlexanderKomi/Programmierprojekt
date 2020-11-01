@@ -2,7 +2,7 @@ package de.hsh.dennis.model
 
 import common.actor.Direction
 import common.updates.UpdateCodes
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.dennis.model.KeyLayout.Movement.Custom
 import de.hsh.dennis.model.NpcLogic.NPCEnums.NpcType
 import de.hsh.dennis.model.NpcLogic.NPCEnums.Spawn

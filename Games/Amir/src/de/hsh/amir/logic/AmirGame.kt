@@ -1,6 +1,6 @@
 package de.hsh.amir.logic
 
-import common.util.PlaySound.playSound
+import common.sound.PlaySound.playSound
 import de.hsh.kevin.logic.Score
 import javafx.scene.canvas.Canvas
 import javafx.scene.input.KeyEvent

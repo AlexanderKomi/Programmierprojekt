@@ -1,9 +1,8 @@
 package de.hsh.dennis.model.NpcLogic
 
-import common.util.Logger.log
+import common.logger.Logger.log
 import de.hsh.dennis.model.NpcLogic.NPCEnums.NpcType
 import de.hsh.dennis.model.NpcLogic.NPCEnums.Spawn
-import de.hsh.dennis.model.NpcLogic.SkinConfig.Level.Difficulty
 import de.hsh.dennis.model.NpcLogic.actors.*
 import de.hsh.dennis.model.audio.AudioAnalyser
 import javafx.scene.canvas.Canvas

@@ -2,9 +2,9 @@ package de.hsh.daniel
 
 import common.engine.FxModul
 import common.engine.FxmlChanger
-import common.updates.MenuCodes
+import common.codes.EngineObserverCodes
 import common.updates.UpdateCodes
-import common.util.Logger
+import common.logger.Logger
 import de.hsh.daniel.controller.RAM_MainMenu_controller
 import de.hsh.daniel.controller.RAM_winScreen_controller
 import de.hsh.daniel.controller.RamGame_controller
@@ -23,7 +23,7 @@ class RAMFxmlChanger internal constructor(fxModul: FxModul,
             UpdateCodes.RAM.mainMenu, UpdateCodes.RAM.quit -> {
                 changeScene(RAM_MainMenu_controller.fxml, o!!)
             }
-            MenuCodes.exitToMainGUI                        -> {
+            EngineObserverCodes.exitToMainGUI                        -> {
                 changeScene("common/gui/P3_Gui.fxml", o!!)
             }
             UpdateCodes.RAM.p1Win                          -> {

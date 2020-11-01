@@ -1,6 +1,6 @@
 package de.hsh.kevin.controller;
 
-import common.updates.MenuCodes;
+import common.codes.EngineObserverCodes;
 import common.updates.UpdateCodes;
 import de.hsh.kevin.logic.Config;
 import de.hsh.kevin.logic.enmDifficultyOptions;
@@ -82,7 +82,7 @@ public class TIMenuController extends Observable {
     @FXML
     void sammlungPressed(ActionEvent event) {
         this.setChanged();
-        this.notifyObservers(MenuCodes.exitToMainGUI);
+        this.notifyObservers(EngineObserverCodes.exitToMainGUI);
     }
 
     /**

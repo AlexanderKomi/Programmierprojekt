@@ -1,8 +1,8 @@
 package de.hsh.daniel.model
 
 import common.actor.Actor
-import common.util.Logger
-import common.util.PlaySound
+import common.logger.Logger
+import common.sound.PlaySound
 
 class Card(val pictureFileName: String, pair_id: Int) : Actor(pictureFileName) {
     /**

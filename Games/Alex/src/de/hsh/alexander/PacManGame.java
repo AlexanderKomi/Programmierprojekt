@@ -2,7 +2,7 @@ package de.hsh.alexander;
 
 import common.config.WindowConfig;
 import common.updates.UpdateCodes;
-import common.util.Logger;
+import common.logger.Logger;
 import de.hsh.alexander.level.Level1;
 import de.hsh.alexander.level.PacManLevel;
 import de.hsh.alexander.actor.player.PacMan1;

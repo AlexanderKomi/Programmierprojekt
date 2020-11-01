@@ -1,6 +1,6 @@
 package de.hsh.Julian.controller;
 
-import common.util.Logger;
+import common.logger.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
