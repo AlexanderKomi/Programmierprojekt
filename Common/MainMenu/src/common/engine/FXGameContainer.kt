@@ -42,7 +42,7 @@ abstract class FXGameContainer : Application(), GameContainer, Observer {
 
     fun showMainMenu() {
         stage.scene = menu.scene
-        stage.title = WindowConfig.mainGui_title
+        stage.title = menu.title
     }
 
     fun setGameShown(gameName: String) {
