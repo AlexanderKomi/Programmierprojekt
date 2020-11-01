@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 /**
  * @author Alexander Komischke
  */
-public final class MainMenu extends Menu implements Initializable {
+public final class MainMenu extends Menu implements Initializable, common.engine.components.menu.MainMenu {
 
     @FXML
     public AnchorPane       ap_desktop;
@@ -106,8 +106,8 @@ public final class MainMenu extends Menu implements Initializable {
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
+    public String title() {
+        return WindowConfig.mainGui_title;
     }
+
 }

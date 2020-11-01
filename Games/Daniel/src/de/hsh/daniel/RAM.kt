@@ -34,7 +34,7 @@ class RAM(o: Observer) : GameEntryPoint(o, WindowConfig.daniel_title) {
     private fun startGame(message: String) {
         if (!initialized) {
             game = RamGame_controller()
-            changer.changeFxml(game, message)
+            changer.changeFxml(game!!, message)
             initialized = true
         }
     }
@@ -42,13 +42,13 @@ class RAM(o: Observer) : GameEntryPoint(o, WindowConfig.daniel_title) {
     private fun showMainMenu(message: String) {
         ramMenu = RAM_MainMenu_controller()
         initialized = false
-        changer.changeFxml(ramMenu, message)
+        changer.changeFxml(ramMenu!!, message)
     }
 
     private fun showEndScreen(message: String) {
         winScreen = RAM_winScreen_controller()
         initialized = false
-        changer.changeFxml(winScreen, message)
+        changer.changeFxml(winScreen!!, message)
     }
 
     private fun exit() {

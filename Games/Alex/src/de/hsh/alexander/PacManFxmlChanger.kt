@@ -18,11 +18,11 @@ class PacManFxmlChanger(fxModul: FxModul,
         super.changeScene(fxmlPackage + fxmlLocation, controller)
     }
 
-    override fun changeFxml(o: Observable?,
-                            msg: String?) = when (msg) {
-        UpdateCodes.PacMan.startGame -> changeScene(PacManGame.fxml, o!!)
-        UpdateCodes.PacMan.mainMenu -> changeScene(PacManMenu.fxml, o!!)
-        UpdateCodes.PacMan.showEndScreen -> changeScene(PacManEndScreen.fxml, o!!)
+    override fun changeFxml(o: Observable,
+                            msg: String) = when (msg) {
+        UpdateCodes.PacMan.startGame -> changeScene(PacManGame.fxml, o)
+        UpdateCodes.PacMan.mainMenu -> changeScene(PacManMenu.fxml, o)
+        UpdateCodes.PacMan.showEndScreen -> changeScene(PacManEndScreen.fxml, o)
         else                             -> Logger.log(this.javaClass.toString() + ": changeFxml in PacManFxmlCanger: default")
     }
 

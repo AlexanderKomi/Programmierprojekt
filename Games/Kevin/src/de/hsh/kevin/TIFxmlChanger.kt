@@ -20,7 +20,7 @@ class TIFxmlChanger(fxModul: FxModul, fxmlPath: String, fxController: Observable
     /**
      * Ändert die Scene zum Hauptmenü oder Spielmenü
      */
-    override fun changeFxml(o: Observable?, msg: String?) {
+    override fun changeFxml(o: Observable, msg: String) {
         when (o) {
             is TIMenuController         -> {
                 when (msg) {

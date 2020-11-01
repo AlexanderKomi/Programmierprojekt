@@ -1,5 +1,6 @@
 package common.engine
 
+import javafx.application.Platform
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
@@ -24,11 +25,10 @@ abstract class FxmlChanger(protected val fxModul: FxModul, fxmlPath: String, fxC
         @Suppress("LeakingThis")
         this.addObserver(fxModul)
         fxController.addObserver(fxModul)
-        val p = loadFxml(fxmlPath, fxController)
-        if (p.isPresent) {
-            this.fxModul.scene = Scene(p.get())
-        } else {
-            throw NullPointerException("FXML kann nicht geladen werden: $fxmlPath")
+        try {
+            this.fxModul.scene = Scene(loadFxml(fxmlPath, fxController))
+        } catch(e : IOException) {
+            throw e
         }
     }
 
@@ -39,17 +39,13 @@ abstract class FxmlChanger(protected val fxModul: FxModul, fxmlPath: String, fxC
      * @param controller The controller suitable for the .fxml
      * @return A loaded Parent
      */
+    @Throws(IOException::class)
     private fun loadFxml(fxmlLocation: String,
-                         controller: Observable): Optional<Parent> {
-        try {
-            val fxmlLoader = FXMLLoader()
-            fxmlLoader.location = javaClass.getResource(fxmlLocation)
-            fxmlLoader.setController(controller)
-            return Optional.of(fxmlLoader.load())
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return Optional.empty()
+                         controller: Observable): Parent {
+        val fxmlLoader = FXMLLoader()
+        fxmlLoader.location = javaClass.getResource(fxmlLocation)
+        fxmlLoader.setController(controller)
+        return fxmlLoader.load()
     }
 
     /***
@@ -59,17 +55,18 @@ abstract class FxmlChanger(protected val fxModul: FxModul, fxmlPath: String, fxC
      */
     open fun changeScene(fxmlLocation: String,
                          controller: Observable) {
-        controller.addObserver(fxModul)
-        loadFxml(fxmlLocation, controller)
-                .ifPresent { parent: Parent? ->
-                    fxModul.setRoot(parent)
-                }
+        Platform.runLater {
+            controller.addObserver(fxModul)
+            loadFxml(fxmlLocation, controller).also { parent: Parent ->
+                fxModul.setRoot(parent)
+            }
+        }
     }
 
     /**
      * Insert your changeScene(String fxmlLocation, Observable controller) calls here as you please.
      */
-    abstract fun changeFxml(o: Observable?,
-                            msg: String?)
+    abstract fun changeFxml(o: Observable,
+                            msg: String)
 
 }

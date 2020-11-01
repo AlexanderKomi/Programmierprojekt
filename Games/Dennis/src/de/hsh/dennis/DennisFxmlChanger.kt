@@ -123,21 +123,15 @@ class DennisFxmlChanger(fxModul: FxModul, fxmlPath: String, fxController: Observ
         }
     }
 
-    override fun changeFxml(o: Observable?, msg: String?) {
-        if (o is Level_controller) {
-            handle_Level_controller(msg)
-        } else if (o is BreakMenu_controller) {
-            handle_BreakMenu_controller(msg)
-        } else if (o is LevelMenu_controller) {
-            handle_LevelMenu_controller(msg)
-        } else if (o is MainMenu_controller) {
-            handle_MainMenu_controller(msg)
-        } else if (o is Tutorial_controller) {
-            handle_Tutorial_controller(msg)
-        } else if (o is GameModel) {
-            handle_GameModel(o, msg)
-        } else if (o is EndScreen_controller) {
-            handle_EndScreen_controller(msg)
+    override fun changeFxml(o: Observable, msg: String) {
+        when (o) {
+            is Level_controller -> handle_Level_controller(msg)
+            is BreakMenu_controller -> handle_BreakMenu_controller(msg)
+            is LevelMenu_controller -> handle_LevelMenu_controller(msg)
+            is MainMenu_controller -> handle_MainMenu_controller(msg)
+            is Tutorial_controller -> handle_Tutorial_controller(msg)
+            is GameModel -> handle_GameModel(o, msg)
+            is EndScreen_controller -> handle_EndScreen_controller(msg)
         }
     }
 

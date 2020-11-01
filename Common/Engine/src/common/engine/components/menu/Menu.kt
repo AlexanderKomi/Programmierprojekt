@@ -8,6 +8,10 @@ abstract class Menu : Observable(), Observer {
     var scene: Scene? = null
         private set
 
+    override fun update(o: Observable?, arg: Any?) {
+
+    }
+
     override fun notifyObservers() {
         setChanged()
         super.notifyObservers()

@@ -8,9 +8,9 @@ package common.engine
  * For a few examples, take a look at the classes in this package : common.engine.examples .
  *
  * @author Alexander Komischke
- * @see GameContainerInterface
+ * @see AbleToBeRendered
  */
-class Java2DEngine(private val gameContainer: GameContainerInterface) : Runnable {
+class Java2DEngine(private val gameContainer: AbleToBeRendered) : Runnable {
 
     private var gameThread: Thread = Thread(this, "Java 2D Engine")
     var isRunning = false
@@ -43,7 +43,10 @@ class Java2DEngine(private val gameContainer: GameContainerInterface) : Runnable
      */
     override fun run() {
         gameLoop()
-        stop()
+        if (isRunning) {
+            isRunning = false
+            gameThread.interrupt()
+        }
     }
 
     /**
@@ -84,16 +87,6 @@ class Java2DEngine(private val gameContainer: GameContainerInterface) : Runnable
     }
 
     /**
-     * Interrupts the engine thread.
-     */
-    private fun stop() {
-        if (isRunning) {
-            isRunning = false
-            gameThread.interrupt()
-        }
-    }
-
-    /**
      * Calls CPU Idle and starts render process of the current gameContainer.<br></br>
      *
      * @param shouldRender
@@ -103,21 +96,15 @@ class Java2DEngine(private val gameContainer: GameContainerInterface) : Runnable
      * Returns 0 when cpu idles.
      */
     private fun render(shouldRender: Boolean): Byte {
-        if (shouldRender) {
-            // START ------------------------ Render gameContainer ------------------------
+        return if (shouldRender) {
             gameContainer.render(fps)
-            // STOP  ------------------------ Render gameContainer ------------------------
-            return 1
+            1
         } else {
             if (!gameThread.isInterrupted) {
-                try {
-                    Thread.sleep(1) // CPU Idle
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
+                Thread.sleep(1) // CPU Idle
             }
+            0
         }
-        return 0
     }
 
     companion object {

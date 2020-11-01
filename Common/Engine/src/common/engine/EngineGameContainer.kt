@@ -2,7 +2,7 @@ package common.engine
 
 import common.engine.components.game.GameEntryPoints
 
-class EngineGameContainer(val gameEntryPoints: GameEntryPoints) : GameContainerInterface{
+class EngineGameContainer(val gameEntryPoints: GameEntryPoints) : AbleToBeRendered{
 
     @Suppress("LeakingThis")
     private val engine: Java2DEngine = Java2DEngine(this)

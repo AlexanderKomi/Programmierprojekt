@@ -39,7 +39,7 @@ internal constructor(fxModul: FxModul, fxmlPath: String, fxController: Observabl
      * @param o Observer
      * @param msg Name of fxml
      */
-    override fun changeFxml(o: Observable?, msg: String?) {
+    override fun changeFxml(o: Observable, msg: String) {
         when (msg) {
             "b_backtomenu" -> {
                 Logger.log(this.javaClass.toString() + " b_backtomenu_clicked")

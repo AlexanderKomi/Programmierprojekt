@@ -20,7 +20,7 @@ class AmirEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.amir_title) {
             when (arg) {
                 UpdateCodes.Amir.startGame     -> {
                     amirGame = AmirGameController()
-                    changer.changeFxml(amirGame, UpdateCodes.Amir.startGame)
+                    changer.changeFxml(amirGame!!, UpdateCodes.Amir.startGame)
                 }
                 UpdateCodes.Amir.mainMenu      -> changer.changeFxml(AmirsMainMenuController(),
                                                                      UpdateCodes.Amir.mainMenu)

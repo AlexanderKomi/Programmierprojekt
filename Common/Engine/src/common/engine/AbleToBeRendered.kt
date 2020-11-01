@@ -1,6 +1,6 @@
 package common.engine
 
-interface GameContainerInterface {
+interface AbleToBeRendered {
 
 
     /**

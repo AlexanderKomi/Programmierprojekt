@@ -19,7 +19,6 @@ abstract class Collectable : Actor {
      * Then following many overloadings of constructor
      * @param pictureFileName path of desired picture
      */
-    protected constructor(pictureFileName: String) : super(pictureFileName)
     protected constructor(pictureFilePaths: Array<String>, x: Double, y: Double, delay: Int, scale: Double)
             : super(pictureFilePaths, x, y, delay, scale)
     protected constructor(pictureFileName: String) : super(pictureFileName) {}
@@ -27,7 +26,7 @@ abstract class Collectable : Actor {
                           y: Double,
                           delay: Int,
                           scale: Double,
-                          vararg pictureFilePaths: String) : super(pictureFilePaths.toList(), x, y, delay.toDouble()) {
+                          vararg pictureFilePaths: String) : super(pictureFilePaths.toList(), x, y, delay) {
         scaleImage(scale)
     }
 

@@ -41,7 +41,7 @@ class PacManController(o: Observer)
         }
         game = PacManGame()
         game!!.addObserver(this)
-        changer.changeFxml(game, UpdateCodes.PacMan.startGame)
+        changer.changeFxml(game!!, UpdateCodes.PacMan.startGame)
     }
 
     private fun showEndScreen() {

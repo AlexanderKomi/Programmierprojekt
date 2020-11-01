@@ -1,5 +1,6 @@
 package common.engine
 
+import common.updates.MenuCodes
 import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
@@ -19,7 +20,7 @@ import java.util.*
 abstract class FxModul(container: Observer) : Observable(), Observer {
     var scene: Scene = Scene(Pane()) //local scene being worked on.
 
-    fun setRoot(root: Parent?) {
+    fun setRoot(root: Parent) {
         scene.root = root
     }
 
