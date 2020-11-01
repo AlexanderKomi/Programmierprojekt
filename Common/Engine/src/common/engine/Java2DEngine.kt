@@ -1,8 +1,5 @@
 package common.engine
 
-import java.util.*
-import kotlin.coroutines.CoroutineContext
-
 /**
  * A simple Java 2 engine.<br></br>
  * To use the engine, implement an GameContainerInterface.<br></br>
@@ -13,9 +10,11 @@ import kotlin.coroutines.CoroutineContext
  * @author Alexander Komischke
  * @see GameContainerInterface
  */
-class Java2DEngine(private val gameContainer: GameContainerInterface) :
-        Observable(),
-        Runnable {
+class Java2DEngine(private val gameContainer: GameContainerInterface) : Runnable {
+
+    private var gameThread: Thread = Thread(this, "Java 2D Engine")
+    var isRunning = false
+    var fps = 0
 
     /**
      * Use configMainMenu once before start.
@@ -123,18 +122,6 @@ class Java2DEngine(private val gameContainer: GameContainerInterface) :
 
     companion object {
         private const val UPDATE_CAP = 1.0f / 60.0f
-        private lateinit var gameThread: Thread
-        private var isRunning = false
-        var fps = 0
     }
 
-    /**
-     * Must be called before start().
-     *
-     *
-     * Initializes the Game Thread, with an instance of this class.
-     */
-    init {
-        gameThread = Thread(this, "Java 2D Engine")
-    }
 }

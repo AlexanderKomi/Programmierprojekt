@@ -2,18 +2,21 @@ package common.engine
 
 import common.MainMenu
 import common.config.WindowConfig
-import common.engine.GameContainerInterface.Companion.gameEntryPoints
+import common.engine.components.game.GameEntryPoints
+import javafx.application.Application
 import javafx.application.Platform
 import javafx.event.EventHandler
 import javafx.stage.Stage
+import java.util.*
 
 /**
  * FXGameContainer is a container for a game engine, a main menu and all gameEntryPoints.
  *
  * @author Alexander Komischke
  */
-abstract class FXGameContainer : EngineGameContainer() {
+abstract class FXGameContainer : Application(), GameContainer, Observer {
 
+    private lateinit var engineGameContainer: EngineGameContainer
     private lateinit var stage: Stage
     private lateinit var menu: MainMenu
 
@@ -24,21 +27,16 @@ abstract class FXGameContainer : EngineGameContainer() {
      * Main window used.
      */
     override fun start(primaryStage: Stage) {
-        check(!isLaunched) { "Already isLaunched an JavaFX Application. Use existing Stage instead." }
-        isLaunched = true
-
-        stage = primaryStage // This line is required, for reference change.
-        stage.title = WindowConfig.mainGui_title
-        stage.isResizable = false
+        stage = configureStage(primaryStage) // This line is required, for reference change.
         stage.onCloseRequest = EventHandler { stopContainer() }
 
-        gameEntryPoints = createGames(this)
+        engineGameContainer = EngineGameContainer(createGames(this))
 
-        menu = configMainMenu(gameEntryPoints.names)
+        menu = configMainMenu(engineGameContainer.gameEntryPoints.names)
         menu.addObserver(this)
         menu.initGameNames()
         stage.scene = menu.scene
-        engine.start()
+        engineGameContainer.startEngine()
         stage.show()
     }
 
@@ -48,26 +46,29 @@ abstract class FXGameContainer : EngineGameContainer() {
     }
 
     fun setGameShown(gameName: String) {
-        gameEntryPoints.activeGame = gameName
-        val gameEntryPoint = gameEntryPoints[gameName]
+        engineGameContainer.gameEntryPoints.activeGame = gameName
+        val gameEntryPoint = engineGameContainer.gameEntryPoints[gameName]
         stage.title = gameEntryPoint.name
-        val s = gameEntryPoint.scene
-        if (s.rootProperty().get() == null) {
+        if (gameEntryPoint.scene.rootProperty().get() == null) {
             throw NullPointerException("Scene root property is null.")
         }
-        stage.scene = s
+        stage.scene = gameEntryPoint.scene
     }
 
-    /**
-     * Stops the Container instance and the running engine.
-     *
-     * @see GameContainerInterface
-     */
-    override fun stopContainer(func: () -> Unit) =
-            super.stopContainer {
-                func()
-                Platform.exit()
-            }
+    fun containsGame(gameName: String): Boolean = this.engineGameContainer.gameEntryPoints.contains(gameName)
 
+    /**
+     * Stops the engine container. Kills every process inside the container.
+     */
+    override fun stopContainer(func: () -> Unit) {
+        beforeStoppingContainer()
+        func()
+        engineGameContainer.stopEngine()
+        Platform.exit()
+    }
+
+    protected abstract fun configureStage(primaryStage: Stage): Stage
     protected abstract fun configMainMenu(games: List<String>): MainMenu
+    abstract fun createGames(o: Observer): GameEntryPoints
+    abstract fun beforeStoppingContainer()
 }

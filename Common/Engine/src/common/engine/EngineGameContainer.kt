@@ -1,31 +1,15 @@
 package common.engine
 
-import common.engine.GameContainerInterface.Companion.gameEntryPoints
 import common.engine.components.game.GameEntryPoints
-import javafx.application.Application
-import java.util.*
 
-abstract class EngineGameContainer : Application(),
-        GameContainerInterface {
-
-    var isLaunched = false
+class EngineGameContainer(val gameEntryPoints: GameEntryPoints) : GameContainerInterface{
 
     @Suppress("LeakingThis")
-    protected val engine: Java2DEngine = Java2DEngine(this)
+    private val engine: Java2DEngine = Java2DEngine(this)
 
     override fun render(fps: Int) = gameEntryPoints.render(fps)
-    abstract fun createGames(o: Observer): GameEntryPoints
-    abstract override fun update(observable: Observable, arg: Any)
 
     fun containsGame(gameName: String): Boolean = gameEntryPoints.contains(gameName)
-
-    /**
-     * Stops the engine container. Kills every process inside the container.
-     */
-    override fun stopContainer(func: () -> Unit) =
-            super.stopContainer {
-                func()
-                engine.shutdown()
-            }
-
+    fun startEngine() = engine.start()
+    fun stopEngine() = engine.shutdown()
 }

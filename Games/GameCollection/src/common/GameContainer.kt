@@ -1,5 +1,6 @@
 package common
 
+import common.config.WindowConfig
 import common.engine.FXGameContainer
 import common.engine.components.game.GameEntryPoints
 import common.updates.Updater
@@ -11,6 +12,7 @@ import de.hsh.dennis.DennisGameEntryPoint
 import de.hsh.dennis.model.AudioPlayer
 import de.hsh.kevin.controller.TIController
 import javafx.fxml.FXMLLoader
+import javafx.stage.Stage
 import java.io.IOException
 import java.util.*
 
@@ -25,6 +27,12 @@ class GameContainer : FXGameContainer() {
                     TIController(o),
                     DennisGameEntryPoint(o),
                     LKEntryPoint(o))
+
+    override fun configureStage(primaryStage: Stage): Stage {
+        primaryStage.title = WindowConfig.mainGui_title
+        primaryStage.isResizable = false
+        return primaryStage
+    }
 
     override fun configMainMenu(games: List<String>): MainMenu {
         var mainMenu = MainMenu()
