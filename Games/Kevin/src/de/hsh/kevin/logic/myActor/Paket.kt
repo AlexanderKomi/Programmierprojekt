@@ -10,7 +10,7 @@ class Paket(pictureFileName: List<String>,
             x: Double,
             y: Double,
             paketTyp: enmPaketTyp) :
-        Actor(pictureFileName, x, y, 15.0) {
+        Actor(pictureFileName, x, y, 15) {
 
     override var speed = 3.0
 

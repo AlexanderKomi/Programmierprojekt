@@ -7,6 +7,7 @@ import common.engine.components.game.GameEntryPoint
 import common.updates.UpdateCodes
 import common.util.Logger
 import de.hsh.dennis.controller.*
+import de.hsh.dennis.model.Difficulty
 import de.hsh.dennis.model.GameModel
 import de.hsh.dennis.model.KeyLayout
 import de.hsh.dennis.model.NpcLogic.SkinConfig
@@ -41,28 +42,28 @@ class DennisFxmlChanger(fxModul: FxModul, fxmlPath: String, fxController: Observ
                 changeScene("view/level.fxml", levelController)
                 levelController.passCanvas()
                 setChanged()
-                notifyObservers(SkinConfig.Level.Difficulty.EASY)
+                notifyObservers(Difficulty.EASY)
             }
             "b_medium"    -> {
                 Logger.log("handle_LevelMenu_controller: b_medium erreicht")
                 changeScene("view/level.fxml", levelController)
                 levelController.passCanvas()
                 setChanged()
-                notifyObservers(SkinConfig.Level.Difficulty.MEDIUM)
+                notifyObservers(Difficulty.MEDIUM)
             }
             "b_hard"      -> {
                 Logger.log("handle_LevelMenu_controller: b_hard erreicht")
                 changeScene("view/level.fxml", levelController)
                 levelController.passCanvas()
                 setChanged()
-                notifyObservers(SkinConfig.Level.Difficulty.HARD)
+                notifyObservers(Difficulty.HARD)
             }
             "b_nightmare" -> {
                 Logger.log("handle_LevelMenu_controller: b_nightmare erreicht")
                 changeScene("view/level.fxml", levelController)
                 levelController.passCanvas()
                 setChanged()
-                notifyObservers(SkinConfig.Level.Difficulty.NIGHTMARE)
+                notifyObservers(Difficulty.NIGHTMARE)
             }
             "b_back"      -> {
                 Logger.log("handle_LevelMenu_controller: b_back erreicht")

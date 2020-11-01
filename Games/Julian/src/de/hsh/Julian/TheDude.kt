@@ -9,8 +9,7 @@ import common.actor.Collectable
 /**
  * Main actor of Leertastenklatsche
  */
-internal class TheDude(x: Double,
-                       y: Double) : Actor(firstImage, x, y) {
+internal class TheDude(x: Double, y: Double) : Actor(firstImagePath, x, y) {
 
     init {
         speed = 0.0
@@ -21,31 +20,32 @@ internal class TheDude(x: Double,
     /**
      * Swapping image depending on actors view-direction
      */
-    fun swapImage() = if (currentImageName == firstImage) {
-        setCurrentImage(secondImage)
-    } else {
-        setCurrentImage(firstImage)
-    }
+    fun swapImage() =
+            if (currentImageName == firstImagePath) {
+                setCurrentImage(secondImagePath)
+            } else {
+                setCurrentImage(firstImagePath)
+            }
 
     /**
      *
      * @param other checks if collectable was collected
      * @return returns false or instance of collected item
      */
-    public override fun collisionModifier(other: Actor?): Boolean {
-        if (other is Collectable) {
-            other.wasCollected(this)
-            return false
-        }
-        return true
-    }
+    public override fun collisionModifier(other: Actor): Boolean =
+            if (other is Collectable) {
+                other.wasCollectedBy(this)
+                false
+            } else {
+                true
+            }
 
     companion object {
         /**
          * GETTERS AND SETTERS
          */
-        const val firstImage = Leertastenklatsche.location + "thedude.png"
-        const val secondImage = Leertastenklatsche.location + "thedude_turned.png"
+        const val firstImagePath = Leertastenklatsche.location + "thedude.png"
+        const val secondImagePath = Leertastenklatsche.location + "thedude_turned.png"
 
     }
 }

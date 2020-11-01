@@ -98,7 +98,7 @@ class GameField(canvas: Canvas, private val score: Score) {
      * Prüft Collision Player - Pakete und spielt Sound bei Collision
      */
     private fun collisionPlayerPaket() {
-        val toRemove = paketManager.pakete.filter { p: Paket? -> player!!.doesCollide(p) }
+        val toRemove = paketManager.pakete.filter { p: Paket -> player.doesCollide(p) }
         toRemove.forEach { paket ->
             Sound.playSound(enmSounds.collision)
             leben.decrease()

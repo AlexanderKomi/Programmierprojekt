@@ -1,9 +1,7 @@
 package de.hsh.dennis.model.NpcLogic
 
 import common.util.Logger.log
-import de.hsh.dennis.model.NpcLogic.NPCEnums.NpcType
 import de.hsh.dennis.model.NpcLogic.NPCEnums.Spawn
-import de.hsh.dennis.model.NpcLogic.SkinConfig.Level.Difficulty
 import de.hsh.dennis.model.NpcLogic.actors.*
 import de.hsh.dennis.model.audio.AudioAnalyser
 import javafx.scene.canvas.Canvas
@@ -11,33 +9,24 @@ import java.util.*
 
 class NpcHandler(canvas: Canvas?) {
     private val npcLimit = 100
-    private val time = SpawnTimer()
-    val audioAnalyzer = AudioAnalyser()
     private var spawnArray: Array<Npc> = arrayOf()
     private var spawnIterator = 0
-    private val npcsToRemove: MutableList<Npc> = Collections.synchronizedList<Npc>(
-            ArrayList())
-    private val npcsToHit: MutableList<Npc> = Collections.synchronizedList<Npc>(
-            ArrayList())
-    val npcList: MutableList<Npc> = mutableListOf()
-    var scoreChange = 0
-    var healthChange = 0
+    private val npcsToRemove = mutableListOf<Npc>()
+    private val npcsToHit = mutableListOf<Npc>()
     private val pointValue = 1
     private val spawnDelay = 0.0
     private var breakTimeElabsed = 0.0
-    private var breakTimeMark = 0.0
-    val isEndReached: Boolean
-        get() {
-            synchronized(npcList) {
-                if (spawnIterator == spawnArray.size && npcList.isEmpty()) {
-                    return true
-                }
-            }
-            return false
-        }
 
-    fun triggerBreak() {
-        breakTimeMark = time.currentTimeStamp
+    val npcList: MutableList<Npc> = mutableListOf()
+    val time = SpawnTimer()
+    var scoreChange = 0
+    var healthChange = 0
+    var breakTimeMark = 0.0
+
+    fun isEndReached(): Boolean {
+        synchronized(npcList) {
+            return spawnIterator == spawnArray.size && npcList.isEmpty()
+        }
     }
 
     fun unTriggerBreak() {
@@ -58,65 +47,60 @@ class NpcHandler(canvas: Canvas?) {
             if (npcList.size <= npcLimit) {
                 npcList.add(npc)
             }
-            log("Npc: " + npc.npcType + " spawned at " + npc.spawnTime + " seconds.")
+            log("Npc: " + npc.javaClass.name + " spawned at " + npc.spawnTime + " seconds.")
         }
     }
 
     fun generateNpcs(mp3Name: String, speed: Double) {
-        audioAnalyzer.loadSound(mp3Name)
-        val tempTimes = audioAnalyzer.spawnTimes
-        audioAnalyzer.clearAudioFile()
-        val temp: MutableList<Npc> = ArrayList()
-        for (d in tempTimes) {
-            if (d >= spawnDelay) {
-                var direction: Spawn
-                val dirTemp = RandomInt.randInt(1, 2)
-                direction = if (dirTemp == 1) {
-                    Spawn.RIGHT
-                } else {
-                    Spawn.LEFT
-                }
-                when (RandomInt.randInt(1, 3)) {
-                    1 -> if (RandomInt.randInt(1, 4) == 1) {
-                        temp.add(PackageHealing(direction, d, speed))
-                    } else {
-                        temp.add(Package(direction, d, speed))
+        AudioAnalyser.loadSound(mp3Name)
+        val spawnTimes = AudioAnalyser.getSpawnTimes()
+        AudioAnalyser.clearAudioFile()
+        val temp = mutableListOf<Npc>()
+        spawnTimes
+                .filter { spawnTime -> spawnTime >= spawnDelay }
+                .forEach { spawnTime ->
+                    val direction =
+                            if (RandomInt.randInt(1, 2) == 1) Spawn.RIGHT
+                            else Spawn.LEFT
+
+                    when (RandomInt.randInt(1, 3)) {
+                        1 -> if (RandomInt.randInt(1, 4) == 1) {
+                            temp.add(PackageHealing(direction, spawnTime, speed))
+                        } else temp.add(Package(direction, spawnTime, speed))
+                        2 -> temp.add(Bot(direction, spawnTime, speed))
+                        3 -> temp.add(Hacker(direction, spawnTime, speed))
                     }
-                    2 -> temp.add(Bot(direction, d, speed))
-                    3 -> temp.add(Hacker(direction, d, speed))
                 }
-            }
-        }
         //converting
         spawnArray = spawnArray.indices.map { index -> temp[index] }.toTypedArray()
     }
 
     private fun removeNpcs() = synchronized(npcList) {
         //removing hided enemys
-        for (npc in npcsToHit) {
-            when (npc.npcType) {
-                NpcType.PACKAGE -> {
+        npcsToHit.forEach { npc ->
+            when (npc) {
+                is Package -> {
                     scoreChange += pointValue
                     if (npc is PackageHealing) {
                         healthChange += pointValue
                     }
                 }
-                NpcType.BOT     -> scoreChange += pointValue
-                NpcType.HACKER  -> scoreChange += pointValue
+                is Bot -> scoreChange += pointValue
+                is Hacker -> scoreChange += pointValue
             }
             npcList.remove(npc)
         }
         npcsToHit.clear()
 
         //removing missed enemys
-        for (npc in npcsToRemove) {
-            when (npc.npcType) {
-                NpcType.PACKAGE -> scoreChange -= pointValue
-                NpcType.BOT     -> {
+        npcsToRemove.forEach { npc ->
+            when (npc) {
+                is Package -> scoreChange -= pointValue
+                is Bot -> {
                     scoreChange -= pointValue
                     healthChange -= pointValue
                 }
-                NpcType.HACKER  -> {
+                is Hacker -> {
                     scoreChange -= pointValue
                     healthChange -= pointValue
                 }
@@ -140,41 +124,13 @@ class NpcHandler(canvas: Canvas?) {
         removeNpcs()
     }
 
-    fun setDelaysBetweenSpawns(delay: Double) {
-        audioAnalyzer.setSpawnDelay(delay)
-    } /*
-    public void reset() {
-        npcLimit = 100;
-        time = new SpawnTimer();
-        npcIO = new NpcIO();
-        aa = new AudioAnalyser();
-
-        spawnArray = null;
-        spawnIterator = 0;
-        npcList.clear();
-        npcsToRemove.clear();
-        npcsToHit.clear();
-
-        scoreChange = 0;
-        healthChange = 0;
-
-        pointValue = 10;
-    }
-
-    public void setCanvas(Canvas canvas) {
-        this.canvas = canvas;
-    }
-    */
-
     companion object {
         private var canvas: Canvas? = null
         private val npcList: MutableList<Npc> = Collections.synchronizedList(ArrayList())
 
-        fun drawNpcs() {
-            synchronized(npcList) {
-                for (npc in npcList) {
-                    canvas!!.graphicsContext2D.drawImage(npc.currentImage, npc.x, npc.y)
-                }
+        fun drawNpcs() = synchronized(npcList) {
+            npcList.forEach { npc ->
+                canvas!!.graphicsContext2D.drawImage(npc.currentImage, npc.x, npc.y)
             }
         }
     }

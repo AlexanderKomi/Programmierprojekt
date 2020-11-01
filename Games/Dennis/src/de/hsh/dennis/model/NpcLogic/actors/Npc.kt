@@ -1,63 +1,20 @@
 package de.hsh.dennis.model.NpcLogic.actors
 
 import common.actor.Actor
-import common.config.WindowConfig
-import de.hsh.dennis.model.NpcLogic.NPCEnums.NpcType
 import de.hsh.dennis.model.NpcLogic.NPCEnums.Spawn
-import de.hsh.dennis.model.NpcLogic.SkinConfig
 
-abstract class Npc : Actor, Comparable<Npc> {
-    val spawnTime: Double
-    val spawnType: Spawn
-    val npcType: NpcType
+abstract class Npc(picturePath: String,
+                   val spawnType: Spawn,
+                   val spawnTime: Double,
+                   speed: Double) :
+        Actor(picturePath),
+        Comparable<Npc> {
 
-    internal constructor(picturePath: String?, spawnType: Spawn, type: NpcType) : super(picturePath!!) {
-        this.spawnType = spawnType
-        npcType = type
-        spawnTime = 0.0
-        this.speed = SkinConfig.Level.speed
-        when (type) {
-            NpcType.PACKAGE -> {
-                x = if (spawnType == Spawn.RIGHT) WindowConfig.window_width.toDouble() else - SkinConfig.Package.skin_width.toDouble()
-                y = SkinConfig.Player.posY
-            }
-            NpcType.BOT     -> {
-                x = if (spawnType == Spawn.RIGHT) WindowConfig.window_width.toDouble() else - SkinConfig.Bot.skin_width.toDouble()
-                y = SkinConfig.Player.posY + SkinConfig.Player.skin_height * 0.2
-            }
-            NpcType.HACKER  -> {
-                x = if (spawnType == Spawn.RIGHT) WindowConfig.window_width.toDouble() else - SkinConfig.Hacker.skin_width.toDouble()
-                y = SkinConfig.Player.posY + SkinConfig.Player.skin_height -
-                    SkinConfig.Hacker.skin_height
-            }
-        }
+    init {
+        super.speed = speed
     }
 
-    internal constructor(picturePath: String?,
-                         spawnType: Spawn,
-                         type: NpcType,
-                         spawnTime: Double,
-                         speed: Double) : super(picturePath!!) {
-        this.spawnTime = spawnTime
-        npcType = type
-        this.spawnType = spawnType
-        this.speed = speed
-        when (type) {
-            NpcType.PACKAGE -> {
-                x = if (spawnType == Spawn.RIGHT) WindowConfig.window_width.toDouble() else -SkinConfig.Package.skin_width.toDouble()
-                y = SkinConfig.Player.posY
-            }
-            NpcType.BOT     -> {
-                x = if (spawnType == Spawn.RIGHT) WindowConfig.window_width.toDouble() else -SkinConfig.Bot.skin_width.toDouble()
-                y = SkinConfig.Player.posY + SkinConfig.Player.skin_height * 0.2
-            }
-            NpcType.HACKER  -> {
-                x = if (spawnType == Spawn.RIGHT) WindowConfig.window_width.toDouble() else -SkinConfig.Hacker.skin_width.toDouble()
-                y = SkinConfig.Player.posY + SkinConfig.Player.skin_height -
-                    SkinConfig.Hacker.skin_height
-            }
-        }
-    }
+    abstract fun collidesWithPlayer(player: Player): Boolean
 
     open fun move() {
         x = if (spawnType == Spawn.RIGHT) x - speed else x + speed
@@ -70,7 +27,6 @@ abstract class Npc : Actor, Comparable<Npc> {
             spawnTime:	$spawnTime
             speed:		$speed
             spawnType:	$spawnType
-            npcType:	$npcType
             
             """.trimIndent()
     }

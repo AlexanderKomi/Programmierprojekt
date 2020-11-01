@@ -15,7 +15,7 @@ class SpawnTimer {
             return currentSec - start
         }
 
-    val currentSec: Double
+    private val currentSec: Double
         get() = System.currentTimeMillis() / 1000.0
 
     //Rundenzähler

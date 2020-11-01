@@ -19,6 +19,9 @@ abstract class Collectable : Actor {
      * Then following many overloadings of constructor
      * @param pictureFileName path of desired picture
      */
+    protected constructor(pictureFileName: String) : super(pictureFileName)
+    protected constructor(pictureFilePaths: Array<String>, x: Double, y: Double, delay: Int, scale: Double)
+            : super(pictureFilePaths, x, y, delay, scale)
     protected constructor(pictureFileName: String) : super(pictureFileName) {}
     protected constructor(x: Double,
                           y: Double,
@@ -28,16 +31,13 @@ abstract class Collectable : Actor {
         scaleImage(scale)
     }
 
-    constructor(x: Double, y: Double, invisiblePictures: String?) : super(invisiblePictures!!,
-                                                                          x,
-                                                                          y) {
-    }
+    constructor(x: Double, y: Double, invisiblePictures: String) : super(invisiblePictures, x, y)
 
     /**
      * Notifys ovservers if a collectable was collected
      * @param collector param for new collected to notify observers
      */
-    open fun wasCollected(collector: Actor) {
+    open infix fun wasCollectedBy(collector: Actor) {
         this.collector = collector
         setChanged()
         this.notifyObservers(collected)

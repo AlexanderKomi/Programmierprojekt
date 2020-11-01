@@ -8,8 +8,8 @@ import de.hsh.alexander.actor.ResourcePaths
 class Invisible(x: Double, y: Double) : Collectable(x,
                                                     y,
                                                     ResourcePaths.Actor.Collectables.Invisible.invisiblePicture) {
-    override fun wasCollected(collector: Actor) {
+    override fun wasCollectedBy(collector: Actor) {
         PlaySound.playSound(ResourcePaths.Actor.Collectables.Invisible.invisibleSound)
-        super.wasCollected(collector)
+        super.wasCollectedBy(collector)
     }
 }

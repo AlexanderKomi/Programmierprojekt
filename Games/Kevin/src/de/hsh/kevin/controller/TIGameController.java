@@ -82,7 +82,7 @@ public class TIGameController extends Observable implements Initializable {
         this.gameCanvas.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE || keyEvent.getCode() == KeyCode.NUMPAD0) {
                 this.gameField.setProjectileSpawning(true);
-                this.gameField.getPlayer().switchFiring();
+                this.gameField.getPlayer().fire();
             } else {
                 this.gameField.getPlayer().move(keyEvent);
             }
@@ -91,7 +91,7 @@ public class TIGameController extends Observable implements Initializable {
         this.gameCanvas.setOnKeyReleased(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE || keyEvent.getCode() == KeyCode.NUMPAD0) {
                 this.gameField.setProjectileSpawning(false);
-                this.gameField.getPlayer().switchIdle();
+                this.gameField.getPlayer().idle();
             } else {
                 this.gameField.getPlayer().move(keyEvent);
 

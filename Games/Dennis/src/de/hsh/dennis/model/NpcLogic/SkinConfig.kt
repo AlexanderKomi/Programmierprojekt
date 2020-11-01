@@ -9,11 +9,6 @@ object SkinConfig {
 
     object Level {
         var level_Background = Image(resourceFolderPath + "background_Level.png")
-        var speed = 1.0
-
-        enum class Difficulty {
-            EASY, MEDIUM, HARD, NIGHTMARE, CUSTOM
-        }
     }
 
     object Player {

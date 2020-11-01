@@ -14,20 +14,22 @@ import java.io.IOException
 class PlayerCharacter(
         pictureFileName: List<String>,
         keyMap: Map<String, Direction>,
-        x : Double = 250.0,
-        y : Double = 750.0
-) :
-        ControlableActor(
-                pictureFileName[0],
-                x,
-                y,
-                keyMap) {
+        x: Double = 250.0,
+        y: Double = 750.0
+) : ControlableActor(pictureFileName[0], x, y, keyMap) {
+
+    /**
+     * Gibt an ob der PlayerCharacter gerade schiesst
+     *
+     * @return ob PlayerCharacter gerade schiesst
+     */
+    private var isFiring: Boolean = false
+
     /**
      * Überschreibt die Bewegung von Super, sodass die Bewegung nur nach Links und
      * Rechts möglich ist
      */
-    override fun calculateDirectedSpeed(direction: Direction,
-                                        movementSpeed: Double): DoubleArray {
+    override fun calculateDirectedSpeed(direction: Direction, movementSpeed: Double): DoubleArray {
         val xyTuple = DoubleArray(2)
         if (direction === Direction.Left) {
             xyTuple[0] = -movementSpeed
@@ -39,33 +41,8 @@ class PlayerCharacter(
         return xyTuple
     }
 
-    /**
-     * Ändert das Bild zum feuernden
-     */
-    fun switchFiring() {
-        currentImage = firingImage
-        isFiring = true
-    }
-
-    /**
-     * Änder Player in Idle Modus
-     */
-    fun switchIdle() {
-        currentImage = idleImage
-        isFiring = false
-    }
-
-    /**
-     * Gibt an ob der PlayerCharacter gerade schiesst
-     *
-     * @return ob PlayerCharacter gerade schiesst
-     */
-    private var isFiring: Boolean = false
-
-    companion object {
-        private lateinit var firingImage: Image
-        private lateinit var idleImage: Image
-    }
+    fun fire() { currentImage = firingImage; isFiring = true }
+    fun idle() { currentImage = idleImage; isFiring = false }
 
     /**
      * Setzt das zweite Bild der List<String> als feuerndes Bild und das erste Bild
@@ -80,5 +57,10 @@ class PlayerCharacter(
                 ioException.printStackTrace()
             }
         }
+    }
+
+    companion object {
+        private lateinit var firingImage: Image
+        private lateinit var idleImage: Image
     }
 }
