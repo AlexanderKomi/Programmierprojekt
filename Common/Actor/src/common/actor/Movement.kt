@@ -1,10 +1,12 @@
 package common.actor
 
+import javafx.scene.input.KeyCode
+
 /**
  * Checks inputs for movements
  */
 class Movement {
-    lateinit var keymap: Map<String, Direction>
+    lateinit var keymap: Map<KeyCode, Direction>
     val holdDown = mutableMapOf(
             Direction.Up to false,
             Direction.Down to false,
@@ -17,7 +19,7 @@ class Movement {
      * @param keyName e.g. UP,DOWN,LEFT,RIGHT
      * @return a boolean if key was hold or not
      */
-    private fun isHoldDown(keyName: String): Boolean {
+    private fun isHoldDown(keyName: KeyCode): Boolean {
         val d = keymap[keyName]
         return if (d != null) {
             holdDown[d]!!
@@ -29,7 +31,7 @@ class Movement {
      * @param keyName Name of key pressed
      * @param b
      */
-    private fun setKeyHoldDownIfPresent(keyName: String, b: Boolean) {
+    private fun setKeyHoldDownIfPresent(keyName: KeyCode, b: Boolean) {
         val d = keymap[keyName]
         if (d != null) {
             holdDown[d] = b
@@ -40,7 +42,7 @@ class Movement {
      * Action to take when key is pressed
      * @param keyName Name of Key
      */
-    fun onKeyPressed(keyName: String) {
+    fun onKeyPressed(keyName: KeyCode) {
         if (!this.isHoldDown(keyName) && keymap.containsKey(keyName)) {
             setKeyHoldDownIfPresent(keyName, true)
         }
@@ -50,7 +52,7 @@ class Movement {
      * Action to take when key is released
      * @param keyName Keyname
      */
-    fun onKeyReleased(keyName: String) = setKeyHoldDownIfPresent(keyName, false)
+    fun onKeyReleased(keyName: KeyCode) = setKeyHoldDownIfPresent(keyName, false)
 
 
 }

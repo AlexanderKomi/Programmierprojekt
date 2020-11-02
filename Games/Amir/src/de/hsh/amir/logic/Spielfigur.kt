@@ -2,14 +2,15 @@ package de.hsh.amir.logic
 
 import common.actor.ControlableActor
 import common.actor.Direction
+import javafx.scene.input.KeyCode
 
 class Spielfigur internal constructor(x: Double, y: Double)
     : ControlableActor(
         spielFigurBildpfad,
         x,
         y,
-        mapOf("Right" to Direction.Right,
-              "Left" to Direction.Left)) {
+        mapOf(KeyCode.RIGHT to Direction.Right,
+              KeyCode.LEFT to Direction.Left)) {
 
     override fun calculateDirectedSpeed(direction: Direction, movementSpeed: Double): DoubleArray {
         val xyTuple = DoubleArray(2)

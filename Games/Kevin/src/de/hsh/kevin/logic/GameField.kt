@@ -3,8 +3,10 @@ package de.hsh.kevin.logic
 import common.actor.Direction
 import de.hsh.kevin.logic.myActor.*
 import javafx.scene.canvas.Canvas
+import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.paint.Color
+import java.security.Key
 import java.util.*
 
 /**
@@ -17,11 +19,11 @@ class GameField(canvas: Canvas, private val score: Score) {
     var player: PlayerCharacter = PlayerCharacter(
         listOf(Config.resLocation + "player/player1.png",
                Config.resLocation + "player/player2.png"),
-        mapOf("A" to Direction.Left,
-                "D" to Direction.Right,
+        mapOf(KeyCode.A to Direction.Left,
+                KeyCode.D to Direction.Right,
                 // Easteregg Steuerung invertiert
-                "Left" to Direction.Right,
-                "Right" to Direction.Left),
+                KeyCode.LEFT to Direction.Right,
+                KeyCode.RIGHT to Direction.Left),
             canvas.width / 2 - 250.0 / 2,
             canvas.height - 65
         )

@@ -1,20 +1,21 @@
 package common.actor
 
 import javafx.scene.canvas.Canvas
+import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 
 abstract class ControlableActor : Actor {
     protected constructor(pictureFileName: String,
                           x: Double,
                           y: Double,
-                          keymap: Map<String, Direction>) : super(pictureFileName, x, y) {
+                          keymap: Map<KeyCode, Direction>) : super(pictureFileName, x, y) {
         this.movement.keymap = (keymap)
     }
 
     protected constructor(pictureFileNames: Array<String>,
                           x: Double,
                           y: Double,
-                          keymap: Map<String, Direction>,
+                          keymap: Map<KeyCode, Direction>,
                           delay: Int) : super(pictureFileNames.toList(), x = x, y = y, delay = delay) {
         this.movement.keymap = (keymap)
     }
@@ -25,10 +26,9 @@ abstract class ControlableActor : Actor {
      * Checks Key Released and Pressed Events.
      */
     fun move(keyEvent: KeyEvent) {
-        val keyName = keyEvent.code.getName()
         when (keyEvent.eventType.name) {
-            "KEY_PRESSED" -> { movement.onKeyPressed(keyName) }
-            "KEY_RELEASED" -> { movement.onKeyReleased(keyName) }
+            "KEY_PRESSED" -> { movement.onKeyPressed(keyEvent.code) }
+            "KEY_RELEASED" -> { movement.onKeyReleased(keyEvent.code) }
             else -> {}
         }
     }

@@ -4,6 +4,7 @@ import common.actor.ControlableActor
 import common.actor.Direction
 import common.actor.ImageLoader.loadImage
 import javafx.scene.image.Image
+import javafx.scene.input.KeyCode
 import java.io.IOException
 
 /**
@@ -13,7 +14,7 @@ import java.io.IOException
  */
 class PlayerCharacter(
         pictureFileName: List<String>,
-        keyMap: Map<String, Direction>,
+        keyMap: Map<KeyCode, Direction>,
         x: Double = 250.0,
         y: Double = 750.0
 ) : ControlableActor(pictureFileName[0], x, y, keyMap) {
