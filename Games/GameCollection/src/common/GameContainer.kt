@@ -2,8 +2,10 @@ package common
 
 import common.config.WindowConfig
 import common.engine.FXGameContainer
+import common.engine.components.game.GameEntryPoint
 import common.engine.components.game.GameEntryPoints
 import common.updates.Updater
+import common.util.Logger
 import de.hsh.Julian.LKEntryPoint
 import de.hsh.alexander.PacManController
 import de.hsh.amir.AmirEntryPoint
@@ -18,7 +20,13 @@ import java.util.*
 
 class GameContainer : FXGameContainer() {
 
-    override fun update(observable: Observable, arg: Any) = Updater.update(observable, arg, this)
+    override fun update(observable: Observable, arg: Any) {
+        if (arg is String) {
+            Updater.update(observable, arg, this)
+        } else {
+            Logger.log(Updater.unknownErrorCode + " type : " + GameEntryPoint::class.java)
+        }
+    }
 
     override fun createGames(o: Observer): GameEntryPoints = GameEntryPoints(
                     PacManController(o),
@@ -53,11 +61,7 @@ class GameContainer : FXGameContainer() {
      */
     override fun startContainer(args: Array<String>) = launch(*args)
     override fun beforeStoppingContainer() = MusicPlayer.shutdown()
-    override fun toString(): String {
-        return "GameContainer(" +
-               "superclass:" + super.toString() +
-               ")"
-    }
+    override fun toString(): String = "GameContainer(superclass:${super.toString()})"
 
     companion object {
         private const val mainMenuFXMLPath = "gui/P3_Gui.fxml"

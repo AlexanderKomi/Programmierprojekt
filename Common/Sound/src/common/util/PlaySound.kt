@@ -18,89 +18,68 @@ object PlaySound {
     /**
      * Buffer Media before it needs to be played.
      */
-    fun loadMedia(mediaPath: String) {
-        AudioBuffer.loadMedia(mediaPath)
-    }
+    fun loadMedia(mediaPath: String): Media = AudioBuffer.loadMedia(mediaPath)!!
 
     /**
      * Plays a sound
      * @param path Player needs the path of mediafile as parameter
      * @param resetMediaPlayer true, if it's desired to reset mediaplayer
      */
-    fun playSound(path: String, resetMediaPlayer: Boolean = false) {
-        p.playSound(path, resetMediaPlayer)
-    }
+    fun playSound(path: String, resetMediaPlayer: Boolean = false) = p.playSound(path, resetMediaPlayer)
 
     /**
      * Plays and resets sound
      * @param path Player needs the path of mediafile as parameter
      */
-    fun playAndResetSound(path: String) {
-        p.playSound(path, true)
-    }
+    fun playAndResetSound(path: String) = p.playSound(path, true)
 
-    fun stop() {
-        p.stop()
-    }
+    fun stop() = p.stop()
 
-    fun pause() {
-        this.p.pause()
-    }
+    fun pause() = this.p.pause()
 
-    fun resume() {
-        this.p.resume()
-    }
+    fun resume() = this.p.resume()
+
     /**
      * Check if next sound is different to previous, else save performance :-)
      */
     internal class Player : Runnable {
 
         private var musicFile: String? = null
-            set(value) {
-                field = value
-                if (field == null) {
-                    throw NullPointerException("MusicFile String is null")
-                }
-            }
         private var currentMedia: Media? = null
-            set(value) {
-                field = value
-                if (field == null) {
-                    throw NullPointerException("Current Media is null: $musicFile")
-                }
-            }
         private var propMediaplayer: MediaPlayer? = null
         private var resetTimer = false
 
+        fun stop() = this.propMediaplayer?.stop()
+        fun pause() = this.propMediaplayer?.pause()
+        fun resume() = this.propMediaplayer?.play()
+
         @Throws(MediaException::class)
         fun playSound(path: String, resetMediaPlayer: Boolean) {
-            fun initProperties(path: String, resetMediaPlayer: Boolean) {
-                fun createMediaPlayer(): MediaPlayer {
-                    val mediaPlayer = MediaPlayer(currentMedia)
-                    mediaPlayer.isAutoPlay = false
-                    mediaPlayer.onEndOfMedia = Runnable {
-                        mediaPlayer.stop()
-                        mediaPlayer.seek(Duration.ZERO)
-                    }
-                    return mediaPlayer
-                }
 
-                resetTimer = resetMediaPlayer
-                if (musicFile != null && musicFile == path) { //Performance-Kniff
-                    return
+            fun createMediaPlayer(): MediaPlayer {
+                val mediaPlayer = MediaPlayer(currentMedia)
+                mediaPlayer.isAutoPlay = false
+                mediaPlayer.onEndOfMedia = Runnable {
+                    mediaPlayer.stop()
+                    mediaPlayer.seek(Duration.ZERO)
                 }
-                if (propMediaplayer != null) propMediaplayer!!.dispose()
-                musicFile = path
-                currentMedia = AudioBuffer.loadMedia(path)
-                propMediaplayer = createMediaPlayer()
+                return mediaPlayer
             }
 
-            initProperties(path, resetMediaPlayer)
+            resetTimer = resetMediaPlayer
+            if (musicFile != null && musicFile == path) { //Performance-Kniff
+                return
+            }
+            if (propMediaplayer != null) propMediaplayer!!.dispose()
+            musicFile = path
+            currentMedia = AudioBuffer.loadMedia(path)
+            propMediaplayer = createMediaPlayer()
+
             if (propMediaplayer != null) {
                 if (resetTimer) {
                     resetTimer(propMediaplayer!!)
                 }
-                Platform.runLater { propMediaplayer!!.play() } // TODO: Durch Coroutine ersetzen
+                Platform.runLater { propMediaplayer!!.play() }
             }
         }
 
@@ -120,18 +99,6 @@ object PlaySound {
          */
         override fun run() {
             musicFile?.let { playSound(it, resetTimer) }
-        }
-
-        fun stop() {
-            this.propMediaplayer?.stop()
-        }
-
-        fun pause() {
-            this.propMediaplayer?.pause()
-        }
-
-        fun resume() {
-            this.propMediaplayer?.play()
         }
     }
 }

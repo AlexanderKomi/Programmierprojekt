@@ -2,7 +2,6 @@ package de.hsh.daniel.model.board
 
 import common.actor.CollisionCheck.doesCollide
 import common.config.WindowConfig
-import de.hsh.daniel.model.Card
 import de.hsh.daniel.model.board.BoardUtilities.createGrid
 import javafx.scene.canvas.Canvas
 
@@ -11,19 +10,11 @@ class GUIBoard : Board() {
      * A mouse click happened to the board.
      */
     fun onMouseClick(mouse_x: Double, mouse_y: Double) {
-        for (card in cardList) {
-            if (doesCollide(card, mouse_x, mouse_y)) {
-                onClickedCard(card)
-                break
-            }
+        cardList.first { card ->
+            doesCollide(card, mouse_x, mouse_y)
+        }.also { card ->
+            matchCards(card)
         }
-    }
-
-    /**
-     * Checks if card is clicked and not selected, then turns that card
-     */
-    private fun onClickedCard(card: Card) {
-        matchCards(card)
     }
 
     fun draw(canvas: Canvas?) {

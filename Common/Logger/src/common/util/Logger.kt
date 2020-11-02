@@ -11,21 +11,23 @@ import java.util.*
 object Logger {
     private const val shouldLog = true
     private const val separator = "\t : \t"
+
     private fun format(message: String): String {
         if (!shouldLog) {
             return ""
         }
-        val calendar: Calendar = GregorianCalendar()
-        val simpleDateFormat = SimpleDateFormat("yyy.MM.dd HH:mm:ss")
-        return simpleDateFormat.format(calendar.time) + separator + message
+        return SimpleDateFormat("yyy.MM.dd HH:mm:ss")
+                .format(GregorianCalendar().time) + separator + message
     }
 
-    fun log(o: Any) {
-        log(o.toString())
-    }
+    fun log(o: Any?) = log(o.toString())
 
-    fun log(o: Any?, argument: Any?) {
-        log(o.toString() + separator + argument.toString())
+    fun log(vararg o: Any?) {
+        var strings = ""
+        for (i in 0 until (o.size)) {
+            strings += i.toString() + separator
+        }
+        log(strings)
     }
 
     fun log(message: String) {

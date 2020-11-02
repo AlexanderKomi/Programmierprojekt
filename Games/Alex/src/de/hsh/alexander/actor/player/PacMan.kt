@@ -28,12 +28,7 @@ open class PacMan(x: Double, y: Double, keyMap: HashMap<String, Direction>, pict
                 false
             } else super.collisionModifier(other)
 
-    override fun onRemove(collectable: Collectable) {
-        PlaySound.playSound(ResourcePaths.Actor.Player.PacMan.pacManSound)
-        super.onRemove(collectable)
-    }
+    override fun onRemove(collectable: Collectable) = PlaySound.playSound(ResourcePaths.Actor.Player.PacMan.pacManSound)
 
-    fun addPoint() {
-        points.set(points.get() + 1)
-    }
+    fun addPoint() = points.set(points.get() + 1)
 }

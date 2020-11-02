@@ -1,7 +1,6 @@
 package common;
 
 import common.config.WindowConfig;
-import common.engine.components.menu.Menu;
 import common.updates.UpdateCodes;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,13 +13,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 /**
  * @author Alexander Komischke
  */
-public final class MainMenu extends Menu implements Initializable, common.engine.components.menu.MainMenu {
+public final class MainMenu extends common.engine.components.menu.MainMenu implements Initializable {
 
     @FXML
     public AnchorPane       ap_desktop;

@@ -1,9 +1,9 @@
-package de.hsh.dennis.model.NpcLogic.actors
+package de.hsh.dennis.model.Spawn.actors
 
 import common.actor.Direction
 import common.config.WindowConfig
-import de.hsh.dennis.model.NpcLogic.NPCEnums.Spawn
-import de.hsh.dennis.model.NpcLogic.SkinConfig
+import de.hsh.dennis.model.Spawn.SkinConfig
+import de.hsh.dennis.model.Spawn.Spawn
 
 class Bot(spawnType: Spawn, spawnTime: Double, speed: Double) :
         Npc(SkinConfig.Bot.skin_standard_path,

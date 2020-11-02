@@ -3,14 +3,12 @@ package de.hsh.dennis.model
 import common.actor.Direction
 import common.updates.UpdateCodes
 import common.util.Logger
-import de.hsh.dennis.model.KeyLayout.Movement.Custom
-import de.hsh.dennis.model.NpcLogic.NPCEnums.Spawn
-import de.hsh.dennis.model.NpcLogic.NpcHandler
-import de.hsh.dennis.model.NpcLogic.SkinConfig
-import de.hsh.dennis.model.NpcLogic.SpawnTimer
-import de.hsh.dennis.model.NpcLogic.actors.*
+import de.hsh.dennis.model.Spawn.Spawn
+import de.hsh.dennis.model.Spawn.NpcHandler
+import de.hsh.dennis.model.Spawn.SkinConfig
+import de.hsh.dennis.model.Spawn.SpawnTimer
+import de.hsh.dennis.model.Spawn.actors.*
 import de.hsh.dennis.model.audio.AudioAnalyser
-import de.hsh.dennis.model.audio.AudioConfig.MovingSpeeds
 import javafx.beans.property.SimpleStringProperty
 import javafx.beans.property.StringProperty
 import javafx.scene.canvas.Canvas
@@ -176,41 +174,24 @@ class GameModel : Observable() {
 
     private fun initDifficulty(): Double {
         //default fps == 60 -> 60 * pro Sekunde bewegt sich ein Npc um 'speed' pixel.
-        fun calcAudioDelay(fps: Int, speed: Double): Double =
-                (canvas!!.width / 2.0 - SkinConfig.Player.skin_width / 2.0 - 5.0) / (fps * speed)
-
-        return when (difficulty) {
-            Difficulty.EASY -> {
-                GameModelUtils.initEasyDifficulty(npcHandler!!)
-                calcAudioDelay(fps, MovingSpeeds._easy)
-            }
-            Difficulty.MEDIUM -> {
-                GameModelUtils.initMediumDifficulty(npcHandler!!)
-                calcAudioDelay(fps, MovingSpeeds._medium)
-            }
-            Difficulty.HARD -> {
-                GameModelUtils.initHardDifficulty(npcHandler!!)
-                calcAudioDelay(fps, MovingSpeeds._hard)
-            }
-            Difficulty.NIGHTMARE -> {
-                GameModelUtils.initNightmareDifficulty(npcHandler!!)
-                calcAudioDelay(fps, MovingSpeeds._nightmare)
-            }
+        val movingSpeed = when (difficulty) {
+            Difficulty.EASY -> GameModelUtils.initEasyDifficulty(npcHandler!!)
+            Difficulty.MEDIUM -> GameModelUtils.initMediumDifficulty(npcHandler!!)
+            Difficulty.HARD -> GameModelUtils.initHardDifficulty(npcHandler!!)
+            Difficulty.NIGHTMARE -> GameModelUtils.initNightmareDifficulty(npcHandler!!)
             Difficulty.CUSTOM -> throw IllegalArgumentException("Custom difficulty is not supported")
         }
+        return (canvas!!.width / 2.0 - SkinConfig.Player.skin_width / 2.0 - 5.0) / (fps * movingSpeed)
     }
 
 
     // --- /ACT -----------------------------------------------------------------------------------
     fun userInput(k: KeyCode) {
-        if (k == Custom.UP || k == Custom.UP_ALT) {
-            changeDirection(Direction.Up)
-        } else if (k == Custom.LEFT || k == Custom.LEFT_ALT) {
-            changeDirection(Direction.Left)
-        } else if (k == Custom.DOWN || k == Custom.DOWN_ALT) {
-            changeDirection(Direction.Down)
-        } else if (k == Custom.RIGHT || k == Custom.RIGHT_ALT) {
-            changeDirection(Direction.Right)
+        when (k) {
+            KeyCode.UP, KeyCode.W -> changeDirection(Direction.Up)
+            KeyCode.LEFT, KeyCode.A -> changeDirection(Direction.Left)
+            KeyCode.DOWN, KeyCode.S -> changeDirection(Direction.Down)
+            KeyCode.RIGHT, KeyCode.D -> changeDirection(Direction.Right)
         }
         //Logger.log("unbidden Key Input \'" + k + "\'");
     }

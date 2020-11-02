@@ -1,8 +1,8 @@
 package common.engine.components.menu
 
-interface MainMenu  {
+abstract class MainMenu : Menu() {
 
-    fun initGameNames()
+    abstract fun initGameNames()
 
-    fun title(): String
+    abstract fun title(): String
 }

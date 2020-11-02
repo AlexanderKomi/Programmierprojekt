@@ -10,7 +10,6 @@ import de.hsh.dennis.controller.*
 import de.hsh.dennis.model.Difficulty
 import de.hsh.dennis.model.GameModel
 import de.hsh.dennis.model.KeyLayout
-import de.hsh.dennis.model.NpcLogic.SkinConfig
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene

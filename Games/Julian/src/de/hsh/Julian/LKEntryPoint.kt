@@ -21,7 +21,7 @@ import java.util.*
  */
 class LKEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.julian_title) {
     private val changer: LKFxmlChanger = LKFxmlChanger(this, LKStart.fxml, LKStart())
-    private var renderable = false
+    private var canBeRendered = false
     private lateinit var canvas: Canvas
     private lateinit var lk: Leertastenklatsche
 
@@ -30,7 +30,7 @@ class LKEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.julian_title) {
      * @param fps setting the desired frames per second
      */
     override fun render(fps: Int) {
-        if (!renderable) {
+        if (!canBeRendered) {
             return
         }
         Platform.runLater {
@@ -58,9 +58,7 @@ class LKEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.julian_title) {
         lk = Leertastenklatsche(this)
 
         canvas = arg
-        canvas.onKeyPressed = EventHandler { e: KeyEvent ->
-            lk.parseInput(e.code.toString())
-        }
+        canvas.onKeyPressed = EventHandler { e: KeyEvent -> lk.parseInput(e.code) }
         canvas.onKeyReleased = canvas.onKeyPressed
 
         with(canvas.graphicsContext2D!!) {
@@ -70,20 +68,16 @@ class LKEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.julian_title) {
             lineWidth = 1.0
         }
 
-        renderable = true
+        canBeRendered = true
     }
 
-    private fun parseMessage(o: Observable, arg: String) {
-        if (arg == "b_backtomenu") {
-            renderable = false
-            changer.changeScene(LKStart.fxml, LKStart())
-            exitToMainGUI()
-        } else {
-            Logger.log(arg)
-            changer.changeFxml(o, arg)
-        }
-        // Logger.log( this.getClass() + " : update : " + message );
+    private fun parseMessage(o: Observable, arg: String) =
+            if (arg == "b_backtomenu") {
+        canBeRendered = false
+        changer.changeScene(LKStart.fxml, LKStart())
+        exitToMainGUI()
+    } else {
+        Logger.log(arg)
+        changer.changeFxml(o, arg)
     }
-
-
 }

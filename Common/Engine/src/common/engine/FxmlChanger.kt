@@ -54,19 +54,16 @@ abstract class FxmlChanger(protected val fxModul: FxModul, fxmlPath: String, fxC
      * @param controller The controller suitable for the .fxml
      */
     open fun changeScene(fxmlLocation: String,
-                         controller: Observable) {
+                         controller: Observable) =
         Platform.runLater {
-            controller.addObserver(fxModul)
-            loadFxml(fxmlLocation, controller).also { parent: Parent ->
-                fxModul.setRoot(parent)
-            }
+             controller.addObserver(fxModul)
+             loadFxml(fxmlLocation, controller).also { parent: Parent ->
+                 fxModul.scene.root = parent
+             }
         }
-    }
 
     /**
      * Insert your changeScene(String fxmlLocation, Observable controller) calls here as you please.
      */
-    abstract fun changeFxml(o: Observable,
-                            msg: String)
-
+    abstract fun changeFxml(o: Observable,msg: String)
 }

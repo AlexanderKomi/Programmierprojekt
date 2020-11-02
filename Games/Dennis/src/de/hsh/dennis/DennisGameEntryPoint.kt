@@ -9,7 +9,7 @@ import de.hsh.dennis.controller.MainMenu_controller
 import de.hsh.dennis.model.Difficulty
 import de.hsh.dennis.model.GameModel
 import de.hsh.dennis.model.KeyLayout
-import de.hsh.dennis.model.NpcLogic.NpcHandler
+import de.hsh.dennis.model.Spawn.NpcHandler
 import javafx.application.Platform
 import javafx.scene.canvas.Canvas
 import javafx.scene.input.KeyCode

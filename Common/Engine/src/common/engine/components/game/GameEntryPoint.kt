@@ -15,20 +15,14 @@ import java.util.*
 abstract class GameEntryPoint(container: Observer, val name: String = "- Name not set -")
     : FxModul(container), IGame {
 
-    override fun equals(other: Any?): Boolean {
-        if (other is GameEntryPoint) {
-            return name == other.name && other.scene == scene
-        }
-        return false
-    }
+    override fun equals(other: Any?): Boolean =
+            if (other is GameEntryPoint) name == other.name && other.scene == scene
+            else false
 
     override fun exitToMainGUI() {
         setChanged()
         super.notifyObservers(MenuCodes.exitToMainGUI)
     }
 
-    override fun hashCode(): Int {
-        return name.hashCode()
-    }
-
+    override fun hashCode(): Int = name.hashCode()
 }

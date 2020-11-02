@@ -1,4 +1,4 @@
-package de.hsh.dennis.model.NpcLogic
+package de.hsh.dennis.model.Spawn
 
 class SpawnTimer {
     //Uhr

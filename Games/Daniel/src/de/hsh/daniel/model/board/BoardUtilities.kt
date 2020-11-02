@@ -14,10 +14,8 @@ object BoardUtilities {
     fun initCards(numberOfPairs: Int): List<Card> {
         val cardList = ArrayList<Card>()
         for (i in 0 until numberOfPairs) {
-            val c1 = Card(Resources.cardImages[i],
-                          i)
-            val c2 = Card(Resources.cardImages[i],
-                          i)
+            val c1 = Card(Resources.cardImages[i],i)
+            val c2 = Card(Resources.cardImages[i],i)
             cardList.add(c1)
             cardList.add(c2)
         }
@@ -75,8 +73,8 @@ object BoardUtilities {
             gridW: Double,
             gridH: Double,
             imgSize: Double,
-            spacing: Double
-                                   ): List<Card> {
+            spacing: Double): List<Card> {
+
         var xStart = xStart
         var yStart = 10
         var imgCount = 0
@@ -106,14 +104,12 @@ object BoardUtilities {
      * is converted from sec. to millis.
      */
     @JvmStatic
-    fun delay(time: Int) {
-        Platform.runLater {
-            Logger.log("DELAY USED")
-            try {
-                Thread.sleep(time * 1000.toLong())
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
+    fun delay(time: Int) = Platform.runLater {
+        Logger.log("DELAY USED")
+        try {
+            Thread.sleep(time * 1000.toLong())
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
         }
     }
 }

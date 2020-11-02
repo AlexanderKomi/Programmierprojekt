@@ -1,7 +1,7 @@
-package de.hsh.dennis.model.NpcLogic.actors
+package de.hsh.dennis.model.Spawn.actors
 
-import de.hsh.dennis.model.NpcLogic.NPCEnums.Spawn
-import de.hsh.dennis.model.NpcLogic.SkinConfig
+import de.hsh.dennis.model.Spawn.Spawn
+import de.hsh.dennis.model.Spawn.SkinConfig
 
 class PackageHealing(spawnType: Spawn,
                      spawnTime: Double,

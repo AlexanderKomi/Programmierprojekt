@@ -1,8 +1,8 @@
-package de.hsh.dennis.model.NpcLogic.actors
+package de.hsh.dennis.model.Spawn.actors
 
 import common.actor.Actor
 import common.actor.Direction
-import de.hsh.dennis.model.NpcLogic.SkinConfig
+import de.hsh.dennis.model.Spawn.SkinConfig
 
 class Player : Actor(SkinConfig.Player.skin_standard_path,
                      SkinConfig.Player.posX,

@@ -1,4 +1,4 @@
-package de.hsh.dennis.model.NpcLogic
+package de.hsh.dennis.model.Spawn
 
 import common.config.WindowConfig
 import javafx.scene.image.Image

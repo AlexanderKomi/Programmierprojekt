@@ -1,10 +1,9 @@
 package de.hsh.daniel.model
 
 import common.actor.Actor
-import common.util.Logger
 import common.util.PlaySound
 
-class Card(val pictureFileName: String, pair_id: Int) : Actor(pictureFileName) {
+class Card(private val pictureFileName: String, pair_id: Int) : Actor(pictureFileName) {
     /**
      * *****************************************************************
      * *                                                               *
@@ -13,12 +12,10 @@ class Card(val pictureFileName: String, pair_id: Int) : Actor(pictureFileName) {
      * *****************************************************************
      *
      */
-    val pair_id: Int
+    private val pairId: Int
     var isCardMatched = false
     var isTurned = true
-    override fun toString(): String {
-        return "pair_id: $pair_id"
-    }
+    override fun toString(): String = "pair_id: $pairId"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -31,13 +28,13 @@ class Card(val pictureFileName: String, pair_id: Int) : Actor(pictureFileName) {
             return false
         }
         val otherCard = other as Card
-        return pair_id == otherCard.pair_id
+        return pairId == otherCard.pairId
     }
 
     override fun hashCode(): Int {
         val prime = 31
         var result = 1
-        result = prime * result + pair_id
+        result = prime * result + pairId
         return result
     }
 
@@ -47,16 +44,17 @@ class Card(val pictureFileName: String, pair_id: Int) : Actor(pictureFileName) {
     fun turn() {
         val backupWidth = width
         val backupHeight = height
-        if (isTurned) {
-            PlaySound.playSound(cardFrontSoundPath)
-            setCurrentImage(pictureFileName)
-            isTurned = false
-        } else if (!isTurned) {
-            PlaySound.playSound(cardBackSoundPath)
-            setCurrentImage(Resources.cardback)
-            isTurned = true
-        } else {
-            Logger.log("CARD ALREADY FACEUP")
+        when {
+            isTurned -> {
+                PlaySound.playSound(cardFrontSoundPath)
+                setCurrentImage(pictureFileName)
+                isTurned = false
+            }
+            !isTurned -> {
+                PlaySound.playSound(cardBackSoundPath)
+                setCurrentImage(Resources.cardback)
+                isTurned = true
+            }
         }
         width = backupWidth
         height = backupHeight
@@ -69,6 +67,6 @@ class Card(val pictureFileName: String, pair_id: Int) : Actor(pictureFileName) {
 
     init {
         setCurrentImage(Resources.cardback)
-        this.pair_id = pair_id
+        this.pairId = pair_id
     }
 }

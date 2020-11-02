@@ -92,7 +92,7 @@ abstract class Actor : Drawable {
         } else {
             Logger.log("------>" + this.javaClass + " FATAL ERROR : Can not delete: " + collectable)
         }
-        collisionActors = l
+        collisionActors.remove(collectable)
     }
 
     protected open fun onRemove(collectable: Collectable) {}

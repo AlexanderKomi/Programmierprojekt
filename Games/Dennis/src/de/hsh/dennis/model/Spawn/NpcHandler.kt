@@ -1,8 +1,7 @@
-package de.hsh.dennis.model.NpcLogic
+package de.hsh.dennis.model.Spawn
 
 import common.util.Logger.log
-import de.hsh.dennis.model.NpcLogic.NPCEnums.Spawn
-import de.hsh.dennis.model.NpcLogic.actors.*
+import de.hsh.dennis.model.Spawn.actors.*
 import de.hsh.dennis.model.audio.AudioAnalyser
 import javafx.scene.canvas.Canvas
 import java.util.*
@@ -23,10 +22,8 @@ class NpcHandler(canvas: Canvas?) {
     var healthChange = 0
     var breakTimeMark = 0.0
 
-    fun isEndReached(): Boolean {
-        synchronized(npcList) {
-            return spawnIterator == spawnArray.size && npcList.isEmpty()
-        }
+    fun isEndReached(): Boolean = synchronized(npcList) {
+        return spawnIterator == spawnArray.size && npcList.isEmpty()
     }
 
     fun unTriggerBreak() {
@@ -42,13 +39,11 @@ class NpcHandler(canvas: Canvas?) {
         }
     }
 
-    private fun spawnNpc(npc: Npc) {
-        synchronized(npcList) {
-            if (npcList.size <= npcLimit) {
-                npcList.add(npc)
-            }
-            log("Npc: " + npc.javaClass.name + " spawned at " + npc.spawnTime + " seconds.")
+    private fun spawnNpc(npc: Npc) = synchronized(npcList) {
+        if (npcList.size <= npcLimit) {
+            npcList.add(npc)
         }
+        log("Npc: " + npc.javaClass.name + " spawned at " + npc.spawnTime + " seconds.")
     }
 
     fun generateNpcs(mp3Name: String, speed: Double) {

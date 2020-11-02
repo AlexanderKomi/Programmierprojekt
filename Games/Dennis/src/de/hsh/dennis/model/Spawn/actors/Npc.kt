@@ -1,7 +1,7 @@
-package de.hsh.dennis.model.NpcLogic.actors
+package de.hsh.dennis.model.Spawn.actors
 
 import common.actor.Actor
-import de.hsh.dennis.model.NpcLogic.NPCEnums.Spawn
+import de.hsh.dennis.model.Spawn.Spawn
 
 abstract class Npc(picturePath: String,
                    val spawnType: Spawn,

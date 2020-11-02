@@ -15,20 +15,16 @@ internal class TheDude(x: Double, y: Double) : Actor(firstImagePath, x, y) {
         speed = 0.0
     }
 
-    var isTurnedleft = true
+    var isTurnedLeft = true
 
     /**
      * Swapping image depending on actors view-direction
      */
     fun swapImage() =
-            if (currentImageName == firstImagePath) {
-                setCurrentImage(secondImagePath)
-            } else {
-                setCurrentImage(firstImagePath)
-            }
+            if (currentImageName == firstImagePath) setCurrentImage(secondImagePath)
+            else setCurrentImage(firstImagePath)
 
     /**
-     *
      * @param other checks if collectable was collected
      * @return returns false or instance of collected item
      */
@@ -41,11 +37,7 @@ internal class TheDude(x: Double, y: Double) : Actor(firstImagePath, x, y) {
             }
 
     companion object {
-        /**
-         * GETTERS AND SETTERS
-         */
         const val firstImagePath = Leertastenklatsche.location + "thedude.png"
         const val secondImagePath = Leertastenklatsche.location + "thedude_turned.png"
-
     }
 }

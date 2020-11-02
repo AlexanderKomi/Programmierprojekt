@@ -5,7 +5,6 @@ import de.hsh.daniel.model.Card
 import de.hsh.daniel.model.Player
 import de.hsh.daniel.model.board.BoardUtilities.delay
 import de.hsh.daniel.model.board.BoardUtilities.initCards
-import java.util.*
 
 /**
  * Class represents Gameboard where Cards are laid out
@@ -24,16 +23,16 @@ open class Board internal constructor() {
     
     """.trimIndent())
         if (!card.isCardMatched && card.isTurned) {
-            var sameCard = false
-            if (!firstCardClicked) {
-                c1 = card
-                firstCardClicked = true
-            } else if (firstCardClicked && card === c1) {
-                log("SAME CARD SELECTED")
-                sameCard = true
-                return
-            } else {
-                c2 = card
+            when {
+                !firstCardClicked -> {
+                    c1 = card
+                    firstCardClicked = true
+                }
+                firstCardClicked && card === c1 -> {
+                    log("SAME CARD SELECTED")
+                    return
+                }
+                else -> c2 = card
             }
             if (c1 != null && c2 == null) {
                 c1!!.turn()
@@ -53,22 +52,23 @@ open class Board internal constructor() {
             log("One card empty. \n ")
             return
         }
-        if (c1!!.equals(c2)) {
-            log("CARDS MATCH")
-            setCardsMatched()
-            ++matchCount
-            givePoints()
-            nullCards()
-        } else {
-            log("CARDS DON'T MATCH")
-            changeActivePlayer()
+        when (c2) {
+            c1!! -> {
+                log("CARDS MATCH")
+                setCardsMatched()
+                ++matchCount
+                givePoints()
+                nullCards()
+            }
+            else -> changeActivePlayer()
         }
     }
 
     /**
      * Changes active player if cards we're not matched
      */
-    fun changeActivePlayer() {
+    private fun changeActivePlayer() {
+        log("CARDS DON'T MATCH")
         if (p1!!.isMyTurn) {
             p1!!.setTurn(false)
             p2!!.setTurn(true)
@@ -84,14 +84,14 @@ open class Board internal constructor() {
      * Determines winner from collected points
      */
     private fun announceWinner() {
-        if (p1!!.points > p2!!.points) {
-            winner = p1
-        } else if (p1!!.points < p2!!.points) {
-            winner = p2
-        } else if (p1!!.points == p2!!.points) {
-            winner = p1
-            winner!!.name = "BOTH"
-            //winner.setDraw(p1.getPoints());
+        when {
+            p1!!.points > p2!!.points -> winner = p1
+            p1!!.points < p2!!.points -> winner = p2
+            p1!!.points == p2!!.points -> {
+                winner = p1
+                winner!!.name = "BOTH"
+                //winner.setDraw(p1.getPoints());
+            }
         }
         log("P1: " + p1!!.points + "| P2:" + p2!!.points)
     }
@@ -128,12 +128,10 @@ open class Board internal constructor() {
     private fun givePoints() {
         if (p1!!.isMyTurn) {
             p1!!.incrementPoints()
-            log("""P1 points: ${p1!!.points}
- """)
+            log("""P1 points: ${p1!!.points}""")
         } else if (p2!!.isMyTurn) {
             p2!!.incrementPoints()
-            log("""P2 points: ${p2!!.points}
- """)
+            log("""P2 points: ${p2!!.points}""")
         }
         if (matchCount == numberOfPairs.toInt()) {
             announceWinner()
@@ -144,14 +142,6 @@ open class Board internal constructor() {
     val board: Board
         get() = this
 
-    /**
-     * *****************************************************************
-     * *                                                               *
-     * *                       GETTERS & SETTERS                       *
-     * *                                                               *
-     * *****************************************************************
-     *
-     */
     var winner: Player?
 
     val p1Points: Int

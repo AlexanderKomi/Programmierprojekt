@@ -1,8 +1,7 @@
 package common.engine
 
-import common.MainMenu
-import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoints
+import common.engine.components.menu.MainMenu
 import javafx.application.Application
 import javafx.application.Platform
 import javafx.event.EventHandler
@@ -14,7 +13,7 @@ import java.util.*
  *
  * @author Alexander Komischke
  */
-abstract class FXGameContainer : Application(), GameContainer, Observer {
+abstract class FXGameContainer : Application(), StatefulContainer, Observer {
 
     private lateinit var engineGameContainer: EngineGameContainer
     private lateinit var stage: Stage

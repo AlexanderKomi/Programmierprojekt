@@ -4,9 +4,10 @@ import common.config.WindowConfig
 import common.util.Logger
 import common.util.PlaySound.playAndResetSound
 import common.util.PlaySound.playSound
-import de.hsh.dennis.model.NpcLogic.SpawnTimer
+import de.hsh.dennis.model.Spawn.SpawnTimer
 import javafx.application.Platform
 import javafx.scene.canvas.Canvas
+import javafx.scene.input.KeyCode
 import java.util.*
 import kotlin.math.sqrt
 
@@ -36,10 +37,11 @@ class Leertastenklatsche(observer: Observer) : Observable(), Observer {
             enemyList.add(e)
         }
         enemyList.forEach { enemy ->
-            if (enemy.x > WindowConfig.window_width / 2)
-                enemy.setPos(enemy.x - 1.0f - score / sqrt(score + 1.0f), enemy.y)
-            else if (enemy.x <= WindowConfig.window_width / 2)
-                enemy.setPos(enemy.x + 1f + score / sqrt(score + 1.0f), enemy.y)
+            val enemyX = when(enemy.x > WindowConfig.window_width / 2) {
+                true -> enemy.x - 1f - score / sqrt(score + 1f)
+                false -> enemy.x + 1f + score / sqrt(score + 1f)
+            }
+            enemy.setPos(enemyX, enemy.y)
         }
         Platform.runLater {
             renderScore(gc)
@@ -66,24 +68,24 @@ class Leertastenklatsche(observer: Observer) : Observable(), Observer {
         }
     }
 
-    fun parseInput(code: String) {
+    fun parseInput(code: KeyCode) {
         when (code) {
-            "LEFT" -> if (!thedude.isTurnedleft) {
+            KeyCode.LEFT -> if (!thedude.isTurnedLeft) {
                 thedude.swapImage()
-                thedude.isTurnedleft = true
+                thedude.isTurnedLeft = true
             }
-            "RIGHT" -> if (thedude.isTurnedleft) {
+            KeyCode.RIGHT -> if (thedude.isTurnedLeft) {
                 thedude.swapImage()
-                thedude.isTurnedleft = false
+                thedude.isTurnedLeft = false
             }
-            "SPACE" -> if (!horrorWasActivated) playSound(pathToSound + "cat.wav")
+            KeyCode.SPACE -> if (!horrorWasActivated) playSound(pathToSound + "cat.wav")
         }
     }
 
     override fun update(o: Observable, arg: Any) {
         fun adjustPositions(enemyXPosition: Double) {
             if (enemyXPosition <= thedude.pos[0])
-                if (thedude.isTurnedleft) {
+                if (thedude.isTurnedLeft) {
                     score++
                     if (!horrorWasActivated) playAndResetSound(pathToSound + "collision.wav")
                 } else {
@@ -91,7 +93,7 @@ class Leertastenklatsche(observer: Observer) : Observable(), Observer {
                     if (!horrorWasActivated) playAndResetSound(pathToSound + "hit.wav")
                     gameOver()
                 }
-            else if (!thedude.isTurnedleft)
+            else if (!thedude.isTurnedLeft)
                 score++
                 if (!horrorWasActivated) playAndResetSound(pathToSound + "collision.wav")
             else

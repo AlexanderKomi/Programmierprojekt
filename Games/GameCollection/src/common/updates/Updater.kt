@@ -13,9 +13,8 @@ import de.hsh.kevin.controller.TIController
 import java.util.*
 
 object Updater {
-    private const val unknownErrorCode = "ATTENTION : UNKNOWN OBSERVABLE OF TYPE GAME IS NOT PARSED"
-    const val unkownParsingCode = "Unknown String argument: "
-    const val parsingErrorCode = "Can not parse : "
+    const val unknownErrorCode = "ATTENTION : UNKNOWN OBSERVABLE CAN NOT BE PARSED"
+    private const val unknownParsingCode = "Unknown String argument: "
 
     /**
      * Cast observables to the correct type, and call the correct method.<br></br>
@@ -26,55 +25,25 @@ object Updater {
      * @param o
      * The observable notifying this observer
      */
-    fun update(o: Observable,
-               arg: Any,
-               gameContainer: GameContainer) {
-        when (o) {
-            is GameEntryPoint -> {
-                when (o) {
-                    is PacManController -> {
-                        UpdatePacman.update(o,
-                                            arg,
-                                            gameContainer)
-                    }
-                    is AmirEntryPoint -> {
-                        UpdateAmirsGame.update(o,
-                                               arg,
-                                               gameContainer)
-                    }
-                    is RAM -> {
-                        UpdateRAM.update(o,
-                                         arg,
-                                         gameContainer)
-                    }
-                    is DennisGameEntryPoint -> {
-                        UpdateDDOSDefender.update(o,
-                                                  arg,
-                                                  gameContainer)
-                    }
-                    is LKEntryPoint -> {
-                        UpdateLK.update(o,
-                                        arg,
-                                        gameContainer)
-                    }
-                    is TIController -> {
-                        UpdateTunnelInvader.update(o,
-                                                   arg,
-                                                   gameContainer)
-                    }
-                    else                    -> {
-                        Logger.log(unknownErrorCode + " type : " + GameEntryPoint::class.java)
-                    }
-                }
-            }
-            is MainMenu -> {
-                UpdateMainMenu.update(o as MainMenu?, arg, gameContainer)
-            }
-            else              -> {
-                Logger.log(unknownErrorCode)
-                Logger.log(o, arg)
-            }
+    fun update(o: Observable, arg: String, gameContainer: GameContainer) = when (o) {
+        is PacManController -> UpdatePacman.update(arg, gameContainer)
+        is AmirEntryPoint -> UpdateAmirsGame.update(arg, gameContainer)
+        is RAM -> UpdateRAM.update(arg, gameContainer)
+        is DennisGameEntryPoint -> UpdateDDOSDefender.update(arg, gameContainer)
+        is LKEntryPoint -> UpdateLK.update(arg, gameContainer)
+        is TIController -> UpdateTunnelInvader.update(arg, gameContainer)
+        is MainMenu -> UpdateMainMenu.update(arg, gameContainer)
+        else -> {
+            Logger.log(unknownErrorCode)
+            Logger.log(o, arg)
         }
     }
 
+    fun updateElse(arg: String, gameContainer: GameContainer) = when(arg){
+        MenuCodes.exitToMainGUI -> {
+            gameContainer.showMainMenu()
+            System.gc() //remind the garbage collector. he may trow some unused objects away after the game session should be closed.
+        }
+        else -> throw IllegalArgumentException(unknownParsingCode + arg)
+    }
 }

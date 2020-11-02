@@ -2,14 +2,13 @@ package common.engine.components.game
 
 import java.util.*
 
-class GameEntryPoints : ArrayList<GameEntryPoint> {
+class GameEntryPoints(vararg gameEntryPoints: GameEntryPoint) : ArrayList<GameEntryPoint>() {
 
     var activeGame: String? = null
     val names: List<String>
         get() = this.map { game: GameEntryPoint -> game.name }
 
-    constructor()
-    constructor(vararg gameEntryPoints: GameEntryPoint) {
+    init {
         Collections.addAll(this, *gameEntryPoints)
     }
 

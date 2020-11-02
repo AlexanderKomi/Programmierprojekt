@@ -5,18 +5,10 @@ import common.util.Logger
 import de.hsh.alexander.PacManController
 
 object UpdatePacman {
-    fun update(pacManController: PacManController,
-               arg: Any?,
-               gameContainer: GameContainer) {
-        if (arg is String) {
-            when (arg) {
-                UpdateCodes.PacMan.startGame -> gameContainer.setGameShown(UpdateCodes.PacMan.gameName)
-                MenuCodes.exitToMainGUI      -> gameContainer.showMainMenu()
-                else                         -> throw IllegalArgumentException(
-                        Updater.unkownParsingCode + arg)
-            }
-        } else {
-            Logger.log(UpdatePacman::class.java.toString() + " : Unknown Arguments :  " + pacManController, arg)
-        }
-    }
+    fun update(arg: String,
+               gameContainer: GameContainer) =
+       when (arg) {
+           UpdateCodes.PacMan.startGame -> gameContainer.setGameShown(UpdateCodes.PacMan.gameName)
+           else                         -> Updater.updateElse(arg, gameContainer)
+       }
 }

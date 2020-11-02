@@ -1,6 +1,6 @@
 package common.engine
 
-interface GameContainer {
+interface StatefulContainer {
     /**
      * Start the new game. Must be called from the class launching the application!
      *
