@@ -13,14 +13,14 @@ abstract class Level(gameCanvas: Canvas) : Observable(),
         ILevel {
     private var backgroundImage = BackgroundImage()
     private var npcs = mutableListOf<Actor>()
-    var players = mutableListOf<ControlableActor>()
+    var players = mutableListOf<ControllableActor>()
     private var levelElements = mutableListOf<LevelElement>()
     protected var collectables = mutableListOf<Collectable>()
         private set
 
     private fun addCollision() {
         levelElements.forEach { levelElement: LevelElement ->
-            players.forEach { pacMan: ControlableActor ->
+            players.forEach { pacMan: ControllableActor ->
                 pacMan.addCollidingActor(levelElement as Actor)
             }
         }
@@ -28,7 +28,7 @@ abstract class Level(gameCanvas: Canvas) : Observable(),
 
     private fun addCollectables() =
             collectables.forEach { collectable: Collectable ->
-                players.forEach { player: ControlableActor ->
+                players.forEach { player: ControllableActor ->
                     player.addCollidingActor(collectable as Actor)
                 }
             }
@@ -96,7 +96,7 @@ abstract class Level(gameCanvas: Canvas) : Observable(),
         return collectables.add(c)
     }
 
-    protected fun addPlayer(player: ControlableActor): Boolean = players.add(player)
+    protected fun addPlayer(player: ControllableActor): Boolean = players.add(player)
 
     protected open fun addLevelElement(levelElement: LevelElement): Boolean = levelElements.add(levelElement)
 

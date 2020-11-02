@@ -2,7 +2,7 @@ package de.hsh.alexander.level
 
 import common.actor.Collectable
 import common.actor.CollisionCheck.isInBounds
-import common.actor.ControlableActor
+import common.actor.ControllableActor
 import common.actor.Level
 import common.actor.LevelElement
 import common.config.WindowConfig
@@ -51,7 +51,7 @@ abstract class PacManLevel(gameCanvas: Canvas) : Level(gameCanvas) {
                 .first()
 
     override fun keyboardInput(keyEvent: KeyEvent) =
-            players.forEach { pacMan: ControlableActor ->
+            players.forEach { pacMan: ControllableActor ->
                 pacMan.move(keyEvent)
             }
 

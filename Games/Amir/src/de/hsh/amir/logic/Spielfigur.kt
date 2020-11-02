@@ -1,11 +1,11 @@
 package de.hsh.amir.logic
 
-import common.actor.ControlableActor
+import common.actor.ControllableActor
 import common.actor.Direction
 import javafx.scene.input.KeyCode
 
 class Spielfigur internal constructor(x: Double, y: Double)
-    : ControlableActor(
+    : ControllableActor(
         spielFigurBildpfad,
         x,
         y,

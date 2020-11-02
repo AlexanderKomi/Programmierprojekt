@@ -4,7 +4,7 @@ import javafx.scene.canvas.Canvas
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 
-abstract class ControlableActor : Actor {
+abstract class ControllableActor : Actor {
     protected constructor(pictureFileName: String,
                           x: Double,
                           y: Double,

@@ -8,7 +8,7 @@ import javafx.scene.input.KeyCode
 import java.util.*
 
 open class PacMan(x: Double, y: Double, keyMap: HashMap<KeyCode, Direction>, pictureFileName: Array<String>) :
-        ControlableActor(pictureFileName, x, y, keyMap, 5) {
+        ControllableActor(pictureFileName, x, y, keyMap, 5) {
 
     val points: SimpleIntegerProperty = SimpleIntegerProperty(-1)
 

@@ -1,6 +1,6 @@
 package de.hsh.kevin.logic.myActor
 
-import common.actor.ControlableActor
+import common.actor.ControllableActor
 import common.actor.Direction
 import common.actor.ImageLoader.loadImage
 import javafx.scene.image.Image
@@ -17,7 +17,7 @@ class PlayerCharacter(
         keyMap: Map<KeyCode, Direction>,
         x: Double = 250.0,
         y: Double = 750.0
-) : ControlableActor(pictureFileName[0], x, y, keyMap) {
+) : ControllableActor(pictureFileName[0], x, y, keyMap) {
 
     /**
      * Gibt an ob der PlayerCharacter gerade schiesst
