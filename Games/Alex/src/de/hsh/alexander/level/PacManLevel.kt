@@ -33,10 +33,7 @@ abstract class PacManLevel(gameCanvas: Canvas) : Level(gameCanvas) {
                 isGameFinished
             }
 
-    private fun onMouseClick(clickEvent: MouseEvent) {
-        //Logger.log( this.getClass() + ": Clicked at : (" + x + ", " + y + ")" );
-        addCollectable(DataCoin(clickEvent.x, clickEvent.y))
-    }
+    private fun onMouseClick(clickEvent: MouseEvent) = addCollectable(DataCoin(clickEvent.x, clickEvent.y))
 
     val pacMan1Property: SimpleIntegerProperty
         get() = players
@@ -119,16 +116,16 @@ abstract class PacManLevel(gameCanvas: Canvas) : Level(gameCanvas) {
         }
         val end = 580
         val increment: Byte = 19
-        addCondensators_y(gameCanvas, 285, end, increment.toInt(), 525)
-        addCondensators_x(gameCanvas, 545, 805, increment.toInt(), 705)
+        addCondensatorsY(gameCanvas, 285, end, increment.toInt(), 525)
+        addCondensatorsX(gameCanvas, 545, 805, increment.toInt(), 705)
         addLevelElement(gameCanvas, Condensator((525 + increment).toDouble(), (end + increment).toDouble()))
     }
 
-    private fun addCondensators_y(gameCanvas: Canvas,
-                                  start: Int,
-                                  end: Int,
-                                  increment: Int,
-                                  x: Int) {
+    private fun addCondensatorsY(gameCanvas: Canvas,
+                                 start: Int,
+                                 end: Int,
+                                 increment: Int,
+                                 x: Int) {
         var y = start
         while (y < end) {
             addLevelElement(gameCanvas, Condensator(x.toDouble(), y.toDouble()))
@@ -137,11 +134,11 @@ abstract class PacManLevel(gameCanvas: Canvas) : Level(gameCanvas) {
         }
     }
 
-    private fun addCondensators_x(gameCanvas: Canvas,
-                                  start: Int,
-                                  end: Int,
-                                  increment: Int,
-                                  y: Int) {
+    private fun addCondensatorsX(gameCanvas: Canvas,
+                                 start: Int,
+                                 end: Int,
+                                 increment: Int,
+                                 y: Int) {
         var x = start
         while (x < end) {
             addLevelElement(gameCanvas, Condensator(x.toDouble(), y.toDouble()))

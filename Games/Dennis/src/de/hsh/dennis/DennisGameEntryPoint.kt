@@ -1,7 +1,9 @@
 package de.hsh.dennis
 
+import UpdateDDOSDefender
 import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoint
+import common.updates.GameUpdater
 import common.updates.UpdateCodes
 import common.util.Logger
 import de.hsh.dennis.controller.LevelMenu_controller
@@ -31,6 +33,8 @@ class DennisGameEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.dennis_
         if (gm.fps != fps) gm.fps = fps
         if (rendering) Platform.runLater { gm.act() }
     }
+
+    override fun gameUpdater(): GameUpdater = UpdateDDOSDefender
 
     override fun update(o: Observable, arg: Any) {
         if (arg is Difficulty) {

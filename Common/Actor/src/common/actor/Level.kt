@@ -8,30 +8,17 @@ import java.util.*
  *
  * @author Alex
  */
-abstract class Level(gameCanvas: Canvas) : Observable(),
-        Observer,
-        ILevel {
+abstract class Level(gameCanvas: Canvas) : Observable(), Observer, ILevel {
+
     private var backgroundImage = BackgroundImage()
     private var npcs = mutableListOf<Actor>()
     var players = mutableListOf<ControllableActor>()
+        private set
+
     private var levelElements = mutableListOf<LevelElement>()
     protected var collectables = mutableListOf<Collectable>()
         private set
 
-    private fun addCollision() {
-        levelElements.forEach { levelElement: LevelElement ->
-            players.forEach { pacMan: ControllableActor ->
-                pacMan.addCollidingActor(levelElement as Actor)
-            }
-        }
-    }
-
-    private fun addCollectables() =
-            collectables.forEach { collectable: Collectable ->
-                players.forEach { player: ControllableActor ->
-                    player.addCollidingActor(collectable as Actor)
-                }
-            }
 
     protected fun addLevelElement(gameCanvas: Canvas,
                                   levelElement: LevelElement): Boolean =
@@ -58,21 +45,20 @@ abstract class Level(gameCanvas: Canvas) : Observable(),
         draw(players, canvas)
     }
 
-    private fun <T : Actor> draw(list: List<T>,
-                                  canvas: Canvas) {
+    private fun <T : Actor> draw(list: List<T>, canvas: Canvas) {
         val size = list.size
         for (i in 0 until size) {
             list[i].draw(canvas)
         }
     }
 
-    protected fun collidesWithLevelElement(a: Actor): Boolean = levelElements.any { it.doesCollide(a) }
+    protected infix fun collidesWithLevelElement(a: Actor): Boolean = levelElements.any { it.doesCollide(a) }
 
-    protected fun collidesWithPlayer(d: Actor): Boolean = players.any { it.doesCollide(d) }
+    protected infix fun collidesWithPlayer(d: Actor): Boolean = players.any { it.doesCollide(d) }
 
-    protected fun collidesWithCollectable(a: Actor): Boolean = collectables.any { it.doesCollide(a) }
+    protected infix fun collidesWithCollectable(a: Actor): Boolean = collectables.any { it.doesCollide(a) }
 
-    protected fun collected(collectable: Collectable): Boolean {
+    protected infix fun collected(collectable: Collectable): Boolean {
         collectable.deleteObservers()
         val list = Collections.synchronizedList(
                 players)
@@ -96,11 +82,23 @@ abstract class Level(gameCanvas: Canvas) : Observable(),
         return collectables.add(c)
     }
 
-    protected fun addPlayer(player: ControllableActor): Boolean = players.add(player)
+    protected infix fun addPlayer(player: ControllableActor): Boolean = players.add(player)
 
-    protected open fun addLevelElement(levelElement: LevelElement): Boolean = levelElements.add(levelElement)
+    protected open infix fun addLevelElement(levelElement: LevelElement): Boolean = levelElements.add(levelElement)
 
     private fun reset(gameCanvas: Canvas) {
+        fun addCollision() = levelElements.forEach { levelElement: LevelElement ->
+                    players.forEach { pacMan: ControllableActor ->
+                        pacMan addCollidingActor levelElement
+                    }
+                }
+
+        fun addCollectables() = collectables.forEach { collectable: Collectable ->
+                    players.forEach { player: ControllableActor ->
+                        player addCollidingActor collectable
+                    }
+                }
+
         backgroundImage = BackgroundImage()
         npcs = mutableListOf()
         players = mutableListOf()

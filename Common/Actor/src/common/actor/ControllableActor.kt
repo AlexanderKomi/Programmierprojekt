@@ -25,18 +25,16 @@ abstract class ControllableActor : Actor {
     /**
      * Checks Key Released and Pressed Events.
      */
-    fun move(keyEvent: KeyEvent) {
-        when (keyEvent.eventType.name) {
-            "KEY_PRESSED" -> { movement.onKeyPressed(keyEvent.code) }
-            "KEY_RELEASED" -> { movement.onKeyReleased(keyEvent.code) }
-            else -> {}
-        }
+    fun move(keyEvent: KeyEvent) = when (keyEvent.eventType.name) {
+        "KEY_PRESSED" -> { movement.onKeyPressed(keyEvent.code) }
+        "KEY_RELEASED" -> { movement.onKeyReleased(keyEvent.code) }
+        else -> {}
     }
 
     override fun draw(canvas: Canvas) {
         val directedSpeed = movement.holdDown.keys
                 .filter { direction: Direction -> movement.holdDown[direction]!! }
-                .map { direction: Direction -> calculateDirectedSpeed(direction, movement.velocity) }
+                .map { direction: Direction -> calculateDirectedSpeed(direction, speed) }
                 .firstOrNull()
         if (directedSpeed != null) {
             super.draw(canvas, directedSpeed[0], directedSpeed[1])

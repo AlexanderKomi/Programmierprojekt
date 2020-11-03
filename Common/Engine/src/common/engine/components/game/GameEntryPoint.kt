@@ -1,6 +1,7 @@
 package common.engine.components.game
 
 import common.engine.FxModul
+import common.updates.ContainsGameUpdater
 import common.updates.MenuCodes
 import java.util.*
 
@@ -13,7 +14,7 @@ import java.util.*
  * @version 2
  */
 abstract class GameEntryPoint(container: Observer, val name: String = "- Name not set -")
-    : FxModul(container), IGame {
+    : FxModul(container), IGame, ContainsGameUpdater {
 
     override fun equals(other: Any?): Boolean =
             if (other is GameEntryPoint) name == other.name && other.scene == scene

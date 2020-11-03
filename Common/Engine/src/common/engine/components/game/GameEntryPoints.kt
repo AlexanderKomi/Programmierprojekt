@@ -5,8 +5,6 @@ import java.util.*
 class GameEntryPoints(vararg gameEntryPoints: GameEntryPoint) : ArrayList<GameEntryPoint>() {
 
     var activeGame: String? = null
-    val names: List<String>
-        get() = this.map { game: GameEntryPoint -> game.name }
 
     init {
         Collections.addAll(this, *gameEntryPoints)

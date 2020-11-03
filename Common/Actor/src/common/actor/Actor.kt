@@ -10,9 +10,7 @@ abstract class Actor : Drawable {
     val movement = Movement()
     private var collisionActors = mutableListOf<Actor>()
 
-    open var speed: Double
-        get() = movement.velocity
-        set(speed) { movement.velocity = speed }
+    open var speed: Double = 0.0
 
     /**
      * Many overloaded constructors following up now...
@@ -63,7 +61,7 @@ abstract class Actor : Drawable {
      * @param other instance of actor
      * @return returns if collisioned or not
      */
-    fun doesCollide(other: Actor): Boolean =
+    infix fun doesCollide(other: Actor): Boolean =
             if (CollisionCheck.doesCollide(this, other as Drawable) ||
                 CollisionCheck.doesCollide(other, this)) {
                 collisionModifier(other)
@@ -85,7 +83,7 @@ abstract class Actor : Drawable {
      */
     protected open fun collisionModifier(other: Actor): Boolean = true
 
-    fun removeCollisionActor(collectable: Collectable) {
+    infix fun removeCollisionActor(collectable: Collectable) {
         val l = collisionActors
         if (l.remove(collectable)) {
             onRemove(collectable)
@@ -95,13 +93,13 @@ abstract class Actor : Drawable {
         collisionActors.remove(collectable)
     }
 
-    protected open fun onRemove(collectable: Collectable) {}
+    protected open infix fun onRemove(collectable: Collectable) {}
 
     /**
      * adds a colliding actor
      * @param a Actor
      */
-    fun addCollidingActor(a: Actor) {
+    infix fun addCollidingActor(a: Actor) {
         if (!collisionActors.contains(a)) {
             collisionActors.add(a)
         }

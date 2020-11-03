@@ -7,7 +7,6 @@ import javafx.embed.swing.SwingFXUtils
 import javafx.scene.image.Image
 import java.io.File
 import java.io.FileNotFoundException
-import java.io.IOException
 import java.io.InputStream
 import javax.imageio.ImageIO
 
@@ -21,8 +20,8 @@ object ImageLoader {
      * @return returns imagepath for SwingFXUtils
      */
     @Throws(FileNotFoundException::class)
-    fun loadImage(relativeFilePath: String): Image =
-            getInputStream(relativeFilePath).use { u ->
+    infix fun loadImage(relativeFilePath: String): Image =
+            (this getInputStreamFrom relativeFilePath ).use { u ->
                 return SwingFXUtils.toFXImage(ImageIO.read(u)!!, null)
             }
 
@@ -34,7 +33,7 @@ object ImageLoader {
      * @throws NullPointerException Location not found
      */
     @Throws(NullPointerException::class, FileNotFoundException::class)
-    private fun getInputStream(relativePath: String): InputStream {
+    private infix fun getInputStreamFrom(relativePath: String): InputStream {
         val x = ImageLoader::class.java.getResource(relativePath)
                 ?: throw FileNotFoundException("File does not exist under relative Path: $relativePath")
         if (!File(x.path).exists()) { throw FileNotFoundException("File does not exist: " + x.path) }

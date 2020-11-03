@@ -2,8 +2,10 @@ package de.hsh.daniel
 
 import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoint
+import common.updates.GameUpdater
 import common.updates.MenuCodes
 import common.updates.UpdateCodes
+import common.updates.UpdateRAM
 import common.util.Logger
 import de.hsh.daniel.controller.RAM_MainMenu_controller
 import de.hsh.daniel.controller.RAM_winScreen_controller
@@ -64,6 +66,8 @@ class RAM(o: Observer) : GameEntryPoint(o, WindowConfig.daniel_title) {
             }
         }
     }
+
+    override fun gameUpdater(): GameUpdater = UpdateRAM
 
     companion object {
         private var game: RamGame_controller? = null

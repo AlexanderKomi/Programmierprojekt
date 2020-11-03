@@ -21,34 +21,34 @@ import java.util.ResourceBundle;
 public final class MainMenu extends common.engine.components.menu.MainMenu implements Initializable {
 
     @FXML
-    public AnchorPane       ap_desktop;
-    public VBox             vbox;
+    public AnchorPane ap_desktop;
+    public VBox vbox;
     @FXML
-    public Button           b_game_1;
+    public Button b_game_1;
     @FXML
-    public Text             txt_game_1 = new Text();
+    public Text txt_game_1 = new Text();
     @FXML
-    public Button           b_game_2;
+    public Button b_game_2;
     @FXML
-    public Text             txt_game_2 = new Text();
+    public Text txt_game_2 = new Text();
     @FXML
-    public Button           b_game_3;
+    public Button b_game_3;
     @FXML
-    public Text             txt_game_3 = new Text();
+    public Text txt_game_3 = new Text();
     @FXML
-    public Button           b_game_4;
+    public Button b_game_4;
     @FXML
-    public Text             txt_game_4 = new Text();
+    public Text txt_game_4 = new Text();
     @FXML
-    public Button           b_game_5;
+    public Button b_game_5;
     @FXML
-    public Text             txt_game_5 = new Text();
+    public Text txt_game_5 = new Text();
     @FXML
-    public Button           b_game_6;
+    public Button b_game_6;
     @FXML
-    public Text             txt_game_6 = new Text();
+    public Text txt_game_6 = new Text();
     @FXML
-    public Button           b_shutdown;
+    public Button b_shutdown;
     @FXML
     public ComboBox<String> cb_credits = new ComboBox<>();
 
@@ -68,7 +68,7 @@ public final class MainMenu extends common.engine.components.menu.MainMenu imple
                 WindowConfig.amir_title + " : " + "Amir-Hossein Ebrahimzadeh");
     }
 
-    public void initGameNames() {
+    public void init() {
         try {
             bindGamesToButtons(new String[]{
                     WindowConfig.alexander_title,
@@ -79,28 +79,25 @@ public final class MainMenu extends common.engine.components.menu.MainMenu imple
                     WindowConfig.julian_title
             });
 
-            HBox   shutdownBox    = (HBox) this.vbox.getChildren().get(1);
+            HBox shutdownBox = (HBox) this.vbox.getChildren().get(1);
             Button shutdownButton = (Button) shutdownBox.getChildren().get(0);
             shutdownButton.setOnAction(shutdownEvent -> this.notifyObservers(UpdateCodes.MainMenu.shutdown));
         } catch (NullPointerException npe) {
             npe.printStackTrace();
         }
-
     }
 
     private void bindGamesToButtons(final String[] gameNames) {
         final AnchorPane anchorPane = (AnchorPane) this.vbox.getChildren().get(0);
-        final GridPane   gridPane   = (GridPane) anchorPane.getChildren().get(0);
+        final GridPane gridPane = (GridPane) anchorPane.getChildren().get(0);
 
         for (int i = 0; i <= 5; i++) {
             final String gameName = gameNames[i];
-            final VBox   tempBox  = (VBox) gridPane.getChildren().get(i);
+            final VBox tempBox = (VBox) gridPane.getChildren().get(i);
 
-            Text text = ((Text) (tempBox).getChildren().get(1));
-            text.setText(gameName); // Set the Text to the game name
+            ((Text) (tempBox).getChildren().get(1)).setText(gameName); // Set the Text to the game name
 
-            Button button = (Button) tempBox.getChildren().get(0);
-            button.setOnAction(buttonEvent -> this.notifyObservers(gameName));
+            ((Button) tempBox.getChildren().get(0)).setOnAction(buttonEvent -> this.notifyObservers(gameName));
         }
     }
 

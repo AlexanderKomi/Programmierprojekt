@@ -2,7 +2,9 @@ package de.hsh.alexander
 
 import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoint
+import common.updates.GameUpdater
 import common.updates.UpdateCodes
+import common.updates.UpdatePacman
 import common.util.Logger
 import javafx.application.Platform
 import java.util.*
@@ -10,8 +12,15 @@ import java.util.*
 class PacManController(o: Observer)
     : GameEntryPoint(o, WindowConfig.alexander_title) {
 
+    private var game: PacManGame? = null
+    private val pacManEndScreen: PacManEndScreen = PacManEndScreen()
+    private val pacManMenu: PacManMenu = PacManMenu()
     private val changer: PacManFxmlChanger = PacManFxmlChanger(this, PacManMenu.fxml, pacManMenu)
 
+    private fun logParsingError(o: Observable,
+                                arg: Any) {
+        Logger.log("In PacManController: update : from observable : $o Argument could not be parsed : $arg")
+    }
     /**
      * PacManMenu sends a notification to change the fxml.
      */
@@ -21,7 +30,6 @@ class PacManController(o: Observer)
             when (arg) {
                 UpdateCodes.PacMan.startGame -> startGame()
                 UpdateCodes.PacMan.mainMenu -> {
-                    Logger.log("-------------------MAIN MENU----------------------")
                     changer.changeFxml(pacManMenu, UpdateCodes.PacMan.mainMenu)
                     exitToMainGUI()
                 }
@@ -46,15 +54,9 @@ class PacManController(o: Observer)
 
     private fun showEndScreen() {
         Platform.runLater {
-            PacManEndScreen.player1Points = game!!.currentLevel
-                    .pacMan1Property
-                    .get()
-            PacManEndScreen.player2Points = game!!.currentLevel
-                    .pacMan2Property
-                    .get()
-            changer.changeFxml(
-                    pacManEndScreen,
-                    UpdateCodes.PacMan.showEndScreen)
+            PacManEndScreen.player1Points = game!!.currentLevel.pacMan1Property.get()
+            PacManEndScreen.player2Points = game!!.currentLevel.pacMan2Property.get()
+            changer.changeFxml(pacManEndScreen, UpdateCodes.PacMan.showEndScreen)
             if (game != null) {
                 game!!.delete()
                 game = null
@@ -72,13 +74,6 @@ class PacManController(o: Observer)
         }
     }
 
-    companion object {
-        private var game: PacManGame? = null
-        private val pacManEndScreen: PacManEndScreen = PacManEndScreen()
-        private val pacManMenu: PacManMenu = PacManMenu()
-        private fun logParsingError(o: Observable,
-                                    arg: Any) {
-            Logger.log("In PacManController: update : from observable : $o Argument could not be parsed : $arg")
-        }
-    }
+    override fun gameUpdater(): GameUpdater = UpdatePacman
+
 }

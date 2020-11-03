@@ -13,7 +13,7 @@ import java.util.*
  *
  * @author Alexander Komischke
  */
-abstract class FXGameContainer : Application(), StatefulContainer, Observer {
+abstract class FXGameContainer : Application(), GameContainer, Observer {
 
     private lateinit var engineGameContainer: EngineGameContainer
     private lateinit var stage: Stage
@@ -31,20 +31,20 @@ abstract class FXGameContainer : Application(), StatefulContainer, Observer {
 
         engineGameContainer = EngineGameContainer(createGames(this))
 
-        menu = configMainMenu(engineGameContainer.gameEntryPoints.names)
+        menu = configMainMenu()
         menu.addObserver(this)
-        menu.initGameNames()
+        menu.init()
         stage.scene = menu.scene
         engineGameContainer.startEngine()
         stage.show()
     }
 
-    fun showMainMenu() {
+    override fun showMainMenu() {
         stage.scene = menu.scene
         stage.title = menu.title()
     }
 
-    fun setGameShown(gameName: String) {
+    override fun showGame(gameName: String) {
         engineGameContainer.gameEntryPoints.activeGame = gameName
         val gameEntryPoint = engineGameContainer.gameEntryPoints[gameName]
         stage.title = gameEntryPoint.name
@@ -54,7 +54,7 @@ abstract class FXGameContainer : Application(), StatefulContainer, Observer {
         stage.scene = gameEntryPoint.scene
     }
 
-    fun containsGame(gameName: String): Boolean = this.engineGameContainer.gameEntryPoints.contains(gameName)
+    override fun contains(gameName: String): Boolean = this.engineGameContainer.gameEntryPoints.contains(gameName)
 
     /**
      * Stops the engine container. Kills every process inside the container.
@@ -67,7 +67,7 @@ abstract class FXGameContainer : Application(), StatefulContainer, Observer {
     }
 
     protected abstract fun configureStage(primaryStage: Stage): Stage
-    protected abstract fun configMainMenu(games: List<String>): MainMenu
+    protected abstract fun configMainMenu(): MainMenu
     abstract fun createGames(o: Observer): GameEntryPoints
     abstract fun beforeStoppingContainer()
 }

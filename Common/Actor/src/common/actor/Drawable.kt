@@ -50,7 +50,11 @@ open class Drawable : Observable {
         this.x = x; this.y = y
     }
 
-    fun setCurrentImage(filePath: String) {
+    infix fun setPos(xy: Pair<Double, Double>){
+        this.x = xy.first; this.y = xy.second
+    }
+
+    infix fun setCurrentImage(filePath: String) {
         currentImage = TextureBuffer.loadImage(filePath)
         currentImageName = filePath
     }
@@ -68,7 +72,7 @@ open class Drawable : Observable {
                           y: Double = 0.0,
                           delay: Int = 0,
                           scale: Double = 1.0) :
-            this(x, y, delay) {
+        this(x, y, delay) {
         setCurrentImage(pictureFileName)
         scaleImage(scale)
     }
@@ -89,7 +93,7 @@ open class Drawable : Observable {
     }
 
 
-    protected fun scaleImageWidth(factor: Double) {
+    protected infix fun scaleImageWidth(factor: Double) {
         if (factor <= 0) {
             x += width
         }
@@ -99,19 +103,19 @@ open class Drawable : Observable {
         imageView.scaleX = scaleWidth
     }
 
-    protected fun scaleImageHeight(factor: Double) {
+    protected infix fun scaleImageHeight(factor: Double) {
         height *= factor
         scaleHeight *= factor
         imageView.fitHeight = scaleHeight
         imageView.scaleY = scaleHeight
     }
 
-    protected fun scaleImage(factor: Double) {
+    protected infix fun scaleImage(factor: Double) {
         scaleImageHeight(factor)
         scaleImageWidth(factor)
     }
 
-    open fun draw(canvas: Canvas) = draw(canvas, 0.0, 0.0)
+    open infix fun draw(canvas: Canvas) = draw(canvas, 0.0, 0.0)
 
     protected open fun draw(canvas: Canvas,
                             offsetToNewX: Double,
@@ -137,16 +141,10 @@ open class Drawable : Observable {
 
         fun calcPosAfterBounds(isInBounds: BooleanArray,
                                newX: Double,
-                               newY: Double): DoubleArray {
-            val temp = doubleArrayOf(x, y)
-            if (isInBounds[0]) {
-                temp[0] += newX
-            }
-            if (isInBounds[1]) {
-                temp[1] += newY
-            }
-            return temp
-        }
+                               newY: Double): DoubleArray = doubleArrayOf(x, y).also { temp ->
+                                   if (isInBounds[0]) temp[0] += newX
+                                   if (isInBounds[1]) temp[1] += newY
+                               }
 
         if (offsetToNewX != 0.0 || offsetToNewY != 0.0) {
             val inBoundsPos = calcPosAfterBounds(
@@ -180,13 +178,10 @@ open class Drawable : Observable {
                 height == other.height &&
                 width == other.width &&
                 currentImageName == other.currentImageName
-            } else {
-                false
-            }
+            } else false
 
-    override fun toString(): String {
-        return """${this.javaClass}(name:$currentImageName, x:$x, y:$y, width:$width, height:$height)"""
-    }
+    override fun toString(): String =
+            """${this.javaClass}(name:$currentImageName, x:$x, y:$y, width:$width, height:$height)"""
 
     override fun hashCode(): Int {
         var result = id

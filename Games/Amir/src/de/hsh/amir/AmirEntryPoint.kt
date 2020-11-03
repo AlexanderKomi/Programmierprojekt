@@ -2,7 +2,9 @@ package de.hsh.amir
 
 import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoint
+import common.updates.GameUpdater
 import common.updates.MenuCodes
+import common.updates.UpdateAmirsGame
 import common.updates.UpdateCodes
 import common.util.Logger
 import de.hsh.amir.controller.AmirGameController
@@ -51,6 +53,8 @@ class AmirEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.amir_title) {
             amirGame!!.render(fps)
         }
     }
+
+    override fun gameUpdater(): GameUpdater = UpdateAmirsGame
 
     companion object {
         private var amirGame: AmirGameController? = null

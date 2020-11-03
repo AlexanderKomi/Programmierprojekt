@@ -21,12 +21,12 @@ abstract class Collectable : Actor {
      */
     protected constructor(pictureFilePaths: Array<String>, x: Double, y: Double, delay: Int, scale: Double)
             : super(pictureFilePaths, x, y, delay, scale)
+
     protected constructor(pictureFileName: String) : super(pictureFileName) {}
-    protected constructor(x: Double,
-                          y: Double,
-                          delay: Int,
-                          scale: Double,
-                          vararg pictureFilePaths: String) : super(pictureFilePaths.toList(), x, y, delay) {
+
+    protected constructor(x: Double, y: Double, delay: Int, scale: Double,
+                          vararg pictureFilePaths: String) :
+            super(pictureFilePaths.toList(), x, y, delay) {
         scaleImage(scale)
     }
 

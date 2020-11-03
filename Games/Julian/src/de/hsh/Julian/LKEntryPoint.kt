@@ -5,6 +5,8 @@ package de.hsh.Julian
 
 import common.config.WindowConfig
 import common.engine.components.game.GameEntryPoint
+import common.updates.GameUpdater
+import common.updates.UpdateLK
 import common.util.Logger
 import de.hsh.Julian.controller.LKStart
 import javafx.application.Platform
@@ -42,6 +44,8 @@ class LKEntryPoint(o: Observer) : GameEntryPoint(o, WindowConfig.julian_title) {
             lk.render(canvas)
         }
     }
+
+    override fun gameUpdater(): GameUpdater = UpdateLK
 
     /**
      * Controls the scene-changes

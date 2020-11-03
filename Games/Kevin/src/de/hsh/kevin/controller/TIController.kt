@@ -1,7 +1,9 @@
 package de.hsh.kevin.controller
 
 import common.engine.components.game.GameEntryPoint
+import common.updates.GameUpdater
 import common.updates.UpdateCodes
+import common.updates.UpdateTunnelInvader
 import de.hsh.kevin.TIFxmlChanger
 import de.hsh.kevin.logic.Score
 import javafx.application.Platform
@@ -59,5 +61,7 @@ class TIController(o: Observer) : GameEntryPoint(o, UpdateCodes.TunnelInvader.ga
             }
         }
     }
+
+    override fun gameUpdater(): GameUpdater = UpdateTunnelInvader
 
 }

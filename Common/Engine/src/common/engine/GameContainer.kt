@@ -1,6 +1,13 @@
 package common.engine
 
-interface StatefulContainer {
+interface GameContainer {
+
+    infix operator fun contains(gameName: String): Boolean
+
+    infix fun showGame(gameName: String)
+
+    fun showMainMenu()
+
     /**
      * Start the new game. Must be called from the class launching the application!
      *

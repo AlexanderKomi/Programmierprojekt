@@ -17,11 +17,10 @@ open class PacMan(x: Double, y: Double, keyMap: HashMap<KeyCode, Direction>, pic
     }
 
     @Override
-    override fun calculateDirectedSpeed(direction: Direction, movementSpeed: Double): DoubleArray {
-        val xyTuple = direction.toArray(movementSpeed)
-        changeFacingDirection(xyTuple)
-        return xyTuple
-    }
+    override fun calculateDirectedSpeed(direction: Direction, movementSpeed: Double): DoubleArray =
+        direction.toArray(movementSpeed).also {
+            changeFacingDirection(it)
+        }
 
     override fun collisionModifier(other: Actor): Boolean =
             if (other is Collectable) {
