@@ -12,13 +12,11 @@ abstract class Level(gameCanvas: Canvas) : Observable(), Observer, ILevel {
 
     private var backgroundImage = BackgroundImage()
     private var npcs = mutableListOf<Actor>()
-    var players = mutableListOf<ControllableActor>()
-        private set
-
     private var levelElements = mutableListOf<LevelElement>()
     protected var collectables = mutableListOf<Collectable>()
         private set
-
+    var players = mutableListOf<ControllableActor>()
+        private set
 
     protected fun addLevelElement(gameCanvas: Canvas,
                                   levelElement: LevelElement): Boolean =
@@ -72,7 +70,7 @@ abstract class Level(gameCanvas: Canvas) : Observable(), Observer, ILevel {
         return result
     }
 
-    protected open fun addCollectable(c: Collectable): Boolean {
+    protected open infix fun add(c: Collectable): Boolean {
         c.addObserver(this)
         val list = Collections.synchronizedList(players)
         for (player in list) {
