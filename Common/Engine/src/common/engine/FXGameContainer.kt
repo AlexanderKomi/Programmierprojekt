@@ -2,18 +2,18 @@ package common.engine
 
 import common.engine.components.game.GameEntryPoints
 import common.engine.components.menu.MainMenu
+import common.updates.Updater
 import javafx.application.Application
 import javafx.application.Platform
 import javafx.event.EventHandler
 import javafx.stage.Stage
-import java.util.*
 
 /**
  * FXGameContainer is a container for a game engine, a main menu and all gameEntryPoints.
  *
  * @author Alexander Komischke
  */
-abstract class FXGameContainer : Application(), GameContainer, Observer {
+abstract class FXGameContainer : Application(), GameContainer, Updater {
 
     private lateinit var engineGameContainer: EngineGameContainer
     private lateinit var stage: Stage
@@ -32,7 +32,7 @@ abstract class FXGameContainer : Application(), GameContainer, Observer {
         engineGameContainer = EngineGameContainer(createGames(this))
 
         menu = configMainMenu()
-        menu.addObserver(this)
+        menu.addUpdater(this)
         menu.init()
         stage.scene = menu.scene
         engineGameContainer.startEngine()
@@ -68,6 +68,6 @@ abstract class FXGameContainer : Application(), GameContainer, Observer {
 
     protected abstract fun configureStage(primaryStage: Stage): Stage
     protected abstract fun configMainMenu(): MainMenu
-    abstract fun createGames(o: Observer): GameEntryPoints
+    abstract fun createGames(o: Updater): GameEntryPoints
     abstract fun beforeStoppingContainer()
 }

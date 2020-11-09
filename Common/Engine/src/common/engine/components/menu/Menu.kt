@@ -1,16 +1,13 @@
 package common.engine.components.menu
 
+import common.updates.Updatable
+import common.updates.Updater
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
-import java.util.*
 
-abstract class Menu : Observable(), Observer {
+abstract class Menu : Updatable, Updater {
     var scene: Scene? = null
         private set
-
-    override fun update(o: Observable?, arg: Any?) {
-
-    }
 
     override fun notifyObservers() {
         setChanged()

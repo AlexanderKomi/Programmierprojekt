@@ -4,7 +4,7 @@ import common.GameContainer
 import common.util.Logger
 import java.util.*
 
-object Updater {
+object GameCollectionUpdater {
     private const val unknownErrorCode = "ATTENTION : UNKNOWN OBSERVABLE CAN NOT BE PARSED"
     private const val unknownParsingCode = "Unknown String argument: "
 
@@ -24,7 +24,7 @@ object Updater {
         }
     }
 
-    fun update(o: Observable, arg: Any, gameContainer: GameContainer) =
+    fun update(o: Updatable, arg: String?, gameContainer: GameContainer) =
             if (arg is String) {
                 if (o is GameUpdater) {
                     usingGameUpdater(o, arg, gameContainer)

@@ -1,8 +1,9 @@
 package common.engine
 
+import common.updates.Updatable
+import common.updates.Updater
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
-import java.util.*
 
 /**
  * A module with a scene that can be included in a higher place if needed.
@@ -15,11 +16,11 @@ import java.util.*
  * or attach your Fx code in this class directly via using setScene(Scene scene).
  *
  */
-abstract class FxModul(container: Observer) : Observable(), Observer {
+abstract class FxModul(container: Updater) : Updatable, Updater {
     var scene: Scene = Scene(Pane()) //local scene being worked on.
 
     init {
         @Suppress("LeakingThis")
-        addObserver(container)
+        this.addUpdater(container)
     }
 }

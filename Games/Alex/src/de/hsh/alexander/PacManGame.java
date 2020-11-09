@@ -1,7 +1,9 @@
 package de.hsh.alexander;
 
 import common.config.WindowConfig;
+import common.updates.Updatable;
 import common.updates.UpdateCodes;
+import common.updates.Updater;
 import common.util.Logger;
 import de.hsh.alexander.level.PacManLevel;
 import de.hsh.alexander.actor.player.PacMan1;
@@ -14,36 +16,29 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public final class PacManGame extends Observable implements Observer, Initializable {
+public final class PacManGame implements Updatable, Updater, Initializable {
 
     public static final String gameFinishedMessage = "PacMan : Game finished";
     public static final String fxml                = "PacManGame.fxml";
     boolean initialized = false;
 
     private PacManLevel currentLevel;
+    private PacMan1 pacMan1;
+    private PacMan2 pacMan2;
 
     @FXML
     private Canvas gameCanvas;
-
     @FXML
     private Canvas player1Canvas;
     @FXML
     private Canvas player2Canvas;
-
-    private PacMan1 pacMan1;
-    private PacMan2 pacMan2;
-
-
-
     @FXML
     private Label player1Points;
     @FXML
     private Label player2Points;
-
 
     @Override
     public void initialize( URL location, ResourceBundle resources ) {
@@ -60,21 +55,13 @@ public final class PacManGame extends Observable implements Observer, Initializa
     }
 
     @Override
-    public void update( Observable o, Object arg ) {
-        if ( arg instanceof String ) {
-            String message = (String) arg;
-            if ( message.equals( gameFinishedMessage ) ) {
+    public void update(Updatable o, String arg ) {
+        if (arg != null) {
+            if ( arg.equals( gameFinishedMessage ) ) {
                 Logger.INSTANCE.log( this.getClass() + ": " + gameFinishedMessage );
-                this.setChanged();
-                this.notifyObservers( UpdateCodes.PacMan.showEndScreen );
-            }
-            else {
-                Logger.INSTANCE.log( this.getClass() + ": unknown update : " + o + ", " + arg );
-            }
-        }
-        else {
-            Logger.INSTANCE.log( this.getClass() + ": unknown update : " + o + ", " + arg );
-        }
+                this.notifyUpdater( UpdateCodes.PacMan.showEndScreen );
+            } else Logger.INSTANCE.log(this.getClass() + ": unknown update : " + o + ", " + arg);
+        } else Logger.INSTANCE.log(this.getClass() + ": unknown update : " + o + ", " + arg);
     }
 
     void render( final int fps ) {
@@ -135,5 +122,10 @@ public final class PacManGame extends Observable implements Observer, Initializa
     synchronized void delete() {
         this.deleteObservers();
         this.currentLevel = null;
+    }
+
+    @Override
+    public List<Updater> getUpdaterList() {
+        return null;
     }
 }

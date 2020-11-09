@@ -1,10 +1,8 @@
 package common.engine.components.game
 
-import java.util.*
+import common.updates.Updater
 
-internal interface IGame : Observer {
+internal interface IGame : Updater {
     fun render(fps: Int)
     fun exitToMainGUI()
-    override fun update(o: Observable,
-                        arg: Any)
 }

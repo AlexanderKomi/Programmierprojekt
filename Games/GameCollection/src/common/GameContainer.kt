@@ -3,6 +3,8 @@ package common
 import common.config.WindowConfig
 import common.engine.FXGameContainer
 import common.engine.components.game.GameEntryPoints
+import common.updates.GameCollectionUpdater
+import common.updates.Updatable
 import common.updates.Updater
 import de.hsh.Julian.LKEntryPoint
 import de.hsh.alexander.PacManController
@@ -13,13 +15,13 @@ import de.hsh.dennis.model.MusicPlayer
 import de.hsh.kevin.controller.TIController
 import javafx.fxml.FXMLLoader
 import javafx.stage.Stage
-import java.util.*
 
 class GameContainer : FXGameContainer() {
 
-    override fun update(observable: Observable, arg: Any) = Updater.update(observable, arg, this)
+    override fun update(updatable: Updatable, message: String?) =
+            GameCollectionUpdater.update(updatable, message, this)
 
-    override fun createGames(o: Observer): GameEntryPoints = GameEntryPoints(
+    override fun createGames(o: Updater): GameEntryPoints = GameEntryPoints(
             PacManController(o),
             AmirEntryPoint(o),
             RAM(o),
@@ -36,7 +38,7 @@ class GameContainer : FXGameContainer() {
         MainMenu().also {
             it.vbox = FXMLLoader.load(javaClass.getResource(mainMenuFXMLPath))
             it.setMenuPane(it.vbox)
-            it.addObserver(this)
+            it.addUpdater(this)
         }
 
     /**
